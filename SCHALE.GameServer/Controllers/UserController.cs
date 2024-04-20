@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SCHALE.Common.Database;
+using SCHALE.Common.Database.Models;
 using SCHALE.GameServer.Models;
 
 namespace SCHALE.GameServer.Controllers

@@ -48,11 +48,11 @@ namespace SCHALE.Common.Database
             if (counter is null)
             {
                 counter = new Counter() { Id = Collection, Seq = 0 };
-                context.Counters.Add(counter);
+                context.Add(counter);
+                context.SaveChanges();
             }
 
             counter.Seq++;
-            context.Update(counter);
 
             return counter.Seq;
         }
