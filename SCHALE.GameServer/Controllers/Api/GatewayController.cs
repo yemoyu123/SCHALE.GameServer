@@ -6,6 +6,7 @@ using System.Buffers.Binary;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace SCHALE.GameServer.Controllers.Api
 {
@@ -31,20 +32,25 @@ namespace SCHALE.GameServer.Controllers.Api
             using var reader = new BinaryReader(formFile.OpenReadStream());
 
             // CRC + Protocol type conversion + payload length
-            reader.BaseStream.Position = 4;
-
-            var protocol = (Protocol)BinaryPrimitives.ReadUInt32LittleEndian(reader.ReadBytes(4));
-
             reader.BaseStream.Position = 12;
 
             byte[] compressedPayload = reader.ReadBytes((int)reader.BaseStream.Length - 12);
-            XOR.Crypt(compressedPayload, 0xD9);
+            XOR.Crypt(compressedPayload, [0xD9]);
             using var gzStream = new GZipStream(new MemoryStream(compressedPayload), CompressionMode.Decompress);
             using var payloadMs = new MemoryStream();
             gzStream.CopyTo(payloadMs);
 
             try
             {
+                var payloadStr = Encoding.UTF8.GetString(payloadMs.ToArray());
+                var jsonNode = JsonSerializer.Deserialize<JsonNode>(payloadStr);
+                var protocol = (Protocol?)jsonNode?["Protocol"]?.GetValue<int?>() ?? Protocol.None;
+                if (protocol == Protocol.None)
+                {
+                    logger.LogWarning("Failed to read protocol from JsonNode, {Payload:j}", payloadStr);
+                    goto protocolErrorRet;
+                }
+
                 var requestType = protocolHandlerFactory.GetRequestPacketTypeByProtocol(protocol);
                 if (requestType is null)
                 {
@@ -52,7 +58,6 @@ namespace SCHALE.GameServer.Controllers.Api
                     goto protocolErrorRet;
                 }
 
-                var payloadStr = Encoding.UTF8.GetString(payloadMs.ToArray());
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
                 var handler = protocolHandlerFactory.GetProtocolHandler(payload.Protocol);
                 if (handler is null)

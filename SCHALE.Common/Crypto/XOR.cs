@@ -2,11 +2,12 @@
 {
     public static class XOR
     {
-        public static void Crypt(byte[] bytes, byte key, uint offset = 0)
+        public static void Crypt(byte[] bytes, byte[] key, uint offset = 0)
         {
             while (offset < bytes.Length)
             {
-                bytes[offset++] ^= key;
+                bytes[offset] ^= key[offset % key.Length];
+                offset++;
             }
         }
     }
