@@ -1,26 +1,37 @@
 ﻿using SCHALE.Common.NetworkProtocol;
-using SCHALE.Common.NetworkProtocol.Account;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
-    public static class Account
+    public class Account : ProtocolHandlerBase
     {
+        public Account(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
+
         [ProtocolHandler(Protocol.Account_CheckYostar)]
-        public static ResponsePacket CheckYostarHandler(AccountCheckYostarRequest req)
+        public ResponsePacket CheckYostarHandler(AccountCheckYostarRequest req)
         {
+            var account = Context.GuestAccounts.SingleOrDefault(x => x.Uid == uint.Parse(req.EnterTicket.Split(":", StringSplitOptions.None).First()) && x.Token == req.EnterTicket.Split(":", StringSplitOptions.None).Last());
+            if (account is null)
+            {
+                return new AccountCheckYostarResponse()
+                {
+                    ResultState = 0,
+                    ResultMessag = "Invalid account (EnterTicket, AccountCheckYostar)"
+                };
+            }
+
             return new AccountCheckYostarResponse()
             {
                 ResultState = 1,
                 SessionKey = new()
                 {
                     MxToken = req.EnterTicket,
-                    AccountServerId = 1
+                    AccountServerId = account.Uid
                 }
             };
         }
 
         [ProtocolHandler(Protocol.Account_Auth)]
-        public static ResponsePacket AuthHandler(AccountAuthRequest req)
+        public ResponsePacket AuthHandler(AccountAuthRequest req)
         {
             return new ErrorPacket()
             {

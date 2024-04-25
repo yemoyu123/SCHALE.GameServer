@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using SCHALE.Common.Database;
+using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.NetworkProtocol
 {
@@ -36,8 +37,8 @@ namespace SCHALE.Common.NetworkProtocol
     {
         public long ServerTimeTicks { get; set; } = DateTimeOffset.Now.Ticks;
         public ServerNotificationFlag ServerNotification { get; set; }
-        // public List<MissionProgressDB> MissionProgressDBs { get; set; }
-        // public Dictionary<long, List<MissionProgressDB>> EventMissionProgressDBDict { get; set; }
+        public List<MissionProgressDB> MissionProgressDBs { get; set; }
+        public Dictionary<long, List<MissionProgressDB>> EventMissionProgressDBDict { get; set; }
         // public Dictionary<OpenConditionContent, OpenConditionLockReason> StaticOpenConditions { get; set; }
     }
 

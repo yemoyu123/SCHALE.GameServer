@@ -46,6 +46,8 @@ namespace SCHALE.GameServer
                 builder.Services.AddControllers();
                 builder.Services.AddMongoDBProvider(config.GetConnectionString("MongoDB") ?? throw new ArgumentNullException("ConnectionStrings/MongoDB in appsettings is missing"));
                 builder.Services.AddProtocolHandlerFactory();
+                builder.Services.AddProtocolHandlerGroup<Account>();
+                builder.Services.AddProtocolHandlerGroup<Queuing>();
 
                 var app = builder.Build();
 

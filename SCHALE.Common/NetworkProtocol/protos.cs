@@ -34,28 +34,28 @@ namespace SCHALE.Common.NetworkProtocol
         public string EncryptedUID { get; set; }
     }
 
-    //public class AccountAuthRequest : RequestPacket
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Account_Auth;
-    //        }
-    //    }
-    //    public long Version { get; set; }
-    //    public string DevId { get; set; }
-    //    public long IMEI { get; set; }
-    //    public string AccessIP { get; set; }
-    //    public string MarketId { get; set; }
-    //    public string UserType { get; set; }
-    //    public string AdvertisementId { get; set; }
-    //    public string OSType { get; set; }
-    //    public string OSVersion { get; set; }
-    //    public string DeviceUniqueId { get; set; }
-    //    public string DeviceModel { get; set; }
-    //    public int DeviceSystemMemorySize { get; set; }
-    //}
+    public class AccountAuthRequest : RequestPacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Account_Auth;
+            }
+        }
+        public long Version { get; set; }
+        public string DevId { get; set; }
+        public long IMEI { get; set; }
+        public string AccessIP { get; set; }
+        public string MarketId { get; set; }
+        public string UserType { get; set; }
+        public string AdvertisementId { get; set; }
+        public string OSType { get; set; }
+        public string OSVersion { get; set; }
+        public string DeviceUniqueId { get; set; }
+        public string DeviceModel { get; set; }
+        public int DeviceSystemMemorySize { get; set; }
+    }
 
 
     public class AccountCurrencySyncResponse : ResponsePacket
@@ -527,36 +527,36 @@ namespace SCHALE.Common.NetworkProtocol
     }
 
 
-    //public class AccountCheckYostarRequest : RequestPacket
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Account_CheckYostar;
-    //        }
-    //    }
-    //    public long UID { get; set; }
-    //    public string YostarToken { get; set; }
-    //    public string EnterTicket { get; set; }
-    //    public bool PassCookieResult { get; set; }
-    //    public string Cookie { get; set; }
-    //}
+    public class AccountCheckYostarRequest : RequestPacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Account_CheckYostar;
+            }
+        }
+        public long UID { get; set; }
+        public string YostarToken { get; set; }
+        public string EnterTicket { get; set; }
+        public bool PassCookieResult { get; set; }
+        public string Cookie { get; set; }
+    }
 
 
-    //public class AccountCheckYostarResponse : ResponsePacket
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Account_CheckYostar;
-    //        }
-    //    }
-    //    public int ResultState { get; set; }
-    //    public string ResultMessag { get; set; }
-    //    public string Birth { get; set; }
-    //}
+    public class AccountCheckYostarResponse : ResponsePacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Account_CheckYostar;
+            }
+        }
+        public int ResultState { get; set; }
+        public string ResultMessag { get; set; }
+        public string Birth { get; set; }
+    }
 
 
     public class AccountResetRequest : RequestPacket
@@ -9282,23 +9282,23 @@ namespace SCHALE.Common.NetworkProtocol
     }
 
 
-    //public class QueuingGetTicketRequest : RequestPacket
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Queuing_GetTicket;
-    //        }
-    //    }
-    //    public long YostarUID { get; set; }
-    //    public string YostarToken { get; set; }
-    //    public bool MakeStandby { get; set; }
-    //    public bool PassCheck { get; set; }
-    //    public bool PassCheckYostar { get; set; }
-    //    public string WaitingTicket { get; set; }
-    //    public string ClientVersion { get; set; }
-    //}
+    public class QueuingGetTicketRequest : RequestPacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Queuing_GetTicket;
+            }
+        }
+        public long YostarUID { get; set; }
+        public string YostarToken { get; set; }
+        public bool MakeStandby { get; set; }
+        public bool PassCheck { get; set; }
+        public bool PassCheckYostar { get; set; }
+        public string WaitingTicket { get; set; }
+        public string ClientVersion { get; set; }
+    }
 
 
     public class MultiFloorRaidEnterBattleResponse : ResponsePacket
@@ -9625,26 +9625,26 @@ namespace SCHALE.Common.NetworkProtocol
     }
 
 
-    //public class QueuingGetTicketResponse : ResponsePacket
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Queuing_GetTicket;
-    //        }
-    //    }
-    //    public string WaitingTicket { get; set; }
-    //    public string EnterTicket { get; set; }
-    //    public long TicketSequence { get; set; }
-    //    public long AllowedSequence { get; set; }
-    //    public double RequiredSecondsPerUser { get; set; }
-    //    public string Birth { get; set; }
-    //    public string ServerSeed { get; set; }
-    //    public void Reset()
-    //    {
-    //    }
-    //}
+    public class QueuingGetTicketResponse : ResponsePacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Queuing_GetTicket;
+            }
+        }
+        public string WaitingTicket { get; set; }
+        public string EnterTicket { get; set; }
+        public long TicketSequence { get; set; }
+        public long AllowedSequence { get; set; }
+        public double RequiredSecondsPerUser { get; set; }
+        public string Birth { get; set; }
+        public string ServerSeed { get; set; }
+        public void Reset()
+        {
+        }
+    }
 
 
     public class ScenarioRetreatResponse : ResponsePacket

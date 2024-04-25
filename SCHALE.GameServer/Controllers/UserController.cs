@@ -30,7 +30,7 @@ namespace SCHALE.GameServer.Controllers
         public IResult Create([FromForm] string deviceId)
         {
             UserCreateResponse rsp = new() { Result = 0, IsNew = 0 };
-            var account = context.Accounts.SingleOrDefault(x => x.DeviceId == deviceId);
+            var account = context.GuestAccounts.SingleOrDefault(x => x.DeviceId == deviceId);
 
             if (account is null)
             {
@@ -49,7 +49,7 @@ namespace SCHALE.GameServer.Controllers
         [HttpPost("login")]
         public IResult Login([FromForm] uint uid, [FromForm] string token, [FromForm] string storeId)
         {
-            var account = context.Accounts.SingleOrDefault(x => x.Uid == uid && x.Token == token);
+            var account = context.GuestAccounts.SingleOrDefault(x => x.Uid == uid && x.Token == token);
             if (account is not null)
             {
                 return Results.Json(new UserLoginResponse()

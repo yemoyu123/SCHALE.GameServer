@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using MongoDB.EntityFrameworkCore.Extensions;
 using SCHALE.Common.Database.Models;
+using SCHALE.Common.Database.Models.Game;
 
 namespace SCHALE.Common.Database
 {
     public class SCHALEContext : DbContext
     {
+        public DbSet<GuestAccount> GuestAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Counter> Counters { get; set; }
 
@@ -19,42 +21,66 @@ namespace SCHALE.Common.Database
         {
 
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Account>().Property(x => x.Uid).HasValueGenerator<AccountAutoIncrementValueGenerator>();
+
+            modelBuilder.Entity<GuestAccount>().Property(x => x.Uid).HasValueGenerator<GuestAccountAutoIncrementValueGenerator>();
+            modelBuilder.Entity<GuestAccount>().ToCollection("guest_accounts");
+
+            modelBuilder.Entity<Account>().Property(x => x.ServerId).HasValueGenerator<AccountAutoIncrementValueGenerator>();
             modelBuilder.Entity<Account>().ToCollection("accounts");
+
             modelBuilder.Entity<Counter>().ToCollection("counters");
         }
-    }
 
-    class AccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
-    {
-        protected override string Collection => "account";
-    }
-
-    abstract class AutoIncrementValueGenerator : ValueGenerator<uint>
-    {
-        protected abstract string Collection { get; }
-        public override bool GeneratesTemporaryValues => false;
-
-        public override uint Next(EntityEntry entry)
+        private class AccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
         {
-            if (entry.Context is not SCHALEContext)
-            {
-                throw new ArgumentNullException($"{nameof(AutoIncrementValueGenerator)} is only implemented for {nameof(SCHALEContext)}");
-            }
+            protected override string Collection => "account";
+        }
 
-            var context = ((SCHALEContext)entry.Context);
-            var counter = context.Counters.SingleOrDefault(x => x.Id == Collection);
+        private class GuestAccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
+        {
+            protected override string Collection => "guest_account";
+        }
 
-            if (counter is null)
+        private abstract class AutoIncrementValueGenerator : ValueGenerator<uint>
+        {
+            protected abstract string Collection { get; }
+            public override bool GeneratesTemporaryValues => false;
+
+            public override uint Next(EntityEntry entry)
             {
-                counter = new Counter() { Id = Collection, Seq = 0 };
-                context.Add(counter);
+                if (entry.Context is not SCHALEContext)
+                {
+                    throw new ArgumentNullException($"{nameof(AutoIncrementValueGenerator)} is only implemented for {nameof(SCHALEContext)}");
+                }
+
+                var context = ((SCHALEContext)entry.Context);
+                var counter = context.Counters.SingleOrDefault(x => x.Id == Collection);
+
+                if (counter is null)
+                {
+                    counter = new Counter() { Id = Collection, Seq = 0 };
+                    context.Add(counter);
+                }
+
+                counter.Seq++;
                 context.SaveChanges();
+
+                return counter.Seq;
             }
+        }
 
-            counter.Seq++;
+        public override void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            SaveChanges();
+            base.Dispose();
+        }
 
-            return counter.Seq;
+        public override ValueTask DisposeAsync()
+        {
+            GC.SuppressFinalize(this);
+            SaveChanges();
+            return base.DisposeAsync();
         }
     }
 }

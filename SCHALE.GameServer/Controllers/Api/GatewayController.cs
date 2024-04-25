@@ -2,7 +2,6 @@
 using SCHALE.Common.Crypto;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
-using System.Buffers.Binary;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
@@ -59,17 +58,16 @@ namespace SCHALE.GameServer.Controllers.Api
                 }
 
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
-                var handler = protocolHandlerFactory.GetProtocolHandler(payload.Protocol);
-                if (handler is null)
+
+                var rsp = protocolHandlerFactory.Invoke(protocol, [payload]);
+                if (rsp is null)
                 {
                     logger.LogDebug("{Protocol} {Payload:j}", payload.Protocol, payloadStr);
                     logger.LogError("Protocol {Protocol} is unimplemented and left unhandled", payload.Protocol);
 
                     goto protocolErrorRet;
                 }
-
-                var rsp = handler.Invoke(null, [payload]);
-
+                
                 return Results.Json(new
                 {
                     packet = JsonSerializer.Serialize(rsp),

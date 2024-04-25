@@ -1,16 +1,17 @@
 ﻿using SCHALE.Common.NetworkProtocol;
-using SCHALE.Common.NetworkProtocol.Queuing;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
-    public static class Queuing
+    public class Queuing : ProtocolHandlerBase
     {
+        public Queuing(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
+
         [ProtocolHandler(Protocol.Queuing_GetTicket)]
-        public static ResponsePacket GetTicketHandler(QueuingGetTicketRequest req)
+        public ResponsePacket GetTicketHandler(QueuingGetTicketRequest req)
         {
             return new QueuingGetTicketResponse()
             {
-                EnterTicket = req.YostarToken
+                EnterTicket = $"{req.YostarUID}:{req.YostarToken}"
             };
         }
     }
