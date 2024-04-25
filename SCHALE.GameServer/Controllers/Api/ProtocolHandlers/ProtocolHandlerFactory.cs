@@ -18,7 +18,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
     public interface IProtocolHandlerFactory
     {
-        public ResponsePacket? Invoke(Protocol protocol, params object?[]? args);
+        public ResponsePacket? Invoke(Protocol protocol, RequestPacket? req);
         public MethodInfo? GetProtocolHandler(Protocol protocol);
         public Type? GetRequestPacketTypeByProtocol(Protocol protocol);
         public void RegisterInstance(Type t, object? inst);
@@ -62,14 +62,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             }
         }
 
-        public ResponsePacket? Invoke(Protocol protocol, params object?[]? args)
+        public ResponsePacket? Invoke(Protocol protocol, RequestPacket? req)
         {
             var handler = GetProtocolHandler(protocol);
             if (handler is null)
                 return null;
 
             handlerInstances.TryGetValue(handler.DeclaringType!, out var inst);
-            return (ResponsePacket?)handler.Invoke(inst, args);
+            return (ResponsePacket?)handler.Invoke(inst, [req]);
         }
 
         public MethodInfo? GetProtocolHandler(Protocol protocol)

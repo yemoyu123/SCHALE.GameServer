@@ -59,7 +59,7 @@ namespace SCHALE.GameServer.Controllers.Api
 
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
 
-                var rsp = protocolHandlerFactory.Invoke(protocol, [payload]);
+                var rsp = protocolHandlerFactory.Invoke(protocol, payload);
                 if (rsp is null)
                 {
                     logger.LogDebug("{Protocol} {Payload:j}", payload.Protocol, payloadStr);
