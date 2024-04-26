@@ -11,7 +11,7 @@ namespace SCHALE.Common.Database.Models.Game
     {
         [Key]
         [Column("_id")]
-        public uint ServerId { get; set; }
+        public required uint ServerId { get; set; }
 
         public AccountDB AccountDB { get; set; }
 

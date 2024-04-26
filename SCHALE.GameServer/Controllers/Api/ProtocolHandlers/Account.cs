@@ -2,10 +2,11 @@
 using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Parcel;
+using SCHALE.Common.Database.Models.Game;
 using Serilog;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
-{   
+{
     public class Account : ProtocolHandlerBase
     {
         public Account(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
@@ -17,7 +18,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             string[] uid_token = req.EnterTicket.Split(':');
 
             var account = Context.GuestAccounts.SingleOrDefault(x => x.Uid == uint.Parse(uid_token[0]) && x.Token == uid_token[1]);
-            
+
             if (account is null)
             {
                 return new AccountCheckYostarResponse()
@@ -49,8 +50,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     ErrorCode = WebAPIErrorCode.AccountAuthNotCreated
                 };
-            } 
-            else
+            } else
             {
                 return new AccountAuthResponse()
                 {
@@ -61,8 +61,111 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     {
                         AccountServerId = account.ServerId,
                         MxToken = req.SessionKey.MxToken,
+                    },
+
+                    MissionProgressDBs = new List<MissionProgressDB>
+                    {
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1501,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44")    },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1700,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1500,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44")    },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 2200,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 }, { 1, 5 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 300000,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000210,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000220,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000230,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000240,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000250,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000260,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1000270,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1001327,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1001357,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        },
+                        new MissionProgressDB
+                        {
+                            MissionUniqueId = 1001377,
+                            Complete = true,
+                            StartTime = DateTime.Parse("2024-04-26T20:46:44"),
+                            ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
+                        }, 
                     }
                 };
+
             }
         }
 
@@ -72,6 +175,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             var account = Common.Database.Models.Game.Account.Create((uint)req.AccountId);
 
             Context.Accounts.Add(account);
+
+            Context.Players.Add(new Player() { ServerId = (uint)req.AccountId });
+
             Context.SaveChanges();
 
             Log.Information("Account Created " + Context.Accounts.Count());
@@ -90,7 +196,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket NicknameHandler(AccountNicknameRequest req)
         {
             var account = Context.Accounts.SingleOrDefault(x => x.ServerId == req.AccountId);
-            
+
             account.AccountDB.Nickname = req.Nickname;
             Context.SaveChanges();
 
@@ -169,7 +275,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             return new ShopBeforehandGachaGetResponse()
             {
-                SessionKey = new ()
+                SessionKey = new()
                 {
                     MxToken = req.SessionKey.MxToken,
                     AccountServerId = req.SessionKey.AccountServerId,
@@ -186,6 +292,16 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
             };
         }
+
+        [ProtocolHandler(Protocol.EventContent_CollectionList)]
+        public ResponsePacket EventContent_CollectionListHandler(EventContentCollectionListRequest req)
+        {
+
+            return new EventContentCollectionListResponse()
+            {
+
+            };
+        }
     }
-    
+
 }

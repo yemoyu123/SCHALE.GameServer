@@ -12,6 +12,9 @@ namespace SCHALE.Common.Database
         public DbSet<GuestAccount> GuestAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Counter> Counters { get; set; }
+        public DbSet<Player> Players {  get; set; }
+
+        public Player CurrentPlayer { get { return Players.FirstOrDefault();} } // temp
 
         public SCHALEContext(DbContextOptions<SCHALEContext> options) : base(options)
         {
@@ -25,6 +28,10 @@ namespace SCHALE.Common.Database
             modelBuilder.Entity<GuestAccount>().ToCollection("guest_accounts");
 
             modelBuilder.Entity<Account>().ToCollection("accounts");
+            modelBuilder.Entity<Player>().ToCollection("players");
+
+            // attempt to fix MissionProgressDB.Dictionary<long, long> ProgressParameters serialization
+            modelBuilder.Entity<Player>().Property(e => e.MissionProgressDBs).HasJsonConversion<List<MissionProgressDB>>();
 
             modelBuilder.Entity<Counter>().ToCollection("counters");
         }

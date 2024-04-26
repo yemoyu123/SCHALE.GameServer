@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Serilog;
 
 namespace SCHALE.GameServer.Controllers.Api
 {
@@ -45,6 +46,9 @@ namespace SCHALE.GameServer.Controllers.Api
                 var jsonNode = JsonSerializer.Deserialize<JsonNode>(payloadStr);
                 var protocol = (Protocol?)jsonNode?["Protocol"]?.GetValue<int?>() ?? Protocol.None;
 
+                logger.LogDebug("Protocol: {Protocol}", protocol.ToString());
+                logger.LogDebug("Protocol: {Protocol}", (int)protocol);
+
                 if (protocol == Protocol.None)
                 {
                     logger.LogWarning("Failed to read protocol from JsonNode, {Payload:j}", payloadStr);
@@ -57,6 +61,9 @@ namespace SCHALE.GameServer.Controllers.Api
                     logger.LogError("Protocol {Protocol} doesn't have corresponding type registered", protocol);
                     goto protocolErrorRet;
                 }
+
+                logger.LogDebug(Encoding.ASCII.GetString(payloadMs.ToArray()));
+
 
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
 
@@ -77,14 +84,13 @@ namespace SCHALE.GameServer.Controllers.Api
                     protocol = ((BasePacket)rsp).Protocol.ToString()
                 });
 
-protocolErrorRet:
+            protocolErrorRet:
                 return Results.Json(new
                 {
                     packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = "Protocol not implemented (Server Error)", ErrorCode = WebAPIErrorCode.InternalServerError }),
                     protocol = Protocol.Error.ToString()
                 });
-            }
-            catch (Exception)
+            } catch (Exception)
             {
                 throw;
             }

@@ -1,6 +1,9 @@
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Parcel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.Database
@@ -1528,9 +1531,12 @@ namespace SCHALE.Common.Database
 
         [JsonIgnore]
         public long AccountServerId { get; set; }
+
         public long MissionUniqueId { get; set; }
         public bool Complete { get; set; }
         public DateTime StartTime { get; set; }
+
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<long, long> ProgressParameters { get; set; }
     }
 

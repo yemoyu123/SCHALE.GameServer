@@ -1,4 +1,5 @@
 ﻿using SCHALE.Common.NetworkProtocol;
+using Serilog;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
@@ -9,6 +10,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Scenario_Skip)]
         public ResponsePacket SkipHandler(ScenarioSkipRequest req)
         {
+            Log.Information($"ScenarioSkipRequest ScriptGroupId:" + req.ScriptGroupId);
+            Log.Information($"ScenarioSkipRequest SkipPointScriptCount: " + req.SkipPointScriptCount);
+
             // skip story doesn't work yet, probably need to implement missiondb 
             return new ScenarioSkipResponse()
             {
