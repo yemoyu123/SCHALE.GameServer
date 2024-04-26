@@ -48,6 +48,10 @@ namespace SCHALE.GameServer
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddProtocolHandlerGroup<Account>();
                 builder.Services.AddProtocolHandlerGroup<Queuing>();
+                builder.Services.AddProtocolHandlerGroup<Academy>();
+                builder.Services.AddProtocolHandlerGroup<Mission>();
+                builder.Services.AddProtocolHandlerGroup<ProofToken>();
+                builder.Services.AddProtocolHandlerGroup<Scenario>();
 
                 var app = builder.Build();
 

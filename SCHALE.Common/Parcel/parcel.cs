@@ -1,5 +1,6 @@
 ﻿
 using SCHALE.Common.Database;
+using SCHALE.Common.FlatData;
 
 namespace SCHALE.Common.Parcel
 {
@@ -96,16 +97,53 @@ namespace SCHALE.Common.Parcel
         public ParcelChangeType ParcelChangeType { get; set; }
     }
 
-
-    public class ParcelInfo
+        public struct BasisPoint : IEquatable<BasisPoint>, IComparable<BasisPoint>
     {
-        public ParcelKeyPair Key { get; set; }
-        public long Amount { get; set; }
-        //public BasisPoint Multiplier { get; set; }
-        public long MultipliedAmount { get; set; }
-        //public BasisPoint Probability { get; set; }
+        public long RawValue { get; set; }
+
+        public static readonly double DoubleEpsilon;
+
+        public static readonly BasisPoint Epsilon;
+
+        private static readonly long Multiplier;
+
+        public static readonly BasisPoint One;
+
+        private static readonly double OneOver10_4;
+
+        private long rawValue;
+
+        public static readonly BasisPoint Zero;
+
+        public bool Equals(BasisPoint other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CompareTo(BasisPoint other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
+
+    public class ParcelInfo : IEquatable<ParcelInfo>
+    {
+        public ParcelKeyPair Key { get; set; }
+
+        public long Amount { get; set; }
+
+        public BasisPoint Multiplier { get; set; }
+
+        public long MultipliedAmount { get; set; }
+
+        public BasisPoint Probability { get; set; }
+
+        public bool Equals(ParcelInfo? other)
+        {
+            return this.Key.Id.Equals(other.Key.Id);
+        }
+    }
 
     public class ParcelKeyPair
     {

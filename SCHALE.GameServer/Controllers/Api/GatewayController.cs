@@ -44,6 +44,7 @@ namespace SCHALE.GameServer.Controllers.Api
                 var payloadStr = Encoding.UTF8.GetString(payloadMs.ToArray());
                 var jsonNode = JsonSerializer.Deserialize<JsonNode>(payloadStr);
                 var protocol = (Protocol?)jsonNode?["Protocol"]?.GetValue<int?>() ?? Protocol.None;
+
                 if (protocol == Protocol.None)
                 {
                     logger.LogWarning("Failed to read protocol from JsonNode, {Payload:j}", payloadStr);
@@ -60,6 +61,8 @@ namespace SCHALE.GameServer.Controllers.Api
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
 
                 var rsp = protocolHandlerFactory.Invoke(protocol, payload);
+
+
                 if (rsp is null)
                 {
                     logger.LogDebug("{Protocol} {Payload:j}", payload.Protocol, payloadStr);
@@ -67,11 +70,11 @@ namespace SCHALE.GameServer.Controllers.Api
 
                     goto protocolErrorRet;
                 }
-                
+
                 return Results.Json(new
                 {
                     packet = JsonSerializer.Serialize(rsp),
-                    protocol = payload.Protocol.ToString()
+                    protocol = ((BasePacket)rsp).Protocol.ToString()
                 });
 
 protocolErrorRet:

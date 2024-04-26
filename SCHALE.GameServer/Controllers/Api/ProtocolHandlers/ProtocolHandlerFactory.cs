@@ -18,7 +18,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
     public interface IProtocolHandlerFactory
     {
-        public ResponsePacket? Invoke(Protocol protocol, RequestPacket? req);
+        public object? Invoke(Protocol protocol, RequestPacket? req);
         public MethodInfo? GetProtocolHandler(Protocol protocol);
         public Type? GetRequestPacketTypeByProtocol(Protocol protocol);
         public void RegisterInstance(Type t, object? inst);
@@ -62,7 +62,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             }
         }
 
-        public ResponsePacket? Invoke(Protocol protocol, RequestPacket? req)
+        public object? Invoke(Protocol protocol, RequestPacket? req)
         {
             var handler = GetProtocolHandler(protocol);
             if (handler is null)
@@ -90,6 +90,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
     public abstract class ProtocolHandlerBase : IHostedService
     {
         private readonly IServiceScopeFactory scopeFactory;
+        
+        private IServiceScope scope;
 
         public ProtocolHandlerBase(IServiceScopeFactory _scopeFactory, IProtocolHandlerFactory protocolHandlerFactory)
         {
@@ -101,22 +103,22 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             get
             {
-                using (var scope = scopeFactory.CreateScope())
-                {
-                    var db = scope.ServiceProvider.GetRequiredService<SCHALEContext>();
+                var db = scope.ServiceProvider.GetRequiredService<SCHALEContext>();
 
-                    return db;
-                }
+                return db;
             }
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            scope = scopeFactory.CreateScope();
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            scope.Dispose();
+            Context.Dispose();
             return Task.CompletedTask;
         }
     }

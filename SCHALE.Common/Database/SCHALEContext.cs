@@ -19,21 +19,14 @@ namespace SCHALE.Common.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<GuestAccount>().Property(x => x.Uid).HasValueGenerator<GuestAccountAutoIncrementValueGenerator>();
             modelBuilder.Entity<GuestAccount>().ToCollection("guest_accounts");
 
-            modelBuilder.Entity<Account>().Property(x => x.ServerId).HasValueGenerator<AccountAutoIncrementValueGenerator>();
             modelBuilder.Entity<Account>().ToCollection("accounts");
 
             modelBuilder.Entity<Counter>().ToCollection("counters");
-        }
-
-        private class AccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
-        {
-            protected override string Collection => "account";
         }
 
         private class GuestAccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
@@ -67,20 +60,6 @@ namespace SCHALE.Common.Database
 
                 return counter.Seq;
             }
-        }
-
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            SaveChanges();
-            base.Dispose();
-        }
-
-        public override ValueTask DisposeAsync()
-        {
-            GC.SuppressFinalize(this);
-            SaveChanges();
-            return base.DisposeAsync();
         }
     }
 }

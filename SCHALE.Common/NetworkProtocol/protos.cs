@@ -1,6 +1,9 @@
 using SCHALE.Common.Database;
 using System.Text.Json.Serialization;
 using SCHALE.Common.Parcel;
+using SCHALE.Common.FlatData;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace SCHALE.Common.NetworkProtocol
 {
@@ -137,16 +140,16 @@ namespace SCHALE.Common.NetworkProtocol
     }
 
 
-    //public class AccountAuth2Request : AccountAuthRequest
-    //{
-    //    public override Protocol Protocol
-    //    {
-    //        get
-    //        {
-    //            return NetworkProtocol.Protocol.Account_Auth2;
-    //        }
-    //    }
-    //}
+    public class AccountAuth2Request : AccountAuthRequest
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Account_Auth2;
+            }
+        }
+    }
 
 
     public class AccountAuth2Response : AccountAuthResponse
@@ -6578,8 +6581,8 @@ namespace SCHALE.Common.NetworkProtocol
         public long RepresentCharacterCostumeId { get; set; }
         public long CharacterCount { get; set; }
         public long? LastNormalCampaignClearStageId { get; set; }
-        public long? LastHardCampaignClearStageId { get; set; }        
-        public long? ArenaRanking{ get; set; }
+        public long? LastHardCampaignClearStageId { get; set; }
+        public long? ArenaRanking { get; set; }
         public long? RaidRanking { get; set; }
         public int? RaidTier { get; set; }
         public DetailedAccountInfoDB DetailedAccountInfoDB { get; set; }
@@ -7980,8 +7983,8 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.ProofToken_RequestQuestion;
             }
         }
-        public long Hint;
-        public string Question;
+        public long Hint { get; set; }
+        public string Question { get; set; }
     }
 
 
@@ -8855,7 +8858,80 @@ namespace SCHALE.Common.NetworkProtocol
         public long StageUniqueId { get; set; }
     }
 
+    public interface IMissionConstraint
+    {
+        bool CanComplete(DateTime serverTime);
 
+        bool CanReceiveReward(DateTime serverTime);
+    }
+
+    public class MissionInfo : IMissionConstraint
+    {
+        public long Id { get; set; }
+
+        public MissionCategory Category { get; set; }
+
+        public MissionResetType ResetType { get; set; }
+
+        public MissionToastDisplayConditionType ToastDisplayType { get; set; }
+
+        public string Description { get; set; }
+
+        public bool IsVisible { get; set; }
+
+        public bool IsLimited { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime StartableEndDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+        
+        public long EndDday { get; set; }
+
+        public AccountState AccountState { get; set; }
+
+        public long AccountLevel { get; set; }
+
+        public List<long> PreMissionIds { get; set; }
+
+        public long NextMissionId { get; set; }
+
+        public SuddenMissionContentType[] SuddenMissionContentTypes { get; set; }
+
+        public MissionCompleteConditionType CompleteConditionType { get; set; }
+
+        public long CompleteConditionCount { get; set; }
+
+        public List<long> CompleteConditionParameters { get; set; }
+
+        public string RewardIcon { get; set; }
+
+        public List<ParcelInfo> Rewards { get; set; }
+
+        public ContentType DateAutoRefer { get; set; }
+
+        public string ToastImagePath { get; set; }
+
+        public long DisplayOrder { get; set; }
+
+        public bool HasFollowingMission { get; set; }
+
+        public string[] Shortcuts { get; set; }
+
+        public long ChallengeStageId { get; set; }
+
+        public virtual bool CanComplete(DateTime serverTime)
+        {
+            return true;
+        }
+
+        public virtual bool CanReceiveReward(DateTime serverTime)
+        {
+            return false;
+        }
+
+    }
     public class MissionListResponse : ResponsePacket
     {
         public override Protocol Protocol
@@ -8867,7 +8943,7 @@ namespace SCHALE.Common.NetworkProtocol
         }
         public List<long> MissionHistoryUniqueIds { get; set; }
         public List<MissionProgressDB> ProgressDBs { get; set; }
-        //public MissionInfo DailySuddenMissionInfo { get; set; }
+        public MissionInfo DailySuddenMissionInfo { get; set; }
         public List<long> ClearedOrignalMissionIds { get; set; }
     }
 
@@ -10319,7 +10395,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         [JsonIgnore]
-        public AccountCurrencyDB AccountCurrencyDB{ get; set; }
+        public AccountCurrencyDB AccountCurrencyDB { get; set; }
         public ConsumeResultDB ConsumeResultDB { get; set; }
         public ParcelResultDB ParcelResultDB { get; set; }
     }
