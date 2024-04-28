@@ -2,6 +2,8 @@
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.GameServer.Services;
 using MongoDB.Driver.Linq;
+using SCHALE.Common.FlatData;
+using Serilog;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
@@ -58,6 +60,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     CurrentVersion = req.Version,
                     AccountDB = account,
+
                     MissionProgressDBs = [.. context.MissionProgresses.Where(x => x.AccountServerId == account.ServerId)]
                 };
 
@@ -77,124 +80,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
             string[] uidToken = req.SessionKey.MxToken.Split(':');
             var account = new AccountDB(long.Parse(uidToken[0]));
+
             context.Accounts.Add(account);
-            context.MissionProgresses.AddRange([
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1501,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44")
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1700,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1500,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44")
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 2200,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 }, { 1, 5 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 300000,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000210,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000220,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000230,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000240,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000250,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000260,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1000270,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1001327,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1001357,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                },
-                new MissionProgressDB
-                {
-                    AccountServerId = account.ServerId,
-                    MissionUniqueId = 1001377,
-                    Complete = true,
-                    StartTime = DateTime.Parse("2024-04-26T20:46:44"),
-                    ProgressParameters = new Dictionary<long, long> { { 0, 1 } }
-                }
-            ]);
             context.SaveChanges();
 
             return new AccountCreateResponse()
@@ -223,17 +110,196 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             return new AccountLoginSyncResponse()
             {
+                AccountCurrencySyncResponse = new AccountCurrencySyncResponse()
+                {
+                    AccountCurrencyDB = new AccountCurrencyDB
+                    {
+                        AccountLevel = 1,
+                        AcademyLocationRankSum = 1,
+                        CurrencyDict = new Dictionary<CurrencyTypes, long>
+                        {
+                            { CurrencyTypes.Gem, long.MaxValue }, // gacha currency 600
+                            { CurrencyTypes.GemPaid, 0 },
+                            { CurrencyTypes.GemBonus, 89473598435 }, // default blue gem?
+                            { CurrencyTypes.Gold, long.MaxValue }, // credit 10,000
+                            { CurrencyTypes.ActionPoint, long.MaxValue }, // energy  24
+                            { CurrencyTypes.AcademyTicket, 3 },
+                            { CurrencyTypes.ArenaTicket, 5 },
+                            { CurrencyTypes.RaidTicket, 3 },
+                            { CurrencyTypes.WeekDungeonChaserATicket, 0 },
+                            { CurrencyTypes.WeekDungeonChaserBTicket, 0 },
+                            { CurrencyTypes.WeekDungeonChaserCTicket, 0 },
+                            { CurrencyTypes.SchoolDungeonATicket, 0 },
+                            { CurrencyTypes.SchoolDungeonBTicket, 0 },
+                            { CurrencyTypes.SchoolDungeonCTicket, 0 },
+                            { CurrencyTypes.TimeAttackDungeonTicket, 3 },
+                            { CurrencyTypes.MasterCoin, 0 },
+                            { CurrencyTypes.WorldRaidTicketA, 40 },
+                            { CurrencyTypes.WorldRaidTicketB, 40 },
+                            { CurrencyTypes.WorldRaidTicketC, 40 },
+                            { CurrencyTypes.ChaserTotalTicket, 6 },
+                            { CurrencyTypes.SchoolDungeonTotalTicket, 6 },
+                            { CurrencyTypes.EliminateTicketA, 1 },
+                            { CurrencyTypes.EliminateTicketB, 1 },
+                            { CurrencyTypes.EliminateTicketC, 1 },
+                            { CurrencyTypes.EliminateTicketD, 1 }
+                        },
+                        UpdateTimeDict = new Dictionary<CurrencyTypes, DateTime>
+                        {
+                            { CurrencyTypes.ActionPoint, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.AcademyTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.ArenaTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.RaidTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WeekDungeonChaserATicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WeekDungeonChaserBTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WeekDungeonChaserCTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.SchoolDungeonATicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.SchoolDungeonBTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.SchoolDungeonCTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.TimeAttackDungeonTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.MasterCoin, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WorldRaidTicketA, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WorldRaidTicketB, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.WorldRaidTicketC, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.ChaserTotalTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.SchoolDungeonTotalTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.EliminateTicketA, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.EliminateTicketB, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.EliminateTicketC, DateTime.Parse("2024-04-26T19:29:12") },
+                            { CurrencyTypes.EliminateTicketD, DateTime.Parse("2024-04-26T19:29:12") }
+                    }
+                    }
+                },
+                CharacterListResponse = new CharacterListResponse()
+                {
+                    CharacterDBs = new List<CharacterDB>
+                    {
+                        new CharacterDB
+                        {
+                            ServerId = 1043998219,
+                            UniqueId = 13003,
+                            StarGrade = 2,
+                            Level = 1,
+                            FavorRank = 1,
+                            PublicSkillLevel = 1,
+                            ExSkillLevel = 1,
+                            PassiveSkillLevel = 1,
+                            ExtraPassiveSkillLevel = 1,
+                            LeaderSkillLevel = 1,
+                            IsNew = true,
+                            IsLocked = true,
+                            EquipmentServerIds = new List<long> { 0, 0, 0 },
+                            PotentialStats = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 } }
+                        },
+                        new CharacterDB
+                        {
+                            ServerId = 1043998217,
+                            UniqueId = 13010,
+                            StarGrade = 2,
+                            Level = 1,
+                            FavorRank = 1,
+                            PublicSkillLevel = 1,
+                            ExSkillLevel = 1,
+                            PassiveSkillLevel = 1,
+                            ExtraPassiveSkillLevel = 1,
+                            LeaderSkillLevel = 1,
+                            IsNew = true,
+                            IsLocked = true,
+                            EquipmentServerIds = new List<long> { 0, 0, 0 },
+                            PotentialStats = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 } }
+                        },
+                        new CharacterDB
+                        {
+                            ServerId = 1043998218,
+                            UniqueId = 16003,
+                            StarGrade = 1,
+                            Level = 1,
+                            FavorRank = 1,
+                            PublicSkillLevel = 1,
+                            ExSkillLevel = 1,
+                            PassiveSkillLevel = 1,
+                            ExtraPassiveSkillLevel = 1,
+                            LeaderSkillLevel = 1,
+                            IsNew = true,
+                            IsLocked = true,
+                            EquipmentServerIds = new List<long> { 0, 0, 0 },
+                            PotentialStats = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 } }
+                        },
+                        new CharacterDB
+                        {
+                            ServerId = 1043998220,
+                            UniqueId = 26000,
+                            StarGrade = 1,
+                            Level = 1,
+                            FavorRank = 1,
+                            PublicSkillLevel = 1,
+                            ExSkillLevel = 1,
+                            PassiveSkillLevel = 1,
+                            ExtraPassiveSkillLevel = 1,
+                            LeaderSkillLevel = 1,
+                            IsNew = true,
+                            IsLocked = true,
+                            EquipmentServerIds = new List<long> { 0, 0, 0 },
+                            PotentialStats = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 } }
+                        }
+                    },
+                    TSSCharacterDBs = [],
+                    WeaponDBs = [],
+                    CostumeDBs = [],
+                },
+                EchelonListResponse = new EchelonListResponse()
+                {
+                    EchelonDBs = [
+                        new EchelonDB()
+                        {
+                            AccountServerId = req.AccountId,
+                            EchelonType = EchelonType.Adventure,
+                            EchelonNumber = 1,
+                            LeaderServerId = 123,
+                            MainSlotServerIds = [1043998217, 1043998218, 1043998219, 0 ],
+                            SupportSlotServerIds = [ 444, 0],
+                            SkillCardMulliganCharacterIds = []
+                        }
+                    ]
+                },
+                EventContentPermanentListResponse = new EventContentPermanentListResponse()
+                {
+                    PermanentDBs = [
+                        new() { EventContentId = 900801 },
+                        new() { EventContentId = 900802 },
+                        new() { EventContentId = 900803 },
+                        new() { EventContentId = 900804 },
+                        new() { EventContentId = 900805 },
+                        new() { EventContentId = 900806 },
+                        new() { EventContentId = 900808 },
+                        new() { EventContentId = 900809 },
+                        new() { EventContentId = 900810 },
+                        new() { EventContentId = 900812 },
+                        new() { EventContentId = 900813 },
+                        new() { EventContentId = 900816 },
+                        new() { EventContentId = 900701 },
+                    ],
+                },
 
+                FriendCode = "SCHALEPS",
+
+                ServerNotification = ServerNotificationFlag.HasUnreadMail,
+                SessionKey = new()
+                {
+                    AccountServerId = req.AccountId,
+                    MxToken = req.SessionKey.MxToken,
+                },
             };
         }
 
         [ProtocolHandler(Protocol.Account_GetTutorial)]
         public ResponsePacket GetTutorialHandler(AccountGetTutorialRequest req)
         {
-
             return new AccountGetTutorialResponse()
             {
-
+#if DEBUG
+                TutorialIds = [1, 2]
+#endif
             };
         }
 
@@ -248,19 +314,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         }
 
         // others handlers, move to different handler group later
-        [ProtocolHandler(Protocol.Item_List)]
-        public ResponsePacket Item_ListRequestHandler(ItemListRequest req)
-        {
-            return new ItemListResponse()
-            {
-                ItemDBs = [],
-                ExpiryItemDBs = [],
-                ServerNotification = ServerNotificationFlag.HasUnreadMail,
-            };
-        }
-
         [ProtocolHandler(Protocol.NetworkTime_Sync)]
-        public ResponsePacket NetworkTime_Sync(NetworkTimeSyncRequest req)
+        public ResponsePacket NetworkTime_SyncHandler(NetworkTimeSyncRequest req)
         {
             long received_tick = DateTimeOffset.Now.Ticks;
 
@@ -272,24 +327,11 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         }
 
         [ProtocolHandler(Protocol.ContentSave_Get)]
-        public ResponsePacket ContentSave_Get(ContentSaveGetRequest req)
+        public ResponsePacket ContentSave_GetHandler(ContentSaveGetRequest req)
         {
             return new ContentSaveGetResponse()
             {
                 ServerNotification = ServerNotificationFlag.HasUnreadMail,
-            };
-        }
-
-        [ProtocolHandler(Protocol.Shop_BeforehandGachaGet)]
-        public ResponsePacket Shop_BeforehandGachaGet(ShopBeforehandGachaGetRequest req)
-        {
-            return new ShopBeforehandGachaGetResponse()
-            {
-                SessionKey = new()
-                {
-                    MxToken = req.SessionKey.MxToken,
-                    AccountServerId = req.SessionKey.AccountServerId,
-                }
             };
         }
 
@@ -303,11 +345,51 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             };
         }
 
-        [ProtocolHandler(Protocol.EventContent_CollectionList)]
-        public ResponsePacket EventContent_CollectionListHandler(EventContentCollectionListRequest req)
+        [ProtocolHandler(Protocol.ContentLog_UIOpenStatistics)]
+        public ResponsePacket ContentLog_UIOpenStatisticsHandler(ContentLogUIOpenStatisticsRequest req)
         {
 
-            return new EventContentCollectionListResponse()
+            return new ContentLogUIOpenStatisticsResponse()
+            {
+
+            };
+        }
+
+        [ProtocolHandler(Protocol.Event_RewardIncrease)]
+        public ResponsePacket Event_RewardIncreaseHandler(EventRewardIncreaseRequest req)
+        {
+
+            return new EventRewardIncreaseResponse()
+            {
+
+            };
+        }
+
+        [ProtocolHandler(Protocol.OpenCondition_EventList)]
+        public ResponsePacket OpenCondition_EventListHandler(OpenConditionEventListRequest req)
+        {
+
+            return new OpenConditionEventListResponse()
+            {
+
+            };
+        }
+
+        [ProtocolHandler(Protocol.Notification_EventContentReddotCheck)]
+        public ResponsePacket Notification_EventContentReddotCheckHandler(NotificationEventContentReddotRequest req)
+        {
+
+            return new NotificationEventContentReddotResponse()
+            {
+
+            };
+        }
+
+        [ProtocolHandler(Protocol.Billing_PurchaseListByYostar)]
+        public ResponsePacket Billing_PurchaseListByYostarHandler(BillingPurchaseListByYostarRequest req)
+        {
+
+            return new BillingPurchaseListByYostarResponse()
             {
 
             };

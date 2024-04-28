@@ -1,6 +1,8 @@
 ﻿
+using Newtonsoft.Json;
 using SCHALE.Common.Database;
 using SCHALE.Common.FlatData;
+using System.Net.NetworkInformation;
 
 namespace SCHALE.Common.Parcel
 {
@@ -68,10 +70,12 @@ namespace SCHALE.Common.Parcel
     }
 
 
-    public class ParcelBase
+    public abstract class ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public abstract ParcelType Type { get; }
+
+        [JsonIgnore]
+        public abstract IEnumerable<ParcelInfo> ParcelInfos { get; }
     }
 
 
@@ -85,7 +89,7 @@ namespace SCHALE.Common.Parcel
         public bool HasCurrency { get; set; }
         public bool HasItem { get; set; }
         public IEnumerable<ConsumableItemBaseDB> ConsumableItemBaseDBs { get; set; }
-        //public ConsumeCondition ConsumeCondition { get; set; }
+        public ConsumeCondition ConsumeCondition { get; set; }
     }
 
 
@@ -97,45 +101,79 @@ namespace SCHALE.Common.Parcel
         public ParcelChangeType ParcelChangeType { get; set; }
     }
 
-        public struct BasisPoint : IEquatable<BasisPoint>, IComparable<BasisPoint>
+    [Serializable]
+    public struct BasisPoint : IEquatable<BasisPoint>, IComparable<BasisPoint>
     {
-        public long RawValue { get; set; }
-
-        public static readonly double DoubleEpsilon;
-
-        public static readonly BasisPoint Epsilon;
+        [JsonIgnore]
+        public long RawValue
+        {
+            get
+            {
+                return this.rawValue;
+            }
+        }
 
         private static readonly long Multiplier;
 
-        public static readonly BasisPoint One;
-
-        private static readonly double OneOver10_4;
-
-        private long rawValue;
+        private static readonly double OneOver10_4 = 1.0 / 10000.0;
 
         public static readonly BasisPoint Zero;
 
+        public static readonly BasisPoint One;
+
+        public static readonly BasisPoint Epsilon;
+
+        public static readonly double DoubleEpsilon;
+
+        [JsonProperty]
+        private long rawValue;
+
+        public BasisPoint(long rawValue)
+        {
+            this.rawValue = rawValue;
+        }
+
         public bool Equals(BasisPoint other)
         {
-            throw new NotImplementedException();
+            return this.rawValue == other.rawValue;
         }
 
         public int CompareTo(BasisPoint other)
         {
-            throw new NotImplementedException();
+            return rawValue.CompareTo(other.rawValue);
+        }
+
+        public static long operator *(long value, BasisPoint other)
+        {
+            return MultiplyLong(value, other);
+        }
+
+        public static long MultiplyLong(long value, BasisPoint other)
+        {
+            double result = OneOver10_4 * ((double)other.rawValue * value);
+
+            if (double.IsInfinity(result))
+                return long.MaxValue;
+
+            return (long)result;
         }
     }
 
-
     public class ParcelInfo : IEquatable<ParcelInfo>
     {
-        public ParcelKeyPair Key { get; set; }
-
         public long Amount { get; set; }
+
+        public ParcelKeyPair Key { get; set; }
 
         public BasisPoint Multiplier { get; set; }
 
-        public long MultipliedAmount { get; set; }
+        public long MultipliedAmount
+        {
+            get
+            {
+                return Amount * Multiplier;
+            }
+        }
 
         public BasisPoint Probability { get; set; }
 
@@ -145,10 +183,23 @@ namespace SCHALE.Common.Parcel
         }
     }
 
-    public class ParcelKeyPair
+    public class ParcelKeyPair : IEquatable<ParcelKeyPair>, IComparable<ParcelKeyPair>
     {
+        public static readonly ParcelKeyPair Empty;
+
         public ParcelType Type { get; set; }
+
         public long Id { get; set; }
+
+        public int CompareTo(ParcelKeyPair? other)
+        {
+            return Id.CompareTo(other.Id);
+        }
+
+        public bool Equals(ParcelKeyPair? other)
+        {
+            return Id.Equals(other.Id);
+        }
     }
 
 

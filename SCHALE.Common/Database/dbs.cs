@@ -440,13 +440,7 @@ namespace SCHALE.Common.Database
 
     public class CafeProductionParcelInfo
     {
-        public ParcelKeyPair Key { get; set; }
-        //    new ParcelKeyPair()
-        //{
-        //    Id = 1,
-        //    Type = ParcelType.Currency
-        //};
-
+        public ParcelKeyPair Key { get; set; } = new() { Id = 1, Type = ParcelType.Currency };
         public long Amount { get; set; }
     }
 
@@ -491,7 +485,7 @@ namespace SCHALE.Common.Database
     }
 
 
-    public class CampaignMainStageSaveDB
+    public class CampaignMainStageSaveDB : ContentSaveDB
     {
         public ContentType ContentType { get; set; }
         public CampaignState CampaignState { get; set; }
@@ -564,10 +558,13 @@ namespace SCHALE.Common.Database
     }
 
 
-    public class CharacterDB
+    public class CharacterDB : ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.Character; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
         public long ServerId { get; set; }
         public long UniqueId { get; set; }
         public int StarGrade { get; set; }
@@ -656,7 +653,7 @@ namespace SCHALE.Common.Database
         public long RepresentCharacterUniqueId { get; set; }
         public long RepresentCharacterCostumeId { get; set; }
         public long AttendanceCount { get; set; }
-        //public ClanSocialGrade ClanSocialGrade { get; set; }
+        public ClanSocialGrade ClanSocialGrade { get; set; }
         public DateTime JoinDate { get; set; }
         public DateTime SocialGradeUpdateTime { get; set; }
         public DateTime LastLoginDate { get; set; }
@@ -683,7 +680,7 @@ namespace SCHALE.Common.Database
         public int Level { get; set; }
         public int SlotNumber { get; set; }
         public bool HasWeapon { get; set; }
-        //public SquadType SquadType { get; set; }
+        public SquadType SquadType { get; set; }
         public int WeaponStarGrade { get; set; }
     }
 
@@ -832,13 +829,19 @@ namespace SCHALE.Common.Database
     }
 
 
-    public class ConsumableItemBaseDB : ParcelBase
+    public abstract class ConsumableItemBaseDB : ParcelBase
     {
-        public ParcelKeyPair Key { get; set; }
+        [JsonIgnore]
+        public abstract bool CanConsume { get; }
+
+        [JsonIgnore]
+        public ParcelKeyPair Key { get; }
+
         public long ServerId { get; set; }
+
         public long UniqueId { get; set; }
+        
         public long StackCount { get; set; }
-        public bool CanConsume { get; set; }
     }
 
 
@@ -892,10 +895,14 @@ namespace SCHALE.Common.Database
 
     public class CostumeDB : ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
-        public long UniqueId { get; set; }
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
+        public override ParcelType Type { get => ParcelType.Costume; }
+
         public long BoundCharacterServerId { get; set; }
+
+        public long UniqueId { get; set; }
     }
 
 
@@ -1069,15 +1076,20 @@ namespace SCHALE.Common.Database
 
     public class EquipmentDB : ConsumableItemBaseDB
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.Equipment;  }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
+        [JsonIgnore]
+        public override bool CanConsume { get => false; }
+
         public int Level { get; set; }
         public long Exp { get; set; }
         public int Tier { get; set; }
         public long BoundCharacterServerId { get; set; }
         public bool IsNew { get; set; }
         public bool IsLocked { get; set; }
-        public bool CanConsume { get; set; }
     }
 
 
@@ -1298,7 +1310,7 @@ namespace SCHALE.Common.Database
     public class EventRewardIncreaseDB
     {
         public EventTargetType EventTargetType { get; set; }
-        //public BasisPoint Multiplier { get; set; }
+        public BasisPoint Multiplier { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
     }
@@ -1355,15 +1367,20 @@ namespace SCHALE.Common.Database
 
     public class FurnitureDB : ConsumableItemBaseDB
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.Furniture; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
+        [JsonIgnore]
+        public override bool CanConsume { get => false; }
+
         public FurnitureLocation Location { get; set; }
         public long CafeDBId { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
         public float Rotation { get; set; }
         public long ItemDeploySequence { get; set; }
-        public bool CanConsume { get; set; }
     }
 
 
@@ -1388,8 +1405,11 @@ namespace SCHALE.Common.Database
 
     public class GearDB : ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.CharacterGear; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
         public long ServerId { get; set; }
         public long UniqueId { get; set; }
         public int Level { get; set; }
@@ -1444,11 +1464,16 @@ namespace SCHALE.Common.Database
 
     public class ItemDB : ConsumableItemBaseDB
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.Item; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
+        [JsonIgnore]
+        public override bool CanConsume { get; }
+
         public bool IsNew { get; set; }
         public bool IsLocked { get; set; }
-        public bool CanConsume { get; set; }
     }
 
 
@@ -1469,7 +1494,7 @@ namespace SCHALE.Common.Database
     {
         public long ServerId { get; set; }
         public long AccountServerId { get; set; }
-        //public MailType Type { get; set; }
+        public MailType Type { get; set; }
         public long UniqueId { get; set; }
         public string Sender { get; set; }
         public string Comment { get; set; }
@@ -1483,12 +1508,14 @@ namespace SCHALE.Common.Database
 
     public class MemoryLobbyDB : ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.MemoryLobby; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
         public long AccountServerId { get; set; }
         public long MemoryLobbyUniqueId { get; set; }
     }
-
 
     public class MiniGameHistoryDB
     {
@@ -2023,7 +2050,7 @@ namespace SCHALE.Common.Database
     public class ShopInfoDB
     {
         public long EventContentId { get; set; }
-        //public ShopCategoryType Category { get; set; }
+        public ShopCategoryType Category { get; set; }
         public long? ManualRefreshCount { get; set; }
         public bool IsRefresh { get; set; }
         public DateTime? NextAutoRefreshDate { get; set; }
@@ -2036,7 +2063,7 @@ namespace SCHALE.Common.Database
     {
         public long EventContentId { get; set; }
         public long ShopExcelId { get; set; }
-        //public ShopCategoryType Category { get; set; }
+        public ShopCategoryType Category { get; set; }
         public long DisplayOrder { get; set; }
         public long PurchaseCount { get; set; }
         public bool SoldOut { get; set; }
@@ -2087,9 +2114,12 @@ namespace SCHALE.Common.Database
 
     public class StickerDB : ParcelBase, IEquatable<StickerDB>
     {
-        public ParcelType Type { get; set; }
+        public override ParcelType Type { get => ParcelType.Sticker; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
         public long StickerUniqueId { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
 
         public bool Equals(StickerDB? other)
         {
@@ -2185,8 +2215,11 @@ namespace SCHALE.Common.Database
 
     public class WeaponDB : ParcelBase
     {
-        public ParcelType Type { get; set; }
-        public IEnumerable<ParcelInfo> ParcelInfos { get; set; }
+        public override ParcelType Type { get => ParcelType.CharacterWeapon; }
+
+        [JsonIgnore]
+        public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
         public long UniqueId { get; set; }
         public int Level { get; set; }
         public long Exp { get; set; }
@@ -2199,7 +2232,7 @@ namespace SCHALE.Common.Database
     public class WeekDungeonSaveDB
     {
         public ContentType ContentType { get; set; }
-        //public WeekDungeonType WeekDungeonType { get; set; }
+        public WeekDungeonType WeekDungeonType { get; set; }
         public int Seed { get; set; }
         public int Sequence { get; set; }
     }
@@ -2209,21 +2242,21 @@ namespace SCHALE.Common.Database
     {
         public long AccountServerId { get; set; }
         public long StageUniqueId { get; set; }
-        //public Dictionary<StarGoalType, long> StarGoalRecord { get; set; }
+        public Dictionary<StarGoalType, long> StarGoalRecord { get; set; }
         public bool IsCleardEver { get; set; }
     }
 
 
     public class WorldRaidBossDamageRatio
     {
-        //public ContentsChangeType ContentsChangeType { get; set; }
-        //public BasisPoint DamageRatio { get; set; }
+        public ContentsChangeType ContentsChangeType { get; set; }
+        public BasisPoint DamageRatio { get; set; }
     }
 
 
     public class WorldRaidBossGroup
     {
-        //public ContentsChangeType ContentsChangeType { get; set; }
+        public ContentsChangeType ContentsChangeType { get; set; }
         public long GroupId { get; set; }
         public DateTime BossSpawnTime { get; set; }
         public DateTime EliminateTime { get; set; }

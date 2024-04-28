@@ -119,5 +119,10 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             services.AddHostedService<T>();
         }
+
+        public static void AddProtocolHandlerGroupByType(this IServiceCollection services, Type type)
+        {
+            services.AddTransient(typeof(IHostedService), type);
+        }
     }
 }

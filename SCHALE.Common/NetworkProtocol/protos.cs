@@ -24,7 +24,7 @@ namespace SCHALE.Common.NetworkProtocol
         public bool UpdateRequired { get; set; }
         public string TTSCdnUri { get; set; }
         public AccountDB AccountDB { get; set; }
-        //public IEnumerable<AttendanceBookReward> AttendanceBookRewards { get; set; }
+        public IEnumerable<AttendanceBookReward> AttendanceBookRewards { get; set; }
         public IEnumerable<AttendanceHistoryDB> AttendanceHistoryDBs { get; set; }
         public IEnumerable<OpenConditionDB> OpenConditions { get; set; }
         public IEnumerable<PurchaseCountDB> RepurchasableMonthlyProductCountDBs { get; set; }
@@ -987,7 +987,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Attendance_Reward;
             }
         }
-        //public List<AttendanceBookReward> AttendanceBookRewards { get; set; }
+        public List<AttendanceBookReward> AttendanceBookRewards { get; set; }
         public List<AttendanceHistoryDB> AttendanceHistoryDBs { get; set; }
         public ParcelResultDB ParcelResultDB { get; set; }
     }
@@ -1084,7 +1084,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public long PurchaseOrderId { get; set; }
-        //public BillingTransactionEndType EndType { get; set; } = BillingTransactionEndType.Success;
+        public BillingTransactionEndType EndType { get; set; } = BillingTransactionEndType.Success;
     }
 
 
@@ -1290,7 +1290,7 @@ namespace SCHALE.Common.NetworkProtocol
         public DateTime PurchaseResetDate { get; set; }
         public long PurchaseOrderId { get; set; }
         public string MXSeedKey { get; set; }
-        //public PurchaseServerTag PurchaseServerTag { get; set; }
+        public PurchaseServerTag PurchaseServerTag { get; set; }
     }
 
 
@@ -2683,7 +2683,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public long MemberAccountId { get; set; }
-        //public ClanSocialGrade ConferingGrade { get; set; }
+        public ClanSocialGrade ConferingGrade { get; set; }
     }
 
 
@@ -3025,7 +3025,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public string ClanNickName { get; set; }
-        //public ClanJoinOption ClanJoinOption { get; set; }
+        public ClanJoinOption ClanJoinOption { get; set; }
     }
 
 
@@ -3181,7 +3181,7 @@ namespace SCHALE.Common.NetworkProtocol
         }
         public string ChangedClanName { get; set; }
         public string ChangedNotice { get; set; }
-        //public ClanJoinOption ClanJoinOption { get; set; }
+        public ClanJoinOption ClanJoinOption { get; set; }
     }
 
 
@@ -3755,7 +3755,7 @@ namespace SCHALE.Common.NetworkProtocol
         public List<ScenarioHistoryDB> ScenarioHistoryDBs { get; set; }
         public List<ScenarioGroupHistoryDB> ScenarioGroupHistoryDBs { get; set; }
         public List<EmblemDB> EmblemDBs { get; set; }
-        //public List<AttendanceBookReward> AttendanceBookRewards { get; set; }
+        public List<AttendanceBookReward> AttendanceBookRewards { get; set; }
         public List<AttendanceHistoryDB> AttendanceHistoryDBs { get; set; }
         public List<StickerDB> StickerDBs { get; set; }
         public List<MemoryLobbyDB> MemoryLobbyDBs { get; set; }
@@ -4669,7 +4669,7 @@ namespace SCHALE.Common.NetworkProtocol
         public ConsumeRequestDB ConsumeRequestDB { get; set; }
         public long ConsumeGoldAmount { get; set; }
         public long SlotId { get; set; }
-        //public CraftNodeTier CraftNodeType { get; set; }
+        public CraftNodeTier CraftNodeType { get; set; }
     }
 
 
@@ -4723,7 +4723,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.EliminateRaid_Lobby;
             }
         }
-        //public RaidSeasonType SeasonType { get; set; }
+        public RaidSeasonType SeasonType { get; set; }
         public RaidGiveUpDB RaidGiveUpDB { get; set; }
         public EliminateRaidLobbyInfoDB RaidLobbyInfoDB { get; set; }
         public AccountCurrencyDB AccountCurrencyDB { get; set; }
@@ -5258,7 +5258,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.EliminateRaid_Login;
             }
         }
-        //public RaidSeasonType SeasonType { get; set; }
+        public RaidSeasonType SeasonType { get; set; }
         public bool CanReceiveRankingReward { get; set; }
         public List<long> ReceiveLimitedRewardIds { get; set; }
         public Dictionary<long, long> SweepPointByRaidUniqueId { get; set; }
@@ -5690,7 +5690,7 @@ namespace SCHALE.Common.NetworkProtocol
         public long? Score { get; set; }
         public bool IsUpper { get; set; }
         public bool IsFirstRequest { get; set; }
-        //public RankingSearchType SearchType { get; set; }
+        public RankingSearchType SearchType { get; set; }
     }
 
 
@@ -5867,7 +5867,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public long EventContentId { get; set; }
-        //public List<ShopCategoryType> CategoryList { get; set; }
+        public List<ShopCategoryType> CategoryList { get; set; }
     }
 
 
@@ -6421,7 +6421,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public long EventContentId { get; set; }
-        //public ShopCategoryType ShopCategoryType { get; set; }
+        public ShopCategoryType ShopCategoryType { get; set; }
     }
 
 
@@ -6628,7 +6628,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.MiniGame_MissionMultipleReward;
             }
         }
-        //public MissionCategory MissionCategory { get; set; }
+        public MissionCategory MissionCategory { get; set; }
         public long EventContentId { get; set; }
     }
 
@@ -6896,7 +6896,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public long EventContentId { get; set; }
-        //public EventContentDiceRaceResultType DiceRaceResultType { get; set; }
+        public EventContentDiceRaceResultType DiceRaceResultType { get; set; }
     }
 
 
@@ -6935,7 +6935,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.Event_RewardIncrease;
             }
         }
     }
@@ -7956,7 +7956,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Notification_EventContentReddotCheck;
             }
         }
-        //public Dictionary<long, List<NotificationEventReddot>> Reddots { get; set; }
+        public Dictionary<long, List<NotificationEventReddot>> Reddots { get; set; }
         public Dictionary<long, List<EventContentCollectionDB>> EventContentUnlockCGDBs { get; set; }
     }
 
@@ -8050,7 +8050,7 @@ namespace SCHALE.Common.NetworkProtocol
             }
         }
         public string FriendCode { get; set; }
-        //public FriendSearchLevelOption LevelOption { get; set; }
+        public FriendSearchLevelOption LevelOption { get; set; }
     }
 
 
@@ -8145,7 +8145,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Raid_Login;
             }
         }
-        //public RaidSeasonType SeasonType { get; set; }
+        public RaidSeasonType SeasonType { get; set; }
         public bool CanReceiveRankingReward { get; set; }
         public long LastSettledRanking { get; set; }
         public int? LastSettledTier { get; set; }
@@ -8445,7 +8445,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.OpenCondition_List;
             }
         }
-        //public List<OpenConditionContent> ConditionContents { get; set; }
+        public List<OpenConditionContent> ConditionContents { get; set; }
     }
 
 
@@ -8710,7 +8710,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Raid_Lobby;
             }
         }
-        //public RaidSeasonType SeasonType { get; set; }
+        public RaidSeasonType SeasonType { get; set; }
         public RaidGiveUpDB RaidGiveUpDB { get; set; }
         //public SingleRaidLobbyInfoDB RaidLobbyInfoDB { get; set; }
         public AccountCurrencyDB AccountCurrencyDB { get; set; }
@@ -8928,7 +8928,7 @@ namespace SCHALE.Common.NetworkProtocol
 
         public virtual bool CanReceiveReward(DateTime serverTime)
         {
-            return false;
+            return true;
         }
 
     }
@@ -9831,7 +9831,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Mission_MultipleReward;
             }
         }
-        //public MissionCategory MissionCategory { get; set; }
+        public MissionCategory MissionCategory { get; set; }
         public long? GuideMissionSeasonId { get; set; }
         public long? EventContentId { get; set; }
     }
@@ -10157,7 +10157,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Shop_List;
             }
         }
-        //public List<ShopCategoryType> CategoryList { get; set; }
+        public List<ShopCategoryType> CategoryList { get; set; }
     }
 
 
@@ -10174,7 +10174,7 @@ namespace SCHALE.Common.NetworkProtocol
         public long? Score { get; set; }
         public bool IsUpper { get; set; }
         public bool IsFirstRequest { get; set; }
-        //public RankingSearchType SearchType { get; set; }
+        public RankingSearchType SearchType { get; set; }
     }
 
 
@@ -10659,7 +10659,7 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.None;
             }
         }
-        //public ShopCategoryType ShopCategoryType { get; set; }
+        public ShopCategoryType ShopCategoryType { get; set; }
     }
 
 

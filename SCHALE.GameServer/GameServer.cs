@@ -48,12 +48,12 @@ namespace SCHALE.GameServer
                 builder.Services.AddMongoDBProvider(config.GetConnectionString("MongoDB") ?? throw new ArgumentNullException("ConnectionStrings/MongoDB in appsettings is missing"));
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
-                builder.Services.AddProtocolHandlerGroup<Account>();
-                builder.Services.AddProtocolHandlerGroup<Queuing>();
-                builder.Services.AddProtocolHandlerGroup<Academy>();
-                builder.Services.AddProtocolHandlerGroup<Mission>();
-                builder.Services.AddProtocolHandlerGroup<ProofToken>();
-                builder.Services.AddProtocolHandlerGroup<Scenario>();
+
+                // Add all Handler Groups
+                var handlerGroups = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(ProtocolHandlerBase)));
+                
+                foreach (var handlerGroup in handlerGroups)
+                    builder.Services.AddProtocolHandlerGroupByType(handlerGroup);
 
                 var app = builder.Build();
 

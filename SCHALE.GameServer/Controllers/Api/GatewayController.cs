@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Serilog;
+using System.Text.Json.Serialization;
 
 namespace SCHALE.GameServer.Controllers.Api
 {
@@ -83,7 +84,11 @@ namespace SCHALE.GameServer.Controllers.Api
 
                 return Results.Json(new
                 {
-                    packet = JsonSerializer.Serialize(rsp),
+                    packet = JsonSerializer.Serialize(rsp, new JsonSerializerOptions() // ignore null or fields not set, if this breaks anything, remove it, idk if it does but it makes the pcap logs look more readable
+                    {
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+                    }),
+
                     protocol = ((BasePacket)rsp).Protocol.ToString()
                 });
 
