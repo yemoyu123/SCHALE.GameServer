@@ -62,7 +62,7 @@ namespace SCHALE.GameServer.Controllers.Api
                     goto protocolErrorRet;
                 }
 
-                logger.LogDebug(Encoding.ASCII.GetString(payloadMs.ToArray()));
+                logger.LogDebug(payloadStr);
 
 
                 var payload = (JsonSerializer.Deserialize(payloadStr, requestType) as RequestPacket)!;
@@ -77,6 +77,9 @@ namespace SCHALE.GameServer.Controllers.Api
 
                     goto protocolErrorRet;
                 }
+
+                if ((rsp as BasePacket)!.SessionKey is null)
+                    (rsp as BasePacket)!.SessionKey = payload.SessionKey;
 
                 return Results.Json(new
                 {

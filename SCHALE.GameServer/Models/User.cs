@@ -45,7 +45,7 @@ namespace SCHALE.GameServer.Models
     class UserCreateResponse : BaseResponse
     {
         [JsonPropertyName("uid")]
-        public uint Uid { get; set; }
+        public long Uid { get; set; }
 
         [JsonPropertyName("token")]
         public string Token { get; set; }

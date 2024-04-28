@@ -4,6 +4,7 @@ using Serilog;
 using System.Reflection;
 using SCHALE.Common.Database;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
+using SCHALE.GameServer.Services;
 
 namespace SCHALE.GameServer
 {
@@ -46,6 +47,7 @@ namespace SCHALE.GameServer
                 builder.Services.AddControllers();
                 builder.Services.AddMongoDBProvider(config.GetConnectionString("MongoDB") ?? throw new ArgumentNullException("ConnectionStrings/MongoDB in appsettings is missing"));
                 builder.Services.AddProtocolHandlerFactory();
+                builder.Services.AddMemorySessionKeyService();
                 builder.Services.AddProtocolHandlerGroup<Account>();
                 builder.Services.AddProtocolHandlerGroup<Queuing>();
                 builder.Services.AddProtocolHandlerGroup<Academy>();

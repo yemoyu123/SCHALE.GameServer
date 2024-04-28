@@ -5,14 +5,20 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
     public class Academy : ProtocolHandlerBase
     {
-        public Academy(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
+        private SCHALEContext context;
+
+        public Academy(IProtocolHandlerFactory protocolHandlerFactory, SCHALEContext _context) : base(protocolHandlerFactory)
+        {
+            context = _context;
+        }
 
         [ProtocolHandler(Protocol.Academy_GetInfo)]
         public ResponsePacket GetInfoHandler(AcademyGetInfoRequest req)
         {
-            //Context.CurrentPlayer.MissionProgressDBs
-            var MissionProgressDBs = new List<MissionProgressDB> { 
-                new MissionProgressDB() {
+            // context.CurrentPlayer.MissionProgressDBs
+            var MissionProgressDBs = new List<MissionProgressDB> 
+            { 
+                new() {
                     MissionUniqueId = 1700,
                     Complete = false,
                     StartTime = DateTime.UtcNow,
@@ -27,11 +33,11 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             {
                 AcademyDB = new()
                 {
-                    AccountId = Context.CurrentPlayer.ServerId,
+                    AccountId = req.SessionKey?.AccountServerId ?? 0
                 },
                 AcademyLocationDBs = [],
                 MissionProgressDBs = MissionProgressDBs,
-                //MissionProgressDBs = Context.CurrentPlayer.MissionProgressDBs,
+                //MissionProgressDBs = context.CurrentPlayer.MissionProgressDBs,
             };
         }
     }

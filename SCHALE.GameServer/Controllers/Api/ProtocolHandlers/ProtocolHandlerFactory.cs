@@ -89,36 +89,21 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
     public abstract class ProtocolHandlerBase : IHostedService
     {
-        private readonly IServiceScopeFactory scopeFactory;
-        
-        private IServiceScope scope;
+        private IProtocolHandlerFactory protocolHandlerFactory;
 
-        public ProtocolHandlerBase(IServiceScopeFactory _scopeFactory, IProtocolHandlerFactory protocolHandlerFactory)
+        public ProtocolHandlerBase(IProtocolHandlerFactory _protocolHandlerFactory)
         {
-            scopeFactory = _scopeFactory;
-            protocolHandlerFactory.RegisterInstance(GetType(), this);
-        }
-
-        public SCHALEContext Context
-        {
-            get
-            {
-                var db = scope.ServiceProvider.GetRequiredService<SCHALEContext>();
-
-                return db;
-            }
+            protocolHandlerFactory = _protocolHandlerFactory;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            scope = scopeFactory.CreateScope();
+            protocolHandlerFactory.RegisterInstance(GetType(), this);
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            scope.Dispose();
-            Context.Dispose();
             return Task.CompletedTask;
         }
     }

@@ -9,6 +9,6 @@ namespace SCHALE.Common.Database.Models
         [Key]
         [Column("_id")]
         public string Id { get; set; }
-        public uint Seq { get; set; }
+        public long Seq { get; set; }
     }
 }

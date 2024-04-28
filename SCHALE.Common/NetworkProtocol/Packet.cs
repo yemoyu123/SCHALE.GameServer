@@ -1,6 +1,5 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.FlatData;
-using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.NetworkProtocol
 {
@@ -40,7 +39,7 @@ namespace SCHALE.Common.NetworkProtocol
         public ServerNotificationFlag ServerNotification { get; set; }
         public List<MissionProgressDB> MissionProgressDBs { get; set; }
         public Dictionary<long, List<MissionProgressDB>> EventMissionProgressDBDict { get; set; }
-         public Dictionary<OpenConditionContent, OpenConditionLockReason> StaticOpenConditions { get; set; }
+        public Dictionary<OpenConditionContent, OpenConditionLockReason> StaticOpenConditions { get; set; }
     }
 
     [Flags]

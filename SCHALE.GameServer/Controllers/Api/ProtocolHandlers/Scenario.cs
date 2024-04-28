@@ -5,7 +5,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
     public class Scenario : ProtocolHandlerBase
     {
-        public Scenario(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
+        public Scenario(IProtocolHandlerFactory protocolHandlerFactory) : base(protocolHandlerFactory) { }
 
         [ProtocolHandler(Protocol.Scenario_Skip)]
         public ResponsePacket SkipHandler(ScenarioSkipRequest req)

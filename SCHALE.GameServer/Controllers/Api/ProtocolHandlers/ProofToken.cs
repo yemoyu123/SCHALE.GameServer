@@ -4,7 +4,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
     public class ProofToken : ProtocolHandlerBase
     {
-        public ProofToken(IServiceScopeFactory scopeFactory, IProtocolHandlerFactory protocolHandlerFactory) : base(scopeFactory, protocolHandlerFactory) { }
+        public ProofToken(IProtocolHandlerFactory protocolHandlerFactory) : base(protocolHandlerFactory) { }
 
         [ProtocolHandler(Protocol.ProofToken_RequestQuestion)]
         public ResponsePacket RequestQuestionHandler(ProofTokenRequestQuestionRequest req)
@@ -12,26 +12,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             return new ProofTokenRequestQuestionResponse()
             {
                 Hint = 69,
-                Question = "seggs",
-                SessionKey = new()
-                {
-                    MxToken = req.SessionKey.MxToken,
-                    AccountServerId = req.SessionKey.AccountServerId,
-                },
+                Question = "seggs"
             };
         }
 
         [ProtocolHandler(Protocol.ProofToken_Submit)]
         public ResponsePacket SubmitHandler(ProofTokenSubmitRequest req)
         {
-            return new ProofTokenSubmitResponse()
-            {
-                SessionKey = new()
-                {
-                    MxToken = req.SessionKey.MxToken,
-                    AccountServerId = req.SessionKey.AccountServerId,
-                },
-            };
+            return new ProofTokenSubmitResponse();
         }
     }
 }

@@ -1,10 +1,9 @@
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
+using Newtonsoft.Json;
 using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Parcel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.Database
 {
@@ -186,6 +185,19 @@ namespace SCHALE.Common.Database
 
     public class AccountDB
     {
+        public AccountDB() { }
+
+        public AccountDB(long publisherAccountId)
+        {
+            PublisherAccountId = publisherAccountId;
+            State = AccountState.Normal;
+            Level = 1;
+            LastConnectTime = DateTime.Now;
+            CreateDate = DateTime.Now;
+        }
+
+        [Key]
+        [Column("_id")]
         public long ServerId { get; set; }
         
         public string Nickname { get; set; }
@@ -1526,6 +1538,8 @@ namespace SCHALE.Common.Database
 
     public class MissionProgressDB
     {
+        [Key]
+        [Column("_id")]
         [JsonIgnore]
         public long ServerId { get; set; }
 
@@ -1536,8 +1550,21 @@ namespace SCHALE.Common.Database
         public bool Complete { get; set; }
         public DateTime StartTime { get; set; }
 
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<long, long> ProgressParameters { get; set; }
+        [JsonIgnore]
+        public string SerializedProgressParameters { get; private set; } = "{}";
+
+        [NotMapped]
+        public Dictionary<long, long> ProgressParameters
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<Dictionary<long, long>>(SerializedProgressParameters) ?? [];
+            }
+            set
+            {
+                SerializedProgressParameters = JsonConvert.SerializeObject(value);
+            }
+        }
     }
 
 
