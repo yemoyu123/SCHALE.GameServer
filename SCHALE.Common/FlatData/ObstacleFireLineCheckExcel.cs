@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ObstacleFireLineCheckExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct ObstacleFireLineCheckExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ObstacleFireLineCheckExcel> EndObstacleFireLineCheckExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ObstacleFireLineCheckExcel>(o);
+  }
+  public ObstacleFireLineCheckExcelT UnPack() {
+    var _o = new ObstacleFireLineCheckExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ObstacleFireLineCheckExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ObstacleFireLineCheck");
+    _o.MyObstacleFireLineCheck = TableEncryptionService.Convert(this.MyObstacleFireLineCheck, key);
+    _o.AllyObstacleFireLineCheck = TableEncryptionService.Convert(this.AllyObstacleFireLineCheck, key);
+    _o.EnemyObstacleFireLineCheck = TableEncryptionService.Convert(this.EnemyObstacleFireLineCheck, key);
+    _o.EmptyObstacleFireLineCheck = TableEncryptionService.Convert(this.EmptyObstacleFireLineCheck, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ObstacleFireLineCheckExcel> Pack(FlatBufferBuilder builder, ObstacleFireLineCheckExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ObstacleFireLineCheckExcel>);
+    return CreateObstacleFireLineCheckExcel(
+      builder,
+      _o.MyObstacleFireLineCheck,
+      _o.AllyObstacleFireLineCheck,
+      _o.EnemyObstacleFireLineCheck,
+      _o.EmptyObstacleFireLineCheck);
+  }
+}
+
+public class ObstacleFireLineCheckExcelT
+{
+  public bool MyObstacleFireLineCheck { get; set; }
+  public bool AllyObstacleFireLineCheck { get; set; }
+  public bool EnemyObstacleFireLineCheck { get; set; }
+  public bool EmptyObstacleFireLineCheck { get; set; }
+
+  public ObstacleFireLineCheckExcelT() {
+    this.MyObstacleFireLineCheck = false;
+    this.AllyObstacleFireLineCheck = false;
+    this.EnemyObstacleFireLineCheck = false;
+    this.EmptyObstacleFireLineCheck = false;
   }
 }
 

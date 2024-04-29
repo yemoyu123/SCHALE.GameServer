@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RaidSeasonManageExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct RaidSeasonManageExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RaidSeasonManageExcelTable> EndRaidSeasonManageExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RaidSeasonManageExcelTable>(o);
+  }
+  public RaidSeasonManageExcelTableT UnPack() {
+    var _o = new RaidSeasonManageExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RaidSeasonManageExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RaidSeasonManageExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.RaidSeasonManageExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.RaidSeasonManageExcelTable> Pack(FlatBufferBuilder builder, RaidSeasonManageExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RaidSeasonManageExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.RaidSeasonManageExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.RaidSeasonManageExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateRaidSeasonManageExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class RaidSeasonManageExcelTableT
+{
+  public List<SCHALE.Common.FlatData.RaidSeasonManageExcelT> DataList { get; set; }
+
+  public RaidSeasonManageExcelTableT() {
+    this.DataList = null;
   }
 }
 

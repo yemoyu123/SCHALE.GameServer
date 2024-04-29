@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ParcelAutoSynthExcel : IFlatbufferObject
@@ -65,6 +66,62 @@ public struct ParcelAutoSynthExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcel> EndParcelAutoSynthExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcel>(o);
+  }
+  public ParcelAutoSynthExcelT UnPack() {
+    var _o = new ParcelAutoSynthExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ParcelAutoSynthExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ParcelAutoSynth");
+    _o.RequireParcelType = TableEncryptionService.Convert(this.RequireParcelType, key);
+    _o.RequireParcelId = TableEncryptionService.Convert(this.RequireParcelId, key);
+    _o.RequireParcelAmount = TableEncryptionService.Convert(this.RequireParcelAmount, key);
+    _o.SynthStartAmount = TableEncryptionService.Convert(this.SynthStartAmount, key);
+    _o.SynthEndAmount = TableEncryptionService.Convert(this.SynthEndAmount, key);
+    _o.SynthMaxItem = TableEncryptionService.Convert(this.SynthMaxItem, key);
+    _o.ResultParcelType = TableEncryptionService.Convert(this.ResultParcelType, key);
+    _o.ResultParcelId = TableEncryptionService.Convert(this.ResultParcelId, key);
+    _o.ResultParcelAmount = TableEncryptionService.Convert(this.ResultParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcel> Pack(FlatBufferBuilder builder, ParcelAutoSynthExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcel>);
+    return CreateParcelAutoSynthExcel(
+      builder,
+      _o.RequireParcelType,
+      _o.RequireParcelId,
+      _o.RequireParcelAmount,
+      _o.SynthStartAmount,
+      _o.SynthEndAmount,
+      _o.SynthMaxItem,
+      _o.ResultParcelType,
+      _o.ResultParcelId,
+      _o.ResultParcelAmount);
+  }
+}
+
+public class ParcelAutoSynthExcelT
+{
+  public SCHALE.Common.FlatData.ParcelType RequireParcelType { get; set; }
+  public long RequireParcelId { get; set; }
+  public long RequireParcelAmount { get; set; }
+  public long SynthStartAmount { get; set; }
+  public long SynthEndAmount { get; set; }
+  public bool SynthMaxItem { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ResultParcelType { get; set; }
+  public long ResultParcelId { get; set; }
+  public long ResultParcelAmount { get; set; }
+
+  public ParcelAutoSynthExcelT() {
+    this.RequireParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RequireParcelId = 0;
+    this.RequireParcelAmount = 0;
+    this.SynthStartAmount = 0;
+    this.SynthEndAmount = 0;
+    this.SynthMaxItem = false;
+    this.ResultParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ResultParcelId = 0;
+    this.ResultParcelAmount = 0;
   }
 }
 

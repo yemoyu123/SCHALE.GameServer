@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldContentStageRewardExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct FieldContentStageRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcel> EndFieldContentStageRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcel>(o);
+  }
+  public FieldContentStageRewardExcelT UnPack() {
+    var _o = new FieldContentStageRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldContentStageRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldContentStageReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.RewardTag = TableEncryptionService.Convert(this.RewardTag, key);
+    _o.RewardProb = TableEncryptionService.Convert(this.RewardProb, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.RewardAmount = TableEncryptionService.Convert(this.RewardAmount, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcel> Pack(FlatBufferBuilder builder, FieldContentStageRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcel>);
+    return CreateFieldContentStageRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.RewardTag,
+      _o.RewardProb,
+      _o.RewardParcelType,
+      _o.RewardId,
+      _o.RewardAmount,
+      _o.IsDisplayed);
+  }
+}
+
+public class FieldContentStageRewardExcelT
+{
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.RewardTag RewardTag { get; set; }
+  public int RewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardId { get; set; }
+  public int RewardAmount { get; set; }
+  public bool IsDisplayed { get; set; }
+
+  public FieldContentStageRewardExcelT() {
+    this.GroupId = 0;
+    this.RewardTag = SCHALE.Common.FlatData.RewardTag.Default;
+    this.RewardProb = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardId = 0;
+    this.RewardAmount = 0;
+    this.IsDisplayed = false;
   }
 }
 

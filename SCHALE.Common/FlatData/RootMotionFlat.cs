@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RootMotionFlat : IFlatbufferObject
@@ -57,6 +58,58 @@ public struct RootMotionFlat : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RootMotionFlat> EndRootMotionFlat(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RootMotionFlat>(o);
+  }
+  public RootMotionFlatT UnPack() {
+    var _o = new RootMotionFlatT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RootMotionFlatT _o) {
+		byte[] key = { 0 };
+    _o.Forms = new List<SCHALE.Common.FlatData.FormT>();
+    for (var _j = 0; _j < this.FormsLength; ++_j) {_o.Forms.Add(this.Forms(_j).HasValue ? this.Forms(_j).Value.UnPack() : null);}
+    _o.ExSkills = new List<SCHALE.Common.FlatData.MotionT>();
+    for (var _j = 0; _j < this.ExSkillsLength; ++_j) {_o.ExSkills.Add(this.ExSkills(_j).HasValue ? this.ExSkills(_j).Value.UnPack() : null);}
+    _o.MoveLeft = this.MoveLeft.HasValue ? this.MoveLeft.Value.UnPack() : null;
+    _o.MoveRight = this.MoveRight.HasValue ? this.MoveRight.Value.UnPack() : null;
+  }
+  public static Offset<SCHALE.Common.FlatData.RootMotionFlat> Pack(FlatBufferBuilder builder, RootMotionFlatT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RootMotionFlat>);
+    var _Forms = default(VectorOffset);
+    if (_o.Forms != null) {
+      var __Forms = new Offset<SCHALE.Common.FlatData.Form>[_o.Forms.Count];
+      for (var _j = 0; _j < __Forms.Length; ++_j) { __Forms[_j] = SCHALE.Common.FlatData.Form.Pack(builder, _o.Forms[_j]); }
+      _Forms = CreateFormsVector(builder, __Forms);
+    }
+    var _ExSkills = default(VectorOffset);
+    if (_o.ExSkills != null) {
+      var __ExSkills = new Offset<SCHALE.Common.FlatData.Motion>[_o.ExSkills.Count];
+      for (var _j = 0; _j < __ExSkills.Length; ++_j) { __ExSkills[_j] = SCHALE.Common.FlatData.Motion.Pack(builder, _o.ExSkills[_j]); }
+      _ExSkills = CreateExSkillsVector(builder, __ExSkills);
+    }
+    var _MoveLeft = _o.MoveLeft == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.MoveLeft);
+    var _MoveRight = _o.MoveRight == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.MoveRight);
+    return CreateRootMotionFlat(
+      builder,
+      _Forms,
+      _ExSkills,
+      _MoveLeft,
+      _MoveRight);
+  }
+}
+
+public class RootMotionFlatT
+{
+  public List<SCHALE.Common.FlatData.FormT> Forms { get; set; }
+  public List<SCHALE.Common.FlatData.MotionT> ExSkills { get; set; }
+  public SCHALE.Common.FlatData.MotionT MoveLeft { get; set; }
+  public SCHALE.Common.FlatData.MotionT MoveRight { get; set; }
+
+  public RootMotionFlatT() {
+    this.Forms = null;
+    this.ExSkills = null;
+    this.MoveLeft = null;
+    this.MoveRight = null;
   }
 }
 

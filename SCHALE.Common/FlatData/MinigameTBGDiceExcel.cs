@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGDiceExcel : IFlatbufferObject
@@ -97,6 +98,76 @@ public struct MinigameTBGDiceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGDiceExcel> EndMinigameTBGDiceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGDiceExcel>(o);
+  }
+  public MinigameTBGDiceExcelT UnPack() {
+    var _o = new MinigameTBGDiceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGDiceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGDice");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.DiceGroup = TableEncryptionService.Convert(this.DiceGroup, key);
+    _o.DiceResult = TableEncryptionService.Convert(this.DiceResult, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.ProbModifyCondition = new List<SCHALE.Common.FlatData.TBGProbModifyCondition>();
+    for (var _j = 0; _j < this.ProbModifyConditionLength; ++_j) {_o.ProbModifyCondition.Add(TableEncryptionService.Convert(this.ProbModifyCondition(_j), key));}
+    _o.ProbModifyValue = new List<int>();
+    for (var _j = 0; _j < this.ProbModifyValueLength; ++_j) {_o.ProbModifyValue.Add(TableEncryptionService.Convert(this.ProbModifyValue(_j), key));}
+    _o.ProbModifyLimit = new List<int>();
+    for (var _j = 0; _j < this.ProbModifyLimitLength; ++_j) {_o.ProbModifyLimit.Add(TableEncryptionService.Convert(this.ProbModifyLimit(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGDiceExcel> Pack(FlatBufferBuilder builder, MinigameTBGDiceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGDiceExcel>);
+    var _ProbModifyCondition = default(VectorOffset);
+    if (_o.ProbModifyCondition != null) {
+      var __ProbModifyCondition = _o.ProbModifyCondition.ToArray();
+      _ProbModifyCondition = CreateProbModifyConditionVector(builder, __ProbModifyCondition);
+    }
+    var _ProbModifyValue = default(VectorOffset);
+    if (_o.ProbModifyValue != null) {
+      var __ProbModifyValue = _o.ProbModifyValue.ToArray();
+      _ProbModifyValue = CreateProbModifyValueVector(builder, __ProbModifyValue);
+    }
+    var _ProbModifyLimit = default(VectorOffset);
+    if (_o.ProbModifyLimit != null) {
+      var __ProbModifyLimit = _o.ProbModifyLimit.ToArray();
+      _ProbModifyLimit = CreateProbModifyLimitVector(builder, __ProbModifyLimit);
+    }
+    return CreateMinigameTBGDiceExcel(
+      builder,
+      _o.EventContentId,
+      _o.UniqueId,
+      _o.DiceGroup,
+      _o.DiceResult,
+      _o.Prob,
+      _ProbModifyCondition,
+      _ProbModifyValue,
+      _ProbModifyLimit);
+  }
+}
+
+public class MinigameTBGDiceExcelT
+{
+  public long EventContentId { get; set; }
+  public long UniqueId { get; set; }
+  public int DiceGroup { get; set; }
+  public int DiceResult { get; set; }
+  public int Prob { get; set; }
+  public List<SCHALE.Common.FlatData.TBGProbModifyCondition> ProbModifyCondition { get; set; }
+  public List<int> ProbModifyValue { get; set; }
+  public List<int> ProbModifyLimit { get; set; }
+
+  public MinigameTBGDiceExcelT() {
+    this.EventContentId = 0;
+    this.UniqueId = 0;
+    this.DiceGroup = 0;
+    this.DiceResult = 0;
+    this.Prob = 0;
+    this.ProbModifyCondition = null;
+    this.ProbModifyValue = null;
+    this.ProbModifyLimit = null;
   }
 }
 

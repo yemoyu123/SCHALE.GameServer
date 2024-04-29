@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestEventExcel : IFlatbufferObject
@@ -199,6 +200,141 @@ public struct ConquestEventExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestEventExcel> EndConquestEventExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestEventExcel>(o);
+  }
+  public ConquestEventExcelT UnPack() {
+    var _o = new ConquestEventExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestEventExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestEvent");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.MainStoryEventContentId = TableEncryptionService.Convert(this.MainStoryEventContentId, key);
+    _o.ConquestEventType = TableEncryptionService.Convert(this.ConquestEventType, key);
+    _o.UseErosion = TableEncryptionService.Convert(this.UseErosion, key);
+    _o.UseUnexpectedEvent = TableEncryptionService.Convert(this.UseUnexpectedEvent, key);
+    _o.UseCalculate = TableEncryptionService.Convert(this.UseCalculate, key);
+    _o.UseConquestObject = TableEncryptionService.Convert(this.UseConquestObject, key);
+    _o.EvnetMapGoalLocalize = TableEncryptionService.Convert(this.EvnetMapGoalLocalize, key);
+    _o.EvnetMapNameLocalize = TableEncryptionService.Convert(this.EvnetMapNameLocalize, key);
+    _o.MapEnterScenarioGroupId = TableEncryptionService.Convert(this.MapEnterScenarioGroupId, key);
+    _o.EvnetScenarioBG = TableEncryptionService.Convert(this.EvnetScenarioBG, key);
+    _o.ManageUnitChange = TableEncryptionService.Convert(this.ManageUnitChange, key);
+    _o.AssistCount = TableEncryptionService.Convert(this.AssistCount, key);
+    _o.PlayTimeLimitInSeconds = TableEncryptionService.Convert(this.PlayTimeLimitInSeconds, key);
+    _o.AnimationUnitAmountMin = TableEncryptionService.Convert(this.AnimationUnitAmountMin, key);
+    _o.AnimationUnitAmountMax = TableEncryptionService.Convert(this.AnimationUnitAmountMax, key);
+    _o.AnimationUnitDelay = TableEncryptionService.Convert(this.AnimationUnitDelay, key);
+    _o.LocalizeUnexpected = TableEncryptionService.Convert(this.LocalizeUnexpected, key);
+    _o.LocalizeErosions = TableEncryptionService.Convert(this.LocalizeErosions, key);
+    _o.LocalizeStep = TableEncryptionService.Convert(this.LocalizeStep, key);
+    _o.LocalizeTile = TableEncryptionService.Convert(this.LocalizeTile, key);
+    _o.LocalizeMapInfo = TableEncryptionService.Convert(this.LocalizeMapInfo, key);
+    _o.LocalizeManage = TableEncryptionService.Convert(this.LocalizeManage, key);
+    _o.LocalizeUpgrade = TableEncryptionService.Convert(this.LocalizeUpgrade, key);
+    _o.LocalizeTreasureBox = TableEncryptionService.Convert(this.LocalizeTreasureBox, key);
+    _o.IndividualErosionDailyCount = TableEncryptionService.Convert(this.IndividualErosionDailyCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestEventExcel> Pack(FlatBufferBuilder builder, ConquestEventExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestEventExcel>);
+    var _EvnetMapGoalLocalize = _o.EvnetMapGoalLocalize == null ? default(StringOffset) : builder.CreateString(_o.EvnetMapGoalLocalize);
+    var _EvnetMapNameLocalize = _o.EvnetMapNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.EvnetMapNameLocalize);
+    var _EvnetScenarioBG = _o.EvnetScenarioBG == null ? default(StringOffset) : builder.CreateString(_o.EvnetScenarioBG);
+    var _LocalizeUnexpected = _o.LocalizeUnexpected == null ? default(StringOffset) : builder.CreateString(_o.LocalizeUnexpected);
+    var _LocalizeErosions = _o.LocalizeErosions == null ? default(StringOffset) : builder.CreateString(_o.LocalizeErosions);
+    var _LocalizeStep = _o.LocalizeStep == null ? default(StringOffset) : builder.CreateString(_o.LocalizeStep);
+    var _LocalizeTile = _o.LocalizeTile == null ? default(StringOffset) : builder.CreateString(_o.LocalizeTile);
+    var _LocalizeMapInfo = _o.LocalizeMapInfo == null ? default(StringOffset) : builder.CreateString(_o.LocalizeMapInfo);
+    var _LocalizeManage = _o.LocalizeManage == null ? default(StringOffset) : builder.CreateString(_o.LocalizeManage);
+    var _LocalizeUpgrade = _o.LocalizeUpgrade == null ? default(StringOffset) : builder.CreateString(_o.LocalizeUpgrade);
+    var _LocalizeTreasureBox = _o.LocalizeTreasureBox == null ? default(StringOffset) : builder.CreateString(_o.LocalizeTreasureBox);
+    return CreateConquestEventExcel(
+      builder,
+      _o.EventContentId,
+      _o.MainStoryEventContentId,
+      _o.ConquestEventType,
+      _o.UseErosion,
+      _o.UseUnexpectedEvent,
+      _o.UseCalculate,
+      _o.UseConquestObject,
+      _EvnetMapGoalLocalize,
+      _EvnetMapNameLocalize,
+      _o.MapEnterScenarioGroupId,
+      _EvnetScenarioBG,
+      _o.ManageUnitChange,
+      _o.AssistCount,
+      _o.PlayTimeLimitInSeconds,
+      _o.AnimationUnitAmountMin,
+      _o.AnimationUnitAmountMax,
+      _o.AnimationUnitDelay,
+      _LocalizeUnexpected,
+      _LocalizeErosions,
+      _LocalizeStep,
+      _LocalizeTile,
+      _LocalizeMapInfo,
+      _LocalizeManage,
+      _LocalizeUpgrade,
+      _LocalizeTreasureBox,
+      _o.IndividualErosionDailyCount);
+  }
+}
+
+public class ConquestEventExcelT
+{
+  public long EventContentId { get; set; }
+  public long MainStoryEventContentId { get; set; }
+  public SCHALE.Common.FlatData.ConquestEventType ConquestEventType { get; set; }
+  public bool UseErosion { get; set; }
+  public bool UseUnexpectedEvent { get; set; }
+  public bool UseCalculate { get; set; }
+  public bool UseConquestObject { get; set; }
+  public string EvnetMapGoalLocalize { get; set; }
+  public string EvnetMapNameLocalize { get; set; }
+  public long MapEnterScenarioGroupId { get; set; }
+  public string EvnetScenarioBG { get; set; }
+  public int ManageUnitChange { get; set; }
+  public int AssistCount { get; set; }
+  public int PlayTimeLimitInSeconds { get; set; }
+  public int AnimationUnitAmountMin { get; set; }
+  public int AnimationUnitAmountMax { get; set; }
+  public float AnimationUnitDelay { get; set; }
+  public string LocalizeUnexpected { get; set; }
+  public string LocalizeErosions { get; set; }
+  public string LocalizeStep { get; set; }
+  public string LocalizeTile { get; set; }
+  public string LocalizeMapInfo { get; set; }
+  public string LocalizeManage { get; set; }
+  public string LocalizeUpgrade { get; set; }
+  public string LocalizeTreasureBox { get; set; }
+  public long IndividualErosionDailyCount { get; set; }
+
+  public ConquestEventExcelT() {
+    this.EventContentId = 0;
+    this.MainStoryEventContentId = 0;
+    this.ConquestEventType = SCHALE.Common.FlatData.ConquestEventType.None;
+    this.UseErosion = false;
+    this.UseUnexpectedEvent = false;
+    this.UseCalculate = false;
+    this.UseConquestObject = false;
+    this.EvnetMapGoalLocalize = null;
+    this.EvnetMapNameLocalize = null;
+    this.MapEnterScenarioGroupId = 0;
+    this.EvnetScenarioBG = null;
+    this.ManageUnitChange = 0;
+    this.AssistCount = 0;
+    this.PlayTimeLimitInSeconds = 0;
+    this.AnimationUnitAmountMin = 0;
+    this.AnimationUnitAmountMax = 0;
+    this.AnimationUnitDelay = 0.0f;
+    this.LocalizeUnexpected = null;
+    this.LocalizeErosions = null;
+    this.LocalizeStep = null;
+    this.LocalizeTile = null;
+    this.LocalizeMapInfo = null;
+    this.LocalizeManage = null;
+    this.LocalizeUpgrade = null;
+    this.LocalizeTreasureBox = null;
+    this.IndividualErosionDailyCount = 0;
   }
 }
 

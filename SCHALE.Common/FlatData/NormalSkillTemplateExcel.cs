@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct NormalSkillTemplateExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct NormalSkillTemplateExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.NormalSkillTemplateExcel> EndNormalSkillTemplateExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.NormalSkillTemplateExcel>(o);
+  }
+  public NormalSkillTemplateExcelT UnPack() {
+    var _o = new NormalSkillTemplateExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(NormalSkillTemplateExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("NormalSkillTemplate");
+    _o.Index = TableEncryptionService.Convert(this.Index, key);
+    _o.FirstCoolTime = TableEncryptionService.Convert(this.FirstCoolTime, key);
+    _o.CoolTime = TableEncryptionService.Convert(this.CoolTime, key);
+    _o.MultiAni = TableEncryptionService.Convert(this.MultiAni, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.NormalSkillTemplateExcel> Pack(FlatBufferBuilder builder, NormalSkillTemplateExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.NormalSkillTemplateExcel>);
+    return CreateNormalSkillTemplateExcel(
+      builder,
+      _o.Index,
+      _o.FirstCoolTime,
+      _o.CoolTime,
+      _o.MultiAni);
+  }
+}
+
+public class NormalSkillTemplateExcelT
+{
+  public long Index { get; set; }
+  public float FirstCoolTime { get; set; }
+  public float CoolTime { get; set; }
+  public bool MultiAni { get; set; }
+
+  public NormalSkillTemplateExcelT() {
+    this.Index = 0;
+    this.FirstCoolTime = 0.0f;
+    this.CoolTime = 0.0f;
+    this.MultiAni = false;
   }
 }
 

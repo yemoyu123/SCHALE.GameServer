@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EmblemExcel : IFlatbufferObject
@@ -155,6 +156,117 @@ public struct EmblemExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EmblemExcel> EndEmblemExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EmblemExcel>(o);
+  }
+  public EmblemExcelT UnPack() {
+    var _o = new EmblemExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EmblemExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Emblem");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Category = TableEncryptionService.Convert(this.Category, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+    _o.UseAtLocalizeId = TableEncryptionService.Convert(this.UseAtLocalizeId, key);
+    _o.EmblemTextVisible = TableEncryptionService.Convert(this.EmblemTextVisible, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.EmblemIconPath = TableEncryptionService.Convert(this.EmblemIconPath, key);
+    _o.EmblemIconNumControl = TableEncryptionService.Convert(this.EmblemIconNumControl, key);
+    _o.EmblemIconBGPath = TableEncryptionService.Convert(this.EmblemIconBGPath, key);
+    _o.EmblemBGPathJp = TableEncryptionService.Convert(this.EmblemBGPathJp, key);
+    _o.EmblemBGPathKr = TableEncryptionService.Convert(this.EmblemBGPathKr, key);
+    _o.DisplayType = TableEncryptionService.Convert(this.DisplayType, key);
+    _o.DisplayStartDate = TableEncryptionService.Convert(this.DisplayStartDate, key);
+    _o.DisplayEndDate = TableEncryptionService.Convert(this.DisplayEndDate, key);
+    _o.DislpayFavorLevel = TableEncryptionService.Convert(this.DislpayFavorLevel, key);
+    _o.CheckPassType = TableEncryptionService.Convert(this.CheckPassType, key);
+    _o.EmblemParameter = TableEncryptionService.Convert(this.EmblemParameter, key);
+    _o.CheckPassCount = TableEncryptionService.Convert(this.CheckPassCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EmblemExcel> Pack(FlatBufferBuilder builder, EmblemExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EmblemExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _EmblemIconPath = _o.EmblemIconPath == null ? default(StringOffset) : builder.CreateString(_o.EmblemIconPath);
+    var _EmblemIconBGPath = _o.EmblemIconBGPath == null ? default(StringOffset) : builder.CreateString(_o.EmblemIconBGPath);
+    var _EmblemBGPathJp = _o.EmblemBGPathJp == null ? default(StringOffset) : builder.CreateString(_o.EmblemBGPathJp);
+    var _EmblemBGPathKr = _o.EmblemBGPathKr == null ? default(StringOffset) : builder.CreateString(_o.EmblemBGPathKr);
+    var _DisplayStartDate = _o.DisplayStartDate == null ? default(StringOffset) : builder.CreateString(_o.DisplayStartDate);
+    var _DisplayEndDate = _o.DisplayEndDate == null ? default(StringOffset) : builder.CreateString(_o.DisplayEndDate);
+    return CreateEmblemExcel(
+      builder,
+      _o.Id,
+      _o.Category,
+      _o.Rarity,
+      _o.DisplayOrder,
+      _o.LocalizeEtcId,
+      _o.LocalizeCodeId,
+      _o.UseAtLocalizeId,
+      _o.EmblemTextVisible,
+      _IconPath,
+      _EmblemIconPath,
+      _o.EmblemIconNumControl,
+      _EmblemIconBGPath,
+      _EmblemBGPathJp,
+      _EmblemBGPathKr,
+      _o.DisplayType,
+      _DisplayStartDate,
+      _DisplayEndDate,
+      _o.DislpayFavorLevel,
+      _o.CheckPassType,
+      _o.EmblemParameter,
+      _o.CheckPassCount);
+  }
+}
+
+public class EmblemExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.EmblemCategory Category { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public long DisplayOrder { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public uint LocalizeCodeId { get; set; }
+  public long UseAtLocalizeId { get; set; }
+  public bool EmblemTextVisible { get; set; }
+  public string IconPath { get; set; }
+  public string EmblemIconPath { get; set; }
+  public int EmblemIconNumControl { get; set; }
+  public string EmblemIconBGPath { get; set; }
+  public string EmblemBGPathJp { get; set; }
+  public string EmblemBGPathKr { get; set; }
+  public SCHALE.Common.FlatData.EmblemDisplayType DisplayType { get; set; }
+  public string DisplayStartDate { get; set; }
+  public string DisplayEndDate { get; set; }
+  public int DislpayFavorLevel { get; set; }
+  public SCHALE.Common.FlatData.EmblemCheckPassType CheckPassType { get; set; }
+  public long EmblemParameter { get; set; }
+  public long CheckPassCount { get; set; }
+
+  public EmblemExcelT() {
+    this.Id = 0;
+    this.Category = SCHALE.Common.FlatData.EmblemCategory.None;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.DisplayOrder = 0;
+    this.LocalizeEtcId = 0;
+    this.LocalizeCodeId = 0;
+    this.UseAtLocalizeId = 0;
+    this.EmblemTextVisible = false;
+    this.IconPath = null;
+    this.EmblemIconPath = null;
+    this.EmblemIconNumControl = 0;
+    this.EmblemIconBGPath = null;
+    this.EmblemBGPathJp = null;
+    this.EmblemBGPathKr = null;
+    this.DisplayType = SCHALE.Common.FlatData.EmblemDisplayType.Always;
+    this.DisplayStartDate = null;
+    this.DisplayEndDate = null;
+    this.DislpayFavorLevel = 0;
+    this.CheckPassType = SCHALE.Common.FlatData.EmblemCheckPassType.None;
+    this.EmblemParameter = 0;
+    this.CheckPassCount = 0;
   }
 }
 

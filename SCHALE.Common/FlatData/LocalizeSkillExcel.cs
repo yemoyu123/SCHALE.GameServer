@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeSkillExcel : IFlatbufferObject
@@ -93,6 +94,60 @@ public struct LocalizeSkillExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeSkillExcel> EndLocalizeSkillExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeSkillExcel>(o);
+  }
+  public LocalizeSkillExcelT UnPack() {
+    var _o = new LocalizeSkillExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeSkillExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeSkill");
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.NameKr = TableEncryptionService.Convert(this.NameKr, key);
+    _o.DescriptionKr = TableEncryptionService.Convert(this.DescriptionKr, key);
+    _o.SkillInvokeLocalizeKr = TableEncryptionService.Convert(this.SkillInvokeLocalizeKr, key);
+    _o.NameJp = TableEncryptionService.Convert(this.NameJp, key);
+    _o.DescriptionJp = TableEncryptionService.Convert(this.DescriptionJp, key);
+    _o.SkillInvokeLocalizeJp = TableEncryptionService.Convert(this.SkillInvokeLocalizeJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeSkillExcel> Pack(FlatBufferBuilder builder, LocalizeSkillExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeSkillExcel>);
+    var _NameKr = _o.NameKr == null ? default(StringOffset) : builder.CreateString(_o.NameKr);
+    var _DescriptionKr = _o.DescriptionKr == null ? default(StringOffset) : builder.CreateString(_o.DescriptionKr);
+    var _SkillInvokeLocalizeKr = _o.SkillInvokeLocalizeKr == null ? default(StringOffset) : builder.CreateString(_o.SkillInvokeLocalizeKr);
+    var _NameJp = _o.NameJp == null ? default(StringOffset) : builder.CreateString(_o.NameJp);
+    var _DescriptionJp = _o.DescriptionJp == null ? default(StringOffset) : builder.CreateString(_o.DescriptionJp);
+    var _SkillInvokeLocalizeJp = _o.SkillInvokeLocalizeJp == null ? default(StringOffset) : builder.CreateString(_o.SkillInvokeLocalizeJp);
+    return CreateLocalizeSkillExcel(
+      builder,
+      _o.Key,
+      _NameKr,
+      _DescriptionKr,
+      _SkillInvokeLocalizeKr,
+      _NameJp,
+      _DescriptionJp,
+      _SkillInvokeLocalizeJp);
+  }
+}
+
+public class LocalizeSkillExcelT
+{
+  public uint Key { get; set; }
+  public string NameKr { get; set; }
+  public string DescriptionKr { get; set; }
+  public string SkillInvokeLocalizeKr { get; set; }
+  public string NameJp { get; set; }
+  public string DescriptionJp { get; set; }
+  public string SkillInvokeLocalizeJp { get; set; }
+
+  public LocalizeSkillExcelT() {
+    this.Key = 0;
+    this.NameKr = null;
+    this.DescriptionKr = null;
+    this.SkillInvokeLocalizeKr = null;
+    this.NameJp = null;
+    this.DescriptionJp = null;
+    this.SkillInvokeLocalizeJp = null;
   }
 }
 

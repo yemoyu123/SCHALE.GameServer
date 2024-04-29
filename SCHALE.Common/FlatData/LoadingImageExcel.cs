@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LoadingImageExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct LoadingImageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LoadingImageExcel> EndLoadingImageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LoadingImageExcel>(o);
+  }
+  public LoadingImageExcelT UnPack() {
+    var _o = new LoadingImageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LoadingImageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LoadingImage");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.ImagePathKr = TableEncryptionService.Convert(this.ImagePathKr, key);
+    _o.ImagePathJp = TableEncryptionService.Convert(this.ImagePathJp, key);
+    _o.DisplayWeight = TableEncryptionService.Convert(this.DisplayWeight, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LoadingImageExcel> Pack(FlatBufferBuilder builder, LoadingImageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LoadingImageExcel>);
+    var _ImagePathKr = _o.ImagePathKr == null ? default(StringOffset) : builder.CreateString(_o.ImagePathKr);
+    var _ImagePathJp = _o.ImagePathJp == null ? default(StringOffset) : builder.CreateString(_o.ImagePathJp);
+    return CreateLoadingImageExcel(
+      builder,
+      _o.ID,
+      _ImagePathKr,
+      _ImagePathJp,
+      _o.DisplayWeight);
+  }
+}
+
+public class LoadingImageExcelT
+{
+  public long ID { get; set; }
+  public string ImagePathKr { get; set; }
+  public string ImagePathJp { get; set; }
+  public int DisplayWeight { get; set; }
+
+  public LoadingImageExcelT() {
+    this.ID = 0;
+    this.ImagePathKr = null;
+    this.ImagePathJp = null;
+    this.DisplayWeight = 0;
   }
 }
 

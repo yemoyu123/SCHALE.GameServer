@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstCombatExcel : IFlatbufferObject
@@ -399,6 +400,351 @@ public struct ConstCombatExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstCombatExcel> EndConstCombatExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstCombatExcel>(o);
+  }
+  public ConstCombatExcelT UnPack() {
+    var _o = new ConstCombatExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstCombatExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstCombat");
+    _o.SkillHandCount = TableEncryptionService.Convert(this.SkillHandCount, key);
+    _o.DyingTime = TableEncryptionService.Convert(this.DyingTime, key);
+    _o.BuffIconBlinkTime = TableEncryptionService.Convert(this.BuffIconBlinkTime, key);
+    _o.ShowBufficonEXSkill = TableEncryptionService.Convert(this.ShowBufficonEXSkill, key);
+    _o.ShowBufficonPassiveSkill = TableEncryptionService.Convert(this.ShowBufficonPassiveSkill, key);
+    _o.ShowBufficonExtraPassiveSkill = TableEncryptionService.Convert(this.ShowBufficonExtraPassiveSkill, key);
+    _o.ShowBufficonLeaderSkill = TableEncryptionService.Convert(this.ShowBufficonLeaderSkill, key);
+    _o.ShowBufficonGroundPassiveSkill = TableEncryptionService.Convert(this.ShowBufficonGroundPassiveSkill, key);
+    _o.SuppliesConditionStringId = TableEncryptionService.Convert(this.SuppliesConditionStringId, key);
+    _o.PublicSpeechBubbleOffsetX = TableEncryptionService.Convert(this.PublicSpeechBubbleOffsetX, key);
+    _o.PublicSpeechBubbleOffsetY = TableEncryptionService.Convert(this.PublicSpeechBubbleOffsetY, key);
+    _o.PublicSpeechBubbleOffsetZ = TableEncryptionService.Convert(this.PublicSpeechBubbleOffsetZ, key);
+    _o.ShowRaidListCount = TableEncryptionService.Convert(this.ShowRaidListCount, key);
+    _o.MaxRaidTicketCount = TableEncryptionService.Convert(this.MaxRaidTicketCount, key);
+    _o.MaxRaidBossSkillSlot = TableEncryptionService.Convert(this.MaxRaidBossSkillSlot, key);
+    _o.EngageTimelinePath = TableEncryptionService.Convert(this.EngageTimelinePath, key);
+    _o.EngageWithSupporterTimelinePath = TableEncryptionService.Convert(this.EngageWithSupporterTimelinePath, key);
+    _o.VictoryTimelinePath = TableEncryptionService.Convert(this.VictoryTimelinePath, key);
+    _o.TimeLimitAlarm = TableEncryptionService.Convert(this.TimeLimitAlarm, key);
+    _o.EchelonMaxCommonCost = TableEncryptionService.Convert(this.EchelonMaxCommonCost, key);
+    _o.EchelonInitCommonCost = TableEncryptionService.Convert(this.EchelonInitCommonCost, key);
+    _o.SkillSlotCoolTime = TableEncryptionService.Convert(this.SkillSlotCoolTime, key);
+    _o.EnemyRegenCost = TableEncryptionService.Convert(this.EnemyRegenCost, key);
+    _o.ChampionRegenCost = TableEncryptionService.Convert(this.ChampionRegenCost, key);
+    _o.PlayerRegenCostDelay = TableEncryptionService.Convert(this.PlayerRegenCostDelay, key);
+    _o.CrowdControlFactor = TableEncryptionService.Convert(this.CrowdControlFactor, key);
+    _o.RaidOpenScenarioId = TableEncryptionService.Convert(this.RaidOpenScenarioId, key);
+    _o.EliminateRaidOpenScenarioId = TableEncryptionService.Convert(this.EliminateRaidOpenScenarioId, key);
+    _o.DefenceConstA = TableEncryptionService.Convert(this.DefenceConstA, key);
+    _o.DefenceConstB = TableEncryptionService.Convert(this.DefenceConstB, key);
+    _o.DefenceConstC = TableEncryptionService.Convert(this.DefenceConstC, key);
+    _o.DefenceConstD = TableEncryptionService.Convert(this.DefenceConstD, key);
+    _o.AccuracyConstA = TableEncryptionService.Convert(this.AccuracyConstA, key);
+    _o.AccuracyConstB = TableEncryptionService.Convert(this.AccuracyConstB, key);
+    _o.AccuracyConstC = TableEncryptionService.Convert(this.AccuracyConstC, key);
+    _o.AccuracyConstD = TableEncryptionService.Convert(this.AccuracyConstD, key);
+    _o.CriticalConstA = TableEncryptionService.Convert(this.CriticalConstA, key);
+    _o.CriticalConstB = TableEncryptionService.Convert(this.CriticalConstB, key);
+    _o.CriticalConstC = TableEncryptionService.Convert(this.CriticalConstC, key);
+    _o.CriticalConstD = TableEncryptionService.Convert(this.CriticalConstD, key);
+    _o.MaxGroupBuffLevel = TableEncryptionService.Convert(this.MaxGroupBuffLevel, key);
+    _o.EmojiDefaultTime = TableEncryptionService.Convert(this.EmojiDefaultTime, key);
+    _o.TimeLineActionRotateSpeed = TableEncryptionService.Convert(this.TimeLineActionRotateSpeed, key);
+    _o.BodyRotateSpeed = TableEncryptionService.Convert(this.BodyRotateSpeed, key);
+    _o.NormalTimeScale = TableEncryptionService.Convert(this.NormalTimeScale, key);
+    _o.FastTimeScale = TableEncryptionService.Convert(this.FastTimeScale, key);
+    _o.BulletTimeScale = TableEncryptionService.Convert(this.BulletTimeScale, key);
+    _o.UIDisplayDelayAfterSkillCutIn = TableEncryptionService.Convert(this.UIDisplayDelayAfterSkillCutIn, key);
+    _o.UseInitialRangeForCoverMove = TableEncryptionService.Convert(this.UseInitialRangeForCoverMove, key);
+    _o.SlowTimeScale = TableEncryptionService.Convert(this.SlowTimeScale, key);
+    _o.AimIKMinDegree = TableEncryptionService.Convert(this.AimIKMinDegree, key);
+    _o.AimIKMaxDegree = TableEncryptionService.Convert(this.AimIKMaxDegree, key);
+    _o.MinimumClearTime = TableEncryptionService.Convert(this.MinimumClearTime, key);
+    _o.MinimumClearLevelGap = TableEncryptionService.Convert(this.MinimumClearLevelGap, key);
+    _o.CheckCheaterMaxUseCostNonArena = TableEncryptionService.Convert(this.CheckCheaterMaxUseCostNonArena, key);
+    _o.CheckCheaterMaxUseCostArena = TableEncryptionService.Convert(this.CheckCheaterMaxUseCostArena, key);
+    _o.AllowedMaxTimeScale = TableEncryptionService.Convert(this.AllowedMaxTimeScale, key);
+    _o.RandomAnimationOutput = TableEncryptionService.Convert(this.RandomAnimationOutput, key);
+    _o.SummonedTeleportDistance = TableEncryptionService.Convert(this.SummonedTeleportDistance, key);
+    _o.ArenaMinimumClearTime = TableEncryptionService.Convert(this.ArenaMinimumClearTime, key);
+    _o.WORLDBOSSBATTLELITTLE = TableEncryptionService.Convert(this.WORLDBOSSBATTLELITTLE, key);
+    _o.WORLDBOSSBATTLEMIDDLE = TableEncryptionService.Convert(this.WORLDBOSSBATTLEMIDDLE, key);
+    _o.WORLDBOSSBATTLEHIGH = TableEncryptionService.Convert(this.WORLDBOSSBATTLEHIGH, key);
+    _o.WORLDBOSSBATTLEVERYHIGH = TableEncryptionService.Convert(this.WORLDBOSSBATTLEVERYHIGH, key);
+    _o.WorldRaidAutoSyncTermSecond = TableEncryptionService.Convert(this.WorldRaidAutoSyncTermSecond, key);
+    _o.WorldRaidBossHpDecreaseTerm = TableEncryptionService.Convert(this.WorldRaidBossHpDecreaseTerm, key);
+    _o.WorldRaidBossParcelReactionDelay = TableEncryptionService.Convert(this.WorldRaidBossParcelReactionDelay, key);
+    _o.RaidRankingJumpMinimumWaitingTime = TableEncryptionService.Convert(this.RaidRankingJumpMinimumWaitingTime, key);
+    _o.EffectTeleportDistance = TableEncryptionService.Convert(this.EffectTeleportDistance, key);
+    _o.AuraExitThresholdMargin = TableEncryptionService.Convert(this.AuraExitThresholdMargin, key);
+    _o.TSAInteractionDamageFactor = TableEncryptionService.Convert(this.TSAInteractionDamageFactor, key);
+    _o.VictoryInteractionRate = TableEncryptionService.Convert(this.VictoryInteractionRate, key);
+    _o.EchelonExtensionEngageTimelinePath = TableEncryptionService.Convert(this.EchelonExtensionEngageTimelinePath, key);
+    _o.EchelonExtensionEngageWithSupporterTimelinePath = TableEncryptionService.Convert(this.EchelonExtensionEngageWithSupporterTimelinePath, key);
+    _o.EchelonExtensionVictoryTimelinePath = TableEncryptionService.Convert(this.EchelonExtensionVictoryTimelinePath, key);
+    _o.EchelonExtensionEchelonMaxCommonCost = TableEncryptionService.Convert(this.EchelonExtensionEchelonMaxCommonCost, key);
+    _o.EchelonExtensionEchelonInitCommonCost = TableEncryptionService.Convert(this.EchelonExtensionEchelonInitCommonCost, key);
+    _o.EchelonExtensionCostRegenRatio = TableEncryptionService.Convert(this.EchelonExtensionCostRegenRatio, key);
+    _o.CheckCheaterMaxUseCostMultiFloorRaid = TableEncryptionService.Convert(this.CheckCheaterMaxUseCostMultiFloorRaid, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstCombatExcel> Pack(FlatBufferBuilder builder, ConstCombatExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstCombatExcel>);
+    var _SuppliesConditionStringId = _o.SuppliesConditionStringId == null ? default(StringOffset) : builder.CreateString(_o.SuppliesConditionStringId);
+    var _EngageTimelinePath = _o.EngageTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.EngageTimelinePath);
+    var _EngageWithSupporterTimelinePath = _o.EngageWithSupporterTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.EngageWithSupporterTimelinePath);
+    var _VictoryTimelinePath = _o.VictoryTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.VictoryTimelinePath);
+    var _RaidOpenScenarioId = _o.RaidOpenScenarioId == null ? default(StringOffset) : builder.CreateString(_o.RaidOpenScenarioId);
+    var _EliminateRaidOpenScenarioId = _o.EliminateRaidOpenScenarioId == null ? default(StringOffset) : builder.CreateString(_o.EliminateRaidOpenScenarioId);
+    var _EchelonExtensionEngageTimelinePath = _o.EchelonExtensionEngageTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.EchelonExtensionEngageTimelinePath);
+    var _EchelonExtensionEngageWithSupporterTimelinePath = _o.EchelonExtensionEngageWithSupporterTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.EchelonExtensionEngageWithSupporterTimelinePath);
+    var _EchelonExtensionVictoryTimelinePath = _o.EchelonExtensionVictoryTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.EchelonExtensionVictoryTimelinePath);
+    return CreateConstCombatExcel(
+      builder,
+      _o.SkillHandCount,
+      _o.DyingTime,
+      _o.BuffIconBlinkTime,
+      _o.ShowBufficonEXSkill,
+      _o.ShowBufficonPassiveSkill,
+      _o.ShowBufficonExtraPassiveSkill,
+      _o.ShowBufficonLeaderSkill,
+      _o.ShowBufficonGroundPassiveSkill,
+      _SuppliesConditionStringId,
+      _o.PublicSpeechBubbleOffsetX,
+      _o.PublicSpeechBubbleOffsetY,
+      _o.PublicSpeechBubbleOffsetZ,
+      _o.ShowRaidListCount,
+      _o.MaxRaidTicketCount,
+      _o.MaxRaidBossSkillSlot,
+      _EngageTimelinePath,
+      _EngageWithSupporterTimelinePath,
+      _VictoryTimelinePath,
+      _o.TimeLimitAlarm,
+      _o.EchelonMaxCommonCost,
+      _o.EchelonInitCommonCost,
+      _o.SkillSlotCoolTime,
+      _o.EnemyRegenCost,
+      _o.ChampionRegenCost,
+      _o.PlayerRegenCostDelay,
+      _o.CrowdControlFactor,
+      _RaidOpenScenarioId,
+      _EliminateRaidOpenScenarioId,
+      _o.DefenceConstA,
+      _o.DefenceConstB,
+      _o.DefenceConstC,
+      _o.DefenceConstD,
+      _o.AccuracyConstA,
+      _o.AccuracyConstB,
+      _o.AccuracyConstC,
+      _o.AccuracyConstD,
+      _o.CriticalConstA,
+      _o.CriticalConstB,
+      _o.CriticalConstC,
+      _o.CriticalConstD,
+      _o.MaxGroupBuffLevel,
+      _o.EmojiDefaultTime,
+      _o.TimeLineActionRotateSpeed,
+      _o.BodyRotateSpeed,
+      _o.NormalTimeScale,
+      _o.FastTimeScale,
+      _o.BulletTimeScale,
+      _o.UIDisplayDelayAfterSkillCutIn,
+      _o.UseInitialRangeForCoverMove,
+      _o.SlowTimeScale,
+      _o.AimIKMinDegree,
+      _o.AimIKMaxDegree,
+      _o.MinimumClearTime,
+      _o.MinimumClearLevelGap,
+      _o.CheckCheaterMaxUseCostNonArena,
+      _o.CheckCheaterMaxUseCostArena,
+      _o.AllowedMaxTimeScale,
+      _o.RandomAnimationOutput,
+      _o.SummonedTeleportDistance,
+      _o.ArenaMinimumClearTime,
+      _o.WORLDBOSSBATTLELITTLE,
+      _o.WORLDBOSSBATTLEMIDDLE,
+      _o.WORLDBOSSBATTLEHIGH,
+      _o.WORLDBOSSBATTLEVERYHIGH,
+      _o.WorldRaidAutoSyncTermSecond,
+      _o.WorldRaidBossHpDecreaseTerm,
+      _o.WorldRaidBossParcelReactionDelay,
+      _o.RaidRankingJumpMinimumWaitingTime,
+      _o.EffectTeleportDistance,
+      _o.AuraExitThresholdMargin,
+      _o.TSAInteractionDamageFactor,
+      _o.VictoryInteractionRate,
+      _EchelonExtensionEngageTimelinePath,
+      _EchelonExtensionEngageWithSupporterTimelinePath,
+      _EchelonExtensionVictoryTimelinePath,
+      _o.EchelonExtensionEchelonMaxCommonCost,
+      _o.EchelonExtensionEchelonInitCommonCost,
+      _o.EchelonExtensionCostRegenRatio,
+      _o.CheckCheaterMaxUseCostMultiFloorRaid);
+  }
+}
+
+public class ConstCombatExcelT
+{
+  public int SkillHandCount { get; set; }
+  public int DyingTime { get; set; }
+  public int BuffIconBlinkTime { get; set; }
+  public bool ShowBufficonEXSkill { get; set; }
+  public bool ShowBufficonPassiveSkill { get; set; }
+  public bool ShowBufficonExtraPassiveSkill { get; set; }
+  public bool ShowBufficonLeaderSkill { get; set; }
+  public bool ShowBufficonGroundPassiveSkill { get; set; }
+  public string SuppliesConditionStringId { get; set; }
+  public float PublicSpeechBubbleOffsetX { get; set; }
+  public float PublicSpeechBubbleOffsetY { get; set; }
+  public float PublicSpeechBubbleOffsetZ { get; set; }
+  public int ShowRaidListCount { get; set; }
+  public long MaxRaidTicketCount { get; set; }
+  public long MaxRaidBossSkillSlot { get; set; }
+  public string EngageTimelinePath { get; set; }
+  public string EngageWithSupporterTimelinePath { get; set; }
+  public string VictoryTimelinePath { get; set; }
+  public long TimeLimitAlarm { get; set; }
+  public int EchelonMaxCommonCost { get; set; }
+  public int EchelonInitCommonCost { get; set; }
+  public long SkillSlotCoolTime { get; set; }
+  public long EnemyRegenCost { get; set; }
+  public long ChampionRegenCost { get; set; }
+  public long PlayerRegenCostDelay { get; set; }
+  public long CrowdControlFactor { get; set; }
+  public string RaidOpenScenarioId { get; set; }
+  public string EliminateRaidOpenScenarioId { get; set; }
+  public long DefenceConstA { get; set; }
+  public long DefenceConstB { get; set; }
+  public long DefenceConstC { get; set; }
+  public long DefenceConstD { get; set; }
+  public long AccuracyConstA { get; set; }
+  public long AccuracyConstB { get; set; }
+  public long AccuracyConstC { get; set; }
+  public long AccuracyConstD { get; set; }
+  public long CriticalConstA { get; set; }
+  public long CriticalConstB { get; set; }
+  public long CriticalConstC { get; set; }
+  public long CriticalConstD { get; set; }
+  public int MaxGroupBuffLevel { get; set; }
+  public int EmojiDefaultTime { get; set; }
+  public long TimeLineActionRotateSpeed { get; set; }
+  public long BodyRotateSpeed { get; set; }
+  public long NormalTimeScale { get; set; }
+  public long FastTimeScale { get; set; }
+  public long BulletTimeScale { get; set; }
+  public long UIDisplayDelayAfterSkillCutIn { get; set; }
+  public bool UseInitialRangeForCoverMove { get; set; }
+  public long SlowTimeScale { get; set; }
+  public float AimIKMinDegree { get; set; }
+  public float AimIKMaxDegree { get; set; }
+  public int MinimumClearTime { get; set; }
+  public int MinimumClearLevelGap { get; set; }
+  public int CheckCheaterMaxUseCostNonArena { get; set; }
+  public int CheckCheaterMaxUseCostArena { get; set; }
+  public long AllowedMaxTimeScale { get; set; }
+  public long RandomAnimationOutput { get; set; }
+  public long SummonedTeleportDistance { get; set; }
+  public int ArenaMinimumClearTime { get; set; }
+  public long WORLDBOSSBATTLELITTLE { get; set; }
+  public long WORLDBOSSBATTLEMIDDLE { get; set; }
+  public long WORLDBOSSBATTLEHIGH { get; set; }
+  public long WORLDBOSSBATTLEVERYHIGH { get; set; }
+  public long WorldRaidAutoSyncTermSecond { get; set; }
+  public long WorldRaidBossHpDecreaseTerm { get; set; }
+  public long WorldRaidBossParcelReactionDelay { get; set; }
+  public long RaidRankingJumpMinimumWaitingTime { get; set; }
+  public float EffectTeleportDistance { get; set; }
+  public long AuraExitThresholdMargin { get; set; }
+  public long TSAInteractionDamageFactor { get; set; }
+  public long VictoryInteractionRate { get; set; }
+  public string EchelonExtensionEngageTimelinePath { get; set; }
+  public string EchelonExtensionEngageWithSupporterTimelinePath { get; set; }
+  public string EchelonExtensionVictoryTimelinePath { get; set; }
+  public int EchelonExtensionEchelonMaxCommonCost { get; set; }
+  public int EchelonExtensionEchelonInitCommonCost { get; set; }
+  public long EchelonExtensionCostRegenRatio { get; set; }
+  public int CheckCheaterMaxUseCostMultiFloorRaid { get; set; }
+
+  public ConstCombatExcelT() {
+    this.SkillHandCount = 0;
+    this.DyingTime = 0;
+    this.BuffIconBlinkTime = 0;
+    this.ShowBufficonEXSkill = false;
+    this.ShowBufficonPassiveSkill = false;
+    this.ShowBufficonExtraPassiveSkill = false;
+    this.ShowBufficonLeaderSkill = false;
+    this.ShowBufficonGroundPassiveSkill = false;
+    this.SuppliesConditionStringId = null;
+    this.PublicSpeechBubbleOffsetX = 0.0f;
+    this.PublicSpeechBubbleOffsetY = 0.0f;
+    this.PublicSpeechBubbleOffsetZ = 0.0f;
+    this.ShowRaidListCount = 0;
+    this.MaxRaidTicketCount = 0;
+    this.MaxRaidBossSkillSlot = 0;
+    this.EngageTimelinePath = null;
+    this.EngageWithSupporterTimelinePath = null;
+    this.VictoryTimelinePath = null;
+    this.TimeLimitAlarm = 0;
+    this.EchelonMaxCommonCost = 0;
+    this.EchelonInitCommonCost = 0;
+    this.SkillSlotCoolTime = 0;
+    this.EnemyRegenCost = 0;
+    this.ChampionRegenCost = 0;
+    this.PlayerRegenCostDelay = 0;
+    this.CrowdControlFactor = 0;
+    this.RaidOpenScenarioId = null;
+    this.EliminateRaidOpenScenarioId = null;
+    this.DefenceConstA = 0;
+    this.DefenceConstB = 0;
+    this.DefenceConstC = 0;
+    this.DefenceConstD = 0;
+    this.AccuracyConstA = 0;
+    this.AccuracyConstB = 0;
+    this.AccuracyConstC = 0;
+    this.AccuracyConstD = 0;
+    this.CriticalConstA = 0;
+    this.CriticalConstB = 0;
+    this.CriticalConstC = 0;
+    this.CriticalConstD = 0;
+    this.MaxGroupBuffLevel = 0;
+    this.EmojiDefaultTime = 0;
+    this.TimeLineActionRotateSpeed = 0;
+    this.BodyRotateSpeed = 0;
+    this.NormalTimeScale = 0;
+    this.FastTimeScale = 0;
+    this.BulletTimeScale = 0;
+    this.UIDisplayDelayAfterSkillCutIn = 0;
+    this.UseInitialRangeForCoverMove = false;
+    this.SlowTimeScale = 0;
+    this.AimIKMinDegree = 0.0f;
+    this.AimIKMaxDegree = 0.0f;
+    this.MinimumClearTime = 0;
+    this.MinimumClearLevelGap = 0;
+    this.CheckCheaterMaxUseCostNonArena = 0;
+    this.CheckCheaterMaxUseCostArena = 0;
+    this.AllowedMaxTimeScale = 0;
+    this.RandomAnimationOutput = 0;
+    this.SummonedTeleportDistance = 0;
+    this.ArenaMinimumClearTime = 0;
+    this.WORLDBOSSBATTLELITTLE = 0;
+    this.WORLDBOSSBATTLEMIDDLE = 0;
+    this.WORLDBOSSBATTLEHIGH = 0;
+    this.WORLDBOSSBATTLEVERYHIGH = 0;
+    this.WorldRaidAutoSyncTermSecond = 0;
+    this.WorldRaidBossHpDecreaseTerm = 0;
+    this.WorldRaidBossParcelReactionDelay = 0;
+    this.RaidRankingJumpMinimumWaitingTime = 0;
+    this.EffectTeleportDistance = 0.0f;
+    this.AuraExitThresholdMargin = 0;
+    this.TSAInteractionDamageFactor = 0;
+    this.VictoryInteractionRate = 0;
+    this.EchelonExtensionEngageTimelinePath = null;
+    this.EchelonExtensionEngageWithSupporterTimelinePath = null;
+    this.EchelonExtensionVictoryTimelinePath = null;
+    this.EchelonExtensionEchelonMaxCommonCost = 0;
+    this.EchelonExtensionEchelonInitCommonCost = 0;
+    this.EchelonExtensionCostRegenRatio = 0;
+    this.CheckCheaterMaxUseCostMultiFloorRaid = 0;
   }
 }
 

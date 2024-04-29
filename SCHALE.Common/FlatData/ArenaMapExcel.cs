@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaMapExcel : IFlatbufferObject
@@ -83,6 +84,65 @@ public struct ArenaMapExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaMapExcel> EndArenaMapExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaMapExcel>(o);
+  }
+  public ArenaMapExcelT UnPack() {
+    var _o = new ArenaMapExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaMapExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaMap");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.TerrainType = TableEncryptionService.Convert(this.TerrainType, key);
+    _o.TerrainTypeLocalizeKey = TableEncryptionService.Convert(this.TerrainTypeLocalizeKey, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+    _o.GroundGroupId = TableEncryptionService.Convert(this.GroundGroupId, key);
+    _o.GroundGroupNameLocalizeKey = TableEncryptionService.Convert(this.GroundGroupNameLocalizeKey, key);
+    _o.StartRank = TableEncryptionService.Convert(this.StartRank, key);
+    _o.EndRank = TableEncryptionService.Convert(this.EndRank, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaMapExcel> Pack(FlatBufferBuilder builder, ArenaMapExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaMapExcel>);
+    var _TerrainTypeLocalizeKey = _o.TerrainTypeLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.TerrainTypeLocalizeKey);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    var _GroundGroupNameLocalizeKey = _o.GroundGroupNameLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.GroundGroupNameLocalizeKey);
+    return CreateArenaMapExcel(
+      builder,
+      _o.UniqueId,
+      _o.TerrainType,
+      _TerrainTypeLocalizeKey,
+      _ImagePath,
+      _o.GroundGroupId,
+      _GroundGroupNameLocalizeKey,
+      _o.StartRank,
+      _o.EndRank,
+      _o.GroundId);
+  }
+}
+
+public class ArenaMapExcelT
+{
+  public long UniqueId { get; set; }
+  public long TerrainType { get; set; }
+  public string TerrainTypeLocalizeKey { get; set; }
+  public string ImagePath { get; set; }
+  public long GroundGroupId { get; set; }
+  public string GroundGroupNameLocalizeKey { get; set; }
+  public long StartRank { get; set; }
+  public long EndRank { get; set; }
+  public long GroundId { get; set; }
+
+  public ArenaMapExcelT() {
+    this.UniqueId = 0;
+    this.TerrainType = 0;
+    this.TerrainTypeLocalizeKey = null;
+    this.ImagePath = null;
+    this.GroundGroupId = 0;
+    this.GroundGroupNameLocalizeKey = null;
+    this.StartRank = 0;
+    this.EndRank = 0;
+    this.GroundId = 0;
   }
 }
 

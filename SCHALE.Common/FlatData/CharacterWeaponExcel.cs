@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterWeaponExcel : IFlatbufferObject
@@ -165,6 +166,128 @@ public struct CharacterWeaponExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterWeaponExcel> EndCharacterWeaponExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterWeaponExcel>(o);
+  }
+  public CharacterWeaponExcelT UnPack() {
+    var _o = new CharacterWeaponExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterWeaponExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterWeapon");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+    _o.SetRecipe = TableEncryptionService.Convert(this.SetRecipe, key);
+    _o.StatLevelUpType = TableEncryptionService.Convert(this.StatLevelUpType, key);
+    _o.AttackPower = TableEncryptionService.Convert(this.AttackPower, key);
+    _o.AttackPower100 = TableEncryptionService.Convert(this.AttackPower100, key);
+    _o.MaxHP = TableEncryptionService.Convert(this.MaxHP, key);
+    _o.MaxHP100 = TableEncryptionService.Convert(this.MaxHP100, key);
+    _o.HealPower = TableEncryptionService.Convert(this.HealPower, key);
+    _o.HealPower100 = TableEncryptionService.Convert(this.HealPower100, key);
+    _o.Unlock = new List<bool>();
+    for (var _j = 0; _j < this.UnlockLength; ++_j) {_o.Unlock.Add(TableEncryptionService.Convert(this.Unlock(_j), key));}
+    _o.RecipeId = new List<long>();
+    for (var _j = 0; _j < this.RecipeIdLength; ++_j) {_o.RecipeId.Add(TableEncryptionService.Convert(this.RecipeId(_j), key));}
+    _o.MaxLevel = new List<int>();
+    for (var _j = 0; _j < this.MaxLevelLength; ++_j) {_o.MaxLevel.Add(TableEncryptionService.Convert(this.MaxLevel(_j), key));}
+    _o.LearnSkillSlot = new List<string>();
+    for (var _j = 0; _j < this.LearnSkillSlotLength; ++_j) {_o.LearnSkillSlot.Add(TableEncryptionService.Convert(this.LearnSkillSlot(_j), key));}
+    _o.StatType = new List<SCHALE.Common.FlatData.EquipmentOptionType>();
+    for (var _j = 0; _j < this.StatTypeLength; ++_j) {_o.StatType.Add(TableEncryptionService.Convert(this.StatType(_j), key));}
+    _o.StatValue = new List<long>();
+    for (var _j = 0; _j < this.StatValueLength; ++_j) {_o.StatValue.Add(TableEncryptionService.Convert(this.StatValue(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterWeaponExcel> Pack(FlatBufferBuilder builder, CharacterWeaponExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterWeaponExcel>);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    var _Unlock = default(VectorOffset);
+    if (_o.Unlock != null) {
+      var __Unlock = _o.Unlock.ToArray();
+      _Unlock = CreateUnlockVector(builder, __Unlock);
+    }
+    var _RecipeId = default(VectorOffset);
+    if (_o.RecipeId != null) {
+      var __RecipeId = _o.RecipeId.ToArray();
+      _RecipeId = CreateRecipeIdVector(builder, __RecipeId);
+    }
+    var _MaxLevel = default(VectorOffset);
+    if (_o.MaxLevel != null) {
+      var __MaxLevel = _o.MaxLevel.ToArray();
+      _MaxLevel = CreateMaxLevelVector(builder, __MaxLevel);
+    }
+    var _LearnSkillSlot = default(VectorOffset);
+    if (_o.LearnSkillSlot != null) {
+      var __LearnSkillSlot = new StringOffset[_o.LearnSkillSlot.Count];
+      for (var _j = 0; _j < __LearnSkillSlot.Length; ++_j) { __LearnSkillSlot[_j] = builder.CreateString(_o.LearnSkillSlot[_j]); }
+      _LearnSkillSlot = CreateLearnSkillSlotVector(builder, __LearnSkillSlot);
+    }
+    var _StatType = default(VectorOffset);
+    if (_o.StatType != null) {
+      var __StatType = _o.StatType.ToArray();
+      _StatType = CreateStatTypeVector(builder, __StatType);
+    }
+    var _StatValue = default(VectorOffset);
+    if (_o.StatValue != null) {
+      var __StatValue = _o.StatValue.ToArray();
+      _StatValue = CreateStatValueVector(builder, __StatValue);
+    }
+    return CreateCharacterWeaponExcel(
+      builder,
+      _o.Id,
+      _ImagePath,
+      _o.SetRecipe,
+      _o.StatLevelUpType,
+      _o.AttackPower,
+      _o.AttackPower100,
+      _o.MaxHP,
+      _o.MaxHP100,
+      _o.HealPower,
+      _o.HealPower100,
+      _Unlock,
+      _RecipeId,
+      _MaxLevel,
+      _LearnSkillSlot,
+      _StatType,
+      _StatValue);
+  }
+}
+
+public class CharacterWeaponExcelT
+{
+  public long Id { get; set; }
+  public string ImagePath { get; set; }
+  public long SetRecipe { get; set; }
+  public SCHALE.Common.FlatData.StatLevelUpType StatLevelUpType { get; set; }
+  public long AttackPower { get; set; }
+  public long AttackPower100 { get; set; }
+  public long MaxHP { get; set; }
+  public long MaxHP100 { get; set; }
+  public long HealPower { get; set; }
+  public long HealPower100 { get; set; }
+  public List<bool> Unlock { get; set; }
+  public List<long> RecipeId { get; set; }
+  public List<int> MaxLevel { get; set; }
+  public List<string> LearnSkillSlot { get; set; }
+  public List<SCHALE.Common.FlatData.EquipmentOptionType> StatType { get; set; }
+  public List<long> StatValue { get; set; }
+
+  public CharacterWeaponExcelT() {
+    this.Id = 0;
+    this.ImagePath = null;
+    this.SetRecipe = 0;
+    this.StatLevelUpType = SCHALE.Common.FlatData.StatLevelUpType.Standard;
+    this.AttackPower = 0;
+    this.AttackPower100 = 0;
+    this.MaxHP = 0;
+    this.MaxHP100 = 0;
+    this.HealPower = 0;
+    this.HealPower100 = 0;
+    this.Unlock = null;
+    this.RecipeId = null;
+    this.MaxLevel = null;
+    this.LearnSkillSlot = null;
+    this.StatType = null;
+    this.StatValue = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterAIExcel : IFlatbufferObject
@@ -77,6 +78,74 @@ public struct CharacterAIExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterAIExcel> EndCharacterAIExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterAIExcel>(o);
+  }
+  public CharacterAIExcelT UnPack() {
+    var _o = new CharacterAIExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterAIExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterAI");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EngageType = TableEncryptionService.Convert(this.EngageType, key);
+    _o.Positioning = TableEncryptionService.Convert(this.Positioning, key);
+    _o.CheckCanUseAutoSkill = TableEncryptionService.Convert(this.CheckCanUseAutoSkill, key);
+    _o.DistanceReduceRatioObstaclePath = TableEncryptionService.Convert(this.DistanceReduceRatioObstaclePath, key);
+    _o.DistanceReduceObstaclePath = TableEncryptionService.Convert(this.DistanceReduceObstaclePath, key);
+    _o.DistanceReduceRatioFormationPath = TableEncryptionService.Convert(this.DistanceReduceRatioFormationPath, key);
+    _o.DistanceReduceFormationPath = TableEncryptionService.Convert(this.DistanceReduceFormationPath, key);
+    _o.MinimumPositionGap = TableEncryptionService.Convert(this.MinimumPositionGap, key);
+    _o.CanUseObstacleOfKneelMotion = TableEncryptionService.Convert(this.CanUseObstacleOfKneelMotion, key);
+    _o.CanUseObstacleOfStandMotion = TableEncryptionService.Convert(this.CanUseObstacleOfStandMotion, key);
+    _o.HasTargetSwitchingMotion = TableEncryptionService.Convert(this.HasTargetSwitchingMotion, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterAIExcel> Pack(FlatBufferBuilder builder, CharacterAIExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterAIExcel>);
+    return CreateCharacterAIExcel(
+      builder,
+      _o.Id,
+      _o.EngageType,
+      _o.Positioning,
+      _o.CheckCanUseAutoSkill,
+      _o.DistanceReduceRatioObstaclePath,
+      _o.DistanceReduceObstaclePath,
+      _o.DistanceReduceRatioFormationPath,
+      _o.DistanceReduceFormationPath,
+      _o.MinimumPositionGap,
+      _o.CanUseObstacleOfKneelMotion,
+      _o.CanUseObstacleOfStandMotion,
+      _o.HasTargetSwitchingMotion);
+  }
+}
+
+public class CharacterAIExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.EngageType EngageType { get; set; }
+  public SCHALE.Common.FlatData.PositioningType Positioning { get; set; }
+  public bool CheckCanUseAutoSkill { get; set; }
+  public long DistanceReduceRatioObstaclePath { get; set; }
+  public long DistanceReduceObstaclePath { get; set; }
+  public long DistanceReduceRatioFormationPath { get; set; }
+  public long DistanceReduceFormationPath { get; set; }
+  public long MinimumPositionGap { get; set; }
+  public bool CanUseObstacleOfKneelMotion { get; set; }
+  public bool CanUseObstacleOfStandMotion { get; set; }
+  public bool HasTargetSwitchingMotion { get; set; }
+
+  public CharacterAIExcelT() {
+    this.Id = 0;
+    this.EngageType = SCHALE.Common.FlatData.EngageType.SearchAndMove;
+    this.Positioning = SCHALE.Common.FlatData.PositioningType.CloseToObstacle;
+    this.CheckCanUseAutoSkill = false;
+    this.DistanceReduceRatioObstaclePath = 0;
+    this.DistanceReduceObstaclePath = 0;
+    this.DistanceReduceRatioFormationPath = 0;
+    this.DistanceReduceFormationPath = 0;
+    this.MinimumPositionGap = 0;
+    this.CanUseObstacleOfKneelMotion = false;
+    this.CanUseObstacleOfStandMotion = false;
+    this.HasTargetSwitchingMotion = false;
   }
 }
 

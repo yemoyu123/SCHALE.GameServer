@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ItemExcel : IFlatbufferObject
@@ -199,6 +200,169 @@ public struct ItemExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ItemExcel> EndItemExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ItemExcel>(o);
+  }
+  public ItemExcelT UnPack() {
+    var _o = new ItemExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ItemExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Item");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.ItemCategory = TableEncryptionService.Convert(this.ItemCategory, key);
+    _o.Quality = TableEncryptionService.Convert(this.Quality, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.SpriteName = TableEncryptionService.Convert(this.SpriteName, key);
+    _o.StackableMax = TableEncryptionService.Convert(this.StackableMax, key);
+    _o.StackableFunction = TableEncryptionService.Convert(this.StackableFunction, key);
+    _o.ImmediateUse = TableEncryptionService.Convert(this.ImmediateUse, key);
+    _o.UsingResultParcelType = TableEncryptionService.Convert(this.UsingResultParcelType, key);
+    _o.UsingResultId = TableEncryptionService.Convert(this.UsingResultId, key);
+    _o.UsingResultAmount = TableEncryptionService.Convert(this.UsingResultAmount, key);
+    _o.MailType = TableEncryptionService.Convert(this.MailType, key);
+    _o.ExpiryChangeParcelType = TableEncryptionService.Convert(this.ExpiryChangeParcelType, key);
+    _o.ExpiryChangeId = TableEncryptionService.Convert(this.ExpiryChangeId, key);
+    _o.ExpiryChangeAmount = TableEncryptionService.Convert(this.ExpiryChangeAmount, key);
+    _o.CanTierUpgrade = TableEncryptionService.Convert(this.CanTierUpgrade, key);
+    _o.TierUpgradeRecipeCraftId = TableEncryptionService.Convert(this.TierUpgradeRecipeCraftId, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+    _o.CraftQualityTier0 = TableEncryptionService.Convert(this.CraftQualityTier0, key);
+    _o.CraftQualityTier1 = TableEncryptionService.Convert(this.CraftQualityTier1, key);
+    _o.CraftQualityTier2 = TableEncryptionService.Convert(this.CraftQualityTier2, key);
+    _o.ShiftingCraftQuality = TableEncryptionService.Convert(this.ShiftingCraftQuality, key);
+    _o.MaxGiftTags = TableEncryptionService.Convert(this.MaxGiftTags, key);
+    _o.ShopCategory = new List<SCHALE.Common.FlatData.ShopCategoryType>();
+    for (var _j = 0; _j < this.ShopCategoryLength; ++_j) {_o.ShopCategory.Add(TableEncryptionService.Convert(this.ShopCategory(_j), key));}
+    _o.ExpirationDateTime = TableEncryptionService.Convert(this.ExpirationDateTime, key);
+    _o.ExpirationNotifyDateIn = TableEncryptionService.Convert(this.ExpirationNotifyDateIn, key);
+    _o.ShortcutTypeId = TableEncryptionService.Convert(this.ShortcutTypeId, key);
+    _o.GachaTicket = TableEncryptionService.Convert(this.GachaTicket, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ItemExcel> Pack(FlatBufferBuilder builder, ItemExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ItemExcel>);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _SpriteName = _o.SpriteName == null ? default(StringOffset) : builder.CreateString(_o.SpriteName);
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    var _ShopCategory = default(VectorOffset);
+    if (_o.ShopCategory != null) {
+      var __ShopCategory = _o.ShopCategory.ToArray();
+      _ShopCategory = CreateShopCategoryVector(builder, __ShopCategory);
+    }
+    var _ExpirationDateTime = _o.ExpirationDateTime == null ? default(StringOffset) : builder.CreateString(_o.ExpirationDateTime);
+    return CreateItemExcel(
+      builder,
+      _o.Id,
+      _o.GroupId,
+      _o.Rarity,
+      _o.ProductionStep,
+      _o.LocalizeEtcId,
+      _o.ItemCategory,
+      _o.Quality,
+      _Icon,
+      _SpriteName,
+      _o.StackableMax,
+      _o.StackableFunction,
+      _o.ImmediateUse,
+      _o.UsingResultParcelType,
+      _o.UsingResultId,
+      _o.UsingResultAmount,
+      _o.MailType,
+      _o.ExpiryChangeParcelType,
+      _o.ExpiryChangeId,
+      _o.ExpiryChangeAmount,
+      _o.CanTierUpgrade,
+      _o.TierUpgradeRecipeCraftId,
+      _Tags,
+      _o.CraftQualityTier0,
+      _o.CraftQualityTier1,
+      _o.CraftQualityTier2,
+      _o.ShiftingCraftQuality,
+      _o.MaxGiftTags,
+      _ShopCategory,
+      _ExpirationDateTime,
+      _o.ExpirationNotifyDateIn,
+      _o.ShortcutTypeId,
+      _o.GachaTicket);
+  }
+}
+
+public class ItemExcelT
+{
+  public long Id { get; set; }
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public SCHALE.Common.FlatData.ItemCategory ItemCategory { get; set; }
+  public long Quality { get; set; }
+  public string Icon { get; set; }
+  public string SpriteName { get; set; }
+  public int StackableMax { get; set; }
+  public int StackableFunction { get; set; }
+  public bool ImmediateUse { get; set; }
+  public SCHALE.Common.FlatData.ParcelType UsingResultParcelType { get; set; }
+  public long UsingResultId { get; set; }
+  public long UsingResultAmount { get; set; }
+  public SCHALE.Common.FlatData.MailType MailType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ExpiryChangeParcelType { get; set; }
+  public long ExpiryChangeId { get; set; }
+  public long ExpiryChangeAmount { get; set; }
+  public bool CanTierUpgrade { get; set; }
+  public long TierUpgradeRecipeCraftId { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+  public long CraftQualityTier0 { get; set; }
+  public long CraftQualityTier1 { get; set; }
+  public long CraftQualityTier2 { get; set; }
+  public long ShiftingCraftQuality { get; set; }
+  public int MaxGiftTags { get; set; }
+  public List<SCHALE.Common.FlatData.ShopCategoryType> ShopCategory { get; set; }
+  public string ExpirationDateTime { get; set; }
+  public int ExpirationNotifyDateIn { get; set; }
+  public long ShortcutTypeId { get; set; }
+  public SCHALE.Common.FlatData.GachaTicketType GachaTicket { get; set; }
+
+  public ItemExcelT() {
+    this.Id = 0;
+    this.GroupId = 0;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.LocalizeEtcId = 0;
+    this.ItemCategory = SCHALE.Common.FlatData.ItemCategory.Coin;
+    this.Quality = 0;
+    this.Icon = null;
+    this.SpriteName = null;
+    this.StackableMax = 0;
+    this.StackableFunction = 0;
+    this.ImmediateUse = false;
+    this.UsingResultParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.UsingResultId = 0;
+    this.UsingResultAmount = 0;
+    this.MailType = SCHALE.Common.FlatData.MailType.System;
+    this.ExpiryChangeParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ExpiryChangeId = 0;
+    this.ExpiryChangeAmount = 0;
+    this.CanTierUpgrade = false;
+    this.TierUpgradeRecipeCraftId = 0;
+    this.Tags = null;
+    this.CraftQualityTier0 = 0;
+    this.CraftQualityTier1 = 0;
+    this.CraftQualityTier2 = 0;
+    this.ShiftingCraftQuality = 0;
+    this.MaxGiftTags = 0;
+    this.ShopCategory = null;
+    this.ExpirationDateTime = null;
+    this.ExpirationNotifyDateIn = 0;
+    this.ShortcutTypeId = 0;
+    this.GachaTicket = SCHALE.Common.FlatData.GachaTicketType.None;
   }
 }
 

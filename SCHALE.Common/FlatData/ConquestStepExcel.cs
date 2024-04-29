@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestStepExcel : IFlatbufferObject
@@ -101,6 +102,82 @@ public struct ConquestStepExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestStepExcel> EndConquestStepExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestStepExcel>(o);
+  }
+  public ConquestStepExcelT UnPack() {
+    var _o = new ConquestStepExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestStepExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestStep");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.MapDifficulty = TableEncryptionService.Convert(this.MapDifficulty, key);
+    _o.Step = TableEncryptionService.Convert(this.Step, key);
+    _o.StepGoalLocalize = TableEncryptionService.Convert(this.StepGoalLocalize, key);
+    _o.StepEnterScenarioGroupId = TableEncryptionService.Convert(this.StepEnterScenarioGroupId, key);
+    _o.StepEnterItemType = TableEncryptionService.Convert(this.StepEnterItemType, key);
+    _o.StepEnterItemUniqueId = TableEncryptionService.Convert(this.StepEnterItemUniqueId, key);
+    _o.StepEnterItemAmount = TableEncryptionService.Convert(this.StepEnterItemAmount, key);
+    _o.UnexpectedEventUnitId = new List<long>();
+    for (var _j = 0; _j < this.UnexpectedEventUnitIdLength; ++_j) {_o.UnexpectedEventUnitId.Add(TableEncryptionService.Convert(this.UnexpectedEventUnitId(_j), key));}
+    _o.UnexpectedEventPrefab = TableEncryptionService.Convert(this.UnexpectedEventPrefab, key);
+    _o.TreasureBoxObjectId = TableEncryptionService.Convert(this.TreasureBoxObjectId, key);
+    _o.TreasureBoxCountPerStepOpen = TableEncryptionService.Convert(this.TreasureBoxCountPerStepOpen, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestStepExcel> Pack(FlatBufferBuilder builder, ConquestStepExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestStepExcel>);
+    var _StepGoalLocalize = _o.StepGoalLocalize == null ? default(StringOffset) : builder.CreateString(_o.StepGoalLocalize);
+    var _UnexpectedEventUnitId = default(VectorOffset);
+    if (_o.UnexpectedEventUnitId != null) {
+      var __UnexpectedEventUnitId = _o.UnexpectedEventUnitId.ToArray();
+      _UnexpectedEventUnitId = CreateUnexpectedEventUnitIdVector(builder, __UnexpectedEventUnitId);
+    }
+    var _UnexpectedEventPrefab = _o.UnexpectedEventPrefab == null ? default(StringOffset) : builder.CreateString(_o.UnexpectedEventPrefab);
+    return CreateConquestStepExcel(
+      builder,
+      _o.EventContentId,
+      _o.MapDifficulty,
+      _o.Step,
+      _StepGoalLocalize,
+      _o.StepEnterScenarioGroupId,
+      _o.StepEnterItemType,
+      _o.StepEnterItemUniqueId,
+      _o.StepEnterItemAmount,
+      _UnexpectedEventUnitId,
+      _UnexpectedEventPrefab,
+      _o.TreasureBoxObjectId,
+      _o.TreasureBoxCountPerStepOpen);
+  }
+}
+
+public class ConquestStepExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty MapDifficulty { get; set; }
+  public int Step { get; set; }
+  public string StepGoalLocalize { get; set; }
+  public long StepEnterScenarioGroupId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StepEnterItemType { get; set; }
+  public long StepEnterItemUniqueId { get; set; }
+  public long StepEnterItemAmount { get; set; }
+  public List<long> UnexpectedEventUnitId { get; set; }
+  public string UnexpectedEventPrefab { get; set; }
+  public long TreasureBoxObjectId { get; set; }
+  public int TreasureBoxCountPerStepOpen { get; set; }
+
+  public ConquestStepExcelT() {
+    this.EventContentId = 0;
+    this.MapDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.Step = 0;
+    this.StepGoalLocalize = null;
+    this.StepEnterScenarioGroupId = 0;
+    this.StepEnterItemType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StepEnterItemUniqueId = 0;
+    this.StepEnterItemAmount = 0;
+    this.UnexpectedEventUnitId = null;
+    this.UnexpectedEventPrefab = null;
+    this.TreasureBoxObjectId = 0;
+    this.TreasureBoxCountPerStepOpen = 0;
   }
 }
 

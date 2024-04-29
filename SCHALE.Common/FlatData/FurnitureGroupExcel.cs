@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FurnitureGroupExcel : IFlatbufferObject
@@ -73,6 +74,58 @@ public struct FurnitureGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FurnitureGroupExcel> EndFurnitureGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FurnitureGroupExcel>(o);
+  }
+  public FurnitureGroupExcelT UnPack() {
+    var _o = new FurnitureGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FurnitureGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FurnitureGroup");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.GroupNameLocalize = TableEncryptionService.Convert(this.GroupNameLocalize, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.RequiredFurnitureCount = new List<int>();
+    for (var _j = 0; _j < this.RequiredFurnitureCountLength; ++_j) {_o.RequiredFurnitureCount.Add(TableEncryptionService.Convert(this.RequiredFurnitureCount(_j), key));}
+    _o.ComfortBonus = new List<long>();
+    for (var _j = 0; _j < this.ComfortBonusLength; ++_j) {_o.ComfortBonus.Add(TableEncryptionService.Convert(this.ComfortBonus(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FurnitureGroupExcel> Pack(FlatBufferBuilder builder, FurnitureGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FurnitureGroupExcel>);
+    var _RequiredFurnitureCount = default(VectorOffset);
+    if (_o.RequiredFurnitureCount != null) {
+      var __RequiredFurnitureCount = _o.RequiredFurnitureCount.ToArray();
+      _RequiredFurnitureCount = CreateRequiredFurnitureCountVector(builder, __RequiredFurnitureCount);
+    }
+    var _ComfortBonus = default(VectorOffset);
+    if (_o.ComfortBonus != null) {
+      var __ComfortBonus = _o.ComfortBonus.ToArray();
+      _ComfortBonus = CreateComfortBonusVector(builder, __ComfortBonus);
+    }
+    return CreateFurnitureGroupExcel(
+      builder,
+      _o.Id,
+      _o.GroupNameLocalize,
+      _o.LocalizeEtcId,
+      _RequiredFurnitureCount,
+      _ComfortBonus);
+  }
+}
+
+public class FurnitureGroupExcelT
+{
+  public long Id { get; set; }
+  public uint GroupNameLocalize { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public List<int> RequiredFurnitureCount { get; set; }
+  public List<long> ComfortBonus { get; set; }
+
+  public FurnitureGroupExcelT() {
+    this.Id = 0;
+    this.GroupNameLocalize = 0;
+    this.LocalizeEtcId = 0;
+    this.RequiredFurnitureCount = null;
+    this.ComfortBonus = null;
   }
 }
 

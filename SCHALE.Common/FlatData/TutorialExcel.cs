@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TutorialExcel : IFlatbufferObject
@@ -75,6 +76,69 @@ public struct TutorialExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TutorialExcel> EndTutorialExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TutorialExcel>(o);
+  }
+  public TutorialExcelT UnPack() {
+    var _o = new TutorialExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TutorialExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Tutorial");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.CompletionReportEventName = TableEncryptionService.Convert(this.CompletionReportEventName, key);
+    _o.CompulsoryTutorial = TableEncryptionService.Convert(this.CompulsoryTutorial, key);
+    _o.DescriptionTutorial = TableEncryptionService.Convert(this.DescriptionTutorial, key);
+    _o.TutorialStageId = TableEncryptionService.Convert(this.TutorialStageId, key);
+    _o.UIName = new List<string>();
+    for (var _j = 0; _j < this.UINameLength; ++_j) {_o.UIName.Add(TableEncryptionService.Convert(this.UIName(_j), key));}
+    _o.TutorialParentName = new List<string>();
+    for (var _j = 0; _j < this.TutorialParentNameLength; ++_j) {_o.TutorialParentName.Add(TableEncryptionService.Convert(this.TutorialParentName(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TutorialExcel> Pack(FlatBufferBuilder builder, TutorialExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TutorialExcel>);
+    var _CompletionReportEventName = _o.CompletionReportEventName == null ? default(StringOffset) : builder.CreateString(_o.CompletionReportEventName);
+    var _UIName = default(VectorOffset);
+    if (_o.UIName != null) {
+      var __UIName = new StringOffset[_o.UIName.Count];
+      for (var _j = 0; _j < __UIName.Length; ++_j) { __UIName[_j] = builder.CreateString(_o.UIName[_j]); }
+      _UIName = CreateUINameVector(builder, __UIName);
+    }
+    var _TutorialParentName = default(VectorOffset);
+    if (_o.TutorialParentName != null) {
+      var __TutorialParentName = new StringOffset[_o.TutorialParentName.Count];
+      for (var _j = 0; _j < __TutorialParentName.Length; ++_j) { __TutorialParentName[_j] = builder.CreateString(_o.TutorialParentName[_j]); }
+      _TutorialParentName = CreateTutorialParentNameVector(builder, __TutorialParentName);
+    }
+    return CreateTutorialExcel(
+      builder,
+      _o.ID,
+      _CompletionReportEventName,
+      _o.CompulsoryTutorial,
+      _o.DescriptionTutorial,
+      _o.TutorialStageId,
+      _UIName,
+      _TutorialParentName);
+  }
+}
+
+public class TutorialExcelT
+{
+  public long ID { get; set; }
+  public string CompletionReportEventName { get; set; }
+  public bool CompulsoryTutorial { get; set; }
+  public bool DescriptionTutorial { get; set; }
+  public long TutorialStageId { get; set; }
+  public List<string> UIName { get; set; }
+  public List<string> TutorialParentName { get; set; }
+
+  public TutorialExcelT() {
+    this.ID = 0;
+    this.CompletionReportEventName = null;
+    this.CompulsoryTutorial = false;
+    this.DescriptionTutorial = false;
+    this.TutorialStageId = 0;
+    this.UIName = null;
+    this.TutorialParentName = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidRankingRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EliminateRaidRankingRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelTable> EndEliminateRaidRankingRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelTable>(o);
+  }
+  public EliminateRaidRankingRewardExcelTableT UnPack() {
+    var _o = new EliminateRaidRankingRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidRankingRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidRankingRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelTable> Pack(FlatBufferBuilder builder, EliminateRaidRankingRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EliminateRaidRankingRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEliminateRaidRankingRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EliminateRaidRankingRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EliminateRaidRankingRewardExcelT> DataList { get; set; }
+
+  public EliminateRaidRankingRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

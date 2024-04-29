@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonOpenScheduleExcel : IFlatbufferObject
@@ -49,6 +50,40 @@ public struct WeekDungeonOpenScheduleExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonOpenScheduleExcel> EndWeekDungeonOpenScheduleExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonOpenScheduleExcel>(o);
+  }
+  public WeekDungeonOpenScheduleExcelT UnPack() {
+    var _o = new WeekDungeonOpenScheduleExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonOpenScheduleExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeonOpenSchedule");
+    _o.WeekDay = TableEncryptionService.Convert(this.WeekDay, key);
+    _o.Open = new List<SCHALE.Common.FlatData.WeekDungeonType>();
+    for (var _j = 0; _j < this.OpenLength; ++_j) {_o.Open.Add(TableEncryptionService.Convert(this.Open(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonOpenScheduleExcel> Pack(FlatBufferBuilder builder, WeekDungeonOpenScheduleExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonOpenScheduleExcel>);
+    var _Open = default(VectorOffset);
+    if (_o.Open != null) {
+      var __Open = _o.Open.ToArray();
+      _Open = CreateOpenVector(builder, __Open);
+    }
+    return CreateWeekDungeonOpenScheduleExcel(
+      builder,
+      _o.WeekDay,
+      _Open);
+  }
+}
+
+public class WeekDungeonOpenScheduleExcelT
+{
+  public SCHALE.Common.FlatData.WeekDay WeekDay { get; set; }
+  public List<SCHALE.Common.FlatData.WeekDungeonType> Open { get; set; }
+
+  public WeekDungeonOpenScheduleExcelT() {
+    this.WeekDay = SCHALE.Common.FlatData.WeekDay.Sunday;
+    this.Open = null;
   }
 }
 

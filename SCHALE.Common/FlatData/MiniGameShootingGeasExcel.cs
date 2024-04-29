@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameShootingGeasExcel : IFlatbufferObject
@@ -73,6 +74,60 @@ public struct MiniGameShootingGeasExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameShootingGeasExcel> EndMiniGameShootingGeasExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameShootingGeasExcel>(o);
+  }
+  public MiniGameShootingGeasExcelT UnPack() {
+    var _o = new MiniGameShootingGeasExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameShootingGeasExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameShootingGeas");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.GeasType = TableEncryptionService.Convert(this.GeasType, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.Probability = TableEncryptionService.Convert(this.Probability, key);
+    _o.MaxOverlapCount = TableEncryptionService.Convert(this.MaxOverlapCount, key);
+    _o.GeasData = TableEncryptionService.Convert(this.GeasData, key);
+    _o.NeedGeasId = TableEncryptionService.Convert(this.NeedGeasId, key);
+    _o.HideInPausePopup = TableEncryptionService.Convert(this.HideInPausePopup, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameShootingGeasExcel> Pack(FlatBufferBuilder builder, MiniGameShootingGeasExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameShootingGeasExcel>);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _GeasData = _o.GeasData == null ? default(StringOffset) : builder.CreateString(_o.GeasData);
+    return CreateMiniGameShootingGeasExcel(
+      builder,
+      _o.UniqueId,
+      _o.GeasType,
+      _Icon,
+      _o.Probability,
+      _o.MaxOverlapCount,
+      _GeasData,
+      _o.NeedGeasId,
+      _o.HideInPausePopup);
+  }
+}
+
+public class MiniGameShootingGeasExcelT
+{
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.Geas GeasType { get; set; }
+  public string Icon { get; set; }
+  public long Probability { get; set; }
+  public int MaxOverlapCount { get; set; }
+  public string GeasData { get; set; }
+  public long NeedGeasId { get; set; }
+  public bool HideInPausePopup { get; set; }
+
+  public MiniGameShootingGeasExcelT() {
+    this.UniqueId = 0;
+    this.GeasType = SCHALE.Common.FlatData.Geas.ForwardProjectile;
+    this.Icon = null;
+    this.Probability = 0;
+    this.MaxOverlapCount = 0;
+    this.GeasData = null;
+    this.NeedGeasId = 0;
+    this.HideInPausePopup = false;
   }
 }
 

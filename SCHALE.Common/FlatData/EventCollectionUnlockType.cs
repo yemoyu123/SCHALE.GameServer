@@ -16,6 +16,7 @@ public enum EventCollectionUnlockType : int
   DiceRaceConsumeDiceCount = 6,
   MinigameTBGThemaClear = 7,
   MinigameEnter = 8,
+  MinigameDreamMakerParameter = 9,
 };
 
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TerrainAdaptationFactorExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct TerrainAdaptationFactorExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelTable> EndTerrainAdaptationFactorExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelTable>(o);
+  }
+  public TerrainAdaptationFactorExcelTableT UnPack() {
+    var _o = new TerrainAdaptationFactorExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TerrainAdaptationFactorExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TerrainAdaptationFactorExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelTable> Pack(FlatBufferBuilder builder, TerrainAdaptationFactorExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.TerrainAdaptationFactorExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateTerrainAdaptationFactorExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class TerrainAdaptationFactorExcelTableT
+{
+  public List<SCHALE.Common.FlatData.TerrainAdaptationFactorExcelT> DataList { get; set; }
+
+  public TerrainAdaptationFactorExcelTableT() {
+    this.DataList = null;
   }
 }
 

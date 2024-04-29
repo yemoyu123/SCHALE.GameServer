@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonRewardExcel : IFlatbufferObject
@@ -67,6 +68,59 @@ public struct WeekDungeonRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonRewardExcel> EndWeekDungeonRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonRewardExcel>(o);
+  }
+  public WeekDungeonRewardExcelT UnPack() {
+    var _o = new WeekDungeonRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeonReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.DungeonType = TableEncryptionService.Convert(this.DungeonType, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+    _o.RewardParcelProbability = TableEncryptionService.Convert(this.RewardParcelProbability, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+    _o.DropItemModelPrefabPath = TableEncryptionService.Convert(this.DropItemModelPrefabPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonRewardExcel> Pack(FlatBufferBuilder builder, WeekDungeonRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonRewardExcel>);
+    var _DropItemModelPrefabPath = _o.DropItemModelPrefabPath == null ? default(StringOffset) : builder.CreateString(_o.DropItemModelPrefabPath);
+    return CreateWeekDungeonRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.DungeonType,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount,
+      _o.RewardParcelProbability,
+      _o.IsDisplayed,
+      _DropItemModelPrefabPath);
+  }
+}
+
+public class WeekDungeonRewardExcelT
+{
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.WeekDungeonType DungeonType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+  public long RewardParcelProbability { get; set; }
+  public bool IsDisplayed { get; set; }
+  public string DropItemModelPrefabPath { get; set; }
+
+  public WeekDungeonRewardExcelT() {
+    this.GroupId = 0;
+    this.DungeonType = SCHALE.Common.FlatData.WeekDungeonType.None;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
+    this.RewardParcelProbability = 0;
+    this.IsDisplayed = false;
+    this.DropItemModelPrefabPath = null;
   }
 }
 

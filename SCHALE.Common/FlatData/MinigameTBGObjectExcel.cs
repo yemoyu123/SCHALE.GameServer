@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGObjectExcel : IFlatbufferObject
@@ -77,6 +78,64 @@ public struct MinigameTBGObjectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcel> EndMinigameTBGObjectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcel>(o);
+  }
+  public MinigameTBGObjectExcelT UnPack() {
+    var _o = new MinigameTBGObjectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGObjectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGObject");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.ObjectType = TableEncryptionService.Convert(this.ObjectType, key);
+    _o.ObjectCostType = TableEncryptionService.Convert(this.ObjectCostType, key);
+    _o.ObjectCostId = TableEncryptionService.Convert(this.ObjectCostId, key);
+    _o.ObjectCostAmount = TableEncryptionService.Convert(this.ObjectCostAmount, key);
+    _o.Disposable = TableEncryptionService.Convert(this.Disposable, key);
+    _o.ReEncounterCost = TableEncryptionService.Convert(this.ReEncounterCost, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcel> Pack(FlatBufferBuilder builder, MinigameTBGObjectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcel>);
+    var _Key = _o.Key == null ? default(StringOffset) : builder.CreateString(_o.Key);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    return CreateMinigameTBGObjectExcel(
+      builder,
+      _o.UniqueId,
+      _Key,
+      _PrefabName,
+      _o.ObjectType,
+      _o.ObjectCostType,
+      _o.ObjectCostId,
+      _o.ObjectCostAmount,
+      _o.Disposable,
+      _o.ReEncounterCost);
+  }
+}
+
+public class MinigameTBGObjectExcelT
+{
+  public long UniqueId { get; set; }
+  public string Key { get; set; }
+  public string PrefabName { get; set; }
+  public SCHALE.Common.FlatData.TBGObjectType ObjectType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ObjectCostType { get; set; }
+  public long ObjectCostId { get; set; }
+  public int ObjectCostAmount { get; set; }
+  public bool Disposable { get; set; }
+  public bool ReEncounterCost { get; set; }
+
+  public MinigameTBGObjectExcelT() {
+    this.UniqueId = 0;
+    this.Key = null;
+    this.PrefabName = null;
+    this.ObjectType = SCHALE.Common.FlatData.TBGObjectType.None;
+    this.ObjectCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ObjectCostId = 0;
+    this.ObjectCostAmount = 0;
+    this.Disposable = false;
+    this.ReEncounterCost = false;
   }
 }
 

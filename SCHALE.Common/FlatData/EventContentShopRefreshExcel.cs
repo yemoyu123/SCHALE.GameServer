@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentShopRefreshExcel : IFlatbufferObject
@@ -75,6 +76,67 @@ public struct EventContentShopRefreshExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentShopRefreshExcel> EndEventContentShopRefreshExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentShopRefreshExcel>(o);
+  }
+  public EventContentShopRefreshExcelT UnPack() {
+    var _o = new EventContentShopRefreshExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentShopRefreshExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentShopRefresh");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.GoodsId = TableEncryptionService.Convert(this.GoodsId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.RefreshGroup = TableEncryptionService.Convert(this.RefreshGroup, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.BuyReportEventName = TableEncryptionService.Convert(this.BuyReportEventName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentShopRefreshExcel> Pack(FlatBufferBuilder builder, EventContentShopRefreshExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentShopRefreshExcel>);
+    var _BuyReportEventName = _o.BuyReportEventName == null ? default(StringOffset) : builder.CreateString(_o.BuyReportEventName);
+    return CreateEventContentShopRefreshExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _o.IsLegacy,
+      _o.GoodsId,
+      _o.DisplayOrder,
+      _o.CategoryType,
+      _o.RefreshGroup,
+      _o.Prob,
+      _BuyReportEventName);
+  }
+}
+
+public class EventContentShopRefreshExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public bool IsLegacy { get; set; }
+  public long GoodsId { get; set; }
+  public long DisplayOrder { get; set; }
+  public SCHALE.Common.FlatData.ShopCategoryType CategoryType { get; set; }
+  public int RefreshGroup { get; set; }
+  public int Prob { get; set; }
+  public string BuyReportEventName { get; set; }
+
+  public EventContentShopRefreshExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.IsLegacy = false;
+    this.GoodsId = 0;
+    this.DisplayOrder = 0;
+    this.CategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.RefreshGroup = 0;
+    this.Prob = 0;
+    this.BuyReportEventName = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RecipeSelectionAutoUseExcel : IFlatbufferObject
@@ -57,6 +58,48 @@ public struct RecipeSelectionAutoUseExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel> EndRecipeSelectionAutoUseExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel>(o);
+  }
+  public RecipeSelectionAutoUseExcelT UnPack() {
+    var _o = new RecipeSelectionAutoUseExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RecipeSelectionAutoUseExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RecipeSelectionAutoUse");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.TargetItemId = TableEncryptionService.Convert(this.TargetItemId, key);
+    _o.Priority = new List<long>();
+    for (var _j = 0; _j < this.PriorityLength; ++_j) {_o.Priority.Add(TableEncryptionService.Convert(this.Priority(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel> Pack(FlatBufferBuilder builder, RecipeSelectionAutoUseExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel>);
+    var _Priority = default(VectorOffset);
+    if (_o.Priority != null) {
+      var __Priority = _o.Priority.ToArray();
+      _Priority = CreatePriorityVector(builder, __Priority);
+    }
+    return CreateRecipeSelectionAutoUseExcel(
+      builder,
+      _o.Id,
+      _o.ParcelType,
+      _o.TargetItemId,
+      _Priority);
+  }
+}
+
+public class RecipeSelectionAutoUseExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long TargetItemId { get; set; }
+  public List<long> Priority { get; set; }
+
+  public RecipeSelectionAutoUseExcelT() {
+    this.Id = 0;
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.TargetItemId = 0;
+    this.Priority = null;
   }
 }
 

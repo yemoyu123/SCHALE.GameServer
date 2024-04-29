@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentSpineDialogOffsetExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct EventContentSpineDialogOffsetExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentSpineDialogOffsetExcel> EndEventContentSpineDialogOffsetExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentSpineDialogOffsetExcel>(o);
+  }
+  public EventContentSpineDialogOffsetExcelT UnPack() {
+    var _o = new EventContentSpineDialogOffsetExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentSpineDialogOffsetExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentSpineDialogOffset");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentType = TableEncryptionService.Convert(this.EventContentType, key);
+    _o.CostumeUniqueId = TableEncryptionService.Convert(this.CostumeUniqueId, key);
+    _o.SpineOffsetX = TableEncryptionService.Convert(this.SpineOffsetX, key);
+    _o.SpineOffsetY = TableEncryptionService.Convert(this.SpineOffsetY, key);
+    _o.DialogOffsetX = TableEncryptionService.Convert(this.DialogOffsetX, key);
+    _o.DialogOffsetY = TableEncryptionService.Convert(this.DialogOffsetY, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentSpineDialogOffsetExcel> Pack(FlatBufferBuilder builder, EventContentSpineDialogOffsetExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentSpineDialogOffsetExcel>);
+    return CreateEventContentSpineDialogOffsetExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentType,
+      _o.CostumeUniqueId,
+      _o.SpineOffsetX,
+      _o.SpineOffsetY,
+      _o.DialogOffsetX,
+      _o.DialogOffsetY);
+  }
+}
+
+public class EventContentSpineDialogOffsetExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentType EventContentType { get; set; }
+  public long CostumeUniqueId { get; set; }
+  public float SpineOffsetX { get; set; }
+  public float SpineOffsetY { get; set; }
+  public float DialogOffsetX { get; set; }
+  public float DialogOffsetY { get; set; }
+
+  public EventContentSpineDialogOffsetExcelT() {
+    this.EventContentId = 0;
+    this.EventContentType = SCHALE.Common.FlatData.EventContentType.Stage;
+    this.CostumeUniqueId = 0;
+    this.SpineOffsetX = 0.0f;
+    this.SpineOffsetY = 0.0f;
+    this.DialogOffsetX = 0.0f;
+    this.DialogOffsetY = 0.0f;
   }
 }
 

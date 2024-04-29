@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BlendData : IFlatbufferObject
@@ -43,6 +44,41 @@ public struct BlendData : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BlendData> EndBlendData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BlendData>(o);
+  }
+  public BlendDataT UnPack() {
+    var _o = new BlendDataT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BlendDataT _o) {
+		byte[] key = { 0 };
+    _o.Type = TableEncryptionService.Convert(this.Type, key);
+    _o.InfoList = new List<SCHALE.Common.FlatData.BlendInfoT>();
+    for (var _j = 0; _j < this.InfoListLength; ++_j) {_o.InfoList.Add(this.InfoList(_j).HasValue ? this.InfoList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.BlendData> Pack(FlatBufferBuilder builder, BlendDataT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BlendData>);
+    var _InfoList = default(VectorOffset);
+    if (_o.InfoList != null) {
+      var __InfoList = new Offset<SCHALE.Common.FlatData.BlendInfo>[_o.InfoList.Count];
+      for (var _j = 0; _j < __InfoList.Length; ++_j) { __InfoList[_j] = SCHALE.Common.FlatData.BlendInfo.Pack(builder, _o.InfoList[_j]); }
+      _InfoList = CreateInfoListVector(builder, __InfoList);
+    }
+    return CreateBlendData(
+      builder,
+      _o.Type,
+      _InfoList);
+  }
+}
+
+public class BlendDataT
+{
+  public int Type { get; set; }
+  public List<SCHALE.Common.FlatData.BlendInfoT> InfoList { get; set; }
+
+  public BlendDataT() {
+    this.Type = 0;
+    this.InfoList = null;
   }
 }
 

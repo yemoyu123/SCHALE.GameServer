@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct VideoExcel : IFlatbufferObject
@@ -85,6 +86,72 @@ public struct VideoExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.VideoExcel> EndVideoExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.VideoExcel>(o);
+  }
+  public VideoExcelT UnPack() {
+    var _o = new VideoExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(VideoExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Video");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Nation_ = new List<SCHALE.Common.FlatData.Nation>();
+    for (var _j = 0; _j < this.Nation_Length; ++_j) {_o.Nation_.Add(TableEncryptionService.Convert(this.Nation_(_j), key));}
+    _o.VideoPath = new List<string>();
+    for (var _j = 0; _j < this.VideoPathLength; ++_j) {_o.VideoPath.Add(TableEncryptionService.Convert(this.VideoPath(_j), key));}
+    _o.SoundPath = new List<string>();
+    for (var _j = 0; _j < this.SoundPathLength; ++_j) {_o.SoundPath.Add(TableEncryptionService.Convert(this.SoundPath(_j), key));}
+    _o.SoundVolume = new List<float>();
+    for (var _j = 0; _j < this.SoundVolumeLength; ++_j) {_o.SoundVolume.Add(TableEncryptionService.Convert(this.SoundVolume(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.VideoExcel> Pack(FlatBufferBuilder builder, VideoExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.VideoExcel>);
+    var _Nation_ = default(VectorOffset);
+    if (_o.Nation_ != null) {
+      var __Nation_ = _o.Nation_.ToArray();
+      _Nation_ = CreateNation_Vector(builder, __Nation_);
+    }
+    var _VideoPath = default(VectorOffset);
+    if (_o.VideoPath != null) {
+      var __VideoPath = new StringOffset[_o.VideoPath.Count];
+      for (var _j = 0; _j < __VideoPath.Length; ++_j) { __VideoPath[_j] = builder.CreateString(_o.VideoPath[_j]); }
+      _VideoPath = CreateVideoPathVector(builder, __VideoPath);
+    }
+    var _SoundPath = default(VectorOffset);
+    if (_o.SoundPath != null) {
+      var __SoundPath = new StringOffset[_o.SoundPath.Count];
+      for (var _j = 0; _j < __SoundPath.Length; ++_j) { __SoundPath[_j] = builder.CreateString(_o.SoundPath[_j]); }
+      _SoundPath = CreateSoundPathVector(builder, __SoundPath);
+    }
+    var _SoundVolume = default(VectorOffset);
+    if (_o.SoundVolume != null) {
+      var __SoundVolume = _o.SoundVolume.ToArray();
+      _SoundVolume = CreateSoundVolumeVector(builder, __SoundVolume);
+    }
+    return CreateVideoExcel(
+      builder,
+      _o.Id,
+      _Nation_,
+      _VideoPath,
+      _SoundPath,
+      _SoundVolume);
+  }
+}
+
+public class VideoExcelT
+{
+  public long Id { get; set; }
+  public List<SCHALE.Common.FlatData.Nation> Nation_ { get; set; }
+  public List<string> VideoPath { get; set; }
+  public List<string> SoundPath { get; set; }
+  public List<float> SoundVolume { get; set; }
+
+  public VideoExcelT() {
+    this.Id = 0;
+    this.Nation_ = null;
+    this.VideoPath = null;
+    this.SoundPath = null;
+    this.SoundVolume = null;
   }
 }
 

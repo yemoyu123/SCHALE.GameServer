@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentLocationExcel : IFlatbufferObject
@@ -79,6 +80,71 @@ public struct EventContentLocationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentLocationExcel> EndEventContentLocationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentLocationExcel>(o);
+  }
+  public EventContentLocationExcelT UnPack() {
+    var _o = new EventContentLocationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentLocationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentLocation");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.PrefabPath = TableEncryptionService.Convert(this.PrefabPath, key);
+    _o.LocationResetScheduleCount = TableEncryptionService.Convert(this.LocationResetScheduleCount, key);
+    _o.ScheduleEventPointCostParcelType = TableEncryptionService.Convert(this.ScheduleEventPointCostParcelType, key);
+    _o.ScheduleEventPointCostParcelId = TableEncryptionService.Convert(this.ScheduleEventPointCostParcelId, key);
+    _o.ScheduleEventPointCostParcelAmount = TableEncryptionService.Convert(this.ScheduleEventPointCostParcelAmount, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.InformationGroupId = TableEncryptionService.Convert(this.InformationGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentLocationExcel> Pack(FlatBufferBuilder builder, EventContentLocationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentLocationExcel>);
+    var _PrefabPath = _o.PrefabPath == null ? default(StringOffset) : builder.CreateString(_o.PrefabPath);
+    return CreateEventContentLocationExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _PrefabPath,
+      _o.LocationResetScheduleCount,
+      _o.ScheduleEventPointCostParcelType,
+      _o.ScheduleEventPointCostParcelId,
+      _o.ScheduleEventPointCostParcelAmount,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.InformationGroupId);
+  }
+}
+
+public class EventContentLocationExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string PrefabPath { get; set; }
+  public int LocationResetScheduleCount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ScheduleEventPointCostParcelType { get; set; }
+  public long ScheduleEventPointCostParcelId { get; set; }
+  public long ScheduleEventPointCostParcelAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long InformationGroupId { get; set; }
+
+  public EventContentLocationExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.PrefabPath = null;
+    this.LocationResetScheduleCount = 0;
+    this.ScheduleEventPointCostParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ScheduleEventPointCostParcelId = 0;
+    this.ScheduleEventPointCostParcelAmount = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.InformationGroupId = 0;
   }
 }
 

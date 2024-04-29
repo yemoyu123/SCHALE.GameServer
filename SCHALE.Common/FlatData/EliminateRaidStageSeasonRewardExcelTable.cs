@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidStageSeasonRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EliminateRaidStageSeasonRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelTable> EndEliminateRaidStageSeasonRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelTable>(o);
+  }
+  public EliminateRaidStageSeasonRewardExcelTableT UnPack() {
+    var _o = new EliminateRaidStageSeasonRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidStageSeasonRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidStageSeasonRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelTable> Pack(FlatBufferBuilder builder, EliminateRaidStageSeasonRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEliminateRaidStageSeasonRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EliminateRaidStageSeasonRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EliminateRaidStageSeasonRewardExcelT> DataList { get; set; }
+
+  public EliminateRaidStageSeasonRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

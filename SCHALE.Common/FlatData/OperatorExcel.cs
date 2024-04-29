@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct OperatorExcel : IFlatbufferObject
@@ -107,6 +108,83 @@ public struct OperatorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.OperatorExcel> EndOperatorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.OperatorExcel>(o);
+  }
+  public OperatorExcelT UnPack() {
+    var _o = new OperatorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(OperatorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Operator");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.OperatorCondition = TableEncryptionService.Convert(this.OperatorCondition, key);
+    _o.OutputSequence = TableEncryptionService.Convert(this.OutputSequence, key);
+    _o.RandomWeight = TableEncryptionService.Convert(this.RandomWeight, key);
+    _o.OutputDelay = TableEncryptionService.Convert(this.OutputDelay, key);
+    _o.Duration = TableEncryptionService.Convert(this.Duration, key);
+    _o.OperatorOutputPriority = TableEncryptionService.Convert(this.OperatorOutputPriority, key);
+    _o.PortraitPath = TableEncryptionService.Convert(this.PortraitPath, key);
+    _o.TextLocalizeKey = TableEncryptionService.Convert(this.TextLocalizeKey, key);
+    _o.VoiceId = new List<uint>();
+    for (var _j = 0; _j < this.VoiceIdLength; ++_j) {_o.VoiceId.Add(TableEncryptionService.Convert(this.VoiceId(_j), key));}
+    _o.OperatorWaitQueue = TableEncryptionService.Convert(this.OperatorWaitQueue, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.OperatorExcel> Pack(FlatBufferBuilder builder, OperatorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.OperatorExcel>);
+    var _GroupId = _o.GroupId == null ? default(StringOffset) : builder.CreateString(_o.GroupId);
+    var _PortraitPath = _o.PortraitPath == null ? default(StringOffset) : builder.CreateString(_o.PortraitPath);
+    var _TextLocalizeKey = _o.TextLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.TextLocalizeKey);
+    var _VoiceId = default(VectorOffset);
+    if (_o.VoiceId != null) {
+      var __VoiceId = _o.VoiceId.ToArray();
+      _VoiceId = CreateVoiceIdVector(builder, __VoiceId);
+    }
+    return CreateOperatorExcel(
+      builder,
+      _o.UniqueId,
+      _GroupId,
+      _o.OperatorCondition,
+      _o.OutputSequence,
+      _o.RandomWeight,
+      _o.OutputDelay,
+      _o.Duration,
+      _o.OperatorOutputPriority,
+      _PortraitPath,
+      _TextLocalizeKey,
+      _VoiceId,
+      _o.OperatorWaitQueue);
+  }
+}
+
+public class OperatorExcelT
+{
+  public long UniqueId { get; set; }
+  public string GroupId { get; set; }
+  public SCHALE.Common.FlatData.OperatorCondition OperatorCondition { get; set; }
+  public int OutputSequence { get; set; }
+  public int RandomWeight { get; set; }
+  public int OutputDelay { get; set; }
+  public int Duration { get; set; }
+  public int OperatorOutputPriority { get; set; }
+  public string PortraitPath { get; set; }
+  public string TextLocalizeKey { get; set; }
+  public List<uint> VoiceId { get; set; }
+  public bool OperatorWaitQueue { get; set; }
+
+  public OperatorExcelT() {
+    this.UniqueId = 0;
+    this.GroupId = null;
+    this.OperatorCondition = SCHALE.Common.FlatData.OperatorCondition.None;
+    this.OutputSequence = 0;
+    this.RandomWeight = 0;
+    this.OutputDelay = 0;
+    this.Duration = 0;
+    this.OperatorOutputPriority = 0;
+    this.PortraitPath = null;
+    this.TextLocalizeKey = null;
+    this.VoiceId = null;
+    this.OperatorWaitQueue = false;
   }
 }
 

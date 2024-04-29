@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CostumeExcel : IFlatbufferObject
@@ -263,6 +264,177 @@ public struct CostumeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CostumeExcel> EndCostumeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CostumeExcel>(o);
+  }
+  public CostumeExcelT UnPack() {
+    var _o = new CostumeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CostumeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Costume");
+    _o.CostumeGroupId = TableEncryptionService.Convert(this.CostumeGroupId, key);
+    _o.CostumeUniqueId = TableEncryptionService.Convert(this.CostumeUniqueId, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.IsDefault = TableEncryptionService.Convert(this.IsDefault, key);
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.ReleaseDate = TableEncryptionService.Convert(this.ReleaseDate, key);
+    _o.CollectionVisibleStartDate = TableEncryptionService.Convert(this.CollectionVisibleStartDate, key);
+    _o.CollectionVisibleEndDate = TableEncryptionService.Convert(this.CollectionVisibleEndDate, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.CharacterSkillListGroupId = TableEncryptionService.Convert(this.CharacterSkillListGroupId, key);
+    _o.SpineResourceName = TableEncryptionService.Convert(this.SpineResourceName, key);
+    _o.SpineResourceNameDiorama = TableEncryptionService.Convert(this.SpineResourceNameDiorama, key);
+    _o.SpineResourceNameDioramaForFormConversion = new List<string>();
+    for (var _j = 0; _j < this.SpineResourceNameDioramaForFormConversionLength; ++_j) {_o.SpineResourceNameDioramaForFormConversion.Add(TableEncryptionService.Convert(this.SpineResourceNameDioramaForFormConversion(_j), key));}
+    _o.EntityMaterialType = TableEncryptionService.Convert(this.EntityMaterialType, key);
+    _o.ModelPrefabName = TableEncryptionService.Convert(this.ModelPrefabName, key);
+    _o.CafeModelPrefabName = TableEncryptionService.Convert(this.CafeModelPrefabName, key);
+    _o.EchelonModelPrefabName = TableEncryptionService.Convert(this.EchelonModelPrefabName, key);
+    _o.StrategyModelPrefabName = TableEncryptionService.Convert(this.StrategyModelPrefabName, key);
+    _o.TextureDir = TableEncryptionService.Convert(this.TextureDir, key);
+    _o.CollectionTexturePath = TableEncryptionService.Convert(this.CollectionTexturePath, key);
+    _o.CollectionBGTexturePath = TableEncryptionService.Convert(this.CollectionBGTexturePath, key);
+    _o.UseObjectHPBAR = TableEncryptionService.Convert(this.UseObjectHPBAR, key);
+    _o.TextureBoss = TableEncryptionService.Convert(this.TextureBoss, key);
+    _o.TextureSkillCard = new List<string>();
+    for (var _j = 0; _j < this.TextureSkillCardLength; ++_j) {_o.TextureSkillCard.Add(TableEncryptionService.Convert(this.TextureSkillCard(_j), key));}
+    _o.InformationPacel = TableEncryptionService.Convert(this.InformationPacel, key);
+    _o.AnimationSSR = TableEncryptionService.Convert(this.AnimationSSR, key);
+    _o.EnterStrategyAnimationName = TableEncryptionService.Convert(this.EnterStrategyAnimationName, key);
+    _o.AnimationValidator = TableEncryptionService.Convert(this.AnimationValidator, key);
+    _o.CharacterVoiceGroupId = TableEncryptionService.Convert(this.CharacterVoiceGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CostumeExcel> Pack(FlatBufferBuilder builder, CostumeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CostumeExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _ReleaseDate = _o.ReleaseDate == null ? default(StringOffset) : builder.CreateString(_o.ReleaseDate);
+    var _CollectionVisibleStartDate = _o.CollectionVisibleStartDate == null ? default(StringOffset) : builder.CreateString(_o.CollectionVisibleStartDate);
+    var _CollectionVisibleEndDate = _o.CollectionVisibleEndDate == null ? default(StringOffset) : builder.CreateString(_o.CollectionVisibleEndDate);
+    var _SpineResourceName = _o.SpineResourceName == null ? default(StringOffset) : builder.CreateString(_o.SpineResourceName);
+    var _SpineResourceNameDiorama = _o.SpineResourceNameDiorama == null ? default(StringOffset) : builder.CreateString(_o.SpineResourceNameDiorama);
+    var _SpineResourceNameDioramaForFormConversion = default(VectorOffset);
+    if (_o.SpineResourceNameDioramaForFormConversion != null) {
+      var __SpineResourceNameDioramaForFormConversion = new StringOffset[_o.SpineResourceNameDioramaForFormConversion.Count];
+      for (var _j = 0; _j < __SpineResourceNameDioramaForFormConversion.Length; ++_j) { __SpineResourceNameDioramaForFormConversion[_j] = builder.CreateString(_o.SpineResourceNameDioramaForFormConversion[_j]); }
+      _SpineResourceNameDioramaForFormConversion = CreateSpineResourceNameDioramaForFormConversionVector(builder, __SpineResourceNameDioramaForFormConversion);
+    }
+    var _ModelPrefabName = _o.ModelPrefabName == null ? default(StringOffset) : builder.CreateString(_o.ModelPrefabName);
+    var _CafeModelPrefabName = _o.CafeModelPrefabName == null ? default(StringOffset) : builder.CreateString(_o.CafeModelPrefabName);
+    var _EchelonModelPrefabName = _o.EchelonModelPrefabName == null ? default(StringOffset) : builder.CreateString(_o.EchelonModelPrefabName);
+    var _StrategyModelPrefabName = _o.StrategyModelPrefabName == null ? default(StringOffset) : builder.CreateString(_o.StrategyModelPrefabName);
+    var _TextureDir = _o.TextureDir == null ? default(StringOffset) : builder.CreateString(_o.TextureDir);
+    var _CollectionTexturePath = _o.CollectionTexturePath == null ? default(StringOffset) : builder.CreateString(_o.CollectionTexturePath);
+    var _CollectionBGTexturePath = _o.CollectionBGTexturePath == null ? default(StringOffset) : builder.CreateString(_o.CollectionBGTexturePath);
+    var _TextureBoss = _o.TextureBoss == null ? default(StringOffset) : builder.CreateString(_o.TextureBoss);
+    var _TextureSkillCard = default(VectorOffset);
+    if (_o.TextureSkillCard != null) {
+      var __TextureSkillCard = new StringOffset[_o.TextureSkillCard.Count];
+      for (var _j = 0; _j < __TextureSkillCard.Length; ++_j) { __TextureSkillCard[_j] = builder.CreateString(_o.TextureSkillCard[_j]); }
+      _TextureSkillCard = CreateTextureSkillCardVector(builder, __TextureSkillCard);
+    }
+    var _InformationPacel = _o.InformationPacel == null ? default(StringOffset) : builder.CreateString(_o.InformationPacel);
+    var _AnimationSSR = _o.AnimationSSR == null ? default(StringOffset) : builder.CreateString(_o.AnimationSSR);
+    var _EnterStrategyAnimationName = _o.EnterStrategyAnimationName == null ? default(StringOffset) : builder.CreateString(_o.EnterStrategyAnimationName);
+    return CreateCostumeExcel(
+      builder,
+      _o.CostumeGroupId,
+      _o.CostumeUniqueId,
+      _DevName,
+      _o.ProductionStep,
+      _o.IsDefault,
+      _o.CollectionVisible,
+      _ReleaseDate,
+      _CollectionVisibleStartDate,
+      _CollectionVisibleEndDate,
+      _o.Rarity,
+      _o.CharacterSkillListGroupId,
+      _SpineResourceName,
+      _SpineResourceNameDiorama,
+      _SpineResourceNameDioramaForFormConversion,
+      _o.EntityMaterialType,
+      _ModelPrefabName,
+      _CafeModelPrefabName,
+      _EchelonModelPrefabName,
+      _StrategyModelPrefabName,
+      _TextureDir,
+      _CollectionTexturePath,
+      _CollectionBGTexturePath,
+      _o.UseObjectHPBAR,
+      _TextureBoss,
+      _TextureSkillCard,
+      _InformationPacel,
+      _AnimationSSR,
+      _EnterStrategyAnimationName,
+      _o.AnimationValidator,
+      _o.CharacterVoiceGroupId);
+  }
+}
+
+public class CostumeExcelT
+{
+  public long CostumeGroupId { get; set; }
+  public long CostumeUniqueId { get; set; }
+  public string DevName { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public bool IsDefault { get; set; }
+  public bool CollectionVisible { get; set; }
+  public string ReleaseDate { get; set; }
+  public string CollectionVisibleStartDate { get; set; }
+  public string CollectionVisibleEndDate { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public long CharacterSkillListGroupId { get; set; }
+  public string SpineResourceName { get; set; }
+  public string SpineResourceNameDiorama { get; set; }
+  public List<string> SpineResourceNameDioramaForFormConversion { get; set; }
+  public SCHALE.Common.FlatData.EntityMaterialType EntityMaterialType { get; set; }
+  public string ModelPrefabName { get; set; }
+  public string CafeModelPrefabName { get; set; }
+  public string EchelonModelPrefabName { get; set; }
+  public string StrategyModelPrefabName { get; set; }
+  public string TextureDir { get; set; }
+  public string CollectionTexturePath { get; set; }
+  public string CollectionBGTexturePath { get; set; }
+  public bool UseObjectHPBAR { get; set; }
+  public string TextureBoss { get; set; }
+  public List<string> TextureSkillCard { get; set; }
+  public string InformationPacel { get; set; }
+  public string AnimationSSR { get; set; }
+  public string EnterStrategyAnimationName { get; set; }
+  public bool AnimationValidator { get; set; }
+  public long CharacterVoiceGroupId { get; set; }
+
+  public CostumeExcelT() {
+    this.CostumeGroupId = 0;
+    this.CostumeUniqueId = 0;
+    this.DevName = null;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.IsDefault = false;
+    this.CollectionVisible = false;
+    this.ReleaseDate = null;
+    this.CollectionVisibleStartDate = null;
+    this.CollectionVisibleEndDate = null;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.CharacterSkillListGroupId = 0;
+    this.SpineResourceName = null;
+    this.SpineResourceNameDiorama = null;
+    this.SpineResourceNameDioramaForFormConversion = null;
+    this.EntityMaterialType = SCHALE.Common.FlatData.EntityMaterialType.Wood;
+    this.ModelPrefabName = null;
+    this.CafeModelPrefabName = null;
+    this.EchelonModelPrefabName = null;
+    this.StrategyModelPrefabName = null;
+    this.TextureDir = null;
+    this.CollectionTexturePath = null;
+    this.CollectionBGTexturePath = null;
+    this.UseObjectHPBAR = false;
+    this.TextureBoss = null;
+    this.TextureSkillCard = null;
+    this.InformationPacel = null;
+    this.AnimationSSR = null;
+    this.EnterStrategyAnimationName = null;
+    this.AnimationValidator = false;
+    this.CharacterVoiceGroupId = 0;
   }
 }
 

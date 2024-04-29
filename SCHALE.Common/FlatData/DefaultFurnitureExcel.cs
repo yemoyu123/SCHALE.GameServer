@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultFurnitureExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct DefaultFurnitureExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultFurnitureExcel> EndDefaultFurnitureExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultFurnitureExcel>(o);
+  }
+  public DefaultFurnitureExcelT UnPack() {
+    var _o = new DefaultFurnitureExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultFurnitureExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultFurniture");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Location = TableEncryptionService.Convert(this.Location, key);
+    _o.PositionX = TableEncryptionService.Convert(this.PositionX, key);
+    _o.PositionY = TableEncryptionService.Convert(this.PositionY, key);
+    _o.Rotation = TableEncryptionService.Convert(this.Rotation, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultFurnitureExcel> Pack(FlatBufferBuilder builder, DefaultFurnitureExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultFurnitureExcel>);
+    return CreateDefaultFurnitureExcel(
+      builder,
+      _o.Id,
+      _o.Location,
+      _o.PositionX,
+      _o.PositionY,
+      _o.Rotation);
+  }
+}
+
+public class DefaultFurnitureExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.FurnitureLocation Location { get; set; }
+  public float PositionX { get; set; }
+  public float PositionY { get; set; }
+  public float Rotation { get; set; }
+
+  public DefaultFurnitureExcelT() {
+    this.Id = 0;
+    this.Location = SCHALE.Common.FlatData.FurnitureLocation.None;
+    this.PositionX = 0.0f;
+    this.PositionY = 0.0f;
+    this.Rotation = 0.0f;
   }
 }
 

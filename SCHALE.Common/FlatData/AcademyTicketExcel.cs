@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyTicketExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct AcademyTicketExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyTicketExcel> EndAcademyTicketExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyTicketExcel>(o);
+  }
+  public AcademyTicketExcelT UnPack() {
+    var _o = new AcademyTicketExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyTicketExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyTicket");
+    _o.LocationRankSum = TableEncryptionService.Convert(this.LocationRankSum, key);
+    _o.ScheduleTicktetMax = TableEncryptionService.Convert(this.ScheduleTicktetMax, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyTicketExcel> Pack(FlatBufferBuilder builder, AcademyTicketExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyTicketExcel>);
+    return CreateAcademyTicketExcel(
+      builder,
+      _o.LocationRankSum,
+      _o.ScheduleTicktetMax);
+  }
+}
+
+public class AcademyTicketExcelT
+{
+  public long LocationRankSum { get; set; }
+  public long ScheduleTicktetMax { get; set; }
+
+  public AcademyTicketExcelT() {
+    this.LocationRankSum = 0;
+    this.ScheduleTicktetMax = 0;
   }
 }
 

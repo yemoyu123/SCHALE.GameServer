@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct KnockBackExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct KnockBackExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.KnockBackExcel> EndKnockBackExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.KnockBackExcel>(o);
+  }
+  public KnockBackExcelT UnPack() {
+    var _o = new KnockBackExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(KnockBackExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("KnockBack");
+    _o.Index = TableEncryptionService.Convert(this.Index, key);
+    _o.Dist = TableEncryptionService.Convert(this.Dist, key);
+    _o.Speed = TableEncryptionService.Convert(this.Speed, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.KnockBackExcel> Pack(FlatBufferBuilder builder, KnockBackExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.KnockBackExcel>);
+    return CreateKnockBackExcel(
+      builder,
+      _o.Index,
+      _o.Dist,
+      _o.Speed);
+  }
+}
+
+public class KnockBackExcelT
+{
+  public long Index { get; set; }
+  public float Dist { get; set; }
+  public float Speed { get; set; }
+
+  public KnockBackExcelT() {
+    this.Index = 0;
+    this.Dist = 0.0f;
+    this.Speed = 0.0f;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldMasteryLevelExcel : IFlatbufferObject
@@ -97,6 +98,70 @@ public struct FieldMasteryLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldMasteryLevelExcel> EndFieldMasteryLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldMasteryLevelExcel>(o);
+  }
+  public FieldMasteryLevelExcelT UnPack() {
+    var _o = new FieldMasteryLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldMasteryLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldMasteryLevel");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Id = new List<long>();
+    for (var _j = 0; _j < this.IdLength; ++_j) {_o.Id.Add(TableEncryptionService.Convert(this.Id(_j), key));}
+    _o.Exp = new List<long>();
+    for (var _j = 0; _j < this.ExpLength; ++_j) {_o.Exp.Add(TableEncryptionService.Convert(this.Exp(_j), key));}
+    _o.TotalExp = new List<long>();
+    for (var _j = 0; _j < this.TotalExpLength; ++_j) {_o.TotalExp.Add(TableEncryptionService.Convert(this.TotalExp(_j), key));}
+    _o.RewardId = new List<long>();
+    for (var _j = 0; _j < this.RewardIdLength; ++_j) {_o.RewardId.Add(TableEncryptionService.Convert(this.RewardId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldMasteryLevelExcel> Pack(FlatBufferBuilder builder, FieldMasteryLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldMasteryLevelExcel>);
+    var _Id = default(VectorOffset);
+    if (_o.Id != null) {
+      var __Id = _o.Id.ToArray();
+      _Id = CreateIdVector(builder, __Id);
+    }
+    var _Exp = default(VectorOffset);
+    if (_o.Exp != null) {
+      var __Exp = _o.Exp.ToArray();
+      _Exp = CreateExpVector(builder, __Exp);
+    }
+    var _TotalExp = default(VectorOffset);
+    if (_o.TotalExp != null) {
+      var __TotalExp = _o.TotalExp.ToArray();
+      _TotalExp = CreateTotalExpVector(builder, __TotalExp);
+    }
+    var _RewardId = default(VectorOffset);
+    if (_o.RewardId != null) {
+      var __RewardId = _o.RewardId.ToArray();
+      _RewardId = CreateRewardIdVector(builder, __RewardId);
+    }
+    return CreateFieldMasteryLevelExcel(
+      builder,
+      _o.Level,
+      _Id,
+      _Exp,
+      _TotalExp,
+      _RewardId);
+  }
+}
+
+public class FieldMasteryLevelExcelT
+{
+  public int Level { get; set; }
+  public List<long> Id { get; set; }
+  public List<long> Exp { get; set; }
+  public List<long> TotalExp { get; set; }
+  public List<long> RewardId { get; set; }
+
+  public FieldMasteryLevelExcelT() {
+    this.Level = 0;
+    this.Id = null;
+    this.Exp = null;
+    this.TotalExp = null;
+    this.RewardId = null;
   }
 }
 

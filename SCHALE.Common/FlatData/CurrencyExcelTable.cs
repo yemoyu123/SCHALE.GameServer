@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CurrencyExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CurrencyExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CurrencyExcelTable> EndCurrencyExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CurrencyExcelTable>(o);
+  }
+  public CurrencyExcelTableT UnPack() {
+    var _o = new CurrencyExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CurrencyExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CurrencyExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CurrencyExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CurrencyExcelTable> Pack(FlatBufferBuilder builder, CurrencyExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CurrencyExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CurrencyExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CurrencyExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCurrencyExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CurrencyExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CurrencyExcelT> DataList { get; set; }
+
+  public CurrencyExcelTableT() {
+    this.DataList = null;
   }
 }
 

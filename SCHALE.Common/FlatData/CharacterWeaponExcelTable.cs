@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterWeaponExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CharacterWeaponExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterWeaponExcelTable> EndCharacterWeaponExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterWeaponExcelTable>(o);
+  }
+  public CharacterWeaponExcelTableT UnPack() {
+    var _o = new CharacterWeaponExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterWeaponExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterWeaponExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CharacterWeaponExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterWeaponExcelTable> Pack(FlatBufferBuilder builder, CharacterWeaponExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterWeaponExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CharacterWeaponExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CharacterWeaponExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCharacterWeaponExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CharacterWeaponExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CharacterWeaponExcelT> DataList { get; set; }
+
+  public CharacterWeaponExcelTableT() {
+    this.DataList = null;
   }
 }
 

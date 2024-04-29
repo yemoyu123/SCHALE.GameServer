@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentSeasonExcel : IFlatbufferObject
@@ -271,6 +272,187 @@ public struct EventContentSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentSeasonExcel> EndEventContentSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentSeasonExcel>(o);
+  }
+  public EventContentSeasonExcelT UnPack() {
+    var _o = new EventContentSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentSeason");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.OriginalEventContentId = TableEncryptionService.Convert(this.OriginalEventContentId, key);
+    _o.IsReturn = TableEncryptionService.Convert(this.IsReturn, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.EventContentType = TableEncryptionService.Convert(this.EventContentType, key);
+    _o.OpenConditionContent = TableEncryptionService.Convert(this.OpenConditionContent, key);
+    _o.EventDisplay = TableEncryptionService.Convert(this.EventDisplay, key);
+    _o.IconOrder = TableEncryptionService.Convert(this.IconOrder, key);
+    _o.SubEventType = TableEncryptionService.Convert(this.SubEventType, key);
+    _o.SubEvent = TableEncryptionService.Convert(this.SubEvent, key);
+    _o.EventItemId = TableEncryptionService.Convert(this.EventItemId, key);
+    _o.MainEventId = TableEncryptionService.Convert(this.MainEventId, key);
+    _o.EventChangeOpenCondition = TableEncryptionService.Convert(this.EventChangeOpenCondition, key);
+    _o.BeforehandExposedTime = TableEncryptionService.Convert(this.BeforehandExposedTime, key);
+    _o.EventContentOpenTime = TableEncryptionService.Convert(this.EventContentOpenTime, key);
+    _o.EventContentCloseTime = TableEncryptionService.Convert(this.EventContentCloseTime, key);
+    _o.ExtensionTime = TableEncryptionService.Convert(this.ExtensionTime, key);
+    _o.MainIconParcelPath = TableEncryptionService.Convert(this.MainIconParcelPath, key);
+    _o.SubIconParcelPath = TableEncryptionService.Convert(this.SubIconParcelPath, key);
+    _o.BeforehandBgImagePath = TableEncryptionService.Convert(this.BeforehandBgImagePath, key);
+    _o.MinigamePrologScenarioGroupId = TableEncryptionService.Convert(this.MinigamePrologScenarioGroupId, key);
+    _o.BeforehandScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.BeforehandScenarioGroupIdLength; ++_j) {_o.BeforehandScenarioGroupId.Add(TableEncryptionService.Convert(this.BeforehandScenarioGroupId(_j), key));}
+    _o.MainBannerImagePath = TableEncryptionService.Convert(this.MainBannerImagePath, key);
+    _o.MainBgImagePath = TableEncryptionService.Convert(this.MainBgImagePath, key);
+    _o.ShiftTriggerStageId = TableEncryptionService.Convert(this.ShiftTriggerStageId, key);
+    _o.ShiftMainBgImagePath = TableEncryptionService.Convert(this.ShiftMainBgImagePath, key);
+    _o.MinigameLobbyPrefabName = TableEncryptionService.Convert(this.MinigameLobbyPrefabName, key);
+    _o.MinigameVictoryPrefabName = TableEncryptionService.Convert(this.MinigameVictoryPrefabName, key);
+    _o.MinigameMissionBgPrefabName = TableEncryptionService.Convert(this.MinigameMissionBgPrefabName, key);
+    _o.CardBgImagePath = TableEncryptionService.Convert(this.CardBgImagePath, key);
+    _o.EventAssist = TableEncryptionService.Convert(this.EventAssist, key);
+    _o.EventContentReleaseType = TableEncryptionService.Convert(this.EventContentReleaseType, key);
+    _o.EventContentStageRewardIdPermanent = TableEncryptionService.Convert(this.EventContentStageRewardIdPermanent, key);
+    _o.RewardTagPermanent = TableEncryptionService.Convert(this.RewardTagPermanent, key);
+    _o.MiniEventShortCutScenarioModeId = TableEncryptionService.Convert(this.MiniEventShortCutScenarioModeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentSeasonExcel> Pack(FlatBufferBuilder builder, EventContentSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentSeasonExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _BeforehandExposedTime = _o.BeforehandExposedTime == null ? default(StringOffset) : builder.CreateString(_o.BeforehandExposedTime);
+    var _EventContentOpenTime = _o.EventContentOpenTime == null ? default(StringOffset) : builder.CreateString(_o.EventContentOpenTime);
+    var _EventContentCloseTime = _o.EventContentCloseTime == null ? default(StringOffset) : builder.CreateString(_o.EventContentCloseTime);
+    var _ExtensionTime = _o.ExtensionTime == null ? default(StringOffset) : builder.CreateString(_o.ExtensionTime);
+    var _MainIconParcelPath = _o.MainIconParcelPath == null ? default(StringOffset) : builder.CreateString(_o.MainIconParcelPath);
+    var _SubIconParcelPath = _o.SubIconParcelPath == null ? default(StringOffset) : builder.CreateString(_o.SubIconParcelPath);
+    var _BeforehandBgImagePath = _o.BeforehandBgImagePath == null ? default(StringOffset) : builder.CreateString(_o.BeforehandBgImagePath);
+    var _BeforehandScenarioGroupId = default(VectorOffset);
+    if (_o.BeforehandScenarioGroupId != null) {
+      var __BeforehandScenarioGroupId = _o.BeforehandScenarioGroupId.ToArray();
+      _BeforehandScenarioGroupId = CreateBeforehandScenarioGroupIdVector(builder, __BeforehandScenarioGroupId);
+    }
+    var _MainBannerImagePath = _o.MainBannerImagePath == null ? default(StringOffset) : builder.CreateString(_o.MainBannerImagePath);
+    var _MainBgImagePath = _o.MainBgImagePath == null ? default(StringOffset) : builder.CreateString(_o.MainBgImagePath);
+    var _ShiftMainBgImagePath = _o.ShiftMainBgImagePath == null ? default(StringOffset) : builder.CreateString(_o.ShiftMainBgImagePath);
+    var _MinigameLobbyPrefabName = _o.MinigameLobbyPrefabName == null ? default(StringOffset) : builder.CreateString(_o.MinigameLobbyPrefabName);
+    var _MinigameVictoryPrefabName = _o.MinigameVictoryPrefabName == null ? default(StringOffset) : builder.CreateString(_o.MinigameVictoryPrefabName);
+    var _MinigameMissionBgPrefabName = _o.MinigameMissionBgPrefabName == null ? default(StringOffset) : builder.CreateString(_o.MinigameMissionBgPrefabName);
+    var _CardBgImagePath = _o.CardBgImagePath == null ? default(StringOffset) : builder.CreateString(_o.CardBgImagePath);
+    return CreateEventContentSeasonExcel(
+      builder,
+      _o.EventContentId,
+      _o.OriginalEventContentId,
+      _o.IsReturn,
+      _Name,
+      _o.EventContentType,
+      _o.OpenConditionContent,
+      _o.EventDisplay,
+      _o.IconOrder,
+      _o.SubEventType,
+      _o.SubEvent,
+      _o.EventItemId,
+      _o.MainEventId,
+      _o.EventChangeOpenCondition,
+      _BeforehandExposedTime,
+      _EventContentOpenTime,
+      _EventContentCloseTime,
+      _ExtensionTime,
+      _MainIconParcelPath,
+      _SubIconParcelPath,
+      _BeforehandBgImagePath,
+      _o.MinigamePrologScenarioGroupId,
+      _BeforehandScenarioGroupId,
+      _MainBannerImagePath,
+      _MainBgImagePath,
+      _o.ShiftTriggerStageId,
+      _ShiftMainBgImagePath,
+      _MinigameLobbyPrefabName,
+      _MinigameVictoryPrefabName,
+      _MinigameMissionBgPrefabName,
+      _CardBgImagePath,
+      _o.EventAssist,
+      _o.EventContentReleaseType,
+      _o.EventContentStageRewardIdPermanent,
+      _o.RewardTagPermanent,
+      _o.MiniEventShortCutScenarioModeId);
+  }
+}
+
+public class EventContentSeasonExcelT
+{
+  public long EventContentId { get; set; }
+  public long OriginalEventContentId { get; set; }
+  public bool IsReturn { get; set; }
+  public string Name { get; set; }
+  public SCHALE.Common.FlatData.EventContentType EventContentType { get; set; }
+  public SCHALE.Common.FlatData.OpenConditionContent OpenConditionContent { get; set; }
+  public bool EventDisplay { get; set; }
+  public int IconOrder { get; set; }
+  public SCHALE.Common.FlatData.SubEventType SubEventType { get; set; }
+  public bool SubEvent { get; set; }
+  public long EventItemId { get; set; }
+  public long MainEventId { get; set; }
+  public long EventChangeOpenCondition { get; set; }
+  public string BeforehandExposedTime { get; set; }
+  public string EventContentOpenTime { get; set; }
+  public string EventContentCloseTime { get; set; }
+  public string ExtensionTime { get; set; }
+  public string MainIconParcelPath { get; set; }
+  public string SubIconParcelPath { get; set; }
+  public string BeforehandBgImagePath { get; set; }
+  public long MinigamePrologScenarioGroupId { get; set; }
+  public List<long> BeforehandScenarioGroupId { get; set; }
+  public string MainBannerImagePath { get; set; }
+  public string MainBgImagePath { get; set; }
+  public long ShiftTriggerStageId { get; set; }
+  public string ShiftMainBgImagePath { get; set; }
+  public string MinigameLobbyPrefabName { get; set; }
+  public string MinigameVictoryPrefabName { get; set; }
+  public string MinigameMissionBgPrefabName { get; set; }
+  public string CardBgImagePath { get; set; }
+  public bool EventAssist { get; set; }
+  public SCHALE.Common.FlatData.EventContentReleaseType EventContentReleaseType { get; set; }
+  public long EventContentStageRewardIdPermanent { get; set; }
+  public SCHALE.Common.FlatData.RewardTag RewardTagPermanent { get; set; }
+  public long MiniEventShortCutScenarioModeId { get; set; }
+
+  public EventContentSeasonExcelT() {
+    this.EventContentId = 0;
+    this.OriginalEventContentId = 0;
+    this.IsReturn = false;
+    this.Name = null;
+    this.EventContentType = SCHALE.Common.FlatData.EventContentType.Stage;
+    this.OpenConditionContent = SCHALE.Common.FlatData.OpenConditionContent.Shop;
+    this.EventDisplay = false;
+    this.IconOrder = 0;
+    this.SubEventType = SCHALE.Common.FlatData.SubEventType.None;
+    this.SubEvent = false;
+    this.EventItemId = 0;
+    this.MainEventId = 0;
+    this.EventChangeOpenCondition = 0;
+    this.BeforehandExposedTime = null;
+    this.EventContentOpenTime = null;
+    this.EventContentCloseTime = null;
+    this.ExtensionTime = null;
+    this.MainIconParcelPath = null;
+    this.SubIconParcelPath = null;
+    this.BeforehandBgImagePath = null;
+    this.MinigamePrologScenarioGroupId = 0;
+    this.BeforehandScenarioGroupId = null;
+    this.MainBannerImagePath = null;
+    this.MainBgImagePath = null;
+    this.ShiftTriggerStageId = 0;
+    this.ShiftMainBgImagePath = null;
+    this.MinigameLobbyPrefabName = null;
+    this.MinigameVictoryPrefabName = null;
+    this.MinigameMissionBgPrefabName = null;
+    this.CardBgImagePath = null;
+    this.EventAssist = false;
+    this.EventContentReleaseType = SCHALE.Common.FlatData.EventContentReleaseType.None;
+    this.EventContentStageRewardIdPermanent = 0;
+    this.RewardTagPermanent = SCHALE.Common.FlatData.RewardTag.Default;
+    this.MiniEventShortCutScenarioModeId = 0;
   }
 }
 

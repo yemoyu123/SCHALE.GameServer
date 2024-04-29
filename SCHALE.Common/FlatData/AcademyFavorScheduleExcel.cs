@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyFavorScheduleExcel : IFlatbufferObject
@@ -119,6 +120,93 @@ public struct AcademyFavorScheduleExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyFavorScheduleExcel> EndAcademyFavorScheduleExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyFavorScheduleExcel>(o);
+  }
+  public AcademyFavorScheduleExcelT UnPack() {
+    var _o = new AcademyFavorScheduleExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyFavorScheduleExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyFavorSchedule");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.ScheduleGroupId = TableEncryptionService.Convert(this.ScheduleGroupId, key);
+    _o.OrderInGroup = TableEncryptionService.Convert(this.OrderInGroup, key);
+    _o.Location = TableEncryptionService.Convert(this.Location, key);
+    _o.LocalizeScenarioId = TableEncryptionService.Convert(this.LocalizeScenarioId, key);
+    _o.FavorRank = TableEncryptionService.Convert(this.FavorRank, key);
+    _o.SecretStoneAmount = TableEncryptionService.Convert(this.SecretStoneAmount, key);
+    _o.ScenarioSriptGroupId = TableEncryptionService.Convert(this.ScenarioSriptGroupId, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyFavorScheduleExcel> Pack(FlatBufferBuilder builder, AcademyFavorScheduleExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyFavorScheduleExcel>);
+    var _Location = _o.Location == null ? default(StringOffset) : builder.CreateString(_o.Location);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    return CreateAcademyFavorScheduleExcel(
+      builder,
+      _o.Id,
+      _o.CharacterId,
+      _o.ScheduleGroupId,
+      _o.OrderInGroup,
+      _Location,
+      _o.LocalizeScenarioId,
+      _o.FavorRank,
+      _o.SecretStoneAmount,
+      _o.ScenarioSriptGroupId,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardAmount);
+  }
+}
+
+public class AcademyFavorScheduleExcelT
+{
+  public long Id { get; set; }
+  public long CharacterId { get; set; }
+  public long ScheduleGroupId { get; set; }
+  public long OrderInGroup { get; set; }
+  public string Location { get; set; }
+  public uint LocalizeScenarioId { get; set; }
+  public long FavorRank { get; set; }
+  public long SecretStoneAmount { get; set; }
+  public long ScenarioSriptGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardAmount { get; set; }
+
+  public AcademyFavorScheduleExcelT() {
+    this.Id = 0;
+    this.CharacterId = 0;
+    this.ScheduleGroupId = 0;
+    this.OrderInGroup = 0;
+    this.Location = null;
+    this.LocalizeScenarioId = 0;
+    this.FavorRank = 0;
+    this.SecretStoneAmount = 0;
+    this.ScenarioSriptGroupId = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardAmount = null;
   }
 }
 

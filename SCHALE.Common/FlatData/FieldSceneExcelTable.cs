@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldSceneExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct FieldSceneExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldSceneExcelTable> EndFieldSceneExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldSceneExcelTable>(o);
+  }
+  public FieldSceneExcelTableT UnPack() {
+    var _o = new FieldSceneExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldSceneExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldSceneExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.FieldSceneExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldSceneExcelTable> Pack(FlatBufferBuilder builder, FieldSceneExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldSceneExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.FieldSceneExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.FieldSceneExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateFieldSceneExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class FieldSceneExcelTableT
+{
+  public List<SCHALE.Common.FlatData.FieldSceneExcelT> DataList { get; set; }
+
+  public FieldSceneExcelTableT() {
+    this.DataList = null;
   }
 }
 

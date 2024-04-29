@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SchoolDungeonRewardExcel : IFlatbufferObject
@@ -61,6 +62,58 @@ public struct SchoolDungeonRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SchoolDungeonRewardExcel> EndSchoolDungeonRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SchoolDungeonRewardExcel>(o);
+  }
+  public SchoolDungeonRewardExcelT UnPack() {
+    var _o = new SchoolDungeonRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SchoolDungeonRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SchoolDungeonReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.DungeonType = TableEncryptionService.Convert(this.DungeonType, key);
+    _o.RewardTag = TableEncryptionService.Convert(this.RewardTag, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+    _o.RewardParcelProbability = TableEncryptionService.Convert(this.RewardParcelProbability, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SchoolDungeonRewardExcel> Pack(FlatBufferBuilder builder, SchoolDungeonRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SchoolDungeonRewardExcel>);
+    return CreateSchoolDungeonRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.DungeonType,
+      _o.RewardTag,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount,
+      _o.RewardParcelProbability,
+      _o.IsDisplayed);
+  }
+}
+
+public class SchoolDungeonRewardExcelT
+{
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.SchoolDungeonType DungeonType { get; set; }
+  public SCHALE.Common.FlatData.RewardTag RewardTag { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+  public long RewardParcelProbability { get; set; }
+  public bool IsDisplayed { get; set; }
+
+  public SchoolDungeonRewardExcelT() {
+    this.GroupId = 0;
+    this.DungeonType = SCHALE.Common.FlatData.SchoolDungeonType.SchoolA;
+    this.RewardTag = SCHALE.Common.FlatData.RewardTag.Default;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
+    this.RewardParcelProbability = 0;
+    this.IsDisplayed = false;
   }
 }
 

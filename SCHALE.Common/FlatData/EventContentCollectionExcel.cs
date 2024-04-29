@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentCollectionExcel : IFlatbufferObject
@@ -121,6 +122,92 @@ public struct EventContentCollectionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentCollectionExcel> EndEventContentCollectionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentCollectionExcel>(o);
+  }
+  public EventContentCollectionExcelT UnPack() {
+    var _o = new EventContentCollectionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentCollectionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentCollection");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.UnlockConditionType = TableEncryptionService.Convert(this.UnlockConditionType, key);
+    _o.UnlockConditionParameter = new List<long>();
+    for (var _j = 0; _j < this.UnlockConditionParameterLength; ++_j) {_o.UnlockConditionParameter.Add(TableEncryptionService.Convert(this.UnlockConditionParameter(_j), key));}
+    _o.MultipleConditionCheckType = TableEncryptionService.Convert(this.MultipleConditionCheckType, key);
+    _o.UnlockConditionCount = TableEncryptionService.Convert(this.UnlockConditionCount, key);
+    _o.IsObject = TableEncryptionService.Convert(this.IsObject, key);
+    _o.IsHorizon = TableEncryptionService.Convert(this.IsHorizon, key);
+    _o.EmblemResource = TableEncryptionService.Convert(this.EmblemResource, key);
+    _o.ThumbResource = TableEncryptionService.Convert(this.ThumbResource, key);
+    _o.FullResource = TableEncryptionService.Convert(this.FullResource, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.SubNameLocalizeCodeId = TableEncryptionService.Convert(this.SubNameLocalizeCodeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentCollectionExcel> Pack(FlatBufferBuilder builder, EventContentCollectionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentCollectionExcel>);
+    var _UnlockConditionParameter = default(VectorOffset);
+    if (_o.UnlockConditionParameter != null) {
+      var __UnlockConditionParameter = _o.UnlockConditionParameter.ToArray();
+      _UnlockConditionParameter = CreateUnlockConditionParameterVector(builder, __UnlockConditionParameter);
+    }
+    var _EmblemResource = _o.EmblemResource == null ? default(StringOffset) : builder.CreateString(_o.EmblemResource);
+    var _ThumbResource = _o.ThumbResource == null ? default(StringOffset) : builder.CreateString(_o.ThumbResource);
+    var _FullResource = _o.FullResource == null ? default(StringOffset) : builder.CreateString(_o.FullResource);
+    var _SubNameLocalizeCodeId = _o.SubNameLocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.SubNameLocalizeCodeId);
+    return CreateEventContentCollectionExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.GroupId,
+      _o.UnlockConditionType,
+      _UnlockConditionParameter,
+      _o.MultipleConditionCheckType,
+      _o.UnlockConditionCount,
+      _o.IsObject,
+      _o.IsHorizon,
+      _EmblemResource,
+      _ThumbResource,
+      _FullResource,
+      _o.LocalizeEtcId,
+      _SubNameLocalizeCodeId);
+  }
+}
+
+public class EventContentCollectionExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.EventCollectionUnlockType UnlockConditionType { get; set; }
+  public List<long> UnlockConditionParameter { get; set; }
+  public SCHALE.Common.FlatData.MultipleConditionCheckType MultipleConditionCheckType { get; set; }
+  public long UnlockConditionCount { get; set; }
+  public bool IsObject { get; set; }
+  public bool IsHorizon { get; set; }
+  public string EmblemResource { get; set; }
+  public string ThumbResource { get; set; }
+  public string FullResource { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string SubNameLocalizeCodeId { get; set; }
+
+  public EventContentCollectionExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.GroupId = 0;
+    this.UnlockConditionType = SCHALE.Common.FlatData.EventCollectionUnlockType.None;
+    this.UnlockConditionParameter = null;
+    this.MultipleConditionCheckType = SCHALE.Common.FlatData.MultipleConditionCheckType.And;
+    this.UnlockConditionCount = 0;
+    this.IsObject = false;
+    this.IsHorizon = false;
+    this.EmblemResource = null;
+    this.ThumbResource = null;
+    this.FullResource = null;
+    this.LocalizeEtcId = 0;
+    this.SubNameLocalizeCodeId = null;
   }
 }
 

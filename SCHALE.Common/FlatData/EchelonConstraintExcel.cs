@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EchelonConstraintExcel : IFlatbufferObject
@@ -85,6 +86,70 @@ public struct EchelonConstraintExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EchelonConstraintExcel> EndEchelonConstraintExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EchelonConstraintExcel>(o);
+  }
+  public EchelonConstraintExcelT UnPack() {
+    var _o = new EchelonConstraintExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EchelonConstraintExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EchelonConstraint");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.IsWhiteList = TableEncryptionService.Convert(this.IsWhiteList, key);
+    _o.CharacterId = new List<long>();
+    for (var _j = 0; _j < this.CharacterIdLength; ++_j) {_o.CharacterId.Add(TableEncryptionService.Convert(this.CharacterId(_j), key));}
+    _o.PersonalityId = new List<long>();
+    for (var _j = 0; _j < this.PersonalityIdLength; ++_j) {_o.PersonalityId.Add(TableEncryptionService.Convert(this.PersonalityId(_j), key));}
+    _o.WeaponType = TableEncryptionService.Convert(this.WeaponType, key);
+    _o.School = TableEncryptionService.Convert(this.School, key);
+    _o.Club = TableEncryptionService.Convert(this.Club, key);
+    _o.Role = TableEncryptionService.Convert(this.Role, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EchelonConstraintExcel> Pack(FlatBufferBuilder builder, EchelonConstraintExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EchelonConstraintExcel>);
+    var _CharacterId = default(VectorOffset);
+    if (_o.CharacterId != null) {
+      var __CharacterId = _o.CharacterId.ToArray();
+      _CharacterId = CreateCharacterIdVector(builder, __CharacterId);
+    }
+    var _PersonalityId = default(VectorOffset);
+    if (_o.PersonalityId != null) {
+      var __PersonalityId = _o.PersonalityId.ToArray();
+      _PersonalityId = CreatePersonalityIdVector(builder, __PersonalityId);
+    }
+    return CreateEchelonConstraintExcel(
+      builder,
+      _o.GroupId,
+      _o.IsWhiteList,
+      _CharacterId,
+      _PersonalityId,
+      _o.WeaponType,
+      _o.School,
+      _o.Club,
+      _o.Role);
+  }
+}
+
+public class EchelonConstraintExcelT
+{
+  public long GroupId { get; set; }
+  public bool IsWhiteList { get; set; }
+  public List<long> CharacterId { get; set; }
+  public List<long> PersonalityId { get; set; }
+  public SCHALE.Common.FlatData.WeaponType WeaponType { get; set; }
+  public SCHALE.Common.FlatData.School School { get; set; }
+  public SCHALE.Common.FlatData.Club Club { get; set; }
+  public SCHALE.Common.FlatData.TacticRole Role { get; set; }
+
+  public EchelonConstraintExcelT() {
+    this.GroupId = 0;
+    this.IsWhiteList = false;
+    this.CharacterId = null;
+    this.PersonalityId = null;
+    this.WeaponType = SCHALE.Common.FlatData.WeaponType.None;
+    this.School = SCHALE.Common.FlatData.School.None;
+    this.Club = SCHALE.Common.FlatData.Club.None;
+    this.Role = SCHALE.Common.FlatData.TacticRole.None;
   }
 }
 

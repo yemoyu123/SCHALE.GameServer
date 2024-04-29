@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonExcel : IFlatbufferObject
@@ -177,6 +178,138 @@ public struct WeekDungeonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonExcel> EndWeekDungeonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonExcel>(o);
+  }
+  public WeekDungeonExcelT UnPack() {
+    var _o = new WeekDungeonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeon");
+    _o.StageId = TableEncryptionService.Convert(this.StageId, key);
+    _o.WeekDungeonType = TableEncryptionService.Convert(this.WeekDungeonType, key);
+    _o.Difficulty = TableEncryptionService.Convert(this.Difficulty, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.PrevStageId = TableEncryptionService.Convert(this.PrevStageId, key);
+    _o.StageEnterCostType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.StageEnterCostTypeLength; ++_j) {_o.StageEnterCostType.Add(TableEncryptionService.Convert(this.StageEnterCostType(_j), key));}
+    _o.StageEnterCostId = new List<long>();
+    for (var _j = 0; _j < this.StageEnterCostIdLength; ++_j) {_o.StageEnterCostId.Add(TableEncryptionService.Convert(this.StageEnterCostId(_j), key));}
+    _o.StageEnterCostAmount = new List<int>();
+    for (var _j = 0; _j < this.StageEnterCostAmountLength; ++_j) {_o.StageEnterCostAmount.Add(TableEncryptionService.Convert(this.StageEnterCostAmount(_j), key));}
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.StarGoal = new List<SCHALE.Common.FlatData.StarGoalType>();
+    for (var _j = 0; _j < this.StarGoalLength; ++_j) {_o.StarGoal.Add(TableEncryptionService.Convert(this.StarGoal(_j), key));}
+    _o.StarGoalAmount = new List<int>();
+    for (var _j = 0; _j < this.StarGoalAmountLength; ++_j) {_o.StarGoalAmount.Add(TableEncryptionService.Convert(this.StarGoalAmount(_j), key));}
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.StageRewardId = TableEncryptionService.Convert(this.StageRewardId, key);
+    _o.PlayTimeLimitInSeconds = TableEncryptionService.Convert(this.PlayTimeLimitInSeconds, key);
+    _o.BattleRewardExp = TableEncryptionService.Convert(this.BattleRewardExp, key);
+    _o.BattleRewardPlayerExp = TableEncryptionService.Convert(this.BattleRewardPlayerExp, key);
+    _o.GroupBuffID = new List<long>();
+    for (var _j = 0; _j < this.GroupBuffIDLength; ++_j) {_o.GroupBuffID.Add(TableEncryptionService.Convert(this.GroupBuffID(_j), key));}
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonExcel> Pack(FlatBufferBuilder builder, WeekDungeonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonExcel>);
+    var _StageEnterCostType = default(VectorOffset);
+    if (_o.StageEnterCostType != null) {
+      var __StageEnterCostType = _o.StageEnterCostType.ToArray();
+      _StageEnterCostType = CreateStageEnterCostTypeVector(builder, __StageEnterCostType);
+    }
+    var _StageEnterCostId = default(VectorOffset);
+    if (_o.StageEnterCostId != null) {
+      var __StageEnterCostId = _o.StageEnterCostId.ToArray();
+      _StageEnterCostId = CreateStageEnterCostIdVector(builder, __StageEnterCostId);
+    }
+    var _StageEnterCostAmount = default(VectorOffset);
+    if (_o.StageEnterCostAmount != null) {
+      var __StageEnterCostAmount = _o.StageEnterCostAmount.ToArray();
+      _StageEnterCostAmount = CreateStageEnterCostAmountVector(builder, __StageEnterCostAmount);
+    }
+    var _StarGoal = default(VectorOffset);
+    if (_o.StarGoal != null) {
+      var __StarGoal = _o.StarGoal.ToArray();
+      _StarGoal = CreateStarGoalVector(builder, __StarGoal);
+    }
+    var _StarGoalAmount = default(VectorOffset);
+    if (_o.StarGoalAmount != null) {
+      var __StarGoalAmount = _o.StarGoalAmount.ToArray();
+      _StarGoalAmount = CreateStarGoalAmountVector(builder, __StarGoalAmount);
+    }
+    var _GroupBuffID = default(VectorOffset);
+    if (_o.GroupBuffID != null) {
+      var __GroupBuffID = _o.GroupBuffID.ToArray();
+      _GroupBuffID = CreateGroupBuffIDVector(builder, __GroupBuffID);
+    }
+    return CreateWeekDungeonExcel(
+      builder,
+      _o.StageId,
+      _o.WeekDungeonType,
+      _o.Difficulty,
+      _o.BattleDuration,
+      _o.PrevStageId,
+      _StageEnterCostType,
+      _StageEnterCostId,
+      _StageEnterCostAmount,
+      _o.GroundId,
+      _StarGoal,
+      _StarGoalAmount,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _o.StageRewardId,
+      _o.PlayTimeLimitInSeconds,
+      _o.BattleRewardExp,
+      _o.BattleRewardPlayerExp,
+      _GroupBuffID,
+      _o.EchelonExtensionType);
+  }
+}
+
+public class WeekDungeonExcelT
+{
+  public long StageId { get; set; }
+  public SCHALE.Common.FlatData.WeekDungeonType WeekDungeonType { get; set; }
+  public int Difficulty { get; set; }
+  public long BattleDuration { get; set; }
+  public long PrevStageId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> StageEnterCostType { get; set; }
+  public List<long> StageEnterCostId { get; set; }
+  public List<int> StageEnterCostAmount { get; set; }
+  public int GroundId { get; set; }
+  public List<SCHALE.Common.FlatData.StarGoalType> StarGoal { get; set; }
+  public List<int> StarGoalAmount { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public long RecommandLevel { get; set; }
+  public long StageRewardId { get; set; }
+  public long PlayTimeLimitInSeconds { get; set; }
+  public long BattleRewardExp { get; set; }
+  public long BattleRewardPlayerExp { get; set; }
+  public List<long> GroupBuffID { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+
+  public WeekDungeonExcelT() {
+    this.StageId = 0;
+    this.WeekDungeonType = SCHALE.Common.FlatData.WeekDungeonType.None;
+    this.Difficulty = 0;
+    this.BattleDuration = 0;
+    this.PrevStageId = 0;
+    this.StageEnterCostType = null;
+    this.StageEnterCostId = null;
+    this.StageEnterCostAmount = null;
+    this.GroundId = 0;
+    this.StarGoal = null;
+    this.StarGoalAmount = null;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.StageRewardId = 0;
+    this.PlayTimeLimitInSeconds = 0;
+    this.BattleRewardExp = 0;
+    this.BattleRewardPlayerExp = 0;
+    this.GroupBuffID = null;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
   }
 }
 

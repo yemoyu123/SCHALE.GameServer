@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentFortuneGachaModifyExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentFortuneGachaModifyExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelTable> EndEventContentFortuneGachaModifyExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelTable>(o);
+  }
+  public EventContentFortuneGachaModifyExcelTableT UnPack() {
+    var _o = new EventContentFortuneGachaModifyExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentFortuneGachaModifyExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentFortuneGachaModifyExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelTable> Pack(FlatBufferBuilder builder, EventContentFortuneGachaModifyExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentFortuneGachaModifyExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentFortuneGachaModifyExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcelT> DataList { get; set; }
+
+  public EventContentFortuneGachaModifyExcelTableT() {
+    this.DataList = null;
   }
 }
 

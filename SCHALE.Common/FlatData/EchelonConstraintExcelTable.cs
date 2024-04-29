@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EchelonConstraintExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EchelonConstraintExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EchelonConstraintExcelTable> EndEchelonConstraintExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EchelonConstraintExcelTable>(o);
+  }
+  public EchelonConstraintExcelTableT UnPack() {
+    var _o = new EchelonConstraintExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EchelonConstraintExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EchelonConstraintExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EchelonConstraintExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EchelonConstraintExcelTable> Pack(FlatBufferBuilder builder, EchelonConstraintExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EchelonConstraintExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EchelonConstraintExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EchelonConstraintExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEchelonConstraintExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EchelonConstraintExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EchelonConstraintExcelT> DataList { get; set; }
+
+  public EchelonConstraintExcelTableT() {
+    this.DataList = null;
   }
 }
 

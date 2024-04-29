@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignUnitExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CampaignUnitExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignUnitExcelTable> EndCampaignUnitExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignUnitExcelTable>(o);
+  }
+  public CampaignUnitExcelTableT UnPack() {
+    var _o = new CampaignUnitExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignUnitExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignUnitExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CampaignUnitExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignUnitExcelTable> Pack(FlatBufferBuilder builder, CampaignUnitExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignUnitExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CampaignUnitExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CampaignUnitExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCampaignUnitExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CampaignUnitExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CampaignUnitExcelT> DataList { get; set; }
+
+  public CampaignUnitExcelTableT() {
+    this.DataList = null;
   }
 }
 

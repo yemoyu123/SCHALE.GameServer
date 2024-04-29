@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterAcademyTagsExcel : IFlatbufferObject
@@ -113,6 +114,80 @@ public struct CharacterAcademyTagsExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterAcademyTagsExcel> EndCharacterAcademyTagsExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterAcademyTagsExcel>(o);
+  }
+  public CharacterAcademyTagsExcelT UnPack() {
+    var _o = new CharacterAcademyTagsExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterAcademyTagsExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterAcademyTags");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.FavorTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.FavorTagsLength; ++_j) {_o.FavorTags.Add(TableEncryptionService.Convert(this.FavorTags(_j), key));}
+    _o.FavorItemTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.FavorItemTagsLength; ++_j) {_o.FavorItemTags.Add(TableEncryptionService.Convert(this.FavorItemTags(_j), key));}
+    _o.FavorItemUniqueTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.FavorItemUniqueTagsLength; ++_j) {_o.FavorItemUniqueTags.Add(TableEncryptionService.Convert(this.FavorItemUniqueTags(_j), key));}
+    _o.ForbiddenTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.ForbiddenTagsLength; ++_j) {_o.ForbiddenTags.Add(TableEncryptionService.Convert(this.ForbiddenTags(_j), key));}
+    _o.ZoneWhiteListTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.ZoneWhiteListTagsLength; ++_j) {_o.ZoneWhiteListTags.Add(TableEncryptionService.Convert(this.ZoneWhiteListTags(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterAcademyTagsExcel> Pack(FlatBufferBuilder builder, CharacterAcademyTagsExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterAcademyTagsExcel>);
+    var _FavorTags = default(VectorOffset);
+    if (_o.FavorTags != null) {
+      var __FavorTags = _o.FavorTags.ToArray();
+      _FavorTags = CreateFavorTagsVector(builder, __FavorTags);
+    }
+    var _FavorItemTags = default(VectorOffset);
+    if (_o.FavorItemTags != null) {
+      var __FavorItemTags = _o.FavorItemTags.ToArray();
+      _FavorItemTags = CreateFavorItemTagsVector(builder, __FavorItemTags);
+    }
+    var _FavorItemUniqueTags = default(VectorOffset);
+    if (_o.FavorItemUniqueTags != null) {
+      var __FavorItemUniqueTags = _o.FavorItemUniqueTags.ToArray();
+      _FavorItemUniqueTags = CreateFavorItemUniqueTagsVector(builder, __FavorItemUniqueTags);
+    }
+    var _ForbiddenTags = default(VectorOffset);
+    if (_o.ForbiddenTags != null) {
+      var __ForbiddenTags = _o.ForbiddenTags.ToArray();
+      _ForbiddenTags = CreateForbiddenTagsVector(builder, __ForbiddenTags);
+    }
+    var _ZoneWhiteListTags = default(VectorOffset);
+    if (_o.ZoneWhiteListTags != null) {
+      var __ZoneWhiteListTags = _o.ZoneWhiteListTags.ToArray();
+      _ZoneWhiteListTags = CreateZoneWhiteListTagsVector(builder, __ZoneWhiteListTags);
+    }
+    return CreateCharacterAcademyTagsExcel(
+      builder,
+      _o.Id,
+      _FavorTags,
+      _FavorItemTags,
+      _FavorItemUniqueTags,
+      _ForbiddenTags,
+      _ZoneWhiteListTags);
+  }
+}
+
+public class CharacterAcademyTagsExcelT
+{
+  public long Id { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> FavorTags { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> FavorItemTags { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> FavorItemUniqueTags { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> ForbiddenTags { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> ZoneWhiteListTags { get; set; }
+
+  public CharacterAcademyTagsExcelT() {
+    this.Id = 0;
+    this.FavorTags = null;
+    this.FavorItemTags = null;
+    this.FavorItemUniqueTags = null;
+    this.ForbiddenTags = null;
+    this.ZoneWhiteListTags = null;
   }
 }
 

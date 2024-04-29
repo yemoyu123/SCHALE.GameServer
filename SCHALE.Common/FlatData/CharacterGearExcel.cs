@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterGearExcel : IFlatbufferObject
@@ -149,6 +150,112 @@ public struct CharacterGearExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterGearExcel> EndCharacterGearExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterGearExcel>(o);
+  }
+  public CharacterGearExcelT UnPack() {
+    var _o = new CharacterGearExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterGearExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterGear");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.StatLevelUpType = TableEncryptionService.Convert(this.StatLevelUpType, key);
+    _o.Tier = TableEncryptionService.Convert(this.Tier, key);
+    _o.NextTierEquipment = TableEncryptionService.Convert(this.NextTierEquipment, key);
+    _o.RecipeId = TableEncryptionService.Convert(this.RecipeId, key);
+    _o.OpenFavorLevel = TableEncryptionService.Convert(this.OpenFavorLevel, key);
+    _o.MaxLevel = TableEncryptionService.Convert(this.MaxLevel, key);
+    _o.LearnSkillSlot = TableEncryptionService.Convert(this.LearnSkillSlot, key);
+    _o.StatType = new List<SCHALE.Common.FlatData.EquipmentOptionType>();
+    for (var _j = 0; _j < this.StatTypeLength; ++_j) {_o.StatType.Add(TableEncryptionService.Convert(this.StatType(_j), key));}
+    _o.MinStatValue = new List<long>();
+    for (var _j = 0; _j < this.MinStatValueLength; ++_j) {_o.MinStatValue.Add(TableEncryptionService.Convert(this.MinStatValue(_j), key));}
+    _o.MaxStatValue = new List<long>();
+    for (var _j = 0; _j < this.MaxStatValueLength; ++_j) {_o.MaxStatValue.Add(TableEncryptionService.Convert(this.MaxStatValue(_j), key));}
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterGearExcel> Pack(FlatBufferBuilder builder, CharacterGearExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterGearExcel>);
+    var _LearnSkillSlot = _o.LearnSkillSlot == null ? default(StringOffset) : builder.CreateString(_o.LearnSkillSlot);
+    var _StatType = default(VectorOffset);
+    if (_o.StatType != null) {
+      var __StatType = _o.StatType.ToArray();
+      _StatType = CreateStatTypeVector(builder, __StatType);
+    }
+    var _MinStatValue = default(VectorOffset);
+    if (_o.MinStatValue != null) {
+      var __MinStatValue = _o.MinStatValue.ToArray();
+      _MinStatValue = CreateMinStatValueVector(builder, __MinStatValue);
+    }
+    var _MaxStatValue = default(VectorOffset);
+    if (_o.MaxStatValue != null) {
+      var __MaxStatValue = _o.MaxStatValue.ToArray();
+      _MaxStatValue = CreateMaxStatValueVector(builder, __MaxStatValue);
+    }
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    return CreateCharacterGearExcel(
+      builder,
+      _o.Id,
+      _o.CharacterId,
+      _o.StatLevelUpType,
+      _o.Tier,
+      _o.NextTierEquipment,
+      _o.RecipeId,
+      _o.OpenFavorLevel,
+      _o.MaxLevel,
+      _LearnSkillSlot,
+      _StatType,
+      _MinStatValue,
+      _MaxStatValue,
+      _Icon,
+      _o.LocalizeEtcId,
+      _Tags);
+  }
+}
+
+public class CharacterGearExcelT
+{
+  public long Id { get; set; }
+  public long CharacterId { get; set; }
+  public SCHALE.Common.FlatData.StatLevelUpType StatLevelUpType { get; set; }
+  public long Tier { get; set; }
+  public long NextTierEquipment { get; set; }
+  public long RecipeId { get; set; }
+  public long OpenFavorLevel { get; set; }
+  public long MaxLevel { get; set; }
+  public string LearnSkillSlot { get; set; }
+  public List<SCHALE.Common.FlatData.EquipmentOptionType> StatType { get; set; }
+  public List<long> MinStatValue { get; set; }
+  public List<long> MaxStatValue { get; set; }
+  public string Icon { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+
+  public CharacterGearExcelT() {
+    this.Id = 0;
+    this.CharacterId = 0;
+    this.StatLevelUpType = SCHALE.Common.FlatData.StatLevelUpType.Standard;
+    this.Tier = 0;
+    this.NextTierEquipment = 0;
+    this.RecipeId = 0;
+    this.OpenFavorLevel = 0;
+    this.MaxLevel = 0;
+    this.LearnSkillSlot = null;
+    this.StatType = null;
+    this.MinStatValue = null;
+    this.MaxStatValue = null;
+    this.Icon = null;
+    this.LocalizeEtcId = 0;
+    this.Tags = null;
   }
 }
 

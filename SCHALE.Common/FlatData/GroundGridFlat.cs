@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GroundGridFlat : IFlatbufferObject
@@ -69,6 +70,62 @@ public struct GroundGridFlat : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GroundGridFlat> EndGroundGridFlat(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GroundGridFlat>(o);
+  }
+  public GroundGridFlatT UnPack() {
+    var _o = new GroundGridFlatT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GroundGridFlatT _o) {
+		byte[] key = { 0 };
+    _o.X = TableEncryptionService.Convert(this.X, key);
+    _o.Y = TableEncryptionService.Convert(this.Y, key);
+    _o.StartX = TableEncryptionService.Convert(this.StartX, key);
+    _o.StartY = TableEncryptionService.Convert(this.StartY, key);
+    _o.Gap = TableEncryptionService.Convert(this.Gap, key);
+    _o.Nodes = new List<SCHALE.Common.FlatData.GroundNodeFlatT>();
+    for (var _j = 0; _j < this.NodesLength; ++_j) {_o.Nodes.Add(this.Nodes(_j).HasValue ? this.Nodes(_j).Value.UnPack() : null);}
+    _o.Version = TableEncryptionService.Convert(this.Version, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GroundGridFlat> Pack(FlatBufferBuilder builder, GroundGridFlatT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GroundGridFlat>);
+    var _Nodes = default(VectorOffset);
+    if (_o.Nodes != null) {
+      var __Nodes = new Offset<SCHALE.Common.FlatData.GroundNodeFlat>[_o.Nodes.Count];
+      for (var _j = 0; _j < __Nodes.Length; ++_j) { __Nodes[_j] = SCHALE.Common.FlatData.GroundNodeFlat.Pack(builder, _o.Nodes[_j]); }
+      _Nodes = CreateNodesVector(builder, __Nodes);
+    }
+    var _Version = _o.Version == null ? default(StringOffset) : builder.CreateString(_o.Version);
+    return CreateGroundGridFlat(
+      builder,
+      _o.X,
+      _o.Y,
+      _o.StartX,
+      _o.StartY,
+      _o.Gap,
+      _Nodes,
+      _Version);
+  }
+}
+
+public class GroundGridFlatT
+{
+  public int X { get; set; }
+  public int Y { get; set; }
+  public float StartX { get; set; }
+  public float StartY { get; set; }
+  public float Gap { get; set; }
+  public List<SCHALE.Common.FlatData.GroundNodeFlatT> Nodes { get; set; }
+  public string Version { get; set; }
+
+  public GroundGridFlatT() {
+    this.X = 0;
+    this.Y = 0;
+    this.StartX = 0.0f;
+    this.StartY = 0.0f;
+    this.Gap = 0.0f;
+    this.Nodes = null;
+    this.Version = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ProductMonthlyExcel : IFlatbufferObject
@@ -169,6 +170,120 @@ public struct ProductMonthlyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ProductMonthlyExcel> EndProductMonthlyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ProductMonthlyExcel>(o);
+  }
+  public ProductMonthlyExcelT UnPack() {
+    var _o = new ProductMonthlyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ProductMonthlyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ProductMonthly");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ProductId = TableEncryptionService.Convert(this.ProductId, key);
+    _o.StoreType = TableEncryptionService.Convert(this.StoreType, key);
+    _o.Price = TableEncryptionService.Convert(this.Price, key);
+    _o.PriceReference = TableEncryptionService.Convert(this.PriceReference, key);
+    _o.ProductTagType = TableEncryptionService.Convert(this.ProductTagType, key);
+    _o.MonthlyDays = TableEncryptionService.Convert(this.MonthlyDays, key);
+    _o.ParcelType_ = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ParcelType_Length; ++_j) {_o.ParcelType_.Add(TableEncryptionService.Convert(this.ParcelType_(_j), key));}
+    _o.ParcelId = new List<long>();
+    for (var _j = 0; _j < this.ParcelIdLength; ++_j) {_o.ParcelId.Add(TableEncryptionService.Convert(this.ParcelId(_j), key));}
+    _o.ParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.ParcelAmountLength; ++_j) {_o.ParcelAmount.Add(TableEncryptionService.Convert(this.ParcelAmount(_j), key));}
+    _o.EnterCostReduceGroupId = TableEncryptionService.Convert(this.EnterCostReduceGroupId, key);
+    _o.DailyParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.DailyParcelTypeLength; ++_j) {_o.DailyParcelType.Add(TableEncryptionService.Convert(this.DailyParcelType(_j), key));}
+    _o.DailyParcelId = new List<long>();
+    for (var _j = 0; _j < this.DailyParcelIdLength; ++_j) {_o.DailyParcelId.Add(TableEncryptionService.Convert(this.DailyParcelId(_j), key));}
+    _o.DailyParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.DailyParcelAmountLength; ++_j) {_o.DailyParcelAmount.Add(TableEncryptionService.Convert(this.DailyParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ProductMonthlyExcel> Pack(FlatBufferBuilder builder, ProductMonthlyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ProductMonthlyExcel>);
+    var _ProductId = _o.ProductId == null ? default(StringOffset) : builder.CreateString(_o.ProductId);
+    var _PriceReference = _o.PriceReference == null ? default(StringOffset) : builder.CreateString(_o.PriceReference);
+    var _ParcelType_ = default(VectorOffset);
+    if (_o.ParcelType_ != null) {
+      var __ParcelType_ = _o.ParcelType_.ToArray();
+      _ParcelType_ = CreateParcelType_Vector(builder, __ParcelType_);
+    }
+    var _ParcelId = default(VectorOffset);
+    if (_o.ParcelId != null) {
+      var __ParcelId = _o.ParcelId.ToArray();
+      _ParcelId = CreateParcelIdVector(builder, __ParcelId);
+    }
+    var _ParcelAmount = default(VectorOffset);
+    if (_o.ParcelAmount != null) {
+      var __ParcelAmount = _o.ParcelAmount.ToArray();
+      _ParcelAmount = CreateParcelAmountVector(builder, __ParcelAmount);
+    }
+    var _DailyParcelType = default(VectorOffset);
+    if (_o.DailyParcelType != null) {
+      var __DailyParcelType = _o.DailyParcelType.ToArray();
+      _DailyParcelType = CreateDailyParcelTypeVector(builder, __DailyParcelType);
+    }
+    var _DailyParcelId = default(VectorOffset);
+    if (_o.DailyParcelId != null) {
+      var __DailyParcelId = _o.DailyParcelId.ToArray();
+      _DailyParcelId = CreateDailyParcelIdVector(builder, __DailyParcelId);
+    }
+    var _DailyParcelAmount = default(VectorOffset);
+    if (_o.DailyParcelAmount != null) {
+      var __DailyParcelAmount = _o.DailyParcelAmount.ToArray();
+      _DailyParcelAmount = CreateDailyParcelAmountVector(builder, __DailyParcelAmount);
+    }
+    return CreateProductMonthlyExcel(
+      builder,
+      _o.Id,
+      _ProductId,
+      _o.StoreType,
+      _o.Price,
+      _PriceReference,
+      _o.ProductTagType,
+      _o.MonthlyDays,
+      _ParcelType_,
+      _ParcelId,
+      _ParcelAmount,
+      _o.EnterCostReduceGroupId,
+      _DailyParcelType,
+      _DailyParcelId,
+      _DailyParcelAmount);
+  }
+}
+
+public class ProductMonthlyExcelT
+{
+  public long Id { get; set; }
+  public string ProductId { get; set; }
+  public SCHALE.Common.FlatData.StoreType StoreType { get; set; }
+  public long Price { get; set; }
+  public string PriceReference { get; set; }
+  public SCHALE.Common.FlatData.ProductTagType ProductTagType { get; set; }
+  public long MonthlyDays { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ParcelType_ { get; set; }
+  public List<long> ParcelId { get; set; }
+  public List<long> ParcelAmount { get; set; }
+  public long EnterCostReduceGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> DailyParcelType { get; set; }
+  public List<long> DailyParcelId { get; set; }
+  public List<long> DailyParcelAmount { get; set; }
+
+  public ProductMonthlyExcelT() {
+    this.Id = 0;
+    this.ProductId = null;
+    this.StoreType = SCHALE.Common.FlatData.StoreType.None;
+    this.Price = 0;
+    this.PriceReference = null;
+    this.ProductTagType = SCHALE.Common.FlatData.ProductTagType.Monthly;
+    this.MonthlyDays = 0;
+    this.ParcelType_ = null;
+    this.ParcelId = null;
+    this.ParcelAmount = null;
+    this.EnterCostReduceGroupId = 0;
+    this.DailyParcelType = null;
+    this.DailyParcelId = null;
+    this.DailyParcelAmount = null;
   }
 }
 

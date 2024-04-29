@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidStageExcel : IFlatbufferObject
@@ -275,6 +276,215 @@ public struct EliminateRaidStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidStageExcel> EndEliminateRaidStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidStageExcel>(o);
+  }
+  public EliminateRaidStageExcelT UnPack() {
+    var _o = new EliminateRaidStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.UseBossIndex = TableEncryptionService.Convert(this.UseBossIndex, key);
+    _o.UseBossAIPhaseSync = TableEncryptionService.Convert(this.UseBossAIPhaseSync, key);
+    _o.RaidBossGroup = TableEncryptionService.Convert(this.RaidBossGroup, key);
+    _o.RaidEnterCostType = TableEncryptionService.Convert(this.RaidEnterCostType, key);
+    _o.RaidEnterCostId = TableEncryptionService.Convert(this.RaidEnterCostId, key);
+    _o.RaidEnterCostAmount = TableEncryptionService.Convert(this.RaidEnterCostAmount, key);
+    _o.BossSpinePath = TableEncryptionService.Convert(this.BossSpinePath, key);
+    _o.PortraitPath = TableEncryptionService.Convert(this.PortraitPath, key);
+    _o.BGPath = TableEncryptionService.Convert(this.BGPath, key);
+    _o.RaidCharacterId = TableEncryptionService.Convert(this.RaidCharacterId, key);
+    _o.BossCharacterId = new List<long>();
+    for (var _j = 0; _j < this.BossCharacterIdLength; ++_j) {_o.BossCharacterId.Add(TableEncryptionService.Convert(this.BossCharacterId(_j), key));}
+    _o.Difficulty = TableEncryptionService.Convert(this.Difficulty, key);
+    _o.IsOpen = TableEncryptionService.Convert(this.IsOpen, key);
+    _o.MaxPlayerCount = TableEncryptionService.Convert(this.MaxPlayerCount, key);
+    _o.RaidRoomLifeTime = TableEncryptionService.Convert(this.RaidRoomLifeTime, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.GroundDevName = TableEncryptionService.Convert(this.GroundDevName, key);
+    _o.EnterTimeLine = TableEncryptionService.Convert(this.EnterTimeLine, key);
+    _o.TacticEnvironment = TableEncryptionService.Convert(this.TacticEnvironment, key);
+    _o.DefaultClearScore = TableEncryptionService.Convert(this.DefaultClearScore, key);
+    _o.MaximumScore = TableEncryptionService.Convert(this.MaximumScore, key);
+    _o.PerSecondMinusScore = TableEncryptionService.Convert(this.PerSecondMinusScore, key);
+    _o.HPPercentScore = TableEncryptionService.Convert(this.HPPercentScore, key);
+    _o.MinimumAcquisitionScore = TableEncryptionService.Convert(this.MinimumAcquisitionScore, key);
+    _o.MaximumAcquisitionScore = TableEncryptionService.Convert(this.MaximumAcquisitionScore, key);
+    _o.RaidRewardGroupId = TableEncryptionService.Convert(this.RaidRewardGroupId, key);
+    _o.BattleReadyTimelinePath = new List<string>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePathLength; ++_j) {_o.BattleReadyTimelinePath.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePath(_j), key));}
+    _o.BattleReadyTimelinePhaseStart = new List<int>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePhaseStartLength; ++_j) {_o.BattleReadyTimelinePhaseStart.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePhaseStart(_j), key));}
+    _o.BattleReadyTimelinePhaseEnd = new List<int>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePhaseEndLength; ++_j) {_o.BattleReadyTimelinePhaseEnd.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePhaseEnd(_j), key));}
+    _o.VictoryTimelinePath = TableEncryptionService.Convert(this.VictoryTimelinePath, key);
+    _o.PhaseChangeTimelinePath = TableEncryptionService.Convert(this.PhaseChangeTimelinePath, key);
+    _o.TimeLinePhase = TableEncryptionService.Convert(this.TimeLinePhase, key);
+    _o.EnterScenarioKey = TableEncryptionService.Convert(this.EnterScenarioKey, key);
+    _o.ClearScenarioKey = TableEncryptionService.Convert(this.ClearScenarioKey, key);
+    _o.ShowSkillCard = TableEncryptionService.Convert(this.ShowSkillCard, key);
+    _o.BossBGInfoKey = TableEncryptionService.Convert(this.BossBGInfoKey, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidStageExcel> Pack(FlatBufferBuilder builder, EliminateRaidStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidStageExcel>);
+    var _RaidBossGroup = _o.RaidBossGroup == null ? default(StringOffset) : builder.CreateString(_o.RaidBossGroup);
+    var _BossSpinePath = _o.BossSpinePath == null ? default(StringOffset) : builder.CreateString(_o.BossSpinePath);
+    var _PortraitPath = _o.PortraitPath == null ? default(StringOffset) : builder.CreateString(_o.PortraitPath);
+    var _BGPath = _o.BGPath == null ? default(StringOffset) : builder.CreateString(_o.BGPath);
+    var _BossCharacterId = default(VectorOffset);
+    if (_o.BossCharacterId != null) {
+      var __BossCharacterId = _o.BossCharacterId.ToArray();
+      _BossCharacterId = CreateBossCharacterIdVector(builder, __BossCharacterId);
+    }
+    var _GroundDevName = _o.GroundDevName == null ? default(StringOffset) : builder.CreateString(_o.GroundDevName);
+    var _EnterTimeLine = _o.EnterTimeLine == null ? default(StringOffset) : builder.CreateString(_o.EnterTimeLine);
+    var _BattleReadyTimelinePath = default(VectorOffset);
+    if (_o.BattleReadyTimelinePath != null) {
+      var __BattleReadyTimelinePath = new StringOffset[_o.BattleReadyTimelinePath.Count];
+      for (var _j = 0; _j < __BattleReadyTimelinePath.Length; ++_j) { __BattleReadyTimelinePath[_j] = builder.CreateString(_o.BattleReadyTimelinePath[_j]); }
+      _BattleReadyTimelinePath = CreateBattleReadyTimelinePathVector(builder, __BattleReadyTimelinePath);
+    }
+    var _BattleReadyTimelinePhaseStart = default(VectorOffset);
+    if (_o.BattleReadyTimelinePhaseStart != null) {
+      var __BattleReadyTimelinePhaseStart = _o.BattleReadyTimelinePhaseStart.ToArray();
+      _BattleReadyTimelinePhaseStart = CreateBattleReadyTimelinePhaseStartVector(builder, __BattleReadyTimelinePhaseStart);
+    }
+    var _BattleReadyTimelinePhaseEnd = default(VectorOffset);
+    if (_o.BattleReadyTimelinePhaseEnd != null) {
+      var __BattleReadyTimelinePhaseEnd = _o.BattleReadyTimelinePhaseEnd.ToArray();
+      _BattleReadyTimelinePhaseEnd = CreateBattleReadyTimelinePhaseEndVector(builder, __BattleReadyTimelinePhaseEnd);
+    }
+    var _VictoryTimelinePath = _o.VictoryTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.VictoryTimelinePath);
+    var _PhaseChangeTimelinePath = _o.PhaseChangeTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.PhaseChangeTimelinePath);
+    return CreateEliminateRaidStageExcel(
+      builder,
+      _o.Id,
+      _o.UseBossIndex,
+      _o.UseBossAIPhaseSync,
+      _RaidBossGroup,
+      _o.RaidEnterCostType,
+      _o.RaidEnterCostId,
+      _o.RaidEnterCostAmount,
+      _BossSpinePath,
+      _PortraitPath,
+      _BGPath,
+      _o.RaidCharacterId,
+      _BossCharacterId,
+      _o.Difficulty,
+      _o.IsOpen,
+      _o.MaxPlayerCount,
+      _o.RaidRoomLifeTime,
+      _o.BattleDuration,
+      _o.GroundId,
+      _GroundDevName,
+      _EnterTimeLine,
+      _o.TacticEnvironment,
+      _o.DefaultClearScore,
+      _o.MaximumScore,
+      _o.PerSecondMinusScore,
+      _o.HPPercentScore,
+      _o.MinimumAcquisitionScore,
+      _o.MaximumAcquisitionScore,
+      _o.RaidRewardGroupId,
+      _BattleReadyTimelinePath,
+      _BattleReadyTimelinePhaseStart,
+      _BattleReadyTimelinePhaseEnd,
+      _VictoryTimelinePath,
+      _PhaseChangeTimelinePath,
+      _o.TimeLinePhase,
+      _o.EnterScenarioKey,
+      _o.ClearScenarioKey,
+      _o.ShowSkillCard,
+      _o.BossBGInfoKey,
+      _o.EchelonExtensionType);
+  }
+}
+
+public class EliminateRaidStageExcelT
+{
+  public long Id { get; set; }
+  public bool UseBossIndex { get; set; }
+  public bool UseBossAIPhaseSync { get; set; }
+  public string RaidBossGroup { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RaidEnterCostType { get; set; }
+  public long RaidEnterCostId { get; set; }
+  public int RaidEnterCostAmount { get; set; }
+  public string BossSpinePath { get; set; }
+  public string PortraitPath { get; set; }
+  public string BGPath { get; set; }
+  public long RaidCharacterId { get; set; }
+  public List<long> BossCharacterId { get; set; }
+  public SCHALE.Common.FlatData.Difficulty Difficulty { get; set; }
+  public bool IsOpen { get; set; }
+  public long MaxPlayerCount { get; set; }
+  public int RaidRoomLifeTime { get; set; }
+  public long BattleDuration { get; set; }
+  public long GroundId { get; set; }
+  public string GroundDevName { get; set; }
+  public string EnterTimeLine { get; set; }
+  public SCHALE.Common.FlatData.TacticEnvironment TacticEnvironment { get; set; }
+  public long DefaultClearScore { get; set; }
+  public long MaximumScore { get; set; }
+  public long PerSecondMinusScore { get; set; }
+  public long HPPercentScore { get; set; }
+  public long MinimumAcquisitionScore { get; set; }
+  public long MaximumAcquisitionScore { get; set; }
+  public long RaidRewardGroupId { get; set; }
+  public List<string> BattleReadyTimelinePath { get; set; }
+  public List<int> BattleReadyTimelinePhaseStart { get; set; }
+  public List<int> BattleReadyTimelinePhaseEnd { get; set; }
+  public string VictoryTimelinePath { get; set; }
+  public string PhaseChangeTimelinePath { get; set; }
+  public long TimeLinePhase { get; set; }
+  public uint EnterScenarioKey { get; set; }
+  public uint ClearScenarioKey { get; set; }
+  public bool ShowSkillCard { get; set; }
+  public uint BossBGInfoKey { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+
+  public EliminateRaidStageExcelT() {
+    this.Id = 0;
+    this.UseBossIndex = false;
+    this.UseBossAIPhaseSync = false;
+    this.RaidBossGroup = null;
+    this.RaidEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RaidEnterCostId = 0;
+    this.RaidEnterCostAmount = 0;
+    this.BossSpinePath = null;
+    this.PortraitPath = null;
+    this.BGPath = null;
+    this.RaidCharacterId = 0;
+    this.BossCharacterId = null;
+    this.Difficulty = SCHALE.Common.FlatData.Difficulty.Normal;
+    this.IsOpen = false;
+    this.MaxPlayerCount = 0;
+    this.RaidRoomLifeTime = 0;
+    this.BattleDuration = 0;
+    this.GroundId = 0;
+    this.GroundDevName = null;
+    this.EnterTimeLine = null;
+    this.TacticEnvironment = SCHALE.Common.FlatData.TacticEnvironment.None;
+    this.DefaultClearScore = 0;
+    this.MaximumScore = 0;
+    this.PerSecondMinusScore = 0;
+    this.HPPercentScore = 0;
+    this.MinimumAcquisitionScore = 0;
+    this.MaximumAcquisitionScore = 0;
+    this.RaidRewardGroupId = 0;
+    this.BattleReadyTimelinePath = null;
+    this.BattleReadyTimelinePhaseStart = null;
+    this.BattleReadyTimelinePhaseEnd = null;
+    this.VictoryTimelinePath = null;
+    this.PhaseChangeTimelinePath = null;
+    this.TimeLinePhase = 0;
+    this.EnterScenarioKey = 0;
+    this.ClearScenarioKey = 0;
+    this.ShowSkillCard = false;
+    this.BossBGInfoKey = 0;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
   }
 }
 

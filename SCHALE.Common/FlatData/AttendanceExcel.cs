@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AttendanceExcel : IFlatbufferObject
@@ -153,6 +154,110 @@ public struct AttendanceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AttendanceExcel> EndAttendanceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AttendanceExcel>(o);
+  }
+  public AttendanceExcelT UnPack() {
+    var _o = new AttendanceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AttendanceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Attendance");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Type = TableEncryptionService.Convert(this.Type, key);
+    _o.CountdownPrefab = TableEncryptionService.Convert(this.CountdownPrefab, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.AccountType = TableEncryptionService.Convert(this.AccountType, key);
+    _o.AccountLevelLimit = TableEncryptionService.Convert(this.AccountLevelLimit, key);
+    _o.Title = TableEncryptionService.Convert(this.Title, key);
+    _o.InfomationLocalizeCode = TableEncryptionService.Convert(this.InfomationLocalizeCode, key);
+    _o.CountRule = TableEncryptionService.Convert(this.CountRule, key);
+    _o.CountReset = TableEncryptionService.Convert(this.CountReset, key);
+    _o.BookSize = TableEncryptionService.Convert(this.BookSize, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.StartableEndDate = TableEncryptionService.Convert(this.StartableEndDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.ExpiryDate = TableEncryptionService.Convert(this.ExpiryDate, key);
+    _o.MailType = TableEncryptionService.Convert(this.MailType, key);
+    _o.DialogCategory = TableEncryptionService.Convert(this.DialogCategory, key);
+    _o.TitleImagePath = TableEncryptionService.Convert(this.TitleImagePath, key);
+    _o.DecorationImagePath = TableEncryptionService.Convert(this.DecorationImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AttendanceExcel> Pack(FlatBufferBuilder builder, AttendanceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AttendanceExcel>);
+    var _CountdownPrefab = _o.CountdownPrefab == null ? default(StringOffset) : builder.CreateString(_o.CountdownPrefab);
+    var _Title = _o.Title == null ? default(StringOffset) : builder.CreateString(_o.Title);
+    var _InfomationLocalizeCode = _o.InfomationLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.InfomationLocalizeCode);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _StartableEndDate = _o.StartableEndDate == null ? default(StringOffset) : builder.CreateString(_o.StartableEndDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    var _TitleImagePath = _o.TitleImagePath == null ? default(StringOffset) : builder.CreateString(_o.TitleImagePath);
+    var _DecorationImagePath = _o.DecorationImagePath == null ? default(StringOffset) : builder.CreateString(_o.DecorationImagePath);
+    return CreateAttendanceExcel(
+      builder,
+      _o.Id,
+      _o.Type,
+      _CountdownPrefab,
+      _o.DisplayOrder,
+      _o.AccountType,
+      _o.AccountLevelLimit,
+      _Title,
+      _InfomationLocalizeCode,
+      _o.CountRule,
+      _o.CountReset,
+      _o.BookSize,
+      _StartDate,
+      _StartableEndDate,
+      _EndDate,
+      _o.ExpiryDate,
+      _o.MailType,
+      _o.DialogCategory,
+      _TitleImagePath,
+      _DecorationImagePath);
+  }
+}
+
+public class AttendanceExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.AttendanceType Type { get; set; }
+  public string CountdownPrefab { get; set; }
+  public long DisplayOrder { get; set; }
+  public SCHALE.Common.FlatData.AccountState AccountType { get; set; }
+  public long AccountLevelLimit { get; set; }
+  public string Title { get; set; }
+  public string InfomationLocalizeCode { get; set; }
+  public SCHALE.Common.FlatData.AttendanceCountRule CountRule { get; set; }
+  public SCHALE.Common.FlatData.AttendanceResetType CountReset { get; set; }
+  public long BookSize { get; set; }
+  public string StartDate { get; set; }
+  public string StartableEndDate { get; set; }
+  public string EndDate { get; set; }
+  public long ExpiryDate { get; set; }
+  public SCHALE.Common.FlatData.MailType MailType { get; set; }
+  public SCHALE.Common.FlatData.DialogCategory DialogCategory { get; set; }
+  public string TitleImagePath { get; set; }
+  public string DecorationImagePath { get; set; }
+
+  public AttendanceExcelT() {
+    this.Id = 0;
+    this.Type = SCHALE.Common.FlatData.AttendanceType.Basic;
+    this.CountdownPrefab = null;
+    this.DisplayOrder = 0;
+    this.AccountType = SCHALE.Common.FlatData.AccountState.WaitingSignIn;
+    this.AccountLevelLimit = 0;
+    this.Title = null;
+    this.InfomationLocalizeCode = null;
+    this.CountRule = SCHALE.Common.FlatData.AttendanceCountRule.Accumulation;
+    this.CountReset = SCHALE.Common.FlatData.AttendanceResetType.User;
+    this.BookSize = 0;
+    this.StartDate = null;
+    this.StartableEndDate = null;
+    this.EndDate = null;
+    this.ExpiryDate = 0;
+    this.MailType = SCHALE.Common.FlatData.MailType.System;
+    this.DialogCategory = SCHALE.Common.FlatData.DialogCategory.Cafe;
+    this.TitleImagePath = null;
+    this.DecorationImagePath = null;
   }
 }
 

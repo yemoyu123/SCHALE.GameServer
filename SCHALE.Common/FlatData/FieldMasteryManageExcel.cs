@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldMasteryManageExcel : IFlatbufferObject
@@ -51,6 +52,43 @@ public struct FieldMasteryManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldMasteryManageExcel> EndFieldMasteryManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldMasteryManageExcel>(o);
+  }
+  public FieldMasteryManageExcelT UnPack() {
+    var _o = new FieldMasteryManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldMasteryManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldMasteryManage");
+    _o.FieldSeason = TableEncryptionService.Convert(this.FieldSeason, key);
+    _o.LocalizeEtc = TableEncryptionService.Convert(this.LocalizeEtc, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+    _o.LevelId = TableEncryptionService.Convert(this.LevelId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldMasteryManageExcel> Pack(FlatBufferBuilder builder, FieldMasteryManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldMasteryManageExcel>);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    return CreateFieldMasteryManageExcel(
+      builder,
+      _o.FieldSeason,
+      _o.LocalizeEtc,
+      _ImagePath,
+      _o.LevelId);
+  }
+}
+
+public class FieldMasteryManageExcelT
+{
+  public long FieldSeason { get; set; }
+  public uint LocalizeEtc { get; set; }
+  public string ImagePath { get; set; }
+  public long LevelId { get; set; }
+
+  public FieldMasteryManageExcelT() {
+    this.FieldSeason = 0;
+    this.LocalizeEtc = 0;
+    this.ImagePath = null;
+    this.LevelId = 0;
   }
 }
 

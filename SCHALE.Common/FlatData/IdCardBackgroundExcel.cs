@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct IdCardBackgroundExcel : IFlatbufferObject
@@ -73,6 +74,60 @@ public struct IdCardBackgroundExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.IdCardBackgroundExcel> EndIdCardBackgroundExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.IdCardBackgroundExcel>(o);
+  }
+  public IdCardBackgroundExcelT UnPack() {
+    var _o = new IdCardBackgroundExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(IdCardBackgroundExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("IdCardBackground");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.IsDefault = TableEncryptionService.Convert(this.IsDefault, key);
+    _o.BgPath = TableEncryptionService.Convert(this.BgPath, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.IdCardBackgroundExcel> Pack(FlatBufferBuilder builder, IdCardBackgroundExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.IdCardBackgroundExcel>);
+    var _BgPath = _o.BgPath == null ? default(StringOffset) : builder.CreateString(_o.BgPath);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    return CreateIdCardBackgroundExcel(
+      builder,
+      _o.Id,
+      _o.Rarity,
+      _o.DisplayOrder,
+      _o.CollectionVisible,
+      _o.IsDefault,
+      _BgPath,
+      _o.LocalizeEtcId,
+      _Icon);
+  }
+}
+
+public class IdCardBackgroundExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public long DisplayOrder { get; set; }
+  public bool CollectionVisible { get; set; }
+  public bool IsDefault { get; set; }
+  public string BgPath { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string Icon { get; set; }
+
+  public IdCardBackgroundExcelT() {
+    this.Id = 0;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.DisplayOrder = 0;
+    this.CollectionVisible = false;
+    this.IsDefault = false;
+    this.BgPath = null;
+    this.LocalizeEtcId = 0;
+    this.Icon = null;
   }
 }
 

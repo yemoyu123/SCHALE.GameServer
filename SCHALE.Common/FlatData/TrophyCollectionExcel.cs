@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TrophyCollectionExcel : IFlatbufferObject
@@ -53,6 +54,44 @@ public struct TrophyCollectionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TrophyCollectionExcel> EndTrophyCollectionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TrophyCollectionExcel>(o);
+  }
+  public TrophyCollectionExcelT UnPack() {
+    var _o = new TrophyCollectionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TrophyCollectionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TrophyCollection");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+    _o.FurnitureId = new List<long>();
+    for (var _j = 0; _j < this.FurnitureIdLength; ++_j) {_o.FurnitureId.Add(TableEncryptionService.Convert(this.FurnitureId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TrophyCollectionExcel> Pack(FlatBufferBuilder builder, TrophyCollectionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TrophyCollectionExcel>);
+    var _FurnitureId = default(VectorOffset);
+    if (_o.FurnitureId != null) {
+      var __FurnitureId = _o.FurnitureId.ToArray();
+      _FurnitureId = CreateFurnitureIdVector(builder, __FurnitureId);
+    }
+    return CreateTrophyCollectionExcel(
+      builder,
+      _o.GroupId,
+      _o.LocalizeCodeId,
+      _FurnitureId);
+  }
+}
+
+public class TrophyCollectionExcelT
+{
+  public long GroupId { get; set; }
+  public uint LocalizeCodeId { get; set; }
+  public List<long> FurnitureId { get; set; }
+
+  public TrophyCollectionExcelT() {
+    this.GroupId = 0;
+    this.LocalizeCodeId = 0;
+    this.FurnitureId = null;
   }
 }
 

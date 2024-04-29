@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignChapterExcel : IFlatbufferObject
@@ -163,6 +164,115 @@ public struct CampaignChapterExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignChapterExcel> EndCampaignChapterExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignChapterExcel>(o);
+  }
+  public CampaignChapterExcelT UnPack() {
+    var _o = new CampaignChapterExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignChapterExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignChapter");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.NormalImagePath = TableEncryptionService.Convert(this.NormalImagePath, key);
+    _o.HardImagePath = TableEncryptionService.Convert(this.HardImagePath, key);
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.PreChapterId = new List<long>();
+    for (var _j = 0; _j < this.PreChapterIdLength; ++_j) {_o.PreChapterId.Add(TableEncryptionService.Convert(this.PreChapterId(_j), key));}
+    _o.ChapterRewardId = TableEncryptionService.Convert(this.ChapterRewardId, key);
+    _o.ChapterHardRewardId = TableEncryptionService.Convert(this.ChapterHardRewardId, key);
+    _o.ChapterVeryHardRewardId = TableEncryptionService.Convert(this.ChapterVeryHardRewardId, key);
+    _o.NormalCampaignStageId = new List<long>();
+    for (var _j = 0; _j < this.NormalCampaignStageIdLength; ++_j) {_o.NormalCampaignStageId.Add(TableEncryptionService.Convert(this.NormalCampaignStageId(_j), key));}
+    _o.NormalExtraStageId = new List<long>();
+    for (var _j = 0; _j < this.NormalExtraStageIdLength; ++_j) {_o.NormalExtraStageId.Add(TableEncryptionService.Convert(this.NormalExtraStageId(_j), key));}
+    _o.HardCampaignStageId = new List<long>();
+    for (var _j = 0; _j < this.HardCampaignStageIdLength; ++_j) {_o.HardCampaignStageId.Add(TableEncryptionService.Convert(this.HardCampaignStageId(_j), key));}
+    _o.VeryHardCampaignStageId = new List<long>();
+    for (var _j = 0; _j < this.VeryHardCampaignStageIdLength; ++_j) {_o.VeryHardCampaignStageId.Add(TableEncryptionService.Convert(this.VeryHardCampaignStageId(_j), key));}
+    _o.IsTacticSkip = TableEncryptionService.Convert(this.IsTacticSkip, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignChapterExcel> Pack(FlatBufferBuilder builder, CampaignChapterExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignChapterExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _NormalImagePath = _o.NormalImagePath == null ? default(StringOffset) : builder.CreateString(_o.NormalImagePath);
+    var _HardImagePath = _o.HardImagePath == null ? default(StringOffset) : builder.CreateString(_o.HardImagePath);
+    var _PreChapterId = default(VectorOffset);
+    if (_o.PreChapterId != null) {
+      var __PreChapterId = _o.PreChapterId.ToArray();
+      _PreChapterId = CreatePreChapterIdVector(builder, __PreChapterId);
+    }
+    var _NormalCampaignStageId = default(VectorOffset);
+    if (_o.NormalCampaignStageId != null) {
+      var __NormalCampaignStageId = _o.NormalCampaignStageId.ToArray();
+      _NormalCampaignStageId = CreateNormalCampaignStageIdVector(builder, __NormalCampaignStageId);
+    }
+    var _NormalExtraStageId = default(VectorOffset);
+    if (_o.NormalExtraStageId != null) {
+      var __NormalExtraStageId = _o.NormalExtraStageId.ToArray();
+      _NormalExtraStageId = CreateNormalExtraStageIdVector(builder, __NormalExtraStageId);
+    }
+    var _HardCampaignStageId = default(VectorOffset);
+    if (_o.HardCampaignStageId != null) {
+      var __HardCampaignStageId = _o.HardCampaignStageId.ToArray();
+      _HardCampaignStageId = CreateHardCampaignStageIdVector(builder, __HardCampaignStageId);
+    }
+    var _VeryHardCampaignStageId = default(VectorOffset);
+    if (_o.VeryHardCampaignStageId != null) {
+      var __VeryHardCampaignStageId = _o.VeryHardCampaignStageId.ToArray();
+      _VeryHardCampaignStageId = CreateVeryHardCampaignStageIdVector(builder, __VeryHardCampaignStageId);
+    }
+    return CreateCampaignChapterExcel(
+      builder,
+      _o.Id,
+      _Name,
+      _NormalImagePath,
+      _HardImagePath,
+      _o.Order,
+      _PreChapterId,
+      _o.ChapterRewardId,
+      _o.ChapterHardRewardId,
+      _o.ChapterVeryHardRewardId,
+      _NormalCampaignStageId,
+      _NormalExtraStageId,
+      _HardCampaignStageId,
+      _VeryHardCampaignStageId,
+      _o.IsTacticSkip);
+  }
+}
+
+public class CampaignChapterExcelT
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public string NormalImagePath { get; set; }
+  public string HardImagePath { get; set; }
+  public long Order { get; set; }
+  public List<long> PreChapterId { get; set; }
+  public long ChapterRewardId { get; set; }
+  public long ChapterHardRewardId { get; set; }
+  public long ChapterVeryHardRewardId { get; set; }
+  public List<long> NormalCampaignStageId { get; set; }
+  public List<long> NormalExtraStageId { get; set; }
+  public List<long> HardCampaignStageId { get; set; }
+  public List<long> VeryHardCampaignStageId { get; set; }
+  public bool IsTacticSkip { get; set; }
+
+  public CampaignChapterExcelT() {
+    this.Id = 0;
+    this.Name = null;
+    this.NormalImagePath = null;
+    this.HardImagePath = null;
+    this.Order = 0;
+    this.PreChapterId = null;
+    this.ChapterRewardId = 0;
+    this.ChapterHardRewardId = 0;
+    this.ChapterVeryHardRewardId = 0;
+    this.NormalCampaignStageId = null;
+    this.NormalExtraStageId = null;
+    this.HardCampaignStageId = null;
+    this.VeryHardCampaignStageId = null;
+    this.IsTacticSkip = false;
   }
 }
 

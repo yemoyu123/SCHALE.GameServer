@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldContentStageExcel : IFlatbufferObject
@@ -103,6 +104,95 @@ public struct FieldContentStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldContentStageExcel> EndFieldContentStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldContentStageExcel>(o);
+  }
+  public FieldContentStageExcelT UnPack() {
+    var _o = new FieldContentStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldContentStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldContentStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.AreaId = TableEncryptionService.Convert(this.AreaId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.StageDifficulty = TableEncryptionService.Convert(this.StageDifficulty, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.StageEnterCostType = TableEncryptionService.Convert(this.StageEnterCostType, key);
+    _o.StageEnterCostId = TableEncryptionService.Convert(this.StageEnterCostId, key);
+    _o.StageEnterCostAmount = TableEncryptionService.Convert(this.StageEnterCostAmount, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.GroundID = TableEncryptionService.Convert(this.GroundID, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.InstantClear = TableEncryptionService.Convert(this.InstantClear, key);
+    _o.FixedEchelonId = TableEncryptionService.Convert(this.FixedEchelonId, key);
+    _o.SkipFormationSettings = TableEncryptionService.Convert(this.SkipFormationSettings, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldContentStageExcel> Pack(FlatBufferBuilder builder, FieldContentStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldContentStageExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    return CreateFieldContentStageExcel(
+      builder,
+      _o.Id,
+      _o.SeasonId,
+      _o.AreaId,
+      _o.GroupId,
+      _o.StageDifficulty,
+      _Name,
+      _o.BattleDuration,
+      _o.StageEnterCostType,
+      _o.StageEnterCostId,
+      _o.StageEnterCostAmount,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _o.GroundID,
+      _o.BGMId,
+      _o.InstantClear,
+      _o.FixedEchelonId,
+      _o.SkipFormationSettings);
+  }
+}
+
+public class FieldContentStageExcelT
+{
+  public long Id { get; set; }
+  public long SeasonId { get; set; }
+  public long AreaId { get; set; }
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty StageDifficulty { get; set; }
+  public string Name { get; set; }
+  public long BattleDuration { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StageEnterCostType { get; set; }
+  public long StageEnterCostId { get; set; }
+  public int StageEnterCostAmount { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public int RecommandLevel { get; set; }
+  public long GroundID { get; set; }
+  public long BGMId { get; set; }
+  public bool InstantClear { get; set; }
+  public long FixedEchelonId { get; set; }
+  public bool SkipFormationSettings { get; set; }
+
+  public FieldContentStageExcelT() {
+    this.Id = 0;
+    this.SeasonId = 0;
+    this.AreaId = 0;
+    this.GroupId = 0;
+    this.StageDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.Name = null;
+    this.BattleDuration = 0;
+    this.StageEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StageEnterCostId = 0;
+    this.StageEnterCostAmount = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.GroundID = 0;
+    this.BGMId = 0;
+    this.InstantClear = false;
+    this.FixedEchelonId = 0;
+    this.SkipFormationSettings = false;
   }
 }
 

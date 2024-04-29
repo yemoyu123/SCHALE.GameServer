@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterCombatSkinExcel : IFlatbufferObject
@@ -53,6 +54,40 @@ public struct CharacterCombatSkinExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterCombatSkinExcel> EndCharacterCombatSkinExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterCombatSkinExcel>(o);
+  }
+  public CharacterCombatSkinExcelT UnPack() {
+    var _o = new CharacterCombatSkinExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterCombatSkinExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterCombatSkin");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.ResourcePath = TableEncryptionService.Convert(this.ResourcePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterCombatSkinExcel> Pack(FlatBufferBuilder builder, CharacterCombatSkinExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterCombatSkinExcel>);
+    var _GroupId = _o.GroupId == null ? default(StringOffset) : builder.CreateString(_o.GroupId);
+    var _ResourcePath = _o.ResourcePath == null ? default(StringOffset) : builder.CreateString(_o.ResourcePath);
+    return CreateCharacterCombatSkinExcel(
+      builder,
+      _GroupId,
+      _o.UniqueId,
+      _ResourcePath);
+  }
+}
+
+public class CharacterCombatSkinExcelT
+{
+  public string GroupId { get; set; }
+  public long UniqueId { get; set; }
+  public string ResourcePath { get; set; }
+
+  public CharacterCombatSkinExcelT() {
+    this.GroupId = null;
+    this.UniqueId = 0;
+    this.ResourcePath = null;
   }
 }
 

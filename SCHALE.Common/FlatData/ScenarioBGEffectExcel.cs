@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioBGEffectExcel : IFlatbufferObject
@@ -59,6 +60,51 @@ public struct ScenarioBGEffectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioBGEffectExcel> EndScenarioBGEffectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioBGEffectExcel>(o);
+  }
+  public ScenarioBGEffectExcelT UnPack() {
+    var _o = new ScenarioBGEffectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioBGEffectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioBGEffect");
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Effect = TableEncryptionService.Convert(this.Effect, key);
+    _o.Scroll = TableEncryptionService.Convert(this.Scroll, key);
+    _o.ScrollTime = TableEncryptionService.Convert(this.ScrollTime, key);
+    _o.ScrollFrom = TableEncryptionService.Convert(this.ScrollFrom, key);
+    _o.ScrollTo = TableEncryptionService.Convert(this.ScrollTo, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioBGEffectExcel> Pack(FlatBufferBuilder builder, ScenarioBGEffectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioBGEffectExcel>);
+    var _Effect = _o.Effect == null ? default(StringOffset) : builder.CreateString(_o.Effect);
+    return CreateScenarioBGEffectExcel(
+      builder,
+      _o.Name,
+      _Effect,
+      _o.Scroll,
+      _o.ScrollTime,
+      _o.ScrollFrom,
+      _o.ScrollTo);
+  }
+}
+
+public class ScenarioBGEffectExcelT
+{
+  public uint Name { get; set; }
+  public string Effect { get; set; }
+  public SCHALE.Common.FlatData.ScenarioBGScroll Scroll { get; set; }
+  public long ScrollTime { get; set; }
+  public long ScrollFrom { get; set; }
+  public long ScrollTo { get; set; }
+
+  public ScenarioBGEffectExcelT() {
+    this.Name = 0;
+    this.Effect = null;
+    this.Scroll = SCHALE.Common.FlatData.ScenarioBGScroll.None;
+    this.ScrollTime = 0;
+    this.ScrollFrom = 0;
+    this.ScrollTo = 0;
   }
 }
 

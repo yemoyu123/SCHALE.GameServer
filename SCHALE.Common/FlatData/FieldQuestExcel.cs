@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldQuestExcel : IFlatbufferObject
@@ -75,6 +76,67 @@ public struct FieldQuestExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldQuestExcel> EndFieldQuestExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldQuestExcel>(o);
+  }
+  public FieldQuestExcelT UnPack() {
+    var _o = new FieldQuestExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldQuestExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldQuest");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.FieldSeasonId = TableEncryptionService.Convert(this.FieldSeasonId, key);
+    _o.IsDaily = TableEncryptionService.Convert(this.IsDaily, key);
+    _o.FieldDateId = TableEncryptionService.Convert(this.FieldDateId, key);
+    _o.Opendate = TableEncryptionService.Convert(this.Opendate, key);
+    _o.AssetPath = TableEncryptionService.Convert(this.AssetPath, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.QuestNamKey = TableEncryptionService.Convert(this.QuestNamKey, key);
+    _o.QuestDescKey = TableEncryptionService.Convert(this.QuestDescKey, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldQuestExcel> Pack(FlatBufferBuilder builder, FieldQuestExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldQuestExcel>);
+    var _AssetPath = _o.AssetPath == null ? default(StringOffset) : builder.CreateString(_o.AssetPath);
+    return CreateFieldQuestExcel(
+      builder,
+      _o.UniqueId,
+      _o.FieldSeasonId,
+      _o.IsDaily,
+      _o.FieldDateId,
+      _o.Opendate,
+      _AssetPath,
+      _o.RewardId,
+      _o.Prob,
+      _o.QuestNamKey,
+      _o.QuestDescKey);
+  }
+}
+
+public class FieldQuestExcelT
+{
+  public long UniqueId { get; set; }
+  public long FieldSeasonId { get; set; }
+  public bool IsDaily { get; set; }
+  public long FieldDateId { get; set; }
+  public long Opendate { get; set; }
+  public string AssetPath { get; set; }
+  public long RewardId { get; set; }
+  public int Prob { get; set; }
+  public uint QuestNamKey { get; set; }
+  public uint QuestDescKey { get; set; }
+
+  public FieldQuestExcelT() {
+    this.UniqueId = 0;
+    this.FieldSeasonId = 0;
+    this.IsDaily = false;
+    this.FieldDateId = 0;
+    this.Opendate = 0;
+    this.AssetPath = null;
+    this.RewardId = 0;
+    this.Prob = 0;
+    this.QuestNamKey = 0;
+    this.QuestDescKey = 0;
   }
 }
 

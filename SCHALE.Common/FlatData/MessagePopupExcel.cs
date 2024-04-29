@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MessagePopupExcel : IFlatbufferObject
@@ -135,6 +136,111 @@ public struct MessagePopupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MessagePopupExcel> EndMessagePopupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MessagePopupExcel>(o);
+  }
+  public MessagePopupExcelT UnPack() {
+    var _o = new MessagePopupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MessagePopupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MessagePopup");
+    _o.StringId = TableEncryptionService.Convert(this.StringId, key);
+    _o.MessagePopupLayout = TableEncryptionService.Convert(this.MessagePopupLayout, key);
+    _o.OrderType = TableEncryptionService.Convert(this.OrderType, key);
+    _o.Image = TableEncryptionService.Convert(this.Image, key);
+    _o.TitleText = TableEncryptionService.Convert(this.TitleText, key);
+    _o.SubTitleText = TableEncryptionService.Convert(this.SubTitleText, key);
+    _o.MessageText = TableEncryptionService.Convert(this.MessageText, key);
+    _o.ConditionText = new List<uint>();
+    for (var _j = 0; _j < this.ConditionTextLength; ++_j) {_o.ConditionText.Add(TableEncryptionService.Convert(this.ConditionText(_j), key));}
+    _o.DisplayXButton = TableEncryptionService.Convert(this.DisplayXButton, key);
+    _o.Button = new List<SCHALE.Common.FlatData.MessagePopupButtonType>();
+    for (var _j = 0; _j < this.ButtonLength; ++_j) {_o.Button.Add(TableEncryptionService.Convert(this.Button(_j), key));}
+    _o.ButtonText = new List<uint>();
+    for (var _j = 0; _j < this.ButtonTextLength; ++_j) {_o.ButtonText.Add(TableEncryptionService.Convert(this.ButtonText(_j), key));}
+    _o.ButtonCommand = new List<string>();
+    for (var _j = 0; _j < this.ButtonCommandLength; ++_j) {_o.ButtonCommand.Add(TableEncryptionService.Convert(this.ButtonCommand(_j), key));}
+    _o.ButtonParameter = new List<string>();
+    for (var _j = 0; _j < this.ButtonParameterLength; ++_j) {_o.ButtonParameter.Add(TableEncryptionService.Convert(this.ButtonParameter(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.MessagePopupExcel> Pack(FlatBufferBuilder builder, MessagePopupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MessagePopupExcel>);
+    var _Image = _o.Image == null ? default(StringOffset) : builder.CreateString(_o.Image);
+    var _ConditionText = default(VectorOffset);
+    if (_o.ConditionText != null) {
+      var __ConditionText = _o.ConditionText.ToArray();
+      _ConditionText = CreateConditionTextVector(builder, __ConditionText);
+    }
+    var _Button = default(VectorOffset);
+    if (_o.Button != null) {
+      var __Button = _o.Button.ToArray();
+      _Button = CreateButtonVector(builder, __Button);
+    }
+    var _ButtonText = default(VectorOffset);
+    if (_o.ButtonText != null) {
+      var __ButtonText = _o.ButtonText.ToArray();
+      _ButtonText = CreateButtonTextVector(builder, __ButtonText);
+    }
+    var _ButtonCommand = default(VectorOffset);
+    if (_o.ButtonCommand != null) {
+      var __ButtonCommand = new StringOffset[_o.ButtonCommand.Count];
+      for (var _j = 0; _j < __ButtonCommand.Length; ++_j) { __ButtonCommand[_j] = builder.CreateString(_o.ButtonCommand[_j]); }
+      _ButtonCommand = CreateButtonCommandVector(builder, __ButtonCommand);
+    }
+    var _ButtonParameter = default(VectorOffset);
+    if (_o.ButtonParameter != null) {
+      var __ButtonParameter = new StringOffset[_o.ButtonParameter.Count];
+      for (var _j = 0; _j < __ButtonParameter.Length; ++_j) { __ButtonParameter[_j] = builder.CreateString(_o.ButtonParameter[_j]); }
+      _ButtonParameter = CreateButtonParameterVector(builder, __ButtonParameter);
+    }
+    return CreateMessagePopupExcel(
+      builder,
+      _o.StringId,
+      _o.MessagePopupLayout,
+      _o.OrderType,
+      _Image,
+      _o.TitleText,
+      _o.SubTitleText,
+      _o.MessageText,
+      _ConditionText,
+      _o.DisplayXButton,
+      _Button,
+      _ButtonText,
+      _ButtonCommand,
+      _ButtonParameter);
+  }
+}
+
+public class MessagePopupExcelT
+{
+  public uint StringId { get; set; }
+  public SCHALE.Common.FlatData.MessagePopupLayout MessagePopupLayout { get; set; }
+  public SCHALE.Common.FlatData.MessagePopupImagePositionType OrderType { get; set; }
+  public string Image { get; set; }
+  public uint TitleText { get; set; }
+  public uint SubTitleText { get; set; }
+  public uint MessageText { get; set; }
+  public List<uint> ConditionText { get; set; }
+  public bool DisplayXButton { get; set; }
+  public List<SCHALE.Common.FlatData.MessagePopupButtonType> Button { get; set; }
+  public List<uint> ButtonText { get; set; }
+  public List<string> ButtonCommand { get; set; }
+  public List<string> ButtonParameter { get; set; }
+
+  public MessagePopupExcelT() {
+    this.StringId = 0;
+    this.MessagePopupLayout = SCHALE.Common.FlatData.MessagePopupLayout.TextOnly;
+    this.OrderType = SCHALE.Common.FlatData.MessagePopupImagePositionType.ImageFirst;
+    this.Image = null;
+    this.TitleText = 0;
+    this.SubTitleText = 0;
+    this.MessageText = 0;
+    this.ConditionText = null;
+    this.DisplayXButton = false;
+    this.Button = null;
+    this.ButtonText = null;
+    this.ButtonCommand = null;
+    this.ButtonParameter = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LimitedStageSeasonExcel : IFlatbufferObject
@@ -65,6 +66,52 @@ public struct LimitedStageSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LimitedStageSeasonExcel> EndLimitedStageSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LimitedStageSeasonExcel>(o);
+  }
+  public LimitedStageSeasonExcelT UnPack() {
+    var _o = new LimitedStageSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LimitedStageSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LimitedStageSeason");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.TypeACount = TableEncryptionService.Convert(this.TypeACount, key);
+    _o.TypeBCount = TableEncryptionService.Convert(this.TypeBCount, key);
+    _o.TypeCCount = TableEncryptionService.Convert(this.TypeCCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LimitedStageSeasonExcel> Pack(FlatBufferBuilder builder, LimitedStageSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LimitedStageSeasonExcel>);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    return CreateLimitedStageSeasonExcel(
+      builder,
+      _o.Id,
+      _StartDate,
+      _EndDate,
+      _o.TypeACount,
+      _o.TypeBCount,
+      _o.TypeCCount);
+  }
+}
+
+public class LimitedStageSeasonExcelT
+{
+  public long Id { get; set; }
+  public string StartDate { get; set; }
+  public string EndDate { get; set; }
+  public long TypeACount { get; set; }
+  public long TypeBCount { get; set; }
+  public long TypeCCount { get; set; }
+
+  public LimitedStageSeasonExcelT() {
+    this.Id = 0;
+    this.StartDate = null;
+    this.EndDate = null;
+    this.TypeACount = 0;
+    this.TypeBCount = 0;
+    this.TypeCCount = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultMailExcel : IFlatbufferObject
@@ -109,6 +110,78 @@ public struct DefaultMailExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultMailExcel> EndDefaultMailExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultMailExcel>(o);
+  }
+  public DefaultMailExcelT UnPack() {
+    var _o = new DefaultMailExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultMailExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultMail");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+    _o.MailType = TableEncryptionService.Convert(this.MailType, key);
+    _o.MailSendPeriodFrom = TableEncryptionService.Convert(this.MailSendPeriodFrom, key);
+    _o.MailSendPeriodTo = TableEncryptionService.Convert(this.MailSendPeriodTo, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultMailExcel> Pack(FlatBufferBuilder builder, DefaultMailExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultMailExcel>);
+    var _MailSendPeriodFrom = _o.MailSendPeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.MailSendPeriodFrom);
+    var _MailSendPeriodTo = _o.MailSendPeriodTo == null ? default(StringOffset) : builder.CreateString(_o.MailSendPeriodTo);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateDefaultMailExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeCodeId,
+      _o.MailType,
+      _MailSendPeriodFrom,
+      _MailSendPeriodTo,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class DefaultMailExcelT
+{
+  public long Id { get; set; }
+  public uint LocalizeCodeId { get; set; }
+  public SCHALE.Common.FlatData.MailType MailType { get; set; }
+  public string MailSendPeriodFrom { get; set; }
+  public string MailSendPeriodTo { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public DefaultMailExcelT() {
+    this.Id = 0;
+    this.LocalizeCodeId = 0;
+    this.MailType = SCHALE.Common.FlatData.MailType.System;
+    this.MailSendPeriodFrom = null;
+    this.MailSendPeriodTo = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

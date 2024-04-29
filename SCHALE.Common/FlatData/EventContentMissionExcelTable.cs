@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMissionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentMissionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentMissionExcelTable> EndEventContentMissionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMissionExcelTable>(o);
+  }
+  public EventContentMissionExcelTableT UnPack() {
+    var _o = new EventContentMissionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMissionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMissionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentMissionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMissionExcelTable> Pack(FlatBufferBuilder builder, EventContentMissionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMissionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentMissionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentMissionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentMissionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentMissionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentMissionExcelT> DataList { get; set; }
+
+  public EventContentMissionExcelTableT() {
+    this.DataList = null;
   }
 }
 

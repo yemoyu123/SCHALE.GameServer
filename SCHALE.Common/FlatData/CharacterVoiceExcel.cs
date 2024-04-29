@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterVoiceExcel : IFlatbufferObject
@@ -133,6 +134,108 @@ public struct CharacterVoiceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterVoiceExcel> EndCharacterVoiceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterVoiceExcel>(o);
+  }
+  public CharacterVoiceExcelT UnPack() {
+    var _o = new CharacterVoiceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterVoiceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterVoice");
+    _o.CharacterVoiceUniqueId = TableEncryptionService.Convert(this.CharacterVoiceUniqueId, key);
+    _o.CharacterVoiceGroupId = TableEncryptionService.Convert(this.CharacterVoiceGroupId, key);
+    _o.VoiceHash = TableEncryptionService.Convert(this.VoiceHash, key);
+    _o.OnlyOne = TableEncryptionService.Convert(this.OnlyOne, key);
+    _o.Priority = TableEncryptionService.Convert(this.Priority, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.CVCollectionType = TableEncryptionService.Convert(this.CVCollectionType, key);
+    _o.UnlockFavorRank = TableEncryptionService.Convert(this.UnlockFavorRank, key);
+    _o.LocalizeCVGroup = TableEncryptionService.Convert(this.LocalizeCVGroup, key);
+    _o.Nation_ = new List<SCHALE.Common.FlatData.Nation>();
+    for (var _j = 0; _j < this.Nation_Length; ++_j) {_o.Nation_.Add(TableEncryptionService.Convert(this.Nation_(_j), key));}
+    _o.Volume = new List<float>();
+    for (var _j = 0; _j < this.VolumeLength; ++_j) {_o.Volume.Add(TableEncryptionService.Convert(this.Volume(_j), key));}
+    _o.Delay = new List<float>();
+    for (var _j = 0; _j < this.DelayLength; ++_j) {_o.Delay.Add(TableEncryptionService.Convert(this.Delay(_j), key));}
+    _o.Path = new List<string>();
+    for (var _j = 0; _j < this.PathLength; ++_j) {_o.Path.Add(TableEncryptionService.Convert(this.Path(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterVoiceExcel> Pack(FlatBufferBuilder builder, CharacterVoiceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterVoiceExcel>);
+    var _LocalizeCVGroup = _o.LocalizeCVGroup == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCVGroup);
+    var _Nation_ = default(VectorOffset);
+    if (_o.Nation_ != null) {
+      var __Nation_ = _o.Nation_.ToArray();
+      _Nation_ = CreateNation_Vector(builder, __Nation_);
+    }
+    var _Volume = default(VectorOffset);
+    if (_o.Volume != null) {
+      var __Volume = _o.Volume.ToArray();
+      _Volume = CreateVolumeVector(builder, __Volume);
+    }
+    var _Delay = default(VectorOffset);
+    if (_o.Delay != null) {
+      var __Delay = _o.Delay.ToArray();
+      _Delay = CreateDelayVector(builder, __Delay);
+    }
+    var _Path = default(VectorOffset);
+    if (_o.Path != null) {
+      var __Path = new StringOffset[_o.Path.Count];
+      for (var _j = 0; _j < __Path.Length; ++_j) { __Path[_j] = builder.CreateString(_o.Path[_j]); }
+      _Path = CreatePathVector(builder, __Path);
+    }
+    return CreateCharacterVoiceExcel(
+      builder,
+      _o.CharacterVoiceUniqueId,
+      _o.CharacterVoiceGroupId,
+      _o.VoiceHash,
+      _o.OnlyOne,
+      _o.Priority,
+      _o.DisplayOrder,
+      _o.CollectionVisible,
+      _o.CVCollectionType,
+      _o.UnlockFavorRank,
+      _LocalizeCVGroup,
+      _Nation_,
+      _Volume,
+      _Delay,
+      _Path);
+  }
+}
+
+public class CharacterVoiceExcelT
+{
+  public long CharacterVoiceUniqueId { get; set; }
+  public long CharacterVoiceGroupId { get; set; }
+  public uint VoiceHash { get; set; }
+  public bool OnlyOne { get; set; }
+  public int Priority { get; set; }
+  public long DisplayOrder { get; set; }
+  public bool CollectionVisible { get; set; }
+  public SCHALE.Common.FlatData.CVCollectionType CVCollectionType { get; set; }
+  public long UnlockFavorRank { get; set; }
+  public string LocalizeCVGroup { get; set; }
+  public List<SCHALE.Common.FlatData.Nation> Nation_ { get; set; }
+  public List<float> Volume { get; set; }
+  public List<float> Delay { get; set; }
+  public List<string> Path { get; set; }
+
+  public CharacterVoiceExcelT() {
+    this.CharacterVoiceUniqueId = 0;
+    this.CharacterVoiceGroupId = 0;
+    this.VoiceHash = 0;
+    this.OnlyOne = false;
+    this.Priority = 0;
+    this.DisplayOrder = 0;
+    this.CollectionVisible = false;
+    this.CVCollectionType = SCHALE.Common.FlatData.CVCollectionType.CVNormal;
+    this.UnlockFavorRank = 0;
+    this.LocalizeCVGroup = null;
+    this.Nation_ = null;
+    this.Volume = null;
+    this.Delay = null;
+    this.Path = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct Motion : IFlatbufferObject
@@ -49,6 +50,42 @@ public struct Motion : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.Motion> EndMotion(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.Motion>(o);
+  }
+  public MotionT UnPack() {
+    var _o = new MotionT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MotionT _o) {
+		byte[] key = { 0 };
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Positions = new List<SCHALE.Common.FlatData.PositionT>();
+    for (var _j = 0; _j < this.PositionsLength; ++_j) {_o.Positions.Add(this.Positions(_j).HasValue ? this.Positions(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.Motion> Pack(FlatBufferBuilder builder, MotionT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.Motion>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _Positions = default(VectorOffset);
+    if (_o.Positions != null) {
+      var __Positions = new Offset<SCHALE.Common.FlatData.Position>[_o.Positions.Count];
+      for (var _j = 0; _j < __Positions.Length; ++_j) { __Positions[_j] = SCHALE.Common.FlatData.Position.Pack(builder, _o.Positions[_j]); }
+      _Positions = CreatePositionsVector(builder, __Positions);
+    }
+    return CreateMotion(
+      builder,
+      _Name,
+      _Positions);
+  }
+}
+
+public class MotionT
+{
+  public string Name { get; set; }
+  public List<SCHALE.Common.FlatData.PositionT> Positions { get; set; }
+
+  public MotionT() {
+    this.Name = null;
+    this.Positions = null;
   }
 }
 

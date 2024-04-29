@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestCameraSettingExcel : IFlatbufferObject
@@ -73,6 +74,70 @@ public struct ConquestCameraSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestCameraSettingExcel> EndConquestCameraSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestCameraSettingExcel>(o);
+  }
+  public ConquestCameraSettingExcelT UnPack() {
+    var _o = new ConquestCameraSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestCameraSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestCameraSetting");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ConquestMapBoundaryOffsetLeft = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetLeft, key);
+    _o.ConquestMapBoundaryOffsetRight = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetRight, key);
+    _o.ConquestMapBoundaryOffsetTop = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetTop, key);
+    _o.ConquestMapBoundaryOffsetBottom = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetBottom, key);
+    _o.ConquestMapCenterOffsetX = TableEncryptionService.Convert(this.ConquestMapCenterOffsetX, key);
+    _o.ConquestMapCenterOffsetY = TableEncryptionService.Convert(this.ConquestMapCenterOffsetY, key);
+    _o.CameraAngle = TableEncryptionService.Convert(this.CameraAngle, key);
+    _o.CameraZoomMax = TableEncryptionService.Convert(this.CameraZoomMax, key);
+    _o.CameraZoomMin = TableEncryptionService.Convert(this.CameraZoomMin, key);
+    _o.CameraZoomDefault = TableEncryptionService.Convert(this.CameraZoomDefault, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestCameraSettingExcel> Pack(FlatBufferBuilder builder, ConquestCameraSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestCameraSettingExcel>);
+    return CreateConquestCameraSettingExcel(
+      builder,
+      _o.Id,
+      _o.ConquestMapBoundaryOffsetLeft,
+      _o.ConquestMapBoundaryOffsetRight,
+      _o.ConquestMapBoundaryOffsetTop,
+      _o.ConquestMapBoundaryOffsetBottom,
+      _o.ConquestMapCenterOffsetX,
+      _o.ConquestMapCenterOffsetY,
+      _o.CameraAngle,
+      _o.CameraZoomMax,
+      _o.CameraZoomMin,
+      _o.CameraZoomDefault);
+  }
+}
+
+public class ConquestCameraSettingExcelT
+{
+  public long Id { get; set; }
+  public float ConquestMapBoundaryOffsetLeft { get; set; }
+  public float ConquestMapBoundaryOffsetRight { get; set; }
+  public float ConquestMapBoundaryOffsetTop { get; set; }
+  public float ConquestMapBoundaryOffsetBottom { get; set; }
+  public float ConquestMapCenterOffsetX { get; set; }
+  public float ConquestMapCenterOffsetY { get; set; }
+  public float CameraAngle { get; set; }
+  public float CameraZoomMax { get; set; }
+  public float CameraZoomMin { get; set; }
+  public float CameraZoomDefault { get; set; }
+
+  public ConquestCameraSettingExcelT() {
+    this.Id = 0;
+    this.ConquestMapBoundaryOffsetLeft = 0.0f;
+    this.ConquestMapBoundaryOffsetRight = 0.0f;
+    this.ConquestMapBoundaryOffsetTop = 0.0f;
+    this.ConquestMapBoundaryOffsetBottom = 0.0f;
+    this.ConquestMapCenterOffsetX = 0.0f;
+    this.ConquestMapCenterOffsetY = 0.0f;
+    this.CameraAngle = 0.0f;
+    this.CameraZoomMax = 0.0f;
+    this.CameraZoomMin = 0.0f;
+    this.CameraZoomDefault = 0.0f;
   }
 }
 

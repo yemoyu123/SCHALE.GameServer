@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGEncounterOptionExcel : IFlatbufferObject
@@ -95,6 +96,77 @@ public struct MinigameTBGEncounterOptionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel> EndMinigameTBGEncounterOptionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel>(o);
+  }
+  public MinigameTBGEncounterOptionExcelT UnPack() {
+    var _o = new MinigameTBGEncounterOptionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGEncounterOptionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGEncounterOption");
+    _o.OptionGroupId = TableEncryptionService.Convert(this.OptionGroupId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.SlotIndex = TableEncryptionService.Convert(this.SlotIndex, key);
+    _o.OptionTitleLocalize = TableEncryptionService.Convert(this.OptionTitleLocalize, key);
+    _o.OptionSuccessLocalize = TableEncryptionService.Convert(this.OptionSuccessLocalize, key);
+    _o.OptionSuccessRewardGroupId = TableEncryptionService.Convert(this.OptionSuccessRewardGroupId, key);
+    _o.OptionSuccessOrHigherDiceCount = TableEncryptionService.Convert(this.OptionSuccessOrHigherDiceCount, key);
+    _o.OptionGreatSuccessOrHigherDiceCount = TableEncryptionService.Convert(this.OptionGreatSuccessOrHigherDiceCount, key);
+    _o.OptionFailLocalize = TableEncryptionService.Convert(this.OptionFailLocalize, key);
+    _o.OptionFailLessDiceCount = TableEncryptionService.Convert(this.OptionFailLessDiceCount, key);
+    _o.RunawayOrHigherDiceCount = TableEncryptionService.Convert(this.RunawayOrHigherDiceCount, key);
+    _o.RewardHide = TableEncryptionService.Convert(this.RewardHide, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel> Pack(FlatBufferBuilder builder, MinigameTBGEncounterOptionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel>);
+    var _OptionTitleLocalize = _o.OptionTitleLocalize == null ? default(StringOffset) : builder.CreateString(_o.OptionTitleLocalize);
+    var _OptionSuccessLocalize = _o.OptionSuccessLocalize == null ? default(StringOffset) : builder.CreateString(_o.OptionSuccessLocalize);
+    var _OptionFailLocalize = _o.OptionFailLocalize == null ? default(StringOffset) : builder.CreateString(_o.OptionFailLocalize);
+    return CreateMinigameTBGEncounterOptionExcel(
+      builder,
+      _o.OptionGroupId,
+      _o.UniqueId,
+      _o.SlotIndex,
+      _OptionTitleLocalize,
+      _OptionSuccessLocalize,
+      _o.OptionSuccessRewardGroupId,
+      _o.OptionSuccessOrHigherDiceCount,
+      _o.OptionGreatSuccessOrHigherDiceCount,
+      _OptionFailLocalize,
+      _o.OptionFailLessDiceCount,
+      _o.RunawayOrHigherDiceCount,
+      _o.RewardHide);
+  }
+}
+
+public class MinigameTBGEncounterOptionExcelT
+{
+  public long OptionGroupId { get; set; }
+  public long UniqueId { get; set; }
+  public int SlotIndex { get; set; }
+  public string OptionTitleLocalize { get; set; }
+  public string OptionSuccessLocalize { get; set; }
+  public long OptionSuccessRewardGroupId { get; set; }
+  public int OptionSuccessOrHigherDiceCount { get; set; }
+  public int OptionGreatSuccessOrHigherDiceCount { get; set; }
+  public string OptionFailLocalize { get; set; }
+  public int OptionFailLessDiceCount { get; set; }
+  public int RunawayOrHigherDiceCount { get; set; }
+  public bool RewardHide { get; set; }
+
+  public MinigameTBGEncounterOptionExcelT() {
+    this.OptionGroupId = 0;
+    this.UniqueId = 0;
+    this.SlotIndex = 0;
+    this.OptionTitleLocalize = null;
+    this.OptionSuccessLocalize = null;
+    this.OptionSuccessRewardGroupId = 0;
+    this.OptionSuccessOrHigherDiceCount = 0;
+    this.OptionGreatSuccessOrHigherDiceCount = 0;
+    this.OptionFailLocalize = null;
+    this.OptionFailLessDiceCount = 0;
+    this.RunawayOrHigherDiceCount = 0;
+    this.RewardHide = false;
   }
 }
 

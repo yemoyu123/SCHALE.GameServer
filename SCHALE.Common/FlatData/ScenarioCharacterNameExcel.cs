@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioCharacterNameExcel : IFlatbufferObject
@@ -101,6 +102,68 @@ public struct ScenarioCharacterNameExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioCharacterNameExcel> EndScenarioCharacterNameExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioCharacterNameExcel>(o);
+  }
+  public ScenarioCharacterNameExcelT UnPack() {
+    var _o = new ScenarioCharacterNameExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioCharacterNameExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioCharacterName");
+    _o.CharacterName = TableEncryptionService.Convert(this.CharacterName, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.NameKR = TableEncryptionService.Convert(this.NameKR, key);
+    _o.NicknameKR = TableEncryptionService.Convert(this.NicknameKR, key);
+    _o.NameJP = TableEncryptionService.Convert(this.NameJP, key);
+    _o.NicknameJP = TableEncryptionService.Convert(this.NicknameJP, key);
+    _o.Shape = TableEncryptionService.Convert(this.Shape, key);
+    _o.SpinePrefabName = TableEncryptionService.Convert(this.SpinePrefabName, key);
+    _o.SmallPortrait = TableEncryptionService.Convert(this.SmallPortrait, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioCharacterNameExcel> Pack(FlatBufferBuilder builder, ScenarioCharacterNameExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioCharacterNameExcel>);
+    var _NameKR = _o.NameKR == null ? default(StringOffset) : builder.CreateString(_o.NameKR);
+    var _NicknameKR = _o.NicknameKR == null ? default(StringOffset) : builder.CreateString(_o.NicknameKR);
+    var _NameJP = _o.NameJP == null ? default(StringOffset) : builder.CreateString(_o.NameJP);
+    var _NicknameJP = _o.NicknameJP == null ? default(StringOffset) : builder.CreateString(_o.NicknameJP);
+    var _SpinePrefabName = _o.SpinePrefabName == null ? default(StringOffset) : builder.CreateString(_o.SpinePrefabName);
+    var _SmallPortrait = _o.SmallPortrait == null ? default(StringOffset) : builder.CreateString(_o.SmallPortrait);
+    return CreateScenarioCharacterNameExcel(
+      builder,
+      _o.CharacterName,
+      _o.ProductionStep,
+      _NameKR,
+      _NicknameKR,
+      _NameJP,
+      _NicknameJP,
+      _o.Shape,
+      _SpinePrefabName,
+      _SmallPortrait);
+  }
+}
+
+public class ScenarioCharacterNameExcelT
+{
+  public uint CharacterName { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public string NameKR { get; set; }
+  public string NicknameKR { get; set; }
+  public string NameJP { get; set; }
+  public string NicknameJP { get; set; }
+  public SCHALE.Common.FlatData.ScenarioCharacterShapes Shape { get; set; }
+  public string SpinePrefabName { get; set; }
+  public string SmallPortrait { get; set; }
+
+  public ScenarioCharacterNameExcelT() {
+    this.CharacterName = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.NameKR = null;
+    this.NicknameKR = null;
+    this.NameJP = null;
+    this.NicknameJP = null;
+    this.Shape = SCHALE.Common.FlatData.ScenarioCharacterShapes.None;
+    this.SpinePrefabName = null;
+    this.SmallPortrait = null;
   }
 }
 

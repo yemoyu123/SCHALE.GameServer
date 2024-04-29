@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CafeRankExcel : IFlatbufferObject
@@ -93,6 +94,78 @@ public struct CafeRankExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CafeRankExcel> EndCafeRankExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CafeRankExcel>(o);
+  }
+  public CafeRankExcelT UnPack() {
+    var _o = new CafeRankExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CafeRankExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CafeRank");
+    _o.CafeId = TableEncryptionService.Convert(this.CafeId, key);
+    _o.Rank = TableEncryptionService.Convert(this.Rank, key);
+    _o.RecipeId = TableEncryptionService.Convert(this.RecipeId, key);
+    _o.ComfortMax = TableEncryptionService.Convert(this.ComfortMax, key);
+    _o.TagCountMax = TableEncryptionService.Convert(this.TagCountMax, key);
+    _o.CharacterVisitMin = TableEncryptionService.Convert(this.CharacterVisitMin, key);
+    _o.CharacterVisitMax = TableEncryptionService.Convert(this.CharacterVisitMax, key);
+    _o.CafeVisitWeightBase = TableEncryptionService.Convert(this.CafeVisitWeightBase, key);
+    _o.CafeVisitWeightTagBonusStep = new List<int>();
+    for (var _j = 0; _j < this.CafeVisitWeightTagBonusStepLength; ++_j) {_o.CafeVisitWeightTagBonusStep.Add(TableEncryptionService.Convert(this.CafeVisitWeightTagBonusStep(_j), key));}
+    _o.CafeVisitWeightTagBonus = new List<int>();
+    for (var _j = 0; _j < this.CafeVisitWeightTagBonusLength; ++_j) {_o.CafeVisitWeightTagBonus.Add(TableEncryptionService.Convert(this.CafeVisitWeightTagBonus(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CafeRankExcel> Pack(FlatBufferBuilder builder, CafeRankExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CafeRankExcel>);
+    var _CafeVisitWeightTagBonusStep = default(VectorOffset);
+    if (_o.CafeVisitWeightTagBonusStep != null) {
+      var __CafeVisitWeightTagBonusStep = _o.CafeVisitWeightTagBonusStep.ToArray();
+      _CafeVisitWeightTagBonusStep = CreateCafeVisitWeightTagBonusStepVector(builder, __CafeVisitWeightTagBonusStep);
+    }
+    var _CafeVisitWeightTagBonus = default(VectorOffset);
+    if (_o.CafeVisitWeightTagBonus != null) {
+      var __CafeVisitWeightTagBonus = _o.CafeVisitWeightTagBonus.ToArray();
+      _CafeVisitWeightTagBonus = CreateCafeVisitWeightTagBonusVector(builder, __CafeVisitWeightTagBonus);
+    }
+    return CreateCafeRankExcel(
+      builder,
+      _o.CafeId,
+      _o.Rank,
+      _o.RecipeId,
+      _o.ComfortMax,
+      _o.TagCountMax,
+      _o.CharacterVisitMin,
+      _o.CharacterVisitMax,
+      _o.CafeVisitWeightBase,
+      _CafeVisitWeightTagBonusStep,
+      _CafeVisitWeightTagBonus);
+  }
+}
+
+public class CafeRankExcelT
+{
+  public long CafeId { get; set; }
+  public long Rank { get; set; }
+  public long RecipeId { get; set; }
+  public long ComfortMax { get; set; }
+  public long TagCountMax { get; set; }
+  public int CharacterVisitMin { get; set; }
+  public int CharacterVisitMax { get; set; }
+  public int CafeVisitWeightBase { get; set; }
+  public List<int> CafeVisitWeightTagBonusStep { get; set; }
+  public List<int> CafeVisitWeightTagBonus { get; set; }
+
+  public CafeRankExcelT() {
+    this.CafeId = 0;
+    this.Rank = 0;
+    this.RecipeId = 0;
+    this.ComfortMax = 0;
+    this.TagCountMax = 0;
+    this.CharacterVisitMin = 0;
+    this.CharacterVisitMax = 0;
+    this.CafeVisitWeightBase = 0;
+    this.CafeVisitWeightTagBonusStep = null;
+    this.CafeVisitWeightTagBonus = null;
   }
 }
 

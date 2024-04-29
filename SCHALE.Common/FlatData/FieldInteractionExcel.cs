@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldInteractionExcel : IFlatbufferObject
@@ -175,6 +176,125 @@ public struct FieldInteractionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldInteractionExcel> EndFieldInteractionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldInteractionExcel>(o);
+  }
+  public FieldInteractionExcelT UnPack() {
+    var _o = new FieldInteractionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldInteractionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldInteraction");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.FieldDateId = TableEncryptionService.Convert(this.FieldDateId, key);
+    _o.ShowEmoji = TableEncryptionService.Convert(this.ShowEmoji, key);
+    _o.KeywordLocalize = TableEncryptionService.Convert(this.KeywordLocalize, key);
+    _o.FieldSeasonId = TableEncryptionService.Convert(this.FieldSeasonId, key);
+    _o.InteractionType = new List<SCHALE.Common.FlatData.FieldInteractionType>();
+    for (var _j = 0; _j < this.InteractionTypeLength; ++_j) {_o.InteractionType.Add(TableEncryptionService.Convert(this.InteractionType(_j), key));}
+    _o.InteractionId = new List<long>();
+    for (var _j = 0; _j < this.InteractionIdLength; ++_j) {_o.InteractionId.Add(TableEncryptionService.Convert(this.InteractionId(_j), key));}
+    _o.ConditionClass = TableEncryptionService.Convert(this.ConditionClass, key);
+    _o.ConditionClassParameters = new List<long>();
+    for (var _j = 0; _j < this.ConditionClassParametersLength; ++_j) {_o.ConditionClassParameters.Add(TableEncryptionService.Convert(this.ConditionClassParameters(_j), key));}
+    _o.OnceOnly = TableEncryptionService.Convert(this.OnceOnly, key);
+    _o.ConditionIndex = new List<long>();
+    for (var _j = 0; _j < this.ConditionIndexLength; ++_j) {_o.ConditionIndex.Add(TableEncryptionService.Convert(this.ConditionIndex(_j), key));}
+    _o.ConditionType = new List<SCHALE.Common.FlatData.FieldConditionType>();
+    for (var _j = 0; _j < this.ConditionTypeLength; ++_j) {_o.ConditionType.Add(TableEncryptionService.Convert(this.ConditionType(_j), key));}
+    _o.ConditionId = new List<long>();
+    for (var _j = 0; _j < this.ConditionIdLength; ++_j) {_o.ConditionId.Add(TableEncryptionService.Convert(this.ConditionId(_j), key));}
+    _o.NegateCondition = new List<bool>();
+    for (var _j = 0; _j < this.NegateConditionLength; ++_j) {_o.NegateCondition.Add(TableEncryptionService.Convert(this.NegateCondition(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldInteractionExcel> Pack(FlatBufferBuilder builder, FieldInteractionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldInteractionExcel>);
+    var _KeywordLocalize = _o.KeywordLocalize == null ? default(StringOffset) : builder.CreateString(_o.KeywordLocalize);
+    var _InteractionType = default(VectorOffset);
+    if (_o.InteractionType != null) {
+      var __InteractionType = _o.InteractionType.ToArray();
+      _InteractionType = CreateInteractionTypeVector(builder, __InteractionType);
+    }
+    var _InteractionId = default(VectorOffset);
+    if (_o.InteractionId != null) {
+      var __InteractionId = _o.InteractionId.ToArray();
+      _InteractionId = CreateInteractionIdVector(builder, __InteractionId);
+    }
+    var _ConditionClassParameters = default(VectorOffset);
+    if (_o.ConditionClassParameters != null) {
+      var __ConditionClassParameters = _o.ConditionClassParameters.ToArray();
+      _ConditionClassParameters = CreateConditionClassParametersVector(builder, __ConditionClassParameters);
+    }
+    var _ConditionIndex = default(VectorOffset);
+    if (_o.ConditionIndex != null) {
+      var __ConditionIndex = _o.ConditionIndex.ToArray();
+      _ConditionIndex = CreateConditionIndexVector(builder, __ConditionIndex);
+    }
+    var _ConditionType = default(VectorOffset);
+    if (_o.ConditionType != null) {
+      var __ConditionType = _o.ConditionType.ToArray();
+      _ConditionType = CreateConditionTypeVector(builder, __ConditionType);
+    }
+    var _ConditionId = default(VectorOffset);
+    if (_o.ConditionId != null) {
+      var __ConditionId = _o.ConditionId.ToArray();
+      _ConditionId = CreateConditionIdVector(builder, __ConditionId);
+    }
+    var _NegateCondition = default(VectorOffset);
+    if (_o.NegateCondition != null) {
+      var __NegateCondition = _o.NegateCondition.ToArray();
+      _NegateCondition = CreateNegateConditionVector(builder, __NegateCondition);
+    }
+    return CreateFieldInteractionExcel(
+      builder,
+      _o.UniqueId,
+      _o.FieldDateId,
+      _o.ShowEmoji,
+      _KeywordLocalize,
+      _o.FieldSeasonId,
+      _InteractionType,
+      _InteractionId,
+      _o.ConditionClass,
+      _ConditionClassParameters,
+      _o.OnceOnly,
+      _ConditionIndex,
+      _ConditionType,
+      _ConditionId,
+      _NegateCondition);
+  }
+}
+
+public class FieldInteractionExcelT
+{
+  public long UniqueId { get; set; }
+  public long FieldDateId { get; set; }
+  public bool ShowEmoji { get; set; }
+  public string KeywordLocalize { get; set; }
+  public long FieldSeasonId { get; set; }
+  public List<SCHALE.Common.FlatData.FieldInteractionType> InteractionType { get; set; }
+  public List<long> InteractionId { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionClass ConditionClass { get; set; }
+  public List<long> ConditionClassParameters { get; set; }
+  public bool OnceOnly { get; set; }
+  public List<long> ConditionIndex { get; set; }
+  public List<SCHALE.Common.FlatData.FieldConditionType> ConditionType { get; set; }
+  public List<long> ConditionId { get; set; }
+  public List<bool> NegateCondition { get; set; }
+
+  public FieldInteractionExcelT() {
+    this.UniqueId = 0;
+    this.FieldDateId = 0;
+    this.ShowEmoji = false;
+    this.KeywordLocalize = null;
+    this.FieldSeasonId = 0;
+    this.InteractionType = null;
+    this.InteractionId = null;
+    this.ConditionClass = SCHALE.Common.FlatData.FieldConditionClass.AndOr;
+    this.ConditionClassParameters = null;
+    this.OnceOnly = false;
+    this.ConditionIndex = null;
+    this.ConditionType = null;
+    this.ConditionId = null;
+    this.NegateCondition = null;
   }
 }
 

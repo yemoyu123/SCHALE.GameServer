@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BossPhaseExcel : IFlatbufferObject
@@ -63,6 +64,49 @@ public struct BossPhaseExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BossPhaseExcel> EndBossPhaseExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BossPhaseExcel>(o);
+  }
+  public BossPhaseExcelT UnPack() {
+    var _o = new BossPhaseExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BossPhaseExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BossPhase");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.AIPhase = TableEncryptionService.Convert(this.AIPhase, key);
+    _o.NormalAttackSkillUniqueName = TableEncryptionService.Convert(this.NormalAttackSkillUniqueName, key);
+    _o.UseExSkill = new List<bool>();
+    for (var _j = 0; _j < this.UseExSkillLength; ++_j) {_o.UseExSkill.Add(TableEncryptionService.Convert(this.UseExSkill(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.BossPhaseExcel> Pack(FlatBufferBuilder builder, BossPhaseExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BossPhaseExcel>);
+    var _NormalAttackSkillUniqueName = _o.NormalAttackSkillUniqueName == null ? default(StringOffset) : builder.CreateString(_o.NormalAttackSkillUniqueName);
+    var _UseExSkill = default(VectorOffset);
+    if (_o.UseExSkill != null) {
+      var __UseExSkill = _o.UseExSkill.ToArray();
+      _UseExSkill = CreateUseExSkillVector(builder, __UseExSkill);
+    }
+    return CreateBossPhaseExcel(
+      builder,
+      _o.Id,
+      _o.AIPhase,
+      _NormalAttackSkillUniqueName,
+      _UseExSkill);
+  }
+}
+
+public class BossPhaseExcelT
+{
+  public long Id { get; set; }
+  public long AIPhase { get; set; }
+  public string NormalAttackSkillUniqueName { get; set; }
+  public List<bool> UseExSkill { get; set; }
+
+  public BossPhaseExcelT() {
+    this.Id = 0;
+    this.AIPhase = 0;
+    this.NormalAttackSkillUniqueName = null;
+    this.UseExSkill = null;
   }
 }
 

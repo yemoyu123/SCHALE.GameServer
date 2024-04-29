@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TimeAttackDungeonExcel : IFlatbufferObject
@@ -55,6 +56,47 @@ public struct TimeAttackDungeonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonExcel> EndTimeAttackDungeonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TimeAttackDungeonExcel>(o);
+  }
+  public TimeAttackDungeonExcelT UnPack() {
+    var _o = new TimeAttackDungeonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TimeAttackDungeonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TimeAttackDungeon");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TimeAttackDungeonType = TableEncryptionService.Convert(this.TimeAttackDungeonType, key);
+    _o.LocalizeEtcKey = TableEncryptionService.Convert(this.LocalizeEtcKey, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.InformationGroupID = TableEncryptionService.Convert(this.InformationGroupID, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonExcel> Pack(FlatBufferBuilder builder, TimeAttackDungeonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TimeAttackDungeonExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    return CreateTimeAttackDungeonExcel(
+      builder,
+      _o.Id,
+      _o.TimeAttackDungeonType,
+      _o.LocalizeEtcKey,
+      _IconPath,
+      _o.InformationGroupID);
+  }
+}
+
+public class TimeAttackDungeonExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TimeAttackDungeonType TimeAttackDungeonType { get; set; }
+  public uint LocalizeEtcKey { get; set; }
+  public string IconPath { get; set; }
+  public long InformationGroupID { get; set; }
+
+  public TimeAttackDungeonExcelT() {
+    this.Id = 0;
+    this.TimeAttackDungeonType = SCHALE.Common.FlatData.TimeAttackDungeonType.None;
+    this.LocalizeEtcKey = 0;
+    this.IconPath = null;
+    this.InformationGroupID = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestUnexpectedEventExcel : IFlatbufferObject
@@ -79,6 +80,71 @@ public struct ConquestUnexpectedEventExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestUnexpectedEventExcel> EndConquestUnexpectedEventExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestUnexpectedEventExcel>(o);
+  }
+  public ConquestUnexpectedEventExcelT UnPack() {
+    var _o = new ConquestUnexpectedEventExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestUnexpectedEventExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestUnexpectedEvent");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.UnexpectedEventConditionType = TableEncryptionService.Convert(this.UnexpectedEventConditionType, key);
+    _o.UnexpectedEventConditionUniqueId = TableEncryptionService.Convert(this.UnexpectedEventConditionUniqueId, key);
+    _o.UnexpectedEventConditionAmount = TableEncryptionService.Convert(this.UnexpectedEventConditionAmount, key);
+    _o.UnexpectedEventOccurDailyLimitCount = TableEncryptionService.Convert(this.UnexpectedEventOccurDailyLimitCount, key);
+    _o.UnitCountPerStep = TableEncryptionService.Convert(this.UnitCountPerStep, key);
+    _o.UnexpectedEventPrefab = new List<string>();
+    for (var _j = 0; _j < this.UnexpectedEventPrefabLength; ++_j) {_o.UnexpectedEventPrefab.Add(TableEncryptionService.Convert(this.UnexpectedEventPrefab(_j), key));}
+    _o.UnexpectedEventUnitId = new List<long>();
+    for (var _j = 0; _j < this.UnexpectedEventUnitIdLength; ++_j) {_o.UnexpectedEventUnitId.Add(TableEncryptionService.Convert(this.UnexpectedEventUnitId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestUnexpectedEventExcel> Pack(FlatBufferBuilder builder, ConquestUnexpectedEventExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestUnexpectedEventExcel>);
+    var _UnexpectedEventPrefab = default(VectorOffset);
+    if (_o.UnexpectedEventPrefab != null) {
+      var __UnexpectedEventPrefab = new StringOffset[_o.UnexpectedEventPrefab.Count];
+      for (var _j = 0; _j < __UnexpectedEventPrefab.Length; ++_j) { __UnexpectedEventPrefab[_j] = builder.CreateString(_o.UnexpectedEventPrefab[_j]); }
+      _UnexpectedEventPrefab = CreateUnexpectedEventPrefabVector(builder, __UnexpectedEventPrefab);
+    }
+    var _UnexpectedEventUnitId = default(VectorOffset);
+    if (_o.UnexpectedEventUnitId != null) {
+      var __UnexpectedEventUnitId = _o.UnexpectedEventUnitId.ToArray();
+      _UnexpectedEventUnitId = CreateUnexpectedEventUnitIdVector(builder, __UnexpectedEventUnitId);
+    }
+    return CreateConquestUnexpectedEventExcel(
+      builder,
+      _o.EventContentId,
+      _o.UnexpectedEventConditionType,
+      _o.UnexpectedEventConditionUniqueId,
+      _o.UnexpectedEventConditionAmount,
+      _o.UnexpectedEventOccurDailyLimitCount,
+      _o.UnitCountPerStep,
+      _UnexpectedEventPrefab,
+      _UnexpectedEventUnitId);
+  }
+}
+
+public class ConquestUnexpectedEventExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType UnexpectedEventConditionType { get; set; }
+  public long UnexpectedEventConditionUniqueId { get; set; }
+  public long UnexpectedEventConditionAmount { get; set; }
+  public int UnexpectedEventOccurDailyLimitCount { get; set; }
+  public int UnitCountPerStep { get; set; }
+  public List<string> UnexpectedEventPrefab { get; set; }
+  public List<long> UnexpectedEventUnitId { get; set; }
+
+  public ConquestUnexpectedEventExcelT() {
+    this.EventContentId = 0;
+    this.UnexpectedEventConditionType = SCHALE.Common.FlatData.ParcelType.None;
+    this.UnexpectedEventConditionUniqueId = 0;
+    this.UnexpectedEventConditionAmount = 0;
+    this.UnexpectedEventOccurDailyLimitCount = 0;
+    this.UnitCountPerStep = 0;
+    this.UnexpectedEventPrefab = null;
+    this.UnexpectedEventUnitId = null;
   }
 }
 

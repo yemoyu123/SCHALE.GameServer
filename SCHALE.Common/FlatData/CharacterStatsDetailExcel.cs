@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterStatsDetailExcel : IFlatbufferObject
@@ -65,6 +66,50 @@ public struct CharacterStatsDetailExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterStatsDetailExcel> EndCharacterStatsDetailExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterStatsDetailExcel>(o);
+  }
+  public CharacterStatsDetailExcelT UnPack() {
+    var _o = new CharacterStatsDetailExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterStatsDetailExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterStatsDetail");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.DetailShowStats = new List<SCHALE.Common.FlatData.StatType>();
+    for (var _j = 0; _j < this.DetailShowStatsLength; ++_j) {_o.DetailShowStats.Add(TableEncryptionService.Convert(this.DetailShowStats(_j), key));}
+    _o.IsStatsPercent = new List<bool>();
+    for (var _j = 0; _j < this.IsStatsPercentLength; ++_j) {_o.IsStatsPercent.Add(TableEncryptionService.Convert(this.IsStatsPercent(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterStatsDetailExcel> Pack(FlatBufferBuilder builder, CharacterStatsDetailExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterStatsDetailExcel>);
+    var _DetailShowStats = default(VectorOffset);
+    if (_o.DetailShowStats != null) {
+      var __DetailShowStats = _o.DetailShowStats.ToArray();
+      _DetailShowStats = CreateDetailShowStatsVector(builder, __DetailShowStats);
+    }
+    var _IsStatsPercent = default(VectorOffset);
+    if (_o.IsStatsPercent != null) {
+      var __IsStatsPercent = _o.IsStatsPercent.ToArray();
+      _IsStatsPercent = CreateIsStatsPercentVector(builder, __IsStatsPercent);
+    }
+    return CreateCharacterStatsDetailExcel(
+      builder,
+      _o.Id,
+      _DetailShowStats,
+      _IsStatsPercent);
+  }
+}
+
+public class CharacterStatsDetailExcelT
+{
+  public long Id { get; set; }
+  public List<SCHALE.Common.FlatData.StatType> DetailShowStats { get; set; }
+  public List<bool> IsStatsPercent { get; set; }
+
+  public CharacterStatsDetailExcelT() {
+    this.Id = 0;
+    this.DetailShowStats = null;
+    this.IsStatsPercent = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GoodsExcel : IFlatbufferObject
@@ -215,6 +216,153 @@ public struct GoodsExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GoodsExcel> EndGoodsExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GoodsExcel>(o);
+  }
+  public GoodsExcelT UnPack() {
+    var _o = new GoodsExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GoodsExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Goods");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Type = TableEncryptionService.Convert(this.Type, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.ConsumeParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ConsumeParcelTypeLength; ++_j) {_o.ConsumeParcelType.Add(TableEncryptionService.Convert(this.ConsumeParcelType(_j), key));}
+    _o.ConsumeParcelId = new List<long>();
+    for (var _j = 0; _j < this.ConsumeParcelIdLength; ++_j) {_o.ConsumeParcelId.Add(TableEncryptionService.Convert(this.ConsumeParcelId(_j), key));}
+    _o.ConsumeParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.ConsumeParcelAmountLength; ++_j) {_o.ConsumeParcelAmount.Add(TableEncryptionService.Convert(this.ConsumeParcelAmount(_j), key));}
+    _o.ConsumeCondition_ = new List<SCHALE.Common.FlatData.ConsumeCondition>();
+    for (var _j = 0; _j < this.ConsumeCondition_Length; ++_j) {_o.ConsumeCondition_.Add(TableEncryptionService.Convert(this.ConsumeCondition_(_j), key));}
+    _o.ConsumeGachaTicketType = TableEncryptionService.Convert(this.ConsumeGachaTicketType, key);
+    _o.ConsumeGachaTicketTypeAmount = TableEncryptionService.Convert(this.ConsumeGachaTicketTypeAmount, key);
+    _o.ProductIdAOS = TableEncryptionService.Convert(this.ProductIdAOS, key);
+    _o.ProductIdiOS = TableEncryptionService.Convert(this.ProductIdiOS, key);
+    _o.ConsumeExtraStep = new List<long>();
+    for (var _j = 0; _j < this.ConsumeExtraStepLength; ++_j) {_o.ConsumeExtraStep.Add(TableEncryptionService.Convert(this.ConsumeExtraStep(_j), key));}
+    _o.ConsumeExtraAmount = new List<long>();
+    for (var _j = 0; _j < this.ConsumeExtraAmountLength; ++_j) {_o.ConsumeExtraAmount.Add(TableEncryptionService.Convert(this.ConsumeExtraAmount(_j), key));}
+    _o.State = TableEncryptionService.Convert(this.State, key);
+    _o.ParcelType_ = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ParcelType_Length; ++_j) {_o.ParcelType_.Add(TableEncryptionService.Convert(this.ParcelType_(_j), key));}
+    _o.ParcelId = new List<long>();
+    for (var _j = 0; _j < this.ParcelIdLength; ++_j) {_o.ParcelId.Add(TableEncryptionService.Convert(this.ParcelId(_j), key));}
+    _o.ParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.ParcelAmountLength; ++_j) {_o.ParcelAmount.Add(TableEncryptionService.Convert(this.ParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.GoodsExcel> Pack(FlatBufferBuilder builder, GoodsExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GoodsExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _ConsumeParcelType = default(VectorOffset);
+    if (_o.ConsumeParcelType != null) {
+      var __ConsumeParcelType = _o.ConsumeParcelType.ToArray();
+      _ConsumeParcelType = CreateConsumeParcelTypeVector(builder, __ConsumeParcelType);
+    }
+    var _ConsumeParcelId = default(VectorOffset);
+    if (_o.ConsumeParcelId != null) {
+      var __ConsumeParcelId = _o.ConsumeParcelId.ToArray();
+      _ConsumeParcelId = CreateConsumeParcelIdVector(builder, __ConsumeParcelId);
+    }
+    var _ConsumeParcelAmount = default(VectorOffset);
+    if (_o.ConsumeParcelAmount != null) {
+      var __ConsumeParcelAmount = _o.ConsumeParcelAmount.ToArray();
+      _ConsumeParcelAmount = CreateConsumeParcelAmountVector(builder, __ConsumeParcelAmount);
+    }
+    var _ConsumeCondition_ = default(VectorOffset);
+    if (_o.ConsumeCondition_ != null) {
+      var __ConsumeCondition_ = _o.ConsumeCondition_.ToArray();
+      _ConsumeCondition_ = CreateConsumeCondition_Vector(builder, __ConsumeCondition_);
+    }
+    var _ConsumeExtraStep = default(VectorOffset);
+    if (_o.ConsumeExtraStep != null) {
+      var __ConsumeExtraStep = _o.ConsumeExtraStep.ToArray();
+      _ConsumeExtraStep = CreateConsumeExtraStepVector(builder, __ConsumeExtraStep);
+    }
+    var _ConsumeExtraAmount = default(VectorOffset);
+    if (_o.ConsumeExtraAmount != null) {
+      var __ConsumeExtraAmount = _o.ConsumeExtraAmount.ToArray();
+      _ConsumeExtraAmount = CreateConsumeExtraAmountVector(builder, __ConsumeExtraAmount);
+    }
+    var _ParcelType_ = default(VectorOffset);
+    if (_o.ParcelType_ != null) {
+      var __ParcelType_ = _o.ParcelType_.ToArray();
+      _ParcelType_ = CreateParcelType_Vector(builder, __ParcelType_);
+    }
+    var _ParcelId = default(VectorOffset);
+    if (_o.ParcelId != null) {
+      var __ParcelId = _o.ParcelId.ToArray();
+      _ParcelId = CreateParcelIdVector(builder, __ParcelId);
+    }
+    var _ParcelAmount = default(VectorOffset);
+    if (_o.ParcelAmount != null) {
+      var __ParcelAmount = _o.ParcelAmount.ToArray();
+      _ParcelAmount = CreateParcelAmountVector(builder, __ParcelAmount);
+    }
+    return CreateGoodsExcel(
+      builder,
+      _o.Id,
+      _o.Type,
+      _o.Rarity,
+      _IconPath,
+      _ConsumeParcelType,
+      _ConsumeParcelId,
+      _ConsumeParcelAmount,
+      _ConsumeCondition_,
+      _o.ConsumeGachaTicketType,
+      _o.ConsumeGachaTicketTypeAmount,
+      _o.ProductIdAOS,
+      _o.ProductIdiOS,
+      _ConsumeExtraStep,
+      _ConsumeExtraAmount,
+      _o.State,
+      _ParcelType_,
+      _ParcelId,
+      _ParcelAmount);
+  }
+}
+
+public class GoodsExcelT
+{
+  public long Id { get; set; }
+  public int Type { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public string IconPath { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ConsumeParcelType { get; set; }
+  public List<long> ConsumeParcelId { get; set; }
+  public List<long> ConsumeParcelAmount { get; set; }
+  public List<SCHALE.Common.FlatData.ConsumeCondition> ConsumeCondition_ { get; set; }
+  public SCHALE.Common.FlatData.GachaTicketType ConsumeGachaTicketType { get; set; }
+  public long ConsumeGachaTicketTypeAmount { get; set; }
+  public long ProductIdAOS { get; set; }
+  public long ProductIdiOS { get; set; }
+  public List<long> ConsumeExtraStep { get; set; }
+  public List<long> ConsumeExtraAmount { get; set; }
+  public int State { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ParcelType_ { get; set; }
+  public List<long> ParcelId { get; set; }
+  public List<long> ParcelAmount { get; set; }
+
+  public GoodsExcelT() {
+    this.Id = 0;
+    this.Type = 0;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.IconPath = null;
+    this.ConsumeParcelType = null;
+    this.ConsumeParcelId = null;
+    this.ConsumeParcelAmount = null;
+    this.ConsumeCondition_ = null;
+    this.ConsumeGachaTicketType = SCHALE.Common.FlatData.GachaTicketType.None;
+    this.ConsumeGachaTicketTypeAmount = 0;
+    this.ProductIdAOS = 0;
+    this.ProductIdiOS = 0;
+    this.ConsumeExtraStep = null;
+    this.ConsumeExtraAmount = null;
+    this.State = 0;
+    this.ParcelType_ = null;
+    this.ParcelId = null;
+    this.ParcelAmount = null;
   }
 }
 

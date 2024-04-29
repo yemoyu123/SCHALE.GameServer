@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TutorialFailureImageExcel : IFlatbufferObject
@@ -67,6 +68,49 @@ public struct TutorialFailureImageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TutorialFailureImageExcel> EndTutorialFailureImageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TutorialFailureImageExcel>(o);
+  }
+  public TutorialFailureImageExcelT UnPack() {
+    var _o = new TutorialFailureImageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TutorialFailureImageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TutorialFailureImage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Contents = TableEncryptionService.Convert(this.Contents, key);
+    _o.Type = TableEncryptionService.Convert(this.Type, key);
+    _o.ImagePathKr = TableEncryptionService.Convert(this.ImagePathKr, key);
+    _o.ImagePathJp = TableEncryptionService.Convert(this.ImagePathJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TutorialFailureImageExcel> Pack(FlatBufferBuilder builder, TutorialFailureImageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TutorialFailureImageExcel>);
+    var _Type = _o.Type == null ? default(StringOffset) : builder.CreateString(_o.Type);
+    var _ImagePathKr = _o.ImagePathKr == null ? default(StringOffset) : builder.CreateString(_o.ImagePathKr);
+    var _ImagePathJp = _o.ImagePathJp == null ? default(StringOffset) : builder.CreateString(_o.ImagePathJp);
+    return CreateTutorialFailureImageExcel(
+      builder,
+      _o.Id,
+      _o.Contents,
+      _Type,
+      _ImagePathKr,
+      _ImagePathJp);
+  }
+}
+
+public class TutorialFailureImageExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TutorialFailureContentType Contents { get; set; }
+  public string Type { get; set; }
+  public string ImagePathKr { get; set; }
+  public string ImagePathJp { get; set; }
+
+  public TutorialFailureImageExcelT() {
+    this.Id = 0;
+    this.Contents = SCHALE.Common.FlatData.TutorialFailureContentType.None;
+    this.Type = null;
+    this.ImagePathKr = null;
+    this.ImagePathJp = null;
   }
 }
 

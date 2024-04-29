@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct WeekDungeonExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonExcelTable> EndWeekDungeonExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonExcelTable>(o);
+  }
+  public WeekDungeonExcelTableT UnPack() {
+    var _o = new WeekDungeonExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeonExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.WeekDungeonExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonExcelTable> Pack(FlatBufferBuilder builder, WeekDungeonExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.WeekDungeonExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.WeekDungeonExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateWeekDungeonExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class WeekDungeonExcelTableT
+{
+  public List<SCHALE.Common.FlatData.WeekDungeonExcelT> DataList { get; set; }
+
+  public WeekDungeonExcelTableT() {
+    this.DataList = null;
   }
 }
 

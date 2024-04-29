@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FloaterCommonExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct FloaterCommonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FloaterCommonExcel> EndFloaterCommonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FloaterCommonExcel>(o);
+  }
+  public FloaterCommonExcelT UnPack() {
+    var _o = new FloaterCommonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FloaterCommonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FloaterCommon");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TacticEntityType = TableEncryptionService.Convert(this.TacticEntityType, key);
+    _o.FloaterOffsetPosX = TableEncryptionService.Convert(this.FloaterOffsetPosX, key);
+    _o.FloaterOffsetPosY = TableEncryptionService.Convert(this.FloaterOffsetPosY, key);
+    _o.FloaterRandomPosRangeX = TableEncryptionService.Convert(this.FloaterRandomPosRangeX, key);
+    _o.FloaterRandomPosRangeY = TableEncryptionService.Convert(this.FloaterRandomPosRangeY, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FloaterCommonExcel> Pack(FlatBufferBuilder builder, FloaterCommonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FloaterCommonExcel>);
+    return CreateFloaterCommonExcel(
+      builder,
+      _o.Id,
+      _o.TacticEntityType,
+      _o.FloaterOffsetPosX,
+      _o.FloaterOffsetPosY,
+      _o.FloaterRandomPosRangeX,
+      _o.FloaterRandomPosRangeY);
+  }
+}
+
+public class FloaterCommonExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TacticEntityType TacticEntityType { get; set; }
+  public int FloaterOffsetPosX { get; set; }
+  public int FloaterOffsetPosY { get; set; }
+  public int FloaterRandomPosRangeX { get; set; }
+  public int FloaterRandomPosRangeY { get; set; }
+
+  public FloaterCommonExcelT() {
+    this.Id = 0;
+    this.TacticEntityType = SCHALE.Common.FlatData.TacticEntityType.None;
+    this.FloaterOffsetPosX = 0;
+    this.FloaterOffsetPosY = 0;
+    this.FloaterRandomPosRangeX = 0;
+    this.FloaterRandomPosRangeY = 0;
   }
 }
 

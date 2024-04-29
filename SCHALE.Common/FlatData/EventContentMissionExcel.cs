@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMissionExcel : IFlatbufferObject
@@ -30,13 +31,7 @@ public struct EventContentMissionExcel : IFlatbufferObject
 #endif
   public byte[] GetGroupNameArray() { return __p.__vector_as_array<byte>(10); }
   public SCHALE.Common.FlatData.MissionCategory Category { get { int o = __p.__offset(12); return o != 0 ? (SCHALE.Common.FlatData.MissionCategory)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.MissionCategory.Challenge; } }
-  public string Description { get { int o = __p.__offset(14); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetDescriptionBytes() { return __p.__vector_as_span<byte>(14, 1); }
-#else
-  public ArraySegment<byte>? GetDescriptionBytes() { return __p.__vector_as_arraysegment(14); }
-#endif
-  public byte[] GetDescriptionArray() { return __p.__vector_as_array<byte>(14); }
+  public uint Description { get { int o = __p.__offset(14); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public SCHALE.Common.FlatData.MissionResetType ResetType { get { int o = __p.__offset(16); return o != 0 ? (SCHALE.Common.FlatData.MissionResetType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.MissionResetType.None; } }
   public SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType { get { int o = __p.__offset(18); return o != 0 ? (SCHALE.Common.FlatData.MissionToastDisplayConditionType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always; } }
   public string ToastImagePath { get { int o = __p.__offset(20); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
@@ -151,7 +146,7 @@ public struct EventContentMissionExcel : IFlatbufferObject
       long GroupId = 0,
       StringOffset GroupNameOffset = default(StringOffset),
       SCHALE.Common.FlatData.MissionCategory Category = SCHALE.Common.FlatData.MissionCategory.Challenge,
-      StringOffset DescriptionOffset = default(StringOffset),
+      uint Description = 0,
       SCHALE.Common.FlatData.MissionResetType ResetType = SCHALE.Common.FlatData.MissionResetType.None,
       SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType = SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always,
       StringOffset ToastImagePathOffset = default(StringOffset),
@@ -202,7 +197,7 @@ public struct EventContentMissionExcel : IFlatbufferObject
     EventContentMissionExcel.AddToastImagePath(builder, ToastImagePathOffset);
     EventContentMissionExcel.AddToastDisplayType(builder, ToastDisplayType);
     EventContentMissionExcel.AddResetType(builder, ResetType);
-    EventContentMissionExcel.AddDescription(builder, DescriptionOffset);
+    EventContentMissionExcel.AddDescription(builder, Description);
     EventContentMissionExcel.AddCategory(builder, Category);
     EventContentMissionExcel.AddGroupName(builder, GroupNameOffset);
     EventContentMissionExcel.AddIsCompleteExtensionTime(builder, IsCompleteExtensionTime);
@@ -216,7 +211,7 @@ public struct EventContentMissionExcel : IFlatbufferObject
   public static void AddGroupId(FlatBufferBuilder builder, long groupId) { builder.AddLong(2, groupId, 0); }
   public static void AddGroupName(FlatBufferBuilder builder, StringOffset groupNameOffset) { builder.AddOffset(3, groupNameOffset.Value, 0); }
   public static void AddCategory(FlatBufferBuilder builder, SCHALE.Common.FlatData.MissionCategory category) { builder.AddInt(4, (int)category, 0); }
-  public static void AddDescription(FlatBufferBuilder builder, StringOffset descriptionOffset) { builder.AddOffset(5, descriptionOffset.Value, 0); }
+  public static void AddDescription(FlatBufferBuilder builder, uint description) { builder.AddUint(5, description, 0); }
   public static void AddResetType(FlatBufferBuilder builder, SCHALE.Common.FlatData.MissionResetType resetType) { builder.AddInt(6, (int)resetType, 0); }
   public static void AddToastDisplayType(FlatBufferBuilder builder, SCHALE.Common.FlatData.MissionToastDisplayConditionType toastDisplayType) { builder.AddInt(7, (int)toastDisplayType, 0); }
   public static void AddToastImagePath(FlatBufferBuilder builder, StringOffset toastImagePathOffset) { builder.AddOffset(8, toastImagePathOffset.Value, 0); }
@@ -300,6 +295,216 @@ public struct EventContentMissionExcel : IFlatbufferObject
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMissionExcel>(o);
   }
+  public EventContentMissionExcelT UnPack() {
+    var _o = new EventContentMissionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMissionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMission");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.GroupName = TableEncryptionService.Convert(this.GroupName, key);
+    _o.Category = TableEncryptionService.Convert(this.Category, key);
+    _o.Description = TableEncryptionService.Convert(this.Description, key);
+    _o.ResetType = TableEncryptionService.Convert(this.ResetType, key);
+    _o.ToastDisplayType = TableEncryptionService.Convert(this.ToastDisplayType, key);
+    _o.ToastImagePath = TableEncryptionService.Convert(this.ToastImagePath, key);
+    _o.ViewFlag = TableEncryptionService.Convert(this.ViewFlag, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.PreMissionId = new List<long>();
+    for (var _j = 0; _j < this.PreMissionIdLength; ++_j) {_o.PreMissionId.Add(TableEncryptionService.Convert(this.PreMissionId(_j), key));}
+    _o.AccountType = TableEncryptionService.Convert(this.AccountType, key);
+    _o.AccountLevel = TableEncryptionService.Convert(this.AccountLevel, key);
+    _o.ShortcutUI = new List<string>();
+    for (var _j = 0; _j < this.ShortcutUILength; ++_j) {_o.ShortcutUI.Add(TableEncryptionService.Convert(this.ShortcutUI(_j), key));}
+    _o.ChallengeStageShortcut = TableEncryptionService.Convert(this.ChallengeStageShortcut, key);
+    _o.CompleteConditionType = TableEncryptionService.Convert(this.CompleteConditionType, key);
+    _o.IsCompleteExtensionTime = TableEncryptionService.Convert(this.IsCompleteExtensionTime, key);
+    _o.CompleteConditionCount = TableEncryptionService.Convert(this.CompleteConditionCount, key);
+    _o.CompleteConditionParameter = new List<long>();
+    for (var _j = 0; _j < this.CompleteConditionParameterLength; ++_j) {_o.CompleteConditionParameter.Add(TableEncryptionService.Convert(this.CompleteConditionParameter(_j), key));}
+    _o.CompleteConditionParameterTag = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.CompleteConditionParameterTagLength; ++_j) {_o.CompleteConditionParameterTag.Add(TableEncryptionService.Convert(this.CompleteConditionParameterTag(_j), key));}
+    _o.RewardIcon = TableEncryptionService.Convert(this.RewardIcon, key);
+    _o.CompleteConditionMissionId = new List<long>();
+    for (var _j = 0; _j < this.CompleteConditionMissionIdLength; ++_j) {_o.CompleteConditionMissionId.Add(TableEncryptionService.Convert(this.CompleteConditionMissionId(_j), key));}
+    _o.CompleteConditionMissionCount = TableEncryptionService.Convert(this.CompleteConditionMissionCount, key);
+    _o.MissionRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.MissionRewardParcelTypeLength; ++_j) {_o.MissionRewardParcelType.Add(TableEncryptionService.Convert(this.MissionRewardParcelType(_j), key));}
+    _o.MissionRewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.MissionRewardParcelIdLength; ++_j) {_o.MissionRewardParcelId.Add(TableEncryptionService.Convert(this.MissionRewardParcelId(_j), key));}
+    _o.MissionRewardAmount = new List<int>();
+    for (var _j = 0; _j < this.MissionRewardAmountLength; ++_j) {_o.MissionRewardAmount.Add(TableEncryptionService.Convert(this.MissionRewardAmount(_j), key));}
+    _o.ConditionRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ConditionRewardParcelTypeLength; ++_j) {_o.ConditionRewardParcelType.Add(TableEncryptionService.Convert(this.ConditionRewardParcelType(_j), key));}
+    _o.ConditionRewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.ConditionRewardParcelIdLength; ++_j) {_o.ConditionRewardParcelId.Add(TableEncryptionService.Convert(this.ConditionRewardParcelId(_j), key));}
+    _o.ConditionRewardAmount = new List<int>();
+    for (var _j = 0; _j < this.ConditionRewardAmountLength; ++_j) {_o.ConditionRewardAmount.Add(TableEncryptionService.Convert(this.ConditionRewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMissionExcel> Pack(FlatBufferBuilder builder, EventContentMissionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMissionExcel>);
+    var _GroupName = _o.GroupName == null ? default(StringOffset) : builder.CreateString(_o.GroupName);
+    var _ToastImagePath = _o.ToastImagePath == null ? default(StringOffset) : builder.CreateString(_o.ToastImagePath);
+    var _PreMissionId = default(VectorOffset);
+    if (_o.PreMissionId != null) {
+      var __PreMissionId = _o.PreMissionId.ToArray();
+      _PreMissionId = CreatePreMissionIdVector(builder, __PreMissionId);
+    }
+    var _ShortcutUI = default(VectorOffset);
+    if (_o.ShortcutUI != null) {
+      var __ShortcutUI = new StringOffset[_o.ShortcutUI.Count];
+      for (var _j = 0; _j < __ShortcutUI.Length; ++_j) { __ShortcutUI[_j] = builder.CreateString(_o.ShortcutUI[_j]); }
+      _ShortcutUI = CreateShortcutUIVector(builder, __ShortcutUI);
+    }
+    var _CompleteConditionParameter = default(VectorOffset);
+    if (_o.CompleteConditionParameter != null) {
+      var __CompleteConditionParameter = _o.CompleteConditionParameter.ToArray();
+      _CompleteConditionParameter = CreateCompleteConditionParameterVector(builder, __CompleteConditionParameter);
+    }
+    var _CompleteConditionParameterTag = default(VectorOffset);
+    if (_o.CompleteConditionParameterTag != null) {
+      var __CompleteConditionParameterTag = _o.CompleteConditionParameterTag.ToArray();
+      _CompleteConditionParameterTag = CreateCompleteConditionParameterTagVector(builder, __CompleteConditionParameterTag);
+    }
+    var _RewardIcon = _o.RewardIcon == null ? default(StringOffset) : builder.CreateString(_o.RewardIcon);
+    var _CompleteConditionMissionId = default(VectorOffset);
+    if (_o.CompleteConditionMissionId != null) {
+      var __CompleteConditionMissionId = _o.CompleteConditionMissionId.ToArray();
+      _CompleteConditionMissionId = CreateCompleteConditionMissionIdVector(builder, __CompleteConditionMissionId);
+    }
+    var _MissionRewardParcelType = default(VectorOffset);
+    if (_o.MissionRewardParcelType != null) {
+      var __MissionRewardParcelType = _o.MissionRewardParcelType.ToArray();
+      _MissionRewardParcelType = CreateMissionRewardParcelTypeVector(builder, __MissionRewardParcelType);
+    }
+    var _MissionRewardParcelId = default(VectorOffset);
+    if (_o.MissionRewardParcelId != null) {
+      var __MissionRewardParcelId = _o.MissionRewardParcelId.ToArray();
+      _MissionRewardParcelId = CreateMissionRewardParcelIdVector(builder, __MissionRewardParcelId);
+    }
+    var _MissionRewardAmount = default(VectorOffset);
+    if (_o.MissionRewardAmount != null) {
+      var __MissionRewardAmount = _o.MissionRewardAmount.ToArray();
+      _MissionRewardAmount = CreateMissionRewardAmountVector(builder, __MissionRewardAmount);
+    }
+    var _ConditionRewardParcelType = default(VectorOffset);
+    if (_o.ConditionRewardParcelType != null) {
+      var __ConditionRewardParcelType = _o.ConditionRewardParcelType.ToArray();
+      _ConditionRewardParcelType = CreateConditionRewardParcelTypeVector(builder, __ConditionRewardParcelType);
+    }
+    var _ConditionRewardParcelId = default(VectorOffset);
+    if (_o.ConditionRewardParcelId != null) {
+      var __ConditionRewardParcelId = _o.ConditionRewardParcelId.ToArray();
+      _ConditionRewardParcelId = CreateConditionRewardParcelIdVector(builder, __ConditionRewardParcelId);
+    }
+    var _ConditionRewardAmount = default(VectorOffset);
+    if (_o.ConditionRewardAmount != null) {
+      var __ConditionRewardAmount = _o.ConditionRewardAmount.ToArray();
+      _ConditionRewardAmount = CreateConditionRewardAmountVector(builder, __ConditionRewardAmount);
+    }
+    return CreateEventContentMissionExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.GroupId,
+      _GroupName,
+      _o.Category,
+      _o.Description,
+      _o.ResetType,
+      _o.ToastDisplayType,
+      _ToastImagePath,
+      _o.ViewFlag,
+      _o.DisplayOrder,
+      _PreMissionId,
+      _o.AccountType,
+      _o.AccountLevel,
+      _ShortcutUI,
+      _o.ChallengeStageShortcut,
+      _o.CompleteConditionType,
+      _o.IsCompleteExtensionTime,
+      _o.CompleteConditionCount,
+      _CompleteConditionParameter,
+      _CompleteConditionParameterTag,
+      _RewardIcon,
+      _CompleteConditionMissionId,
+      _o.CompleteConditionMissionCount,
+      _MissionRewardParcelType,
+      _MissionRewardParcelId,
+      _MissionRewardAmount,
+      _ConditionRewardParcelType,
+      _ConditionRewardParcelId,
+      _ConditionRewardAmount);
+  }
+}
+
+public class EventContentMissionExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public long GroupId { get; set; }
+  public string GroupName { get; set; }
+  public SCHALE.Common.FlatData.MissionCategory Category { get; set; }
+  public uint Description { get; set; }
+  public SCHALE.Common.FlatData.MissionResetType ResetType { get; set; }
+  public SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType { get; set; }
+  public string ToastImagePath { get; set; }
+  public bool ViewFlag { get; set; }
+  public long DisplayOrder { get; set; }
+  public List<long> PreMissionId { get; set; }
+  public SCHALE.Common.FlatData.AccountState AccountType { get; set; }
+  public long AccountLevel { get; set; }
+  public List<string> ShortcutUI { get; set; }
+  public long ChallengeStageShortcut { get; set; }
+  public SCHALE.Common.FlatData.MissionCompleteConditionType CompleteConditionType { get; set; }
+  public bool IsCompleteExtensionTime { get; set; }
+  public long CompleteConditionCount { get; set; }
+  public List<long> CompleteConditionParameter { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> CompleteConditionParameterTag { get; set; }
+  public string RewardIcon { get; set; }
+  public List<long> CompleteConditionMissionId { get; set; }
+  public long CompleteConditionMissionCount { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> MissionRewardParcelType { get; set; }
+  public List<long> MissionRewardParcelId { get; set; }
+  public List<int> MissionRewardAmount { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ConditionRewardParcelType { get; set; }
+  public List<long> ConditionRewardParcelId { get; set; }
+  public List<int> ConditionRewardAmount { get; set; }
+
+  public EventContentMissionExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.GroupId = 0;
+    this.GroupName = null;
+    this.Category = SCHALE.Common.FlatData.MissionCategory.Challenge;
+    this.Description = 0;
+    this.ResetType = SCHALE.Common.FlatData.MissionResetType.None;
+    this.ToastDisplayType = SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always;
+    this.ToastImagePath = null;
+    this.ViewFlag = false;
+    this.DisplayOrder = 0;
+    this.PreMissionId = null;
+    this.AccountType = SCHALE.Common.FlatData.AccountState.WaitingSignIn;
+    this.AccountLevel = 0;
+    this.ShortcutUI = null;
+    this.ChallengeStageShortcut = 0;
+    this.CompleteConditionType = SCHALE.Common.FlatData.MissionCompleteConditionType.None;
+    this.IsCompleteExtensionTime = false;
+    this.CompleteConditionCount = 0;
+    this.CompleteConditionParameter = null;
+    this.CompleteConditionParameterTag = null;
+    this.RewardIcon = null;
+    this.CompleteConditionMissionId = null;
+    this.CompleteConditionMissionCount = 0;
+    this.MissionRewardParcelType = null;
+    this.MissionRewardParcelId = null;
+    this.MissionRewardAmount = null;
+    this.ConditionRewardParcelType = null;
+    this.ConditionRewardParcelId = null;
+    this.ConditionRewardAmount = null;
+  }
 }
 
 
@@ -313,7 +518,7 @@ static public class EventContentMissionExcelVerify
       && verifier.VerifyField(tablePos, 8 /*GroupId*/, 8 /*long*/, 8, false)
       && verifier.VerifyString(tablePos, 10 /*GroupName*/, false)
       && verifier.VerifyField(tablePos, 12 /*Category*/, 4 /*SCHALE.Common.FlatData.MissionCategory*/, 4, false)
-      && verifier.VerifyString(tablePos, 14 /*Description*/, false)
+      && verifier.VerifyField(tablePos, 14 /*Description*/, 4 /*uint*/, 4, false)
       && verifier.VerifyField(tablePos, 16 /*ResetType*/, 4 /*SCHALE.Common.FlatData.MissionResetType*/, 4, false)
       && verifier.VerifyField(tablePos, 18 /*ToastDisplayType*/, 4 /*SCHALE.Common.FlatData.MissionToastDisplayConditionType*/, 4, false)
       && verifier.VerifyString(tablePos, 20 /*ToastImagePath*/, false)

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstStrategyExcel : IFlatbufferObject
@@ -125,6 +126,116 @@ public struct ConstStrategyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstStrategyExcel> EndConstStrategyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstStrategyExcel>(o);
+  }
+  public ConstStrategyExcelT UnPack() {
+    var _o = new ConstStrategyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstStrategyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstStrategy");
+    _o.HexaMapBoundaryOffset = TableEncryptionService.Convert(this.HexaMapBoundaryOffset, key);
+    _o.HexaMapStartCameraOffset = TableEncryptionService.Convert(this.HexaMapStartCameraOffset, key);
+    _o.CameraZoomMax = TableEncryptionService.Convert(this.CameraZoomMax, key);
+    _o.CameraZoomMin = TableEncryptionService.Convert(this.CameraZoomMin, key);
+    _o.CameraZoomDefault = TableEncryptionService.Convert(this.CameraZoomDefault, key);
+    _o.HealCostType = TableEncryptionService.Convert(this.HealCostType, key);
+    _o.HealCostAmount = new List<long>();
+    for (var _j = 0; _j < this.HealCostAmountLength; ++_j) {_o.HealCostAmount.Add(TableEncryptionService.Convert(this.HealCostAmount(_j), key));}
+    _o.CanHealHpRate = TableEncryptionService.Convert(this.CanHealHpRate, key);
+    _o.PlayTimeLimitInSeconds = TableEncryptionService.Convert(this.PlayTimeLimitInSeconds, key);
+    _o.AdventureEchelonCount = TableEncryptionService.Convert(this.AdventureEchelonCount, key);
+    _o.RaidEchelonCount = TableEncryptionService.Convert(this.RaidEchelonCount, key);
+    _o.DefaultEchelonCount = TableEncryptionService.Convert(this.DefaultEchelonCount, key);
+    _o.EventContentEchelonCount = TableEncryptionService.Convert(this.EventContentEchelonCount, key);
+    _o.TimeAttackDungeonEchelonCount = TableEncryptionService.Convert(this.TimeAttackDungeonEchelonCount, key);
+    _o.WorldRaidEchelonCount = TableEncryptionService.Convert(this.WorldRaidEchelonCount, key);
+    _o.TacticSkipClearTimeSeconds = TableEncryptionService.Convert(this.TacticSkipClearTimeSeconds, key);
+    _o.TacticSkipFramePerSecond = TableEncryptionService.Convert(this.TacticSkipFramePerSecond, key);
+    _o.ConquestEchelonCount = TableEncryptionService.Convert(this.ConquestEchelonCount, key);
+    _o.StoryEchelonCount = TableEncryptionService.Convert(this.StoryEchelonCount, key);
+    _o.MultiSweepPresetCount = TableEncryptionService.Convert(this.MultiSweepPresetCount, key);
+    _o.MultiSweepPresetNameMaxLength = TableEncryptionService.Convert(this.MultiSweepPresetNameMaxLength, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstStrategyExcel> Pack(FlatBufferBuilder builder, ConstStrategyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstStrategyExcel>);
+    var _HealCostAmount = default(VectorOffset);
+    if (_o.HealCostAmount != null) {
+      var __HealCostAmount = _o.HealCostAmount.ToArray();
+      _HealCostAmount = CreateHealCostAmountVector(builder, __HealCostAmount);
+    }
+    return CreateConstStrategyExcel(
+      builder,
+      _o.HexaMapBoundaryOffset,
+      _o.HexaMapStartCameraOffset,
+      _o.CameraZoomMax,
+      _o.CameraZoomMin,
+      _o.CameraZoomDefault,
+      _o.HealCostType,
+      _HealCostAmount,
+      _o.CanHealHpRate,
+      _o.PlayTimeLimitInSeconds,
+      _o.AdventureEchelonCount,
+      _o.RaidEchelonCount,
+      _o.DefaultEchelonCount,
+      _o.EventContentEchelonCount,
+      _o.TimeAttackDungeonEchelonCount,
+      _o.WorldRaidEchelonCount,
+      _o.TacticSkipClearTimeSeconds,
+      _o.TacticSkipFramePerSecond,
+      _o.ConquestEchelonCount,
+      _o.StoryEchelonCount,
+      _o.MultiSweepPresetCount,
+      _o.MultiSweepPresetNameMaxLength);
+  }
+}
+
+public class ConstStrategyExcelT
+{
+  public float HexaMapBoundaryOffset { get; set; }
+  public float HexaMapStartCameraOffset { get; set; }
+  public float CameraZoomMax { get; set; }
+  public float CameraZoomMin { get; set; }
+  public float CameraZoomDefault { get; set; }
+  public SCHALE.Common.FlatData.CurrencyTypes HealCostType { get; set; }
+  public List<long> HealCostAmount { get; set; }
+  public int CanHealHpRate { get; set; }
+  public long PlayTimeLimitInSeconds { get; set; }
+  public int AdventureEchelonCount { get; set; }
+  public int RaidEchelonCount { get; set; }
+  public int DefaultEchelonCount { get; set; }
+  public int EventContentEchelonCount { get; set; }
+  public int TimeAttackDungeonEchelonCount { get; set; }
+  public int WorldRaidEchelonCount { get; set; }
+  public int TacticSkipClearTimeSeconds { get; set; }
+  public int TacticSkipFramePerSecond { get; set; }
+  public int ConquestEchelonCount { get; set; }
+  public int StoryEchelonCount { get; set; }
+  public int MultiSweepPresetCount { get; set; }
+  public int MultiSweepPresetNameMaxLength { get; set; }
+
+  public ConstStrategyExcelT() {
+    this.HexaMapBoundaryOffset = 0.0f;
+    this.HexaMapStartCameraOffset = 0.0f;
+    this.CameraZoomMax = 0.0f;
+    this.CameraZoomMin = 0.0f;
+    this.CameraZoomDefault = 0.0f;
+    this.HealCostType = SCHALE.Common.FlatData.CurrencyTypes.Invalid;
+    this.HealCostAmount = null;
+    this.CanHealHpRate = 0;
+    this.PlayTimeLimitInSeconds = 0;
+    this.AdventureEchelonCount = 0;
+    this.RaidEchelonCount = 0;
+    this.DefaultEchelonCount = 0;
+    this.EventContentEchelonCount = 0;
+    this.TimeAttackDungeonEchelonCount = 0;
+    this.WorldRaidEchelonCount = 0;
+    this.TacticSkipClearTimeSeconds = 0;
+    this.TacticSkipFramePerSecond = 0;
+    this.ConquestEchelonCount = 0;
+    this.StoryEchelonCount = 0;
+    this.MultiSweepPresetCount = 0;
+    this.MultiSweepPresetNameMaxLength = 0;
   }
 }
 

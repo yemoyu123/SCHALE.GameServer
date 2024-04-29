@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMiniEventShortCutExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct EventContentMiniEventShortCutExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentMiniEventShortCutExcel> EndEventContentMiniEventShortCutExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMiniEventShortCutExcel>(o);
+  }
+  public EventContentMiniEventShortCutExcelT UnPack() {
+    var _o = new EventContentMiniEventShortCutExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMiniEventShortCutExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMiniEventShortCut");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.ShorcutContentType = TableEncryptionService.Convert(this.ShorcutContentType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMiniEventShortCutExcel> Pack(FlatBufferBuilder builder, EventContentMiniEventShortCutExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMiniEventShortCutExcel>);
+    return CreateEventContentMiniEventShortCutExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _o.ShorcutContentType);
+  }
+}
+
+public class EventContentMiniEventShortCutExcelT
+{
+  public int Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public SCHALE.Common.FlatData.EventTargetType ShorcutContentType { get; set; }
+
+  public EventContentMiniEventShortCutExcelT() {
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.ShorcutContentType = SCHALE.Common.FlatData.EventTargetType.WeekDungeon;
   }
 }
 

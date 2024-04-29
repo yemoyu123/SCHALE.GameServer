@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TrophyCollectionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct TrophyCollectionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TrophyCollectionExcelTable> EndTrophyCollectionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TrophyCollectionExcelTable>(o);
+  }
+  public TrophyCollectionExcelTableT UnPack() {
+    var _o = new TrophyCollectionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TrophyCollectionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TrophyCollectionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.TrophyCollectionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.TrophyCollectionExcelTable> Pack(FlatBufferBuilder builder, TrophyCollectionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TrophyCollectionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.TrophyCollectionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.TrophyCollectionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateTrophyCollectionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class TrophyCollectionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.TrophyCollectionExcelT> DataList { get; set; }
+
+  public TrophyCollectionExcelTableT() {
+    this.DataList = null;
   }
 }
 

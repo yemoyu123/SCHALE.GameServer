@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaCraftNodeExcel : IFlatbufferObject
@@ -63,6 +64,55 @@ public struct GachaCraftNodeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaCraftNodeExcel> EndGachaCraftNodeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaCraftNodeExcel>(o);
+  }
+  public GachaCraftNodeExcelT UnPack() {
+    var _o = new GachaCraftNodeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaCraftNodeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaCraftNode");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.Tier = TableEncryptionService.Convert(this.Tier, key);
+    _o.QuickCraftNodeDisplayOrder = TableEncryptionService.Convert(this.QuickCraftNodeDisplayOrder, key);
+    _o.NodeQuality = TableEncryptionService.Convert(this.NodeQuality, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.LocalizeKey = TableEncryptionService.Convert(this.LocalizeKey, key);
+    _o.Property = TableEncryptionService.Convert(this.Property, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaCraftNodeExcel> Pack(FlatBufferBuilder builder, GachaCraftNodeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaCraftNodeExcel>);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    return CreateGachaCraftNodeExcel(
+      builder,
+      _o.ID,
+      _o.Tier,
+      _o.QuickCraftNodeDisplayOrder,
+      _o.NodeQuality,
+      _Icon,
+      _o.LocalizeKey,
+      _o.Property);
+  }
+}
+
+public class GachaCraftNodeExcelT
+{
+  public long ID { get; set; }
+  public long Tier { get; set; }
+  public int QuickCraftNodeDisplayOrder { get; set; }
+  public long NodeQuality { get; set; }
+  public string Icon { get; set; }
+  public uint LocalizeKey { get; set; }
+  public long Property { get; set; }
+
+  public GachaCraftNodeExcelT() {
+    this.ID = 0;
+    this.Tier = 0;
+    this.QuickCraftNodeDisplayOrder = 0;
+    this.NodeQuality = 0;
+    this.Icon = null;
+    this.LocalizeKey = 0;
+    this.Property = 0;
   }
 }
 

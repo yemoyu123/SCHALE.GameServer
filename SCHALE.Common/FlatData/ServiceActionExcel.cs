@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ServiceActionExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct ServiceActionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ServiceActionExcel> EndServiceActionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ServiceActionExcel>(o);
+  }
+  public ServiceActionExcelT UnPack() {
+    var _o = new ServiceActionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ServiceActionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ServiceAction");
+    _o.ServiceActionType = TableEncryptionService.Convert(this.ServiceActionType, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.GoodsId = TableEncryptionService.Convert(this.GoodsId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ServiceActionExcel> Pack(FlatBufferBuilder builder, ServiceActionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ServiceActionExcel>);
+    return CreateServiceActionExcel(
+      builder,
+      _o.ServiceActionType,
+      _o.IsLegacy,
+      _o.GoodsId);
+  }
+}
+
+public class ServiceActionExcelT
+{
+  public SCHALE.Common.FlatData.ServiceActionType ServiceActionType { get; set; }
+  public bool IsLegacy { get; set; }
+  public long GoodsId { get; set; }
+
+  public ServiceActionExcelT() {
+    this.ServiceActionType = SCHALE.Common.FlatData.ServiceActionType.ClanCreate;
+    this.IsLegacy = false;
+    this.GoodsId = 0;
   }
 }
 

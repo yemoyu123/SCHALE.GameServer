@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentEnterCostReduceExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct ContentEnterCostReduceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentEnterCostReduceExcel> EndContentEnterCostReduceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentEnterCostReduceExcel>(o);
+  }
+  public ContentEnterCostReduceExcelT UnPack() {
+    var _o = new ContentEnterCostReduceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentEnterCostReduceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentEnterCostReduce");
+    _o.EnterCostReduceGroupId = TableEncryptionService.Convert(this.EnterCostReduceGroupId, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.StageId = TableEncryptionService.Convert(this.StageId, key);
+    _o.ReduceEnterCostType = TableEncryptionService.Convert(this.ReduceEnterCostType, key);
+    _o.ReduceEnterCostId = TableEncryptionService.Convert(this.ReduceEnterCostId, key);
+    _o.ReduceAmount = TableEncryptionService.Convert(this.ReduceAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentEnterCostReduceExcel> Pack(FlatBufferBuilder builder, ContentEnterCostReduceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentEnterCostReduceExcel>);
+    return CreateContentEnterCostReduceExcel(
+      builder,
+      _o.EnterCostReduceGroupId,
+      _o.ContentType,
+      _o.StageId,
+      _o.ReduceEnterCostType,
+      _o.ReduceEnterCostId,
+      _o.ReduceAmount);
+  }
+}
+
+public class ContentEnterCostReduceExcelT
+{
+  public long EnterCostReduceGroupId { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long StageId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ReduceEnterCostType { get; set; }
+  public long ReduceEnterCostId { get; set; }
+  public long ReduceAmount { get; set; }
+
+  public ContentEnterCostReduceExcelT() {
+    this.EnterCostReduceGroupId = 0;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.StageId = 0;
+    this.ReduceEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ReduceEnterCostId = 0;
+    this.ReduceAmount = 0;
   }
 }
 

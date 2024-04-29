@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidSeasonManageExcel : IFlatbufferObject
@@ -195,6 +196,151 @@ public struct WorldRaidSeasonManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidSeasonManageExcel> EndWorldRaidSeasonManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidSeasonManageExcel>(o);
+  }
+  public WorldRaidSeasonManageExcelT UnPack() {
+    var _o = new WorldRaidSeasonManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidSeasonManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidSeasonManage");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EnterTicket = TableEncryptionService.Convert(this.EnterTicket, key);
+    _o.WorldRaidLobbyScene = TableEncryptionService.Convert(this.WorldRaidLobbyScene, key);
+    _o.WorldRaidLobbyBanner = TableEncryptionService.Convert(this.WorldRaidLobbyBanner, key);
+    _o.WorldRaidLobbyBG = TableEncryptionService.Convert(this.WorldRaidLobbyBG, key);
+    _o.WorldRaidLobbyBannerShow = TableEncryptionService.Convert(this.WorldRaidLobbyBannerShow, key);
+    _o.SeasonOpenCondition = TableEncryptionService.Convert(this.SeasonOpenCondition, key);
+    _o.WorldRaidLobbyEnterScenario = TableEncryptionService.Convert(this.WorldRaidLobbyEnterScenario, key);
+    _o.CanPlayNotSeasonTime = TableEncryptionService.Convert(this.CanPlayNotSeasonTime, key);
+    _o.WorldRaidUniqueThemeLobbyUI = TableEncryptionService.Convert(this.WorldRaidUniqueThemeLobbyUI, key);
+    _o.WorldRaidUniqueThemeName = TableEncryptionService.Convert(this.WorldRaidUniqueThemeName, key);
+    _o.CanWorldRaidGemEnter = TableEncryptionService.Convert(this.CanWorldRaidGemEnter, key);
+    _o.HideWorldRaidTicketUI = TableEncryptionService.Convert(this.HideWorldRaidTicketUI, key);
+    _o.UseWorldRaidCommonToast = TableEncryptionService.Convert(this.UseWorldRaidCommonToast, key);
+    _o.OpenRaidBossGroupId = new List<long>();
+    for (var _j = 0; _j < this.OpenRaidBossGroupIdLength; ++_j) {_o.OpenRaidBossGroupId.Add(TableEncryptionService.Convert(this.OpenRaidBossGroupId(_j), key));}
+    _o.BossSpawnTime = new List<string>();
+    for (var _j = 0; _j < this.BossSpawnTimeLength; ++_j) {_o.BossSpawnTime.Add(TableEncryptionService.Convert(this.BossSpawnTime(_j), key));}
+    _o.EliminateTime = new List<string>();
+    for (var _j = 0; _j < this.EliminateTimeLength; ++_j) {_o.EliminateTime.Add(TableEncryptionService.Convert(this.EliminateTime(_j), key));}
+    _o.ScenarioOutputConditionId = new List<long>();
+    for (var _j = 0; _j < this.ScenarioOutputConditionIdLength; ++_j) {_o.ScenarioOutputConditionId.Add(TableEncryptionService.Convert(this.ScenarioOutputConditionId(_j), key));}
+    _o.ConditionScenarioGroupid = new List<long>();
+    for (var _j = 0; _j < this.ConditionScenarioGroupidLength; ++_j) {_o.ConditionScenarioGroupid.Add(TableEncryptionService.Convert(this.ConditionScenarioGroupid(_j), key));}
+    _o.WorldRaidMapEnterOperator = TableEncryptionService.Convert(this.WorldRaidMapEnterOperator, key);
+    _o.UseFavorRankBuff = TableEncryptionService.Convert(this.UseFavorRankBuff, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidSeasonManageExcel> Pack(FlatBufferBuilder builder, WorldRaidSeasonManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidSeasonManageExcel>);
+    var _WorldRaidLobbyScene = _o.WorldRaidLobbyScene == null ? default(StringOffset) : builder.CreateString(_o.WorldRaidLobbyScene);
+    var _WorldRaidLobbyBanner = _o.WorldRaidLobbyBanner == null ? default(StringOffset) : builder.CreateString(_o.WorldRaidLobbyBanner);
+    var _WorldRaidLobbyBG = _o.WorldRaidLobbyBG == null ? default(StringOffset) : builder.CreateString(_o.WorldRaidLobbyBG);
+    var _WorldRaidUniqueThemeName = _o.WorldRaidUniqueThemeName == null ? default(StringOffset) : builder.CreateString(_o.WorldRaidUniqueThemeName);
+    var _OpenRaidBossGroupId = default(VectorOffset);
+    if (_o.OpenRaidBossGroupId != null) {
+      var __OpenRaidBossGroupId = _o.OpenRaidBossGroupId.ToArray();
+      _OpenRaidBossGroupId = CreateOpenRaidBossGroupIdVector(builder, __OpenRaidBossGroupId);
+    }
+    var _BossSpawnTime = default(VectorOffset);
+    if (_o.BossSpawnTime != null) {
+      var __BossSpawnTime = new StringOffset[_o.BossSpawnTime.Count];
+      for (var _j = 0; _j < __BossSpawnTime.Length; ++_j) { __BossSpawnTime[_j] = builder.CreateString(_o.BossSpawnTime[_j]); }
+      _BossSpawnTime = CreateBossSpawnTimeVector(builder, __BossSpawnTime);
+    }
+    var _EliminateTime = default(VectorOffset);
+    if (_o.EliminateTime != null) {
+      var __EliminateTime = new StringOffset[_o.EliminateTime.Count];
+      for (var _j = 0; _j < __EliminateTime.Length; ++_j) { __EliminateTime[_j] = builder.CreateString(_o.EliminateTime[_j]); }
+      _EliminateTime = CreateEliminateTimeVector(builder, __EliminateTime);
+    }
+    var _ScenarioOutputConditionId = default(VectorOffset);
+    if (_o.ScenarioOutputConditionId != null) {
+      var __ScenarioOutputConditionId = _o.ScenarioOutputConditionId.ToArray();
+      _ScenarioOutputConditionId = CreateScenarioOutputConditionIdVector(builder, __ScenarioOutputConditionId);
+    }
+    var _ConditionScenarioGroupid = default(VectorOffset);
+    if (_o.ConditionScenarioGroupid != null) {
+      var __ConditionScenarioGroupid = _o.ConditionScenarioGroupid.ToArray();
+      _ConditionScenarioGroupid = CreateConditionScenarioGroupidVector(builder, __ConditionScenarioGroupid);
+    }
+    var _WorldRaidMapEnterOperator = _o.WorldRaidMapEnterOperator == null ? default(StringOffset) : builder.CreateString(_o.WorldRaidMapEnterOperator);
+    return CreateWorldRaidSeasonManageExcel(
+      builder,
+      _o.SeasonId,
+      _o.EventContentId,
+      _o.EnterTicket,
+      _WorldRaidLobbyScene,
+      _WorldRaidLobbyBanner,
+      _WorldRaidLobbyBG,
+      _o.WorldRaidLobbyBannerShow,
+      _o.SeasonOpenCondition,
+      _o.WorldRaidLobbyEnterScenario,
+      _o.CanPlayNotSeasonTime,
+      _o.WorldRaidUniqueThemeLobbyUI,
+      _WorldRaidUniqueThemeName,
+      _o.CanWorldRaidGemEnter,
+      _o.HideWorldRaidTicketUI,
+      _o.UseWorldRaidCommonToast,
+      _OpenRaidBossGroupId,
+      _BossSpawnTime,
+      _EliminateTime,
+      _ScenarioOutputConditionId,
+      _ConditionScenarioGroupid,
+      _WorldRaidMapEnterOperator,
+      _o.UseFavorRankBuff);
+  }
+}
+
+public class WorldRaidSeasonManageExcelT
+{
+  public long SeasonId { get; set; }
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.CurrencyTypes EnterTicket { get; set; }
+  public string WorldRaidLobbyScene { get; set; }
+  public string WorldRaidLobbyBanner { get; set; }
+  public string WorldRaidLobbyBG { get; set; }
+  public bool WorldRaidLobbyBannerShow { get; set; }
+  public long SeasonOpenCondition { get; set; }
+  public long WorldRaidLobbyEnterScenario { get; set; }
+  public bool CanPlayNotSeasonTime { get; set; }
+  public bool WorldRaidUniqueThemeLobbyUI { get; set; }
+  public string WorldRaidUniqueThemeName { get; set; }
+  public bool CanWorldRaidGemEnter { get; set; }
+  public bool HideWorldRaidTicketUI { get; set; }
+  public bool UseWorldRaidCommonToast { get; set; }
+  public List<long> OpenRaidBossGroupId { get; set; }
+  public List<string> BossSpawnTime { get; set; }
+  public List<string> EliminateTime { get; set; }
+  public List<long> ScenarioOutputConditionId { get; set; }
+  public List<long> ConditionScenarioGroupid { get; set; }
+  public string WorldRaidMapEnterOperator { get; set; }
+  public bool UseFavorRankBuff { get; set; }
+
+  public WorldRaidSeasonManageExcelT() {
+    this.SeasonId = 0;
+    this.EventContentId = 0;
+    this.EnterTicket = SCHALE.Common.FlatData.CurrencyTypes.Invalid;
+    this.WorldRaidLobbyScene = null;
+    this.WorldRaidLobbyBanner = null;
+    this.WorldRaidLobbyBG = null;
+    this.WorldRaidLobbyBannerShow = false;
+    this.SeasonOpenCondition = 0;
+    this.WorldRaidLobbyEnterScenario = 0;
+    this.CanPlayNotSeasonTime = false;
+    this.WorldRaidUniqueThemeLobbyUI = false;
+    this.WorldRaidUniqueThemeName = null;
+    this.CanWorldRaidGemEnter = false;
+    this.HideWorldRaidTicketUI = false;
+    this.UseWorldRaidCommonToast = false;
+    this.OpenRaidBossGroupId = null;
+    this.BossSpawnTime = null;
+    this.EliminateTime = null;
+    this.ScenarioOutputConditionId = null;
+    this.ConditionScenarioGroupid = null;
+    this.WorldRaidMapEnterOperator = null;
+    this.UseFavorRankBuff = false;
   }
 }
 

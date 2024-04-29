@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StringTestExcel : IFlatbufferObject
@@ -59,6 +60,47 @@ public struct StringTestExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StringTestExcel> EndStringTestExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StringTestExcel>(o);
+  }
+  public StringTestExcelT UnPack() {
+    var _o = new StringTestExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StringTestExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StringTest");
+    _o.String = new List<string>();
+    for (var _j = 0; _j < this.StringLength; ++_j) {_o.String.Add(TableEncryptionService.Convert(this.String(_j), key));}
+    _o.Sentence1 = TableEncryptionService.Convert(this.Sentence1, key);
+    _o.Script = TableEncryptionService.Convert(this.Script, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StringTestExcel> Pack(FlatBufferBuilder builder, StringTestExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StringTestExcel>);
+    var _String = default(VectorOffset);
+    if (_o.String != null) {
+      var __String = new StringOffset[_o.String.Count];
+      for (var _j = 0; _j < __String.Length; ++_j) { __String[_j] = builder.CreateString(_o.String[_j]); }
+      _String = CreateStringVector(builder, __String);
+    }
+    var _Sentence1 = _o.Sentence1 == null ? default(StringOffset) : builder.CreateString(_o.Sentence1);
+    var _Script = _o.Script == null ? default(StringOffset) : builder.CreateString(_o.Script);
+    return CreateStringTestExcel(
+      builder,
+      _String,
+      _Sentence1,
+      _Script);
+  }
+}
+
+public class StringTestExcelT
+{
+  public List<string> String { get; set; }
+  public string Sentence1 { get; set; }
+  public string Script { get; set; }
+
+  public StringTestExcelT() {
+    this.String = null;
+    this.Sentence1 = null;
+    this.Script = null;
   }
 }
 

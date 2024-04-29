@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentArchiveBannerOffsetExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct EventContentArchiveBannerOffsetExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentArchiveBannerOffsetExcel> EndEventContentArchiveBannerOffsetExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentArchiveBannerOffsetExcel>(o);
+  }
+  public EventContentArchiveBannerOffsetExcelT UnPack() {
+    var _o = new EventContentArchiveBannerOffsetExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentArchiveBannerOffsetExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentArchiveBannerOffset");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.OffsetX = TableEncryptionService.Convert(this.OffsetX, key);
+    _o.OffsetY = TableEncryptionService.Convert(this.OffsetY, key);
+    _o.ScaleX = TableEncryptionService.Convert(this.ScaleX, key);
+    _o.ScaleY = TableEncryptionService.Convert(this.ScaleY, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentArchiveBannerOffsetExcel> Pack(FlatBufferBuilder builder, EventContentArchiveBannerOffsetExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentArchiveBannerOffsetExcel>);
+    return CreateEventContentArchiveBannerOffsetExcel(
+      builder,
+      _o.EventContentId,
+      _o.OffsetX,
+      _o.OffsetY,
+      _o.ScaleX,
+      _o.ScaleY);
+  }
+}
+
+public class EventContentArchiveBannerOffsetExcelT
+{
+  public long EventContentId { get; set; }
+  public float OffsetX { get; set; }
+  public float OffsetY { get; set; }
+  public float ScaleX { get; set; }
+  public float ScaleY { get; set; }
+
+  public EventContentArchiveBannerOffsetExcelT() {
+    this.EventContentId = 0;
+    this.OffsetX = 0.0f;
+    this.OffsetY = 0.0f;
+    this.ScaleX = 0.0f;
+    this.ScaleY = 0.0f;
   }
 }
 

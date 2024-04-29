@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ClanChattingEmojiExcel : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct ClanChattingEmojiExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ClanChattingEmojiExcel> EndClanChattingEmojiExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ClanChattingEmojiExcel>(o);
+  }
+  public ClanChattingEmojiExcelT UnPack() {
+    var _o = new ClanChattingEmojiExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ClanChattingEmojiExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ClanChattingEmoji");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TabGroupId = TableEncryptionService.Convert(this.TabGroupId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.ImagePathKr = TableEncryptionService.Convert(this.ImagePathKr, key);
+    _o.ImagePathJp = TableEncryptionService.Convert(this.ImagePathJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ClanChattingEmojiExcel> Pack(FlatBufferBuilder builder, ClanChattingEmojiExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ClanChattingEmojiExcel>);
+    var _ImagePathKr = _o.ImagePathKr == null ? default(StringOffset) : builder.CreateString(_o.ImagePathKr);
+    var _ImagePathJp = _o.ImagePathJp == null ? default(StringOffset) : builder.CreateString(_o.ImagePathJp);
+    return CreateClanChattingEmojiExcel(
+      builder,
+      _o.Id,
+      _o.TabGroupId,
+      _o.DisplayOrder,
+      _ImagePathKr,
+      _ImagePathJp);
+  }
+}
+
+public class ClanChattingEmojiExcelT
+{
+  public long Id { get; set; }
+  public int TabGroupId { get; set; }
+  public int DisplayOrder { get; set; }
+  public string ImagePathKr { get; set; }
+  public string ImagePathJp { get; set; }
+
+  public ClanChattingEmojiExcelT() {
+    this.Id = 0;
+    this.TabGroupId = 0;
+    this.DisplayOrder = 0;
+    this.ImagePathKr = null;
+    this.ImagePathJp = null;
   }
 }
 

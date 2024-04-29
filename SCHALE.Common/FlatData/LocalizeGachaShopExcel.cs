@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeGachaShopExcel : IFlatbufferObject
@@ -113,6 +114,70 @@ public struct LocalizeGachaShopExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeGachaShopExcel> EndLocalizeGachaShopExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeGachaShopExcel>(o);
+  }
+  public LocalizeGachaShopExcelT UnPack() {
+    var _o = new LocalizeGachaShopExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeGachaShopExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeGachaShop");
+    _o.GachaShopId = TableEncryptionService.Convert(this.GachaShopId, key);
+    _o.TabNameKr = TableEncryptionService.Convert(this.TabNameKr, key);
+    _o.TabNameJp = TableEncryptionService.Convert(this.TabNameJp, key);
+    _o.TitleNameKr = TableEncryptionService.Convert(this.TitleNameKr, key);
+    _o.TitleNameJp = TableEncryptionService.Convert(this.TitleNameJp, key);
+    _o.SubTitleKr = TableEncryptionService.Convert(this.SubTitleKr, key);
+    _o.SubTitleJp = TableEncryptionService.Convert(this.SubTitleJp, key);
+    _o.GachaDescriptionKr = TableEncryptionService.Convert(this.GachaDescriptionKr, key);
+    _o.GachaDescriptionJp = TableEncryptionService.Convert(this.GachaDescriptionJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeGachaShopExcel> Pack(FlatBufferBuilder builder, LocalizeGachaShopExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeGachaShopExcel>);
+    var _TabNameKr = _o.TabNameKr == null ? default(StringOffset) : builder.CreateString(_o.TabNameKr);
+    var _TabNameJp = _o.TabNameJp == null ? default(StringOffset) : builder.CreateString(_o.TabNameJp);
+    var _TitleNameKr = _o.TitleNameKr == null ? default(StringOffset) : builder.CreateString(_o.TitleNameKr);
+    var _TitleNameJp = _o.TitleNameJp == null ? default(StringOffset) : builder.CreateString(_o.TitleNameJp);
+    var _SubTitleKr = _o.SubTitleKr == null ? default(StringOffset) : builder.CreateString(_o.SubTitleKr);
+    var _SubTitleJp = _o.SubTitleJp == null ? default(StringOffset) : builder.CreateString(_o.SubTitleJp);
+    var _GachaDescriptionKr = _o.GachaDescriptionKr == null ? default(StringOffset) : builder.CreateString(_o.GachaDescriptionKr);
+    var _GachaDescriptionJp = _o.GachaDescriptionJp == null ? default(StringOffset) : builder.CreateString(_o.GachaDescriptionJp);
+    return CreateLocalizeGachaShopExcel(
+      builder,
+      _o.GachaShopId,
+      _TabNameKr,
+      _TabNameJp,
+      _TitleNameKr,
+      _TitleNameJp,
+      _SubTitleKr,
+      _SubTitleJp,
+      _GachaDescriptionKr,
+      _GachaDescriptionJp);
+  }
+}
+
+public class LocalizeGachaShopExcelT
+{
+  public long GachaShopId { get; set; }
+  public string TabNameKr { get; set; }
+  public string TabNameJp { get; set; }
+  public string TitleNameKr { get; set; }
+  public string TitleNameJp { get; set; }
+  public string SubTitleKr { get; set; }
+  public string SubTitleJp { get; set; }
+  public string GachaDescriptionKr { get; set; }
+  public string GachaDescriptionJp { get; set; }
+
+  public LocalizeGachaShopExcelT() {
+    this.GachaShopId = 0;
+    this.TabNameKr = null;
+    this.TabNameJp = null;
+    this.TitleNameKr = null;
+    this.TitleNameJp = null;
+    this.SubTitleKr = null;
+    this.SubTitleJp = null;
+    this.GachaDescriptionKr = null;
+    this.GachaDescriptionJp = null;
   }
 }
 

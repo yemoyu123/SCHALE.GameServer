@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FixedEchelonSettingExcel : IFlatbufferObject
@@ -525,6 +526,342 @@ public struct FixedEchelonSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FixedEchelonSettingExcel> EndFixedEchelonSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FixedEchelonSettingExcel>(o);
+  }
+  public FixedEchelonSettingExcelT UnPack() {
+    var _o = new FixedEchelonSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FixedEchelonSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FixedEchelonSetting");
+    _o.FixedEchelonID = TableEncryptionService.Convert(this.FixedEchelonID, key);
+    _o.EchelonSceneSkip = TableEncryptionService.Convert(this.EchelonSceneSkip, key);
+    _o.MainLeaderSlot = TableEncryptionService.Convert(this.MainLeaderSlot, key);
+    _o.MainCharacterID = new List<long>();
+    for (var _j = 0; _j < this.MainCharacterIDLength; ++_j) {_o.MainCharacterID.Add(TableEncryptionService.Convert(this.MainCharacterID(_j), key));}
+    _o.MainLevel = new List<int>();
+    for (var _j = 0; _j < this.MainLevelLength; ++_j) {_o.MainLevel.Add(TableEncryptionService.Convert(this.MainLevel(_j), key));}
+    _o.MainGrade = new List<int>();
+    for (var _j = 0; _j < this.MainGradeLength; ++_j) {_o.MainGrade.Add(TableEncryptionService.Convert(this.MainGrade(_j), key));}
+    _o.MainExSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.MainExSkillLevelLength; ++_j) {_o.MainExSkillLevel.Add(TableEncryptionService.Convert(this.MainExSkillLevel(_j), key));}
+    _o.MainNoneExSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.MainNoneExSkillLevelLength; ++_j) {_o.MainNoneExSkillLevel.Add(TableEncryptionService.Convert(this.MainNoneExSkillLevel(_j), key));}
+    _o.MainEquipment1Tier = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment1TierLength; ++_j) {_o.MainEquipment1Tier.Add(TableEncryptionService.Convert(this.MainEquipment1Tier(_j), key));}
+    _o.MainEquipment1Level = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment1LevelLength; ++_j) {_o.MainEquipment1Level.Add(TableEncryptionService.Convert(this.MainEquipment1Level(_j), key));}
+    _o.MainEquipment2Tier = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment2TierLength; ++_j) {_o.MainEquipment2Tier.Add(TableEncryptionService.Convert(this.MainEquipment2Tier(_j), key));}
+    _o.MainEquipment2Level = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment2LevelLength; ++_j) {_o.MainEquipment2Level.Add(TableEncryptionService.Convert(this.MainEquipment2Level(_j), key));}
+    _o.MainEquipment3Tier = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment3TierLength; ++_j) {_o.MainEquipment3Tier.Add(TableEncryptionService.Convert(this.MainEquipment3Tier(_j), key));}
+    _o.MainEquipment3Level = new List<int>();
+    for (var _j = 0; _j < this.MainEquipment3LevelLength; ++_j) {_o.MainEquipment3Level.Add(TableEncryptionService.Convert(this.MainEquipment3Level(_j), key));}
+    _o.MainCharacterWeaponGrade = new List<int>();
+    for (var _j = 0; _j < this.MainCharacterWeaponGradeLength; ++_j) {_o.MainCharacterWeaponGrade.Add(TableEncryptionService.Convert(this.MainCharacterWeaponGrade(_j), key));}
+    _o.MainCharacterWeaponLevel = new List<int>();
+    for (var _j = 0; _j < this.MainCharacterWeaponLevelLength; ++_j) {_o.MainCharacterWeaponLevel.Add(TableEncryptionService.Convert(this.MainCharacterWeaponLevel(_j), key));}
+    _o.MainCharacterGearTier = new List<int>();
+    for (var _j = 0; _j < this.MainCharacterGearTierLength; ++_j) {_o.MainCharacterGearTier.Add(TableEncryptionService.Convert(this.MainCharacterGearTier(_j), key));}
+    _o.MainCharacterGearLevel = new List<int>();
+    for (var _j = 0; _j < this.MainCharacterGearLevelLength; ++_j) {_o.MainCharacterGearLevel.Add(TableEncryptionService.Convert(this.MainCharacterGearLevel(_j), key));}
+    _o.SupportCharacterID = new List<long>();
+    for (var _j = 0; _j < this.SupportCharacterIDLength; ++_j) {_o.SupportCharacterID.Add(TableEncryptionService.Convert(this.SupportCharacterID(_j), key));}
+    _o.SupportLevel = new List<int>();
+    for (var _j = 0; _j < this.SupportLevelLength; ++_j) {_o.SupportLevel.Add(TableEncryptionService.Convert(this.SupportLevel(_j), key));}
+    _o.SupportGrade = new List<int>();
+    for (var _j = 0; _j < this.SupportGradeLength; ++_j) {_o.SupportGrade.Add(TableEncryptionService.Convert(this.SupportGrade(_j), key));}
+    _o.SupportExSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.SupportExSkillLevelLength; ++_j) {_o.SupportExSkillLevel.Add(TableEncryptionService.Convert(this.SupportExSkillLevel(_j), key));}
+    _o.SupportNoneExSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.SupportNoneExSkillLevelLength; ++_j) {_o.SupportNoneExSkillLevel.Add(TableEncryptionService.Convert(this.SupportNoneExSkillLevel(_j), key));}
+    _o.SupportEquipment1Tier = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment1TierLength; ++_j) {_o.SupportEquipment1Tier.Add(TableEncryptionService.Convert(this.SupportEquipment1Tier(_j), key));}
+    _o.SupportEquipment1Level = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment1LevelLength; ++_j) {_o.SupportEquipment1Level.Add(TableEncryptionService.Convert(this.SupportEquipment1Level(_j), key));}
+    _o.SupportEquipment2Tier = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment2TierLength; ++_j) {_o.SupportEquipment2Tier.Add(TableEncryptionService.Convert(this.SupportEquipment2Tier(_j), key));}
+    _o.SupportEquipment2Level = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment2LevelLength; ++_j) {_o.SupportEquipment2Level.Add(TableEncryptionService.Convert(this.SupportEquipment2Level(_j), key));}
+    _o.SupportEquipment3Tier = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment3TierLength; ++_j) {_o.SupportEquipment3Tier.Add(TableEncryptionService.Convert(this.SupportEquipment3Tier(_j), key));}
+    _o.SupportEquipment3Level = new List<int>();
+    for (var _j = 0; _j < this.SupportEquipment3LevelLength; ++_j) {_o.SupportEquipment3Level.Add(TableEncryptionService.Convert(this.SupportEquipment3Level(_j), key));}
+    _o.SupportCharacterWeaponGrade = new List<int>();
+    for (var _j = 0; _j < this.SupportCharacterWeaponGradeLength; ++_j) {_o.SupportCharacterWeaponGrade.Add(TableEncryptionService.Convert(this.SupportCharacterWeaponGrade(_j), key));}
+    _o.SupportCharacterWeaponLevel = new List<int>();
+    for (var _j = 0; _j < this.SupportCharacterWeaponLevelLength; ++_j) {_o.SupportCharacterWeaponLevel.Add(TableEncryptionService.Convert(this.SupportCharacterWeaponLevel(_j), key));}
+    _o.SupportCharacterGearTier = new List<int>();
+    for (var _j = 0; _j < this.SupportCharacterGearTierLength; ++_j) {_o.SupportCharacterGearTier.Add(TableEncryptionService.Convert(this.SupportCharacterGearTier(_j), key));}
+    _o.SupportCharacterGearLevel = new List<int>();
+    for (var _j = 0; _j < this.SupportCharacterGearLevelLength; ++_j) {_o.SupportCharacterGearLevel.Add(TableEncryptionService.Convert(this.SupportCharacterGearLevel(_j), key));}
+    _o.InteractionTSCharacterId = TableEncryptionService.Convert(this.InteractionTSCharacterId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FixedEchelonSettingExcel> Pack(FlatBufferBuilder builder, FixedEchelonSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FixedEchelonSettingExcel>);
+    var _MainCharacterID = default(VectorOffset);
+    if (_o.MainCharacterID != null) {
+      var __MainCharacterID = _o.MainCharacterID.ToArray();
+      _MainCharacterID = CreateMainCharacterIDVector(builder, __MainCharacterID);
+    }
+    var _MainLevel = default(VectorOffset);
+    if (_o.MainLevel != null) {
+      var __MainLevel = _o.MainLevel.ToArray();
+      _MainLevel = CreateMainLevelVector(builder, __MainLevel);
+    }
+    var _MainGrade = default(VectorOffset);
+    if (_o.MainGrade != null) {
+      var __MainGrade = _o.MainGrade.ToArray();
+      _MainGrade = CreateMainGradeVector(builder, __MainGrade);
+    }
+    var _MainExSkillLevel = default(VectorOffset);
+    if (_o.MainExSkillLevel != null) {
+      var __MainExSkillLevel = _o.MainExSkillLevel.ToArray();
+      _MainExSkillLevel = CreateMainExSkillLevelVector(builder, __MainExSkillLevel);
+    }
+    var _MainNoneExSkillLevel = default(VectorOffset);
+    if (_o.MainNoneExSkillLevel != null) {
+      var __MainNoneExSkillLevel = _o.MainNoneExSkillLevel.ToArray();
+      _MainNoneExSkillLevel = CreateMainNoneExSkillLevelVector(builder, __MainNoneExSkillLevel);
+    }
+    var _MainEquipment1Tier = default(VectorOffset);
+    if (_o.MainEquipment1Tier != null) {
+      var __MainEquipment1Tier = _o.MainEquipment1Tier.ToArray();
+      _MainEquipment1Tier = CreateMainEquipment1TierVector(builder, __MainEquipment1Tier);
+    }
+    var _MainEquipment1Level = default(VectorOffset);
+    if (_o.MainEquipment1Level != null) {
+      var __MainEquipment1Level = _o.MainEquipment1Level.ToArray();
+      _MainEquipment1Level = CreateMainEquipment1LevelVector(builder, __MainEquipment1Level);
+    }
+    var _MainEquipment2Tier = default(VectorOffset);
+    if (_o.MainEquipment2Tier != null) {
+      var __MainEquipment2Tier = _o.MainEquipment2Tier.ToArray();
+      _MainEquipment2Tier = CreateMainEquipment2TierVector(builder, __MainEquipment2Tier);
+    }
+    var _MainEquipment2Level = default(VectorOffset);
+    if (_o.MainEquipment2Level != null) {
+      var __MainEquipment2Level = _o.MainEquipment2Level.ToArray();
+      _MainEquipment2Level = CreateMainEquipment2LevelVector(builder, __MainEquipment2Level);
+    }
+    var _MainEquipment3Tier = default(VectorOffset);
+    if (_o.MainEquipment3Tier != null) {
+      var __MainEquipment3Tier = _o.MainEquipment3Tier.ToArray();
+      _MainEquipment3Tier = CreateMainEquipment3TierVector(builder, __MainEquipment3Tier);
+    }
+    var _MainEquipment3Level = default(VectorOffset);
+    if (_o.MainEquipment3Level != null) {
+      var __MainEquipment3Level = _o.MainEquipment3Level.ToArray();
+      _MainEquipment3Level = CreateMainEquipment3LevelVector(builder, __MainEquipment3Level);
+    }
+    var _MainCharacterWeaponGrade = default(VectorOffset);
+    if (_o.MainCharacterWeaponGrade != null) {
+      var __MainCharacterWeaponGrade = _o.MainCharacterWeaponGrade.ToArray();
+      _MainCharacterWeaponGrade = CreateMainCharacterWeaponGradeVector(builder, __MainCharacterWeaponGrade);
+    }
+    var _MainCharacterWeaponLevel = default(VectorOffset);
+    if (_o.MainCharacterWeaponLevel != null) {
+      var __MainCharacterWeaponLevel = _o.MainCharacterWeaponLevel.ToArray();
+      _MainCharacterWeaponLevel = CreateMainCharacterWeaponLevelVector(builder, __MainCharacterWeaponLevel);
+    }
+    var _MainCharacterGearTier = default(VectorOffset);
+    if (_o.MainCharacterGearTier != null) {
+      var __MainCharacterGearTier = _o.MainCharacterGearTier.ToArray();
+      _MainCharacterGearTier = CreateMainCharacterGearTierVector(builder, __MainCharacterGearTier);
+    }
+    var _MainCharacterGearLevel = default(VectorOffset);
+    if (_o.MainCharacterGearLevel != null) {
+      var __MainCharacterGearLevel = _o.MainCharacterGearLevel.ToArray();
+      _MainCharacterGearLevel = CreateMainCharacterGearLevelVector(builder, __MainCharacterGearLevel);
+    }
+    var _SupportCharacterID = default(VectorOffset);
+    if (_o.SupportCharacterID != null) {
+      var __SupportCharacterID = _o.SupportCharacterID.ToArray();
+      _SupportCharacterID = CreateSupportCharacterIDVector(builder, __SupportCharacterID);
+    }
+    var _SupportLevel = default(VectorOffset);
+    if (_o.SupportLevel != null) {
+      var __SupportLevel = _o.SupportLevel.ToArray();
+      _SupportLevel = CreateSupportLevelVector(builder, __SupportLevel);
+    }
+    var _SupportGrade = default(VectorOffset);
+    if (_o.SupportGrade != null) {
+      var __SupportGrade = _o.SupportGrade.ToArray();
+      _SupportGrade = CreateSupportGradeVector(builder, __SupportGrade);
+    }
+    var _SupportExSkillLevel = default(VectorOffset);
+    if (_o.SupportExSkillLevel != null) {
+      var __SupportExSkillLevel = _o.SupportExSkillLevel.ToArray();
+      _SupportExSkillLevel = CreateSupportExSkillLevelVector(builder, __SupportExSkillLevel);
+    }
+    var _SupportNoneExSkillLevel = default(VectorOffset);
+    if (_o.SupportNoneExSkillLevel != null) {
+      var __SupportNoneExSkillLevel = _o.SupportNoneExSkillLevel.ToArray();
+      _SupportNoneExSkillLevel = CreateSupportNoneExSkillLevelVector(builder, __SupportNoneExSkillLevel);
+    }
+    var _SupportEquipment1Tier = default(VectorOffset);
+    if (_o.SupportEquipment1Tier != null) {
+      var __SupportEquipment1Tier = _o.SupportEquipment1Tier.ToArray();
+      _SupportEquipment1Tier = CreateSupportEquipment1TierVector(builder, __SupportEquipment1Tier);
+    }
+    var _SupportEquipment1Level = default(VectorOffset);
+    if (_o.SupportEquipment1Level != null) {
+      var __SupportEquipment1Level = _o.SupportEquipment1Level.ToArray();
+      _SupportEquipment1Level = CreateSupportEquipment1LevelVector(builder, __SupportEquipment1Level);
+    }
+    var _SupportEquipment2Tier = default(VectorOffset);
+    if (_o.SupportEquipment2Tier != null) {
+      var __SupportEquipment2Tier = _o.SupportEquipment2Tier.ToArray();
+      _SupportEquipment2Tier = CreateSupportEquipment2TierVector(builder, __SupportEquipment2Tier);
+    }
+    var _SupportEquipment2Level = default(VectorOffset);
+    if (_o.SupportEquipment2Level != null) {
+      var __SupportEquipment2Level = _o.SupportEquipment2Level.ToArray();
+      _SupportEquipment2Level = CreateSupportEquipment2LevelVector(builder, __SupportEquipment2Level);
+    }
+    var _SupportEquipment3Tier = default(VectorOffset);
+    if (_o.SupportEquipment3Tier != null) {
+      var __SupportEquipment3Tier = _o.SupportEquipment3Tier.ToArray();
+      _SupportEquipment3Tier = CreateSupportEquipment3TierVector(builder, __SupportEquipment3Tier);
+    }
+    var _SupportEquipment3Level = default(VectorOffset);
+    if (_o.SupportEquipment3Level != null) {
+      var __SupportEquipment3Level = _o.SupportEquipment3Level.ToArray();
+      _SupportEquipment3Level = CreateSupportEquipment3LevelVector(builder, __SupportEquipment3Level);
+    }
+    var _SupportCharacterWeaponGrade = default(VectorOffset);
+    if (_o.SupportCharacterWeaponGrade != null) {
+      var __SupportCharacterWeaponGrade = _o.SupportCharacterWeaponGrade.ToArray();
+      _SupportCharacterWeaponGrade = CreateSupportCharacterWeaponGradeVector(builder, __SupportCharacterWeaponGrade);
+    }
+    var _SupportCharacterWeaponLevel = default(VectorOffset);
+    if (_o.SupportCharacterWeaponLevel != null) {
+      var __SupportCharacterWeaponLevel = _o.SupportCharacterWeaponLevel.ToArray();
+      _SupportCharacterWeaponLevel = CreateSupportCharacterWeaponLevelVector(builder, __SupportCharacterWeaponLevel);
+    }
+    var _SupportCharacterGearTier = default(VectorOffset);
+    if (_o.SupportCharacterGearTier != null) {
+      var __SupportCharacterGearTier = _o.SupportCharacterGearTier.ToArray();
+      _SupportCharacterGearTier = CreateSupportCharacterGearTierVector(builder, __SupportCharacterGearTier);
+    }
+    var _SupportCharacterGearLevel = default(VectorOffset);
+    if (_o.SupportCharacterGearLevel != null) {
+      var __SupportCharacterGearLevel = _o.SupportCharacterGearLevel.ToArray();
+      _SupportCharacterGearLevel = CreateSupportCharacterGearLevelVector(builder, __SupportCharacterGearLevel);
+    }
+    return CreateFixedEchelonSettingExcel(
+      builder,
+      _o.FixedEchelonID,
+      _o.EchelonSceneSkip,
+      _o.MainLeaderSlot,
+      _MainCharacterID,
+      _MainLevel,
+      _MainGrade,
+      _MainExSkillLevel,
+      _MainNoneExSkillLevel,
+      _MainEquipment1Tier,
+      _MainEquipment1Level,
+      _MainEquipment2Tier,
+      _MainEquipment2Level,
+      _MainEquipment3Tier,
+      _MainEquipment3Level,
+      _MainCharacterWeaponGrade,
+      _MainCharacterWeaponLevel,
+      _MainCharacterGearTier,
+      _MainCharacterGearLevel,
+      _SupportCharacterID,
+      _SupportLevel,
+      _SupportGrade,
+      _SupportExSkillLevel,
+      _SupportNoneExSkillLevel,
+      _SupportEquipment1Tier,
+      _SupportEquipment1Level,
+      _SupportEquipment2Tier,
+      _SupportEquipment2Level,
+      _SupportEquipment3Tier,
+      _SupportEquipment3Level,
+      _SupportCharacterWeaponGrade,
+      _SupportCharacterWeaponLevel,
+      _SupportCharacterGearTier,
+      _SupportCharacterGearLevel,
+      _o.InteractionTSCharacterId);
+  }
+}
+
+public class FixedEchelonSettingExcelT
+{
+  public long FixedEchelonID { get; set; }
+  public bool EchelonSceneSkip { get; set; }
+  public int MainLeaderSlot { get; set; }
+  public List<long> MainCharacterID { get; set; }
+  public List<int> MainLevel { get; set; }
+  public List<int> MainGrade { get; set; }
+  public List<int> MainExSkillLevel { get; set; }
+  public List<int> MainNoneExSkillLevel { get; set; }
+  public List<int> MainEquipment1Tier { get; set; }
+  public List<int> MainEquipment1Level { get; set; }
+  public List<int> MainEquipment2Tier { get; set; }
+  public List<int> MainEquipment2Level { get; set; }
+  public List<int> MainEquipment3Tier { get; set; }
+  public List<int> MainEquipment3Level { get; set; }
+  public List<int> MainCharacterWeaponGrade { get; set; }
+  public List<int> MainCharacterWeaponLevel { get; set; }
+  public List<int> MainCharacterGearTier { get; set; }
+  public List<int> MainCharacterGearLevel { get; set; }
+  public List<long> SupportCharacterID { get; set; }
+  public List<int> SupportLevel { get; set; }
+  public List<int> SupportGrade { get; set; }
+  public List<int> SupportExSkillLevel { get; set; }
+  public List<int> SupportNoneExSkillLevel { get; set; }
+  public List<int> SupportEquipment1Tier { get; set; }
+  public List<int> SupportEquipment1Level { get; set; }
+  public List<int> SupportEquipment2Tier { get; set; }
+  public List<int> SupportEquipment2Level { get; set; }
+  public List<int> SupportEquipment3Tier { get; set; }
+  public List<int> SupportEquipment3Level { get; set; }
+  public List<int> SupportCharacterWeaponGrade { get; set; }
+  public List<int> SupportCharacterWeaponLevel { get; set; }
+  public List<int> SupportCharacterGearTier { get; set; }
+  public List<int> SupportCharacterGearLevel { get; set; }
+  public long InteractionTSCharacterId { get; set; }
+
+  public FixedEchelonSettingExcelT() {
+    this.FixedEchelonID = 0;
+    this.EchelonSceneSkip = false;
+    this.MainLeaderSlot = 0;
+    this.MainCharacterID = null;
+    this.MainLevel = null;
+    this.MainGrade = null;
+    this.MainExSkillLevel = null;
+    this.MainNoneExSkillLevel = null;
+    this.MainEquipment1Tier = null;
+    this.MainEquipment1Level = null;
+    this.MainEquipment2Tier = null;
+    this.MainEquipment2Level = null;
+    this.MainEquipment3Tier = null;
+    this.MainEquipment3Level = null;
+    this.MainCharacterWeaponGrade = null;
+    this.MainCharacterWeaponLevel = null;
+    this.MainCharacterGearTier = null;
+    this.MainCharacterGearLevel = null;
+    this.SupportCharacterID = null;
+    this.SupportLevel = null;
+    this.SupportGrade = null;
+    this.SupportExSkillLevel = null;
+    this.SupportNoneExSkillLevel = null;
+    this.SupportEquipment1Tier = null;
+    this.SupportEquipment1Level = null;
+    this.SupportEquipment2Tier = null;
+    this.SupportEquipment2Level = null;
+    this.SupportEquipment3Tier = null;
+    this.SupportEquipment3Level = null;
+    this.SupportCharacterWeaponGrade = null;
+    this.SupportCharacterWeaponLevel = null;
+    this.SupportCharacterGearTier = null;
+    this.SupportCharacterGearLevel = null;
+    this.InteractionTSCharacterId = 0;
   }
 }
 

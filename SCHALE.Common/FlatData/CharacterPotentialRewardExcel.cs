@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterPotentialRewardExcel : IFlatbufferObject
@@ -77,6 +78,62 @@ public struct CharacterPotentialRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterPotentialRewardExcel> EndCharacterPotentialRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterPotentialRewardExcel>(o);
+  }
+  public CharacterPotentialRewardExcelT UnPack() {
+    var _o = new CharacterPotentialRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterPotentialRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterPotentialReward");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.RequirePotentialStatType = new List<SCHALE.Common.FlatData.PotentialStatBonusRateType>();
+    for (var _j = 0; _j < this.RequirePotentialStatTypeLength; ++_j) {_o.RequirePotentialStatType.Add(TableEncryptionService.Convert(this.RequirePotentialStatType(_j), key));}
+    _o.RequirePotentialStatLevel = new List<long>();
+    for (var _j = 0; _j < this.RequirePotentialStatLevelLength; ++_j) {_o.RequirePotentialStatLevel.Add(TableEncryptionService.Convert(this.RequirePotentialStatLevel(_j), key));}
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.RewardAmount = TableEncryptionService.Convert(this.RewardAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterPotentialRewardExcel> Pack(FlatBufferBuilder builder, CharacterPotentialRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterPotentialRewardExcel>);
+    var _RequirePotentialStatType = default(VectorOffset);
+    if (_o.RequirePotentialStatType != null) {
+      var __RequirePotentialStatType = _o.RequirePotentialStatType.ToArray();
+      _RequirePotentialStatType = CreateRequirePotentialStatTypeVector(builder, __RequirePotentialStatType);
+    }
+    var _RequirePotentialStatLevel = default(VectorOffset);
+    if (_o.RequirePotentialStatLevel != null) {
+      var __RequirePotentialStatLevel = _o.RequirePotentialStatLevel.ToArray();
+      _RequirePotentialStatLevel = CreateRequirePotentialStatLevelVector(builder, __RequirePotentialStatLevel);
+    }
+    return CreateCharacterPotentialRewardExcel(
+      builder,
+      _o.Id,
+      _RequirePotentialStatType,
+      _RequirePotentialStatLevel,
+      _o.RewardParcelType,
+      _o.RewardId,
+      _o.RewardAmount);
+  }
+}
+
+public class CharacterPotentialRewardExcelT
+{
+  public long Id { get; set; }
+  public List<SCHALE.Common.FlatData.PotentialStatBonusRateType> RequirePotentialStatType { get; set; }
+  public List<long> RequirePotentialStatLevel { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardId { get; set; }
+  public int RewardAmount { get; set; }
+
+  public CharacterPotentialRewardExcelT() {
+    this.Id = 0;
+    this.RequirePotentialStatType = null;
+    this.RequirePotentialStatLevel = null;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardId = 0;
+    this.RewardAmount = 0;
   }
 }
 

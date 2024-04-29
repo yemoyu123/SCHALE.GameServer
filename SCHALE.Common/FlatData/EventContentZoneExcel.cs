@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentZoneExcel : IFlatbufferObject
@@ -105,6 +106,84 @@ public struct EventContentZoneExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentZoneExcel> EndEventContentZoneExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentZoneExcel>(o);
+  }
+  public EventContentZoneExcelT UnPack() {
+    var _o = new EventContentZoneExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentZoneExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentZone");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.OriginalZoneId = TableEncryptionService.Convert(this.OriginalZoneId, key);
+    _o.LocationId = TableEncryptionService.Convert(this.LocationId, key);
+    _o.LocationRank = TableEncryptionService.Convert(this.LocationRank, key);
+    _o.EventPointForLocationRank = TableEncryptionService.Convert(this.EventPointForLocationRank, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.StudentVisitProb = new List<long>();
+    for (var _j = 0; _j < this.StudentVisitProbLength; ++_j) {_o.StudentVisitProb.Add(TableEncryptionService.Convert(this.StudentVisitProb(_j), key));}
+    _o.RewardGroupId = TableEncryptionService.Convert(this.RewardGroupId, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+    _o.WhiteListTags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.WhiteListTagsLength; ++_j) {_o.WhiteListTags.Add(TableEncryptionService.Convert(this.WhiteListTags(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentZoneExcel> Pack(FlatBufferBuilder builder, EventContentZoneExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentZoneExcel>);
+    var _StudentVisitProb = default(VectorOffset);
+    if (_o.StudentVisitProb != null) {
+      var __StudentVisitProb = _o.StudentVisitProb.ToArray();
+      _StudentVisitProb = CreateStudentVisitProbVector(builder, __StudentVisitProb);
+    }
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    var _WhiteListTags = default(VectorOffset);
+    if (_o.WhiteListTags != null) {
+      var __WhiteListTags = _o.WhiteListTags.ToArray();
+      _WhiteListTags = CreateWhiteListTagsVector(builder, __WhiteListTags);
+    }
+    return CreateEventContentZoneExcel(
+      builder,
+      _o.Id,
+      _o.OriginalZoneId,
+      _o.LocationId,
+      _o.LocationRank,
+      _o.EventPointForLocationRank,
+      _o.LocalizeEtcId,
+      _StudentVisitProb,
+      _o.RewardGroupId,
+      _Tags,
+      _WhiteListTags);
+  }
+}
+
+public class EventContentZoneExcelT
+{
+  public long Id { get; set; }
+  public long OriginalZoneId { get; set; }
+  public long LocationId { get; set; }
+  public long LocationRank { get; set; }
+  public long EventPointForLocationRank { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public List<long> StudentVisitProb { get; set; }
+  public long RewardGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> WhiteListTags { get; set; }
+
+  public EventContentZoneExcelT() {
+    this.Id = 0;
+    this.OriginalZoneId = 0;
+    this.LocationId = 0;
+    this.LocationRank = 0;
+    this.EventPointForLocationRank = 0;
+    this.LocalizeEtcId = 0;
+    this.StudentVisitProb = null;
+    this.RewardGroupId = 0;
+    this.Tags = null;
+    this.WhiteListTags = null;
   }
 }
 

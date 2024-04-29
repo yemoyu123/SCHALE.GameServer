@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameShootingCharacterExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct MiniGameShootingCharacterExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelTable> EndMiniGameShootingCharacterExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelTable>(o);
+  }
+  public MiniGameShootingCharacterExcelTableT UnPack() {
+    var _o = new MiniGameShootingCharacterExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameShootingCharacterExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameShootingCharacterExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelTable> Pack(FlatBufferBuilder builder, MiniGameShootingCharacterExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.MiniGameShootingCharacterExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.MiniGameShootingCharacterExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateMiniGameShootingCharacterExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class MiniGameShootingCharacterExcelTableT
+{
+  public List<SCHALE.Common.FlatData.MiniGameShootingCharacterExcelT> DataList { get; set; }
+
+  public MiniGameShootingCharacterExcelTableT() {
+    this.DataList = null;
   }
 }
 

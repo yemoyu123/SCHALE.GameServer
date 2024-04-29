@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StoryStrategyExcel : IFlatbufferObject
@@ -115,6 +116,87 @@ public struct StoryStrategyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StoryStrategyExcel> EndStoryStrategyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StoryStrategyExcel>(o);
+  }
+  public StoryStrategyExcelT UnPack() {
+    var _o = new StoryStrategyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StoryStrategyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StoryStrategy");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Localize = TableEncryptionService.Convert(this.Localize, key);
+    _o.StageEnterEchelonCount = TableEncryptionService.Convert(this.StageEnterEchelonCount, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.WhiteListId = TableEncryptionService.Convert(this.WhiteListId, key);
+    _o.StrategyMap = TableEncryptionService.Convert(this.StrategyMap, key);
+    _o.StrategyMapBG = TableEncryptionService.Convert(this.StrategyMapBG, key);
+    _o.MaxTurn = TableEncryptionService.Convert(this.MaxTurn, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.StrategyEnvironment = TableEncryptionService.Convert(this.StrategyEnvironment, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.FirstClearReportEventName = TableEncryptionService.Convert(this.FirstClearReportEventName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StoryStrategyExcel> Pack(FlatBufferBuilder builder, StoryStrategyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StoryStrategyExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _Localize = _o.Localize == null ? default(StringOffset) : builder.CreateString(_o.Localize);
+    var _StrategyMap = _o.StrategyMap == null ? default(StringOffset) : builder.CreateString(_o.StrategyMap);
+    var _StrategyMapBG = _o.StrategyMapBG == null ? default(StringOffset) : builder.CreateString(_o.StrategyMapBG);
+    var _FirstClearReportEventName = _o.FirstClearReportEventName == null ? default(StringOffset) : builder.CreateString(_o.FirstClearReportEventName);
+    return CreateStoryStrategyExcel(
+      builder,
+      _o.Id,
+      _Name,
+      _Localize,
+      _o.StageEnterEchelonCount,
+      _o.BattleDuration,
+      _o.WhiteListId,
+      _StrategyMap,
+      _StrategyMapBG,
+      _o.MaxTurn,
+      _o.StageTopography,
+      _o.StrategyEnvironment,
+      _o.ContentType,
+      _o.BGMId,
+      _FirstClearReportEventName);
+  }
+}
+
+public class StoryStrategyExcelT
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public string Localize { get; set; }
+  public int StageEnterEchelonCount { get; set; }
+  public long BattleDuration { get; set; }
+  public long WhiteListId { get; set; }
+  public string StrategyMap { get; set; }
+  public string StrategyMapBG { get; set; }
+  public int MaxTurn { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public SCHALE.Common.FlatData.StrategyEnvironment StrategyEnvironment { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long BGMId { get; set; }
+  public string FirstClearReportEventName { get; set; }
+
+  public StoryStrategyExcelT() {
+    this.Id = 0;
+    this.Name = null;
+    this.Localize = null;
+    this.StageEnterEchelonCount = 0;
+    this.BattleDuration = 0;
+    this.WhiteListId = 0;
+    this.StrategyMap = null;
+    this.StrategyMapBG = null;
+    this.MaxTurn = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.StrategyEnvironment = SCHALE.Common.FlatData.StrategyEnvironment.None;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.BGMId = 0;
+    this.FirstClearReportEventName = null;
   }
 }
 

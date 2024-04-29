@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioScriptExcel : IFlatbufferObject
@@ -97,6 +98,74 @@ public struct ScenarioScriptExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioScriptExcel> EndScenarioScriptExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioScriptExcel>(o);
+  }
+  public ScenarioScriptExcelT UnPack() {
+    var _o = new ScenarioScriptExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioScriptExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioScript");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.SelectionGroup = TableEncryptionService.Convert(this.SelectionGroup, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.Sound = TableEncryptionService.Convert(this.Sound, key);
+    _o.Transition = TableEncryptionService.Convert(this.Transition, key);
+    _o.BGName = TableEncryptionService.Convert(this.BGName, key);
+    _o.BGEffect = TableEncryptionService.Convert(this.BGEffect, key);
+    _o.PopupFileName = TableEncryptionService.Convert(this.PopupFileName, key);
+    _o.ScriptKr = TableEncryptionService.Convert(this.ScriptKr, key);
+    _o.TextJp = TableEncryptionService.Convert(this.TextJp, key);
+    _o.VoiceId = TableEncryptionService.Convert(this.VoiceId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioScriptExcel> Pack(FlatBufferBuilder builder, ScenarioScriptExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioScriptExcel>);
+    var _Sound = _o.Sound == null ? default(StringOffset) : builder.CreateString(_o.Sound);
+    var _PopupFileName = _o.PopupFileName == null ? default(StringOffset) : builder.CreateString(_o.PopupFileName);
+    var _ScriptKr = _o.ScriptKr == null ? default(StringOffset) : builder.CreateString(_o.ScriptKr);
+    var _TextJp = _o.TextJp == null ? default(StringOffset) : builder.CreateString(_o.TextJp);
+    return CreateScenarioScriptExcel(
+      builder,
+      _o.GroupId,
+      _o.SelectionGroup,
+      _o.BGMId,
+      _Sound,
+      _o.Transition,
+      _o.BGName,
+      _o.BGEffect,
+      _PopupFileName,
+      _ScriptKr,
+      _TextJp,
+      _o.VoiceId);
+  }
+}
+
+public class ScenarioScriptExcelT
+{
+  public long GroupId { get; set; }
+  public long SelectionGroup { get; set; }
+  public long BGMId { get; set; }
+  public string Sound { get; set; }
+  public uint Transition { get; set; }
+  public uint BGName { get; set; }
+  public uint BGEffect { get; set; }
+  public string PopupFileName { get; set; }
+  public string ScriptKr { get; set; }
+  public string TextJp { get; set; }
+  public uint VoiceId { get; set; }
+
+  public ScenarioScriptExcelT() {
+    this.GroupId = 0;
+    this.SelectionGroup = 0;
+    this.BGMId = 0;
+    this.Sound = null;
+    this.Transition = 0;
+    this.BGName = 0;
+    this.BGEffect = 0;
+    this.PopupFileName = null;
+    this.ScriptKr = null;
+    this.TextJp = null;
+    this.VoiceId = 0;
   }
 }
 

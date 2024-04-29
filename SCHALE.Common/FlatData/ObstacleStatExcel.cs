@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ObstacleStatExcel : IFlatbufferObject
@@ -67,6 +68,59 @@ public struct ObstacleStatExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ObstacleStatExcel> EndObstacleStatExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ObstacleStatExcel>(o);
+  }
+  public ObstacleStatExcelT UnPack() {
+    var _o = new ObstacleStatExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ObstacleStatExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ObstacleStat");
+    _o.StringID = TableEncryptionService.Convert(this.StringID, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.MaxHP1 = TableEncryptionService.Convert(this.MaxHP1, key);
+    _o.MaxHP100 = TableEncryptionService.Convert(this.MaxHP100, key);
+    _o.BlockRate = TableEncryptionService.Convert(this.BlockRate, key);
+    _o.Dodge = TableEncryptionService.Convert(this.Dodge, key);
+    _o.CanNotStandRange = TableEncryptionService.Convert(this.CanNotStandRange, key);
+    _o.HighlightFloaterHeight = TableEncryptionService.Convert(this.HighlightFloaterHeight, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ObstacleStatExcel> Pack(FlatBufferBuilder builder, ObstacleStatExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ObstacleStatExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    return CreateObstacleStatExcel(
+      builder,
+      _o.StringID,
+      _Name,
+      _o.MaxHP1,
+      _o.MaxHP100,
+      _o.BlockRate,
+      _o.Dodge,
+      _o.CanNotStandRange,
+      _o.HighlightFloaterHeight);
+  }
+}
+
+public class ObstacleStatExcelT
+{
+  public uint StringID { get; set; }
+  public string Name { get; set; }
+  public long MaxHP1 { get; set; }
+  public long MaxHP100 { get; set; }
+  public long BlockRate { get; set; }
+  public long Dodge { get; set; }
+  public long CanNotStandRange { get; set; }
+  public float HighlightFloaterHeight { get; set; }
+
+  public ObstacleStatExcelT() {
+    this.StringID = 0;
+    this.Name = null;
+    this.MaxHP1 = 0;
+    this.MaxHP100 = 0;
+    this.BlockRate = 0;
+    this.Dodge = 0;
+    this.CanNotStandRange = 0;
+    this.HighlightFloaterHeight = 0.0f;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaLevelSectionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ArenaLevelSectionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcelTable> EndArenaLevelSectionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcelTable>(o);
+  }
+  public ArenaLevelSectionExcelTableT UnPack() {
+    var _o = new ArenaLevelSectionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaLevelSectionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaLevelSectionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ArenaLevelSectionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcelTable> Pack(FlatBufferBuilder builder, ArenaLevelSectionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ArenaLevelSectionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateArenaLevelSectionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ArenaLevelSectionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ArenaLevelSectionExcelT> DataList { get; set; }
+
+  public ArenaLevelSectionExcelTableT() {
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldContentStageRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct FieldContentStageRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcelTable> EndFieldContentStageRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcelTable>(o);
+  }
+  public FieldContentStageRewardExcelTableT UnPack() {
+    var _o = new FieldContentStageRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldContentStageRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldContentStageRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.FieldContentStageRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcelTable> Pack(FlatBufferBuilder builder, FieldContentStageRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.FieldContentStageRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.FieldContentStageRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateFieldContentStageRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class FieldContentStageRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.FieldContentStageRewardExcelT> DataList { get; set; }
+
+  public FieldContentStageRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

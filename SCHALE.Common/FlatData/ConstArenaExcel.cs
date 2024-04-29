@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstArenaExcel : IFlatbufferObject
@@ -265,6 +266,202 @@ public struct ConstArenaExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstArenaExcel> EndConstArenaExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstArenaExcel>(o);
+  }
+  public ConstArenaExcelT UnPack() {
+    var _o = new ConstArenaExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstArenaExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstArena");
+    _o.AttackCoolTime = TableEncryptionService.Convert(this.AttackCoolTime, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.DefenseCoolTime = TableEncryptionService.Convert(this.DefenseCoolTime, key);
+    _o.TSSStartCoolTime = TableEncryptionService.Convert(this.TSSStartCoolTime, key);
+    _o.EndAlarm = TableEncryptionService.Convert(this.EndAlarm, key);
+    _o.TimeRewardMaxAmount = TableEncryptionService.Convert(this.TimeRewardMaxAmount, key);
+    _o.EnterCostType = TableEncryptionService.Convert(this.EnterCostType, key);
+    _o.EnterCostId = TableEncryptionService.Convert(this.EnterCostId, key);
+    _o.TicketCost = TableEncryptionService.Convert(this.TicketCost, key);
+    _o.DailyRewardResetTime = TableEncryptionService.Convert(this.DailyRewardResetTime, key);
+    _o.OpenScenarioId = TableEncryptionService.Convert(this.OpenScenarioId, key);
+    _o.CharacterSlotHideRank = new List<long>();
+    for (var _j = 0; _j < this.CharacterSlotHideRankLength; ++_j) {_o.CharacterSlotHideRank.Add(TableEncryptionService.Convert(this.CharacterSlotHideRank(_j), key));}
+    _o.MapSlotHideRank = TableEncryptionService.Convert(this.MapSlotHideRank, key);
+    _o.RelativeOpponentRankStart = new List<long>();
+    for (var _j = 0; _j < this.RelativeOpponentRankStartLength; ++_j) {_o.RelativeOpponentRankStart.Add(TableEncryptionService.Convert(this.RelativeOpponentRankStart(_j), key));}
+    _o.RelativeOpponentRankEnd = new List<long>();
+    for (var _j = 0; _j < this.RelativeOpponentRankEndLength; ++_j) {_o.RelativeOpponentRankEnd.Add(TableEncryptionService.Convert(this.RelativeOpponentRankEnd(_j), key));}
+    _o.ModifiedStatType = new List<SCHALE.Common.FlatData.StatType>();
+    for (var _j = 0; _j < this.ModifiedStatTypeLength; ++_j) {_o.ModifiedStatType.Add(TableEncryptionService.Convert(this.ModifiedStatType(_j), key));}
+    _o.StatMulFactor = new List<long>();
+    for (var _j = 0; _j < this.StatMulFactorLength; ++_j) {_o.StatMulFactor.Add(TableEncryptionService.Convert(this.StatMulFactor(_j), key));}
+    _o.StatSumFactor = new List<long>();
+    for (var _j = 0; _j < this.StatSumFactorLength; ++_j) {_o.StatSumFactor.Add(TableEncryptionService.Convert(this.StatSumFactor(_j), key));}
+    _o.NPCName = new List<string>();
+    for (var _j = 0; _j < this.NPCNameLength; ++_j) {_o.NPCName.Add(TableEncryptionService.Convert(this.NPCName(_j), key));}
+    _o.NPCMainCharacterCount = TableEncryptionService.Convert(this.NPCMainCharacterCount, key);
+    _o.NPCSupportCharacterCount = TableEncryptionService.Convert(this.NPCSupportCharacterCount, key);
+    _o.NPCCharacterSkillLevel = TableEncryptionService.Convert(this.NPCCharacterSkillLevel, key);
+    _o.TimeSpanInDaysForBattleHistory = TableEncryptionService.Convert(this.TimeSpanInDaysForBattleHistory, key);
+    _o.HiddenCharacterImagePath = TableEncryptionService.Convert(this.HiddenCharacterImagePath, key);
+    _o.DefenseVictoryRewardMaxCount = TableEncryptionService.Convert(this.DefenseVictoryRewardMaxCount, key);
+    _o.TopRankerCountLimit = TableEncryptionService.Convert(this.TopRankerCountLimit, key);
+    _o.AutoRefreshIntervalMilliSeconds = TableEncryptionService.Convert(this.AutoRefreshIntervalMilliSeconds, key);
+    _o.EchelonSettingIntervalMilliSeconds = TableEncryptionService.Convert(this.EchelonSettingIntervalMilliSeconds, key);
+    _o.SkipAllowedTimeMilliSeconds = TableEncryptionService.Convert(this.SkipAllowedTimeMilliSeconds, key);
+    _o.ShowSeasonChangeInfoStartTime = TableEncryptionService.Convert(this.ShowSeasonChangeInfoStartTime, key);
+    _o.ShowSeasonChangeInfoEndTime = TableEncryptionService.Convert(this.ShowSeasonChangeInfoEndTime, key);
+    _o.ShowSeasonId = TableEncryptionService.Convert(this.ShowSeasonId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstArenaExcel> Pack(FlatBufferBuilder builder, ConstArenaExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstArenaExcel>);
+    var _DailyRewardResetTime = _o.DailyRewardResetTime == null ? default(StringOffset) : builder.CreateString(_o.DailyRewardResetTime);
+    var _OpenScenarioId = _o.OpenScenarioId == null ? default(StringOffset) : builder.CreateString(_o.OpenScenarioId);
+    var _CharacterSlotHideRank = default(VectorOffset);
+    if (_o.CharacterSlotHideRank != null) {
+      var __CharacterSlotHideRank = _o.CharacterSlotHideRank.ToArray();
+      _CharacterSlotHideRank = CreateCharacterSlotHideRankVector(builder, __CharacterSlotHideRank);
+    }
+    var _RelativeOpponentRankStart = default(VectorOffset);
+    if (_o.RelativeOpponentRankStart != null) {
+      var __RelativeOpponentRankStart = _o.RelativeOpponentRankStart.ToArray();
+      _RelativeOpponentRankStart = CreateRelativeOpponentRankStartVector(builder, __RelativeOpponentRankStart);
+    }
+    var _RelativeOpponentRankEnd = default(VectorOffset);
+    if (_o.RelativeOpponentRankEnd != null) {
+      var __RelativeOpponentRankEnd = _o.RelativeOpponentRankEnd.ToArray();
+      _RelativeOpponentRankEnd = CreateRelativeOpponentRankEndVector(builder, __RelativeOpponentRankEnd);
+    }
+    var _ModifiedStatType = default(VectorOffset);
+    if (_o.ModifiedStatType != null) {
+      var __ModifiedStatType = _o.ModifiedStatType.ToArray();
+      _ModifiedStatType = CreateModifiedStatTypeVector(builder, __ModifiedStatType);
+    }
+    var _StatMulFactor = default(VectorOffset);
+    if (_o.StatMulFactor != null) {
+      var __StatMulFactor = _o.StatMulFactor.ToArray();
+      _StatMulFactor = CreateStatMulFactorVector(builder, __StatMulFactor);
+    }
+    var _StatSumFactor = default(VectorOffset);
+    if (_o.StatSumFactor != null) {
+      var __StatSumFactor = _o.StatSumFactor.ToArray();
+      _StatSumFactor = CreateStatSumFactorVector(builder, __StatSumFactor);
+    }
+    var _NPCName = default(VectorOffset);
+    if (_o.NPCName != null) {
+      var __NPCName = new StringOffset[_o.NPCName.Count];
+      for (var _j = 0; _j < __NPCName.Length; ++_j) { __NPCName[_j] = builder.CreateString(_o.NPCName[_j]); }
+      _NPCName = CreateNPCNameVector(builder, __NPCName);
+    }
+    var _HiddenCharacterImagePath = _o.HiddenCharacterImagePath == null ? default(StringOffset) : builder.CreateString(_o.HiddenCharacterImagePath);
+    var _ShowSeasonChangeInfoStartTime = _o.ShowSeasonChangeInfoStartTime == null ? default(StringOffset) : builder.CreateString(_o.ShowSeasonChangeInfoStartTime);
+    var _ShowSeasonChangeInfoEndTime = _o.ShowSeasonChangeInfoEndTime == null ? default(StringOffset) : builder.CreateString(_o.ShowSeasonChangeInfoEndTime);
+    return CreateConstArenaExcel(
+      builder,
+      _o.AttackCoolTime,
+      _o.BattleDuration,
+      _o.DefenseCoolTime,
+      _o.TSSStartCoolTime,
+      _o.EndAlarm,
+      _o.TimeRewardMaxAmount,
+      _o.EnterCostType,
+      _o.EnterCostId,
+      _o.TicketCost,
+      _DailyRewardResetTime,
+      _OpenScenarioId,
+      _CharacterSlotHideRank,
+      _o.MapSlotHideRank,
+      _RelativeOpponentRankStart,
+      _RelativeOpponentRankEnd,
+      _ModifiedStatType,
+      _StatMulFactor,
+      _StatSumFactor,
+      _NPCName,
+      _o.NPCMainCharacterCount,
+      _o.NPCSupportCharacterCount,
+      _o.NPCCharacterSkillLevel,
+      _o.TimeSpanInDaysForBattleHistory,
+      _HiddenCharacterImagePath,
+      _o.DefenseVictoryRewardMaxCount,
+      _o.TopRankerCountLimit,
+      _o.AutoRefreshIntervalMilliSeconds,
+      _o.EchelonSettingIntervalMilliSeconds,
+      _o.SkipAllowedTimeMilliSeconds,
+      _ShowSeasonChangeInfoStartTime,
+      _ShowSeasonChangeInfoEndTime,
+      _o.ShowSeasonId);
+  }
+}
+
+public class ConstArenaExcelT
+{
+  public long AttackCoolTime { get; set; }
+  public long BattleDuration { get; set; }
+  public long DefenseCoolTime { get; set; }
+  public long TSSStartCoolTime { get; set; }
+  public long EndAlarm { get; set; }
+  public long TimeRewardMaxAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType EnterCostType { get; set; }
+  public long EnterCostId { get; set; }
+  public long TicketCost { get; set; }
+  public string DailyRewardResetTime { get; set; }
+  public string OpenScenarioId { get; set; }
+  public List<long> CharacterSlotHideRank { get; set; }
+  public long MapSlotHideRank { get; set; }
+  public List<long> RelativeOpponentRankStart { get; set; }
+  public List<long> RelativeOpponentRankEnd { get; set; }
+  public List<SCHALE.Common.FlatData.StatType> ModifiedStatType { get; set; }
+  public List<long> StatMulFactor { get; set; }
+  public List<long> StatSumFactor { get; set; }
+  public List<string> NPCName { get; set; }
+  public long NPCMainCharacterCount { get; set; }
+  public long NPCSupportCharacterCount { get; set; }
+  public long NPCCharacterSkillLevel { get; set; }
+  public long TimeSpanInDaysForBattleHistory { get; set; }
+  public string HiddenCharacterImagePath { get; set; }
+  public long DefenseVictoryRewardMaxCount { get; set; }
+  public long TopRankerCountLimit { get; set; }
+  public long AutoRefreshIntervalMilliSeconds { get; set; }
+  public long EchelonSettingIntervalMilliSeconds { get; set; }
+  public long SkipAllowedTimeMilliSeconds { get; set; }
+  public string ShowSeasonChangeInfoStartTime { get; set; }
+  public string ShowSeasonChangeInfoEndTime { get; set; }
+  public long ShowSeasonId { get; set; }
+
+  public ConstArenaExcelT() {
+    this.AttackCoolTime = 0;
+    this.BattleDuration = 0;
+    this.DefenseCoolTime = 0;
+    this.TSSStartCoolTime = 0;
+    this.EndAlarm = 0;
+    this.TimeRewardMaxAmount = 0;
+    this.EnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.EnterCostId = 0;
+    this.TicketCost = 0;
+    this.DailyRewardResetTime = null;
+    this.OpenScenarioId = null;
+    this.CharacterSlotHideRank = null;
+    this.MapSlotHideRank = 0;
+    this.RelativeOpponentRankStart = null;
+    this.RelativeOpponentRankEnd = null;
+    this.ModifiedStatType = null;
+    this.StatMulFactor = null;
+    this.StatSumFactor = null;
+    this.NPCName = null;
+    this.NPCMainCharacterCount = 0;
+    this.NPCSupportCharacterCount = 0;
+    this.NPCCharacterSkillLevel = 0;
+    this.TimeSpanInDaysForBattleHistory = 0;
+    this.HiddenCharacterImagePath = null;
+    this.DefenseVictoryRewardMaxCount = 0;
+    this.TopRankerCountLimit = 0;
+    this.AutoRefreshIntervalMilliSeconds = 0;
+    this.EchelonSettingIntervalMilliSeconds = 0;
+    this.SkipAllowedTimeMilliSeconds = 0;
+    this.ShowSeasonChangeInfoStartTime = null;
+    this.ShowSeasonChangeInfoEndTime = null;
+    this.ShowSeasonId = 0;
   }
 }
 

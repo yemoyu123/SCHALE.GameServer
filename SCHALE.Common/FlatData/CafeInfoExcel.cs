@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CafeInfoExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct CafeInfoExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CafeInfoExcel> EndCafeInfoExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CafeInfoExcel>(o);
+  }
+  public CafeInfoExcelT UnPack() {
+    var _o = new CafeInfoExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CafeInfoExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CafeInfo");
+    _o.CafeId = TableEncryptionService.Convert(this.CafeId, key);
+    _o.IsDefault = TableEncryptionService.Convert(this.IsDefault, key);
+    _o.OpenConditionCafeId = TableEncryptionService.Convert(this.OpenConditionCafeId, key);
+    _o.OpenConditionCafeInvite = TableEncryptionService.Convert(this.OpenConditionCafeInvite, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CafeInfoExcel> Pack(FlatBufferBuilder builder, CafeInfoExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CafeInfoExcel>);
+    return CreateCafeInfoExcel(
+      builder,
+      _o.CafeId,
+      _o.IsDefault,
+      _o.OpenConditionCafeId,
+      _o.OpenConditionCafeInvite);
+  }
+}
+
+public class CafeInfoExcelT
+{
+  public long CafeId { get; set; }
+  public bool IsDefault { get; set; }
+  public SCHALE.Common.FlatData.OpenConditionContent OpenConditionCafeId { get; set; }
+  public SCHALE.Common.FlatData.OpenConditionContent OpenConditionCafeInvite { get; set; }
+
+  public CafeInfoExcelT() {
+    this.CafeId = 0;
+    this.IsDefault = false;
+    this.OpenConditionCafeId = SCHALE.Common.FlatData.OpenConditionContent.Shop;
+    this.OpenConditionCafeInvite = SCHALE.Common.FlatData.OpenConditionContent.Shop;
   }
 }
 

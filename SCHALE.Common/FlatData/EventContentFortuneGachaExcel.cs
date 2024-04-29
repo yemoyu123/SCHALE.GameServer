@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentFortuneGachaExcel : IFlatbufferObject
@@ -47,6 +48,39 @@ public struct EventContentFortuneGachaExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaExcel> EndEventContentFortuneGachaExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentFortuneGachaExcel>(o);
+  }
+  public EventContentFortuneGachaExcelT UnPack() {
+    var _o = new EventContentFortuneGachaExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentFortuneGachaExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentFortuneGacha");
+    _o.FortuneGachaGroupId = TableEncryptionService.Convert(this.FortuneGachaGroupId, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaExcel> Pack(FlatBufferBuilder builder, EventContentFortuneGachaExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentFortuneGachaExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    return CreateEventContentFortuneGachaExcel(
+      builder,
+      _o.FortuneGachaGroupId,
+      _o.LocalizeEtcId,
+      _IconPath);
+  }
+}
+
+public class EventContentFortuneGachaExcelT
+{
+  public int FortuneGachaGroupId { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string IconPath { get; set; }
+
+  public EventContentFortuneGachaExcelT() {
+    this.FortuneGachaGroupId = 0;
+    this.LocalizeEtcId = 0;
+    this.IconPath = null;
   }
 }
 

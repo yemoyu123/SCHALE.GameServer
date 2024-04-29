@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentsScenarioExcel : IFlatbufferObject
@@ -61,6 +62,52 @@ public struct ContentsScenarioExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentsScenarioExcel> EndContentsScenarioExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentsScenarioExcel>(o);
+  }
+  public ContentsScenarioExcelT UnPack() {
+    var _o = new ContentsScenarioExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentsScenarioExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentsScenario");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeId = TableEncryptionService.Convert(this.LocalizeId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.ScenarioContentType = TableEncryptionService.Convert(this.ScenarioContentType, key);
+    _o.ScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.ScenarioGroupIdLength; ++_j) {_o.ScenarioGroupId.Add(TableEncryptionService.Convert(this.ScenarioGroupId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentsScenarioExcel> Pack(FlatBufferBuilder builder, ContentsScenarioExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentsScenarioExcel>);
+    var _ScenarioGroupId = default(VectorOffset);
+    if (_o.ScenarioGroupId != null) {
+      var __ScenarioGroupId = _o.ScenarioGroupId.ToArray();
+      _ScenarioGroupId = CreateScenarioGroupIdVector(builder, __ScenarioGroupId);
+    }
+    return CreateContentsScenarioExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeId,
+      _o.DisplayOrder,
+      _o.ScenarioContentType,
+      _ScenarioGroupId);
+  }
+}
+
+public class ContentsScenarioExcelT
+{
+  public uint Id { get; set; }
+  public uint LocalizeId { get; set; }
+  public int DisplayOrder { get; set; }
+  public SCHALE.Common.FlatData.ScenarioContentType ScenarioContentType { get; set; }
+  public List<long> ScenarioGroupId { get; set; }
+
+  public ContentsScenarioExcelT() {
+    this.Id = 0;
+    this.LocalizeId = 0;
+    this.DisplayOrder = 0;
+    this.ScenarioContentType = SCHALE.Common.FlatData.ScenarioContentType.Prologue;
+    this.ScenarioGroupId = null;
   }
 }
 

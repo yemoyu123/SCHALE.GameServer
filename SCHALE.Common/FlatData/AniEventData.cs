@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AniEventData : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct AniEventData : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AniEventData> EndAniEventData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AniEventData>(o);
+  }
+  public AniEventDataT UnPack() {
+    var _o = new AniEventDataT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AniEventDataT _o) {
+		byte[] key = { 0 };
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Time = TableEncryptionService.Convert(this.Time, key);
+    _o.IntParam = TableEncryptionService.Convert(this.IntParam, key);
+    _o.FloatParam = TableEncryptionService.Convert(this.FloatParam, key);
+    _o.StringParam = TableEncryptionService.Convert(this.StringParam, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AniEventData> Pack(FlatBufferBuilder builder, AniEventDataT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AniEventData>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _StringParam = _o.StringParam == null ? default(StringOffset) : builder.CreateString(_o.StringParam);
+    return CreateAniEventData(
+      builder,
+      _Name,
+      _o.Time,
+      _o.IntParam,
+      _o.FloatParam,
+      _StringParam);
+  }
+}
+
+public class AniEventDataT
+{
+  public string Name { get; set; }
+  public float Time { get; set; }
+  public int IntParam { get; set; }
+  public float FloatParam { get; set; }
+  public string StringParam { get; set; }
+
+  public AniEventDataT() {
+    this.Name = null;
+    this.Time = 0.0f;
+    this.IntParam = 0;
+    this.FloatParam = 0.0f;
+    this.StringParam = null;
   }
 }
 

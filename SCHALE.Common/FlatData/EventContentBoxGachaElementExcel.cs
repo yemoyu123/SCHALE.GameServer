@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBoxGachaElementExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct EventContentBoxGachaElementExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcel> EndEventContentBoxGachaElementExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcel>(o);
+  }
+  public EventContentBoxGachaElementExcelT UnPack() {
+    var _o = new EventContentBoxGachaElementExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBoxGachaElementExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBoxGachaElement");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Round = TableEncryptionService.Convert(this.Round, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcel> Pack(FlatBufferBuilder builder, EventContentBoxGachaElementExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcel>);
+    return CreateEventContentBoxGachaElementExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.Round,
+      _o.GroupId);
+  }
+}
+
+public class EventContentBoxGachaElementExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public long Round { get; set; }
+  public long GroupId { get; set; }
+
+  public EventContentBoxGachaElementExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.Round = 0;
+    this.GroupId = 0;
   }
 }
 

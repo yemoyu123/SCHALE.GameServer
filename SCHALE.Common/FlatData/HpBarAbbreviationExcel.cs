@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct HpBarAbbreviationExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct HpBarAbbreviationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcel> EndHpBarAbbreviationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcel>(o);
+  }
+  public HpBarAbbreviationExcelT UnPack() {
+    var _o = new HpBarAbbreviationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(HpBarAbbreviationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("HpBarAbbreviation");
+    _o.MonsterLv = TableEncryptionService.Convert(this.MonsterLv, key);
+    _o.StandardHpBar = TableEncryptionService.Convert(this.StandardHpBar, key);
+    _o.RaidBossHpBar = TableEncryptionService.Convert(this.RaidBossHpBar, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcel> Pack(FlatBufferBuilder builder, HpBarAbbreviationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcel>);
+    return CreateHpBarAbbreviationExcel(
+      builder,
+      _o.MonsterLv,
+      _o.StandardHpBar,
+      _o.RaidBossHpBar);
+  }
+}
+
+public class HpBarAbbreviationExcelT
+{
+  public int MonsterLv { get; set; }
+  public int StandardHpBar { get; set; }
+  public int RaidBossHpBar { get; set; }
+
+  public HpBarAbbreviationExcelT() {
+    this.MonsterLv = 0;
+    this.StandardHpBar = 0;
+    this.RaidBossHpBar = 0;
   }
 }
 

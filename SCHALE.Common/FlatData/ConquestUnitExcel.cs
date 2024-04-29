@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestUnitExcel : IFlatbufferObject
@@ -211,6 +212,171 @@ public struct ConquestUnitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestUnitExcel> EndConquestUnitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestUnitExcel>(o);
+  }
+  public ConquestUnitExcelT UnPack() {
+    var _o = new ConquestUnitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestUnitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestUnit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.StrategyPrefabName = TableEncryptionService.Convert(this.StrategyPrefabName, key);
+    _o.Scale = TableEncryptionService.Convert(this.Scale, key);
+    _o.ShieldEffectScale = TableEncryptionService.Convert(this.ShieldEffectScale, key);
+    _o.UnitFxPrefabName = TableEncryptionService.Convert(this.UnitFxPrefabName, key);
+    _o.PointAnimation = TableEncryptionService.Convert(this.PointAnimation, key);
+    _o.EnemyType = TableEncryptionService.Convert(this.EnemyType, key);
+    _o.Team = TableEncryptionService.Convert(this.Team, key);
+    _o.UnitGroup = TableEncryptionService.Convert(this.UnitGroup, key);
+    _o.PrevUnitGroup = TableEncryptionService.Convert(this.PrevUnitGroup, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.StarGoal = new List<SCHALE.Common.FlatData.StarGoalType>();
+    for (var _j = 0; _j < this.StarGoalLength; ++_j) {_o.StarGoal.Add(TableEncryptionService.Convert(this.StarGoal(_j), key));}
+    _o.StarGoalAmount = new List<int>();
+    for (var _j = 0; _j < this.StarGoalAmountLength; ++_j) {_o.StarGoalAmount.Add(TableEncryptionService.Convert(this.StarGoalAmount(_j), key));}
+    _o.GroupBuffId = TableEncryptionService.Convert(this.GroupBuffId, key);
+    _o.StageEnterCostType = TableEncryptionService.Convert(this.StageEnterCostType, key);
+    _o.StageEnterCostId = TableEncryptionService.Convert(this.StageEnterCostId, key);
+    _o.StageEnterCostAmount = TableEncryptionService.Convert(this.StageEnterCostAmount, key);
+    _o.ManageEchelonStageEnterCostType = TableEncryptionService.Convert(this.ManageEchelonStageEnterCostType, key);
+    _o.ManageEchelonStageEnterCostId = TableEncryptionService.Convert(this.ManageEchelonStageEnterCostId, key);
+    _o.ManageEchelonStageEnterCostAmount = TableEncryptionService.Convert(this.ManageEchelonStageEnterCostAmount, key);
+    _o.EnterScenarioGroupId = TableEncryptionService.Convert(this.EnterScenarioGroupId, key);
+    _o.ClearScenarioGroupId = TableEncryptionService.Convert(this.ClearScenarioGroupId, key);
+    _o.ConquestRewardId = TableEncryptionService.Convert(this.ConquestRewardId, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.TacticRewardExp = TableEncryptionService.Convert(this.TacticRewardExp, key);
+    _o.FixedEchelonId = TableEncryptionService.Convert(this.FixedEchelonId, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestUnitExcel> Pack(FlatBufferBuilder builder, ConquestUnitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestUnitExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _StrategyPrefabName = _o.StrategyPrefabName == null ? default(StringOffset) : builder.CreateString(_o.StrategyPrefabName);
+    var _UnitFxPrefabName = _o.UnitFxPrefabName == null ? default(StringOffset) : builder.CreateString(_o.UnitFxPrefabName);
+    var _PointAnimation = _o.PointAnimation == null ? default(StringOffset) : builder.CreateString(_o.PointAnimation);
+    var _StarGoal = default(VectorOffset);
+    if (_o.StarGoal != null) {
+      var __StarGoal = _o.StarGoal.ToArray();
+      _StarGoal = CreateStarGoalVector(builder, __StarGoal);
+    }
+    var _StarGoalAmount = default(VectorOffset);
+    if (_o.StarGoalAmount != null) {
+      var __StarGoalAmount = _o.StarGoalAmount.ToArray();
+      _StarGoalAmount = CreateStarGoalAmountVector(builder, __StarGoalAmount);
+    }
+    return CreateConquestUnitExcel(
+      builder,
+      _o.Id,
+      _o.Key,
+      _Name,
+      _PrefabName,
+      _StrategyPrefabName,
+      _o.Scale,
+      _o.ShieldEffectScale,
+      _UnitFxPrefabName,
+      _PointAnimation,
+      _o.EnemyType,
+      _o.Team,
+      _o.UnitGroup,
+      _o.PrevUnitGroup,
+      _o.BattleDuration,
+      _o.GroundId,
+      _StarGoal,
+      _StarGoalAmount,
+      _o.GroupBuffId,
+      _o.StageEnterCostType,
+      _o.StageEnterCostId,
+      _o.StageEnterCostAmount,
+      _o.ManageEchelonStageEnterCostType,
+      _o.ManageEchelonStageEnterCostId,
+      _o.ManageEchelonStageEnterCostAmount,
+      _o.EnterScenarioGroupId,
+      _o.ClearScenarioGroupId,
+      _o.ConquestRewardId,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _o.TacticRewardExp,
+      _o.FixedEchelonId,
+      _o.EchelonExtensionType);
+  }
+}
+
+public class ConquestUnitExcelT
+{
+  public long Id { get; set; }
+  public uint Key { get; set; }
+  public string Name { get; set; }
+  public string PrefabName { get; set; }
+  public string StrategyPrefabName { get; set; }
+  public float Scale { get; set; }
+  public float ShieldEffectScale { get; set; }
+  public string UnitFxPrefabName { get; set; }
+  public string PointAnimation { get; set; }
+  public SCHALE.Common.FlatData.ConquestEnemyType EnemyType { get; set; }
+  public SCHALE.Common.FlatData.ConquestTeamType Team { get; set; }
+  public long UnitGroup { get; set; }
+  public long PrevUnitGroup { get; set; }
+  public long BattleDuration { get; set; }
+  public long GroundId { get; set; }
+  public List<SCHALE.Common.FlatData.StarGoalType> StarGoal { get; set; }
+  public List<int> StarGoalAmount { get; set; }
+  public long GroupBuffId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StageEnterCostType { get; set; }
+  public long StageEnterCostId { get; set; }
+  public int StageEnterCostAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ManageEchelonStageEnterCostType { get; set; }
+  public long ManageEchelonStageEnterCostId { get; set; }
+  public int ManageEchelonStageEnterCostAmount { get; set; }
+  public long EnterScenarioGroupId { get; set; }
+  public long ClearScenarioGroupId { get; set; }
+  public long ConquestRewardId { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public int RecommandLevel { get; set; }
+  public long TacticRewardExp { get; set; }
+  public long FixedEchelonId { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+
+  public ConquestUnitExcelT() {
+    this.Id = 0;
+    this.Key = 0;
+    this.Name = null;
+    this.PrefabName = null;
+    this.StrategyPrefabName = null;
+    this.Scale = 0.0f;
+    this.ShieldEffectScale = 0.0f;
+    this.UnitFxPrefabName = null;
+    this.PointAnimation = null;
+    this.EnemyType = SCHALE.Common.FlatData.ConquestEnemyType.None;
+    this.Team = SCHALE.Common.FlatData.ConquestTeamType.None;
+    this.UnitGroup = 0;
+    this.PrevUnitGroup = 0;
+    this.BattleDuration = 0;
+    this.GroundId = 0;
+    this.StarGoal = null;
+    this.StarGoalAmount = null;
+    this.GroupBuffId = 0;
+    this.StageEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StageEnterCostId = 0;
+    this.StageEnterCostAmount = 0;
+    this.ManageEchelonStageEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ManageEchelonStageEnterCostId = 0;
+    this.ManageEchelonStageEnterCostAmount = 0;
+    this.EnterScenarioGroupId = 0;
+    this.ClearScenarioGroupId = 0;
+    this.ConquestRewardId = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.TacticRewardExp = 0;
+    this.FixedEchelonId = 0;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
   }
 }
 

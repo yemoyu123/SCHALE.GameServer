@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CurrencyExcel : IFlatbufferObject
@@ -123,6 +124,99 @@ public struct CurrencyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CurrencyExcel> EndCurrencyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CurrencyExcel>(o);
+  }
+  public CurrencyExcelT UnPack() {
+    var _o = new CurrencyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CurrencyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Currency");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.CurrencyType = TableEncryptionService.Convert(this.CurrencyType, key);
+    _o.CurrencyName = TableEncryptionService.Convert(this.CurrencyName, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.AutoChargeMsc = TableEncryptionService.Convert(this.AutoChargeMsc, key);
+    _o.AutoChargeAmount = TableEncryptionService.Convert(this.AutoChargeAmount, key);
+    _o.CurrencyOverChargeType = TableEncryptionService.Convert(this.CurrencyOverChargeType, key);
+    _o.CurrencyAdditionalChargeType = TableEncryptionService.Convert(this.CurrencyAdditionalChargeType, key);
+    _o.ChargeLimit = TableEncryptionService.Convert(this.ChargeLimit, key);
+    _o.OverChargeLimit = TableEncryptionService.Convert(this.OverChargeLimit, key);
+    _o.SpriteName = TableEncryptionService.Convert(this.SpriteName, key);
+    _o.DailyRefillType = TableEncryptionService.Convert(this.DailyRefillType, key);
+    _o.DailyRefillAmount = TableEncryptionService.Convert(this.DailyRefillAmount, key);
+    _o.DailyRefillTime = new List<long>();
+    for (var _j = 0; _j < this.DailyRefillTimeLength; ++_j) {_o.DailyRefillTime.Add(TableEncryptionService.Convert(this.DailyRefillTime(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CurrencyExcel> Pack(FlatBufferBuilder builder, CurrencyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CurrencyExcel>);
+    var _CurrencyName = _o.CurrencyName == null ? default(StringOffset) : builder.CreateString(_o.CurrencyName);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _SpriteName = _o.SpriteName == null ? default(StringOffset) : builder.CreateString(_o.SpriteName);
+    var _DailyRefillTime = default(VectorOffset);
+    if (_o.DailyRefillTime != null) {
+      var __DailyRefillTime = _o.DailyRefillTime.ToArray();
+      _DailyRefillTime = CreateDailyRefillTimeVector(builder, __DailyRefillTime);
+    }
+    return CreateCurrencyExcel(
+      builder,
+      _o.ID,
+      _o.LocalizeEtcId,
+      _o.CurrencyType,
+      _CurrencyName,
+      _Icon,
+      _o.Rarity,
+      _o.AutoChargeMsc,
+      _o.AutoChargeAmount,
+      _o.CurrencyOverChargeType,
+      _o.CurrencyAdditionalChargeType,
+      _o.ChargeLimit,
+      _o.OverChargeLimit,
+      _SpriteName,
+      _o.DailyRefillType,
+      _o.DailyRefillAmount,
+      _DailyRefillTime);
+  }
+}
+
+public class CurrencyExcelT
+{
+  public long ID { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public SCHALE.Common.FlatData.CurrencyTypes CurrencyType { get; set; }
+  public string CurrencyName { get; set; }
+  public string Icon { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public int AutoChargeMsc { get; set; }
+  public int AutoChargeAmount { get; set; }
+  public SCHALE.Common.FlatData.CurrencyOverChargeType CurrencyOverChargeType { get; set; }
+  public SCHALE.Common.FlatData.CurrencyAdditionalChargeType CurrencyAdditionalChargeType { get; set; }
+  public long ChargeLimit { get; set; }
+  public long OverChargeLimit { get; set; }
+  public string SpriteName { get; set; }
+  public SCHALE.Common.FlatData.DailyRefillType DailyRefillType { get; set; }
+  public long DailyRefillAmount { get; set; }
+  public List<long> DailyRefillTime { get; set; }
+
+  public CurrencyExcelT() {
+    this.ID = 0;
+    this.LocalizeEtcId = 0;
+    this.CurrencyType = SCHALE.Common.FlatData.CurrencyTypes.Invalid;
+    this.CurrencyName = null;
+    this.Icon = null;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.AutoChargeMsc = 0;
+    this.AutoChargeAmount = 0;
+    this.CurrencyOverChargeType = SCHALE.Common.FlatData.CurrencyOverChargeType.CanNotCharge;
+    this.CurrencyAdditionalChargeType = SCHALE.Common.FlatData.CurrencyAdditionalChargeType.EnableAutoChargeOverLimit;
+    this.ChargeLimit = 0;
+    this.OverChargeLimit = 0;
+    this.SpriteName = null;
+    this.DailyRefillType = SCHALE.Common.FlatData.DailyRefillType.None;
+    this.DailyRefillAmount = 0;
+    this.DailyRefillTime = null;
   }
 }
 

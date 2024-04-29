@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGItemExcel : IFlatbufferObject
@@ -89,6 +90,66 @@ public struct MinigameTBGItemExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGItemExcel> EndMinigameTBGItemExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGItemExcel>(o);
+  }
+  public MinigameTBGItemExcelT UnPack() {
+    var _o = new MinigameTBGItemExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGItemExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGItem");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.ItemType = TableEncryptionService.Convert(this.ItemType, key);
+    _o.TBGItemEffectType = TableEncryptionService.Convert(this.TBGItemEffectType, key);
+    _o.ItemParameter = TableEncryptionService.Convert(this.ItemParameter, key);
+    _o.LocalizeETCId = TableEncryptionService.Convert(this.LocalizeETCId, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.BuffIcon = TableEncryptionService.Convert(this.BuffIcon, key);
+    _o.EncounterCount = TableEncryptionService.Convert(this.EncounterCount, key);
+    _o.DiceEffectAniClip = TableEncryptionService.Convert(this.DiceEffectAniClip, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGItemExcel> Pack(FlatBufferBuilder builder, MinigameTBGItemExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGItemExcel>);
+    var _LocalizeETCId = _o.LocalizeETCId == null ? default(StringOffset) : builder.CreateString(_o.LocalizeETCId);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _BuffIcon = _o.BuffIcon == null ? default(StringOffset) : builder.CreateString(_o.BuffIcon);
+    var _DiceEffectAniClip = _o.DiceEffectAniClip == null ? default(StringOffset) : builder.CreateString(_o.DiceEffectAniClip);
+    return CreateMinigameTBGItemExcel(
+      builder,
+      _o.UniqueId,
+      _o.ItemType,
+      _o.TBGItemEffectType,
+      _o.ItemParameter,
+      _LocalizeETCId,
+      _Icon,
+      _BuffIcon,
+      _o.EncounterCount,
+      _DiceEffectAniClip);
+  }
+}
+
+public class MinigameTBGItemExcelT
+{
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.TBGItemType ItemType { get; set; }
+  public SCHALE.Common.FlatData.TBGItemEffectType TBGItemEffectType { get; set; }
+  public int ItemParameter { get; set; }
+  public string LocalizeETCId { get; set; }
+  public string Icon { get; set; }
+  public string BuffIcon { get; set; }
+  public int EncounterCount { get; set; }
+  public string DiceEffectAniClip { get; set; }
+
+  public MinigameTBGItemExcelT() {
+    this.UniqueId = 0;
+    this.ItemType = SCHALE.Common.FlatData.TBGItemType.None;
+    this.TBGItemEffectType = SCHALE.Common.FlatData.TBGItemEffectType.None;
+    this.ItemParameter = 0;
+    this.LocalizeETCId = null;
+    this.Icon = null;
+    this.BuffIcon = null;
+    this.EncounterCount = 0;
+    this.DiceEffectAniClip = null;
   }
 }
 

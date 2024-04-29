@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BGMUIExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct BGMUIExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BGMUIExcel> EndBGMUIExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BGMUIExcel>(o);
+  }
+  public BGMUIExcelT UnPack() {
+    var _o = new BGMUIExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BGMUIExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BGMUI");
+    _o.UIPrefab = TableEncryptionService.Convert(this.UIPrefab, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.BGMId2nd = TableEncryptionService.Convert(this.BGMId2nd, key);
+    _o.BGMId3rd = TableEncryptionService.Convert(this.BGMId3rd, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BGMUIExcel> Pack(FlatBufferBuilder builder, BGMUIExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BGMUIExcel>);
+    return CreateBGMUIExcel(
+      builder,
+      _o.UIPrefab,
+      _o.BGMId,
+      _o.BGMId2nd,
+      _o.BGMId3rd,
+      _o.EventContentId);
+  }
+}
+
+public class BGMUIExcelT
+{
+  public uint UIPrefab { get; set; }
+  public long BGMId { get; set; }
+  public long BGMId2nd { get; set; }
+  public long BGMId3rd { get; set; }
+  public long EventContentId { get; set; }
+
+  public BGMUIExcelT() {
+    this.UIPrefab = 0;
+    this.BGMId = 0;
+    this.BGMId2nd = 0;
+    this.BGMId3rd = 0;
+    this.EventContentId = 0;
   }
 }
 

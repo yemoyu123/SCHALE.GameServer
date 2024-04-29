@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldSeasonExcel : IFlatbufferObject
@@ -89,6 +90,66 @@ public struct FieldSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldSeasonExcel> EndFieldSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldSeasonExcel>(o);
+  }
+  public FieldSeasonExcelT UnPack() {
+    var _o = new FieldSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldSeason");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EntryDateId = TableEncryptionService.Convert(this.EntryDateId, key);
+    _o.InstantEntryDateId = TableEncryptionService.Convert(this.InstantEntryDateId, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.LobbyBGMChangeStageId = TableEncryptionService.Convert(this.LobbyBGMChangeStageId, key);
+    _o.CharacterIconPath = TableEncryptionService.Convert(this.CharacterIconPath, key);
+    _o.MasteryImagePath = TableEncryptionService.Convert(this.MasteryImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldSeasonExcel> Pack(FlatBufferBuilder builder, FieldSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldSeasonExcel>);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    var _CharacterIconPath = _o.CharacterIconPath == null ? default(StringOffset) : builder.CreateString(_o.CharacterIconPath);
+    var _MasteryImagePath = _o.MasteryImagePath == null ? default(StringOffset) : builder.CreateString(_o.MasteryImagePath);
+    return CreateFieldSeasonExcel(
+      builder,
+      _o.UniqueId,
+      _o.EventContentId,
+      _o.EntryDateId,
+      _o.InstantEntryDateId,
+      _StartDate,
+      _EndDate,
+      _o.LobbyBGMChangeStageId,
+      _CharacterIconPath,
+      _MasteryImagePath);
+  }
+}
+
+public class FieldSeasonExcelT
+{
+  public long UniqueId { get; set; }
+  public long EventContentId { get; set; }
+  public long EntryDateId { get; set; }
+  public long InstantEntryDateId { get; set; }
+  public string StartDate { get; set; }
+  public string EndDate { get; set; }
+  public long LobbyBGMChangeStageId { get; set; }
+  public string CharacterIconPath { get; set; }
+  public string MasteryImagePath { get; set; }
+
+  public FieldSeasonExcelT() {
+    this.UniqueId = 0;
+    this.EventContentId = 0;
+    this.EntryDateId = 0;
+    this.InstantEntryDateId = 0;
+    this.StartDate = null;
+    this.EndDate = null;
+    this.LobbyBGMChangeStageId = 0;
+    this.CharacterIconPath = null;
+    this.MasteryImagePath = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestErosionUnitExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct ConquestErosionUnitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestErosionUnitExcel> EndConquestErosionUnitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestErosionUnitExcel>(o);
+  }
+  public ConquestErosionUnitExcelT UnPack() {
+    var _o = new ConquestErosionUnitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestErosionUnitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestErosionUnit");
+    _o.TilePrefabId = TableEncryptionService.Convert(this.TilePrefabId, key);
+    _o.MassErosionUnitId = TableEncryptionService.Convert(this.MassErosionUnitId, key);
+    _o.MassErosionUnitRotationY = TableEncryptionService.Convert(this.MassErosionUnitRotationY, key);
+    _o.IndividualErosionUnitId = TableEncryptionService.Convert(this.IndividualErosionUnitId, key);
+    _o.IndividualErosionUnitRotationY = TableEncryptionService.Convert(this.IndividualErosionUnitRotationY, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestErosionUnitExcel> Pack(FlatBufferBuilder builder, ConquestErosionUnitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestErosionUnitExcel>);
+    return CreateConquestErosionUnitExcel(
+      builder,
+      _o.TilePrefabId,
+      _o.MassErosionUnitId,
+      _o.MassErosionUnitRotationY,
+      _o.IndividualErosionUnitId,
+      _o.IndividualErosionUnitRotationY);
+  }
+}
+
+public class ConquestErosionUnitExcelT
+{
+  public long TilePrefabId { get; set; }
+  public long MassErosionUnitId { get; set; }
+  public float MassErosionUnitRotationY { get; set; }
+  public long IndividualErosionUnitId { get; set; }
+  public float IndividualErosionUnitRotationY { get; set; }
+
+  public ConquestErosionUnitExcelT() {
+    this.TilePrefabId = 0;
+    this.MassErosionUnitId = 0;
+    this.MassErosionUnitRotationY = 0.0f;
+    this.IndividualErosionUnitId = 0;
+    this.IndividualErosionUnitRotationY = 0.0f;
   }
 }
 

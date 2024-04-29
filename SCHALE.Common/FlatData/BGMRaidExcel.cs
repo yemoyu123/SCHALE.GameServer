@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BGMRaidExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct BGMRaidExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BGMRaidExcel> EndBGMRaidExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BGMRaidExcel>(o);
+  }
+  public BGMRaidExcelT UnPack() {
+    var _o = new BGMRaidExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BGMRaidExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BGMRaid");
+    _o.StageId = TableEncryptionService.Convert(this.StageId, key);
+    _o.PhaseIndex = TableEncryptionService.Convert(this.PhaseIndex, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BGMRaidExcel> Pack(FlatBufferBuilder builder, BGMRaidExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BGMRaidExcel>);
+    return CreateBGMRaidExcel(
+      builder,
+      _o.StageId,
+      _o.PhaseIndex,
+      _o.BGMId);
+  }
+}
+
+public class BGMRaidExcelT
+{
+  public long StageId { get; set; }
+  public long PhaseIndex { get; set; }
+  public long BGMId { get; set; }
+
+  public BGMRaidExcelT() {
+    this.StageId = 0;
+    this.PhaseIndex = 0;
+    this.BGMId = 0;
   }
 }
 

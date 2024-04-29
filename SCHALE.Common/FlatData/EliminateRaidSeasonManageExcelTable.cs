@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidSeasonManageExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EliminateRaidSeasonManageExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelTable> EndEliminateRaidSeasonManageExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelTable>(o);
+  }
+  public EliminateRaidSeasonManageExcelTableT UnPack() {
+    var _o = new EliminateRaidSeasonManageExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidSeasonManageExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidSeasonManageExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelTable> Pack(FlatBufferBuilder builder, EliminateRaidSeasonManageExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEliminateRaidSeasonManageExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EliminateRaidSeasonManageExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcelT> DataList { get; set; }
+
+  public EliminateRaidSeasonManageExcelTableT() {
+    this.DataList = null;
   }
 }
 

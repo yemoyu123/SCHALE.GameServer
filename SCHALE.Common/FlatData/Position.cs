@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct Position : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct Position : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.Position> EndPosition(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.Position>(o);
+  }
+  public PositionT UnPack() {
+    var _o = new PositionT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PositionT _o) {
+		byte[] key = { 0 };
+    _o.X = TableEncryptionService.Convert(this.X, key);
+    _o.Z = TableEncryptionService.Convert(this.Z, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.Position> Pack(FlatBufferBuilder builder, PositionT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.Position>);
+    return CreatePosition(
+      builder,
+      _o.X,
+      _o.Z);
+  }
+}
+
+public class PositionT
+{
+  public float X { get; set; }
+  public float Z { get; set; }
+
+  public PositionT() {
+    this.X = 0.0f;
+    this.Z = 0.0f;
   }
 }
 

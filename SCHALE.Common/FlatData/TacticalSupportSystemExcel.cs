@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticalSupportSystemExcel : IFlatbufferObject
@@ -179,6 +180,141 @@ public struct TacticalSupportSystemExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticalSupportSystemExcel> EndTacticalSupportSystemExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticalSupportSystemExcel>(o);
+  }
+  public TacticalSupportSystemExcelT UnPack() {
+    var _o = new TacticalSupportSystemExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticalSupportSystemExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticalSupportSystem");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.SummonedTime = TableEncryptionService.Convert(this.SummonedTime, key);
+    _o.DefaultPersonalityId = TableEncryptionService.Convert(this.DefaultPersonalityId, key);
+    _o.CanTargeting = TableEncryptionService.Convert(this.CanTargeting, key);
+    _o.CanCover = TableEncryptionService.Convert(this.CanCover, key);
+    _o.ObstacleUniqueName = TableEncryptionService.Convert(this.ObstacleUniqueName, key);
+    _o.ObstacleCoverRange = TableEncryptionService.Convert(this.ObstacleCoverRange, key);
+    _o.SummonSkilllGroupId = TableEncryptionService.Convert(this.SummonSkilllGroupId, key);
+    _o.CrashObstacleOBBWidth = TableEncryptionService.Convert(this.CrashObstacleOBBWidth, key);
+    _o.CrashObstacleOBBHeight = TableEncryptionService.Convert(this.CrashObstacleOBBHeight, key);
+    _o.IsTSSBlockedNodeCheck = TableEncryptionService.Convert(this.IsTSSBlockedNodeCheck, key);
+    _o.NumberOfUses = TableEncryptionService.Convert(this.NumberOfUses, key);
+    _o.InventoryOffsetX = TableEncryptionService.Convert(this.InventoryOffsetX, key);
+    _o.InventoryOffsetY = TableEncryptionService.Convert(this.InventoryOffsetY, key);
+    _o.InventoryOffsetZ = TableEncryptionService.Convert(this.InventoryOffsetZ, key);
+    _o.InteractionChar = TableEncryptionService.Convert(this.InteractionChar, key);
+    _o.CharacterInteractionStartDelay = TableEncryptionService.Convert(this.CharacterInteractionStartDelay, key);
+    _o.GetOnStartEffectPath = TableEncryptionService.Convert(this.GetOnStartEffectPath, key);
+    _o.GetOnEndEffectPath = TableEncryptionService.Convert(this.GetOnEndEffectPath, key);
+    _o.SummonerCharacterId = TableEncryptionService.Convert(this.SummonerCharacterId, key);
+    _o.InteractionFrame = TableEncryptionService.Convert(this.InteractionFrame, key);
+    _o.TSAInteractionAddDuration = TableEncryptionService.Convert(this.TSAInteractionAddDuration, key);
+    _o.InteractionStudentExSkillGroupId = TableEncryptionService.Convert(this.InteractionStudentExSkillGroupId, key);
+    _o.InteractionSkillCardTexture = TableEncryptionService.Convert(this.InteractionSkillCardTexture, key);
+    _o.InteractionSkillSpine = TableEncryptionService.Convert(this.InteractionSkillSpine, key);
+    _o.RetreatFrame = TableEncryptionService.Convert(this.RetreatFrame, key);
+    _o.DestroyFrame = TableEncryptionService.Convert(this.DestroyFrame, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticalSupportSystemExcel> Pack(FlatBufferBuilder builder, TacticalSupportSystemExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticalSupportSystemExcel>);
+    var _ObstacleUniqueName = _o.ObstacleUniqueName == null ? default(StringOffset) : builder.CreateString(_o.ObstacleUniqueName);
+    var _SummonSkilllGroupId = _o.SummonSkilllGroupId == null ? default(StringOffset) : builder.CreateString(_o.SummonSkilllGroupId);
+    var _GetOnStartEffectPath = _o.GetOnStartEffectPath == null ? default(StringOffset) : builder.CreateString(_o.GetOnStartEffectPath);
+    var _GetOnEndEffectPath = _o.GetOnEndEffectPath == null ? default(StringOffset) : builder.CreateString(_o.GetOnEndEffectPath);
+    var _InteractionStudentExSkillGroupId = _o.InteractionStudentExSkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.InteractionStudentExSkillGroupId);
+    var _InteractionSkillCardTexture = _o.InteractionSkillCardTexture == null ? default(StringOffset) : builder.CreateString(_o.InteractionSkillCardTexture);
+    var _InteractionSkillSpine = _o.InteractionSkillSpine == null ? default(StringOffset) : builder.CreateString(_o.InteractionSkillSpine);
+    return CreateTacticalSupportSystemExcel(
+      builder,
+      _o.Id,
+      _o.SummonedTime,
+      _o.DefaultPersonalityId,
+      _o.CanTargeting,
+      _o.CanCover,
+      _ObstacleUniqueName,
+      _o.ObstacleCoverRange,
+      _SummonSkilllGroupId,
+      _o.CrashObstacleOBBWidth,
+      _o.CrashObstacleOBBHeight,
+      _o.IsTSSBlockedNodeCheck,
+      _o.NumberOfUses,
+      _o.InventoryOffsetX,
+      _o.InventoryOffsetY,
+      _o.InventoryOffsetZ,
+      _o.InteractionChar,
+      _o.CharacterInteractionStartDelay,
+      _GetOnStartEffectPath,
+      _GetOnEndEffectPath,
+      _o.SummonerCharacterId,
+      _o.InteractionFrame,
+      _o.TSAInteractionAddDuration,
+      _InteractionStudentExSkillGroupId,
+      _InteractionSkillCardTexture,
+      _InteractionSkillSpine,
+      _o.RetreatFrame,
+      _o.DestroyFrame);
+  }
+}
+
+public class TacticalSupportSystemExcelT
+{
+  public long Id { get; set; }
+  public long SummonedTime { get; set; }
+  public long DefaultPersonalityId { get; set; }
+  public bool CanTargeting { get; set; }
+  public bool CanCover { get; set; }
+  public string ObstacleUniqueName { get; set; }
+  public long ObstacleCoverRange { get; set; }
+  public string SummonSkilllGroupId { get; set; }
+  public long CrashObstacleOBBWidth { get; set; }
+  public long CrashObstacleOBBHeight { get; set; }
+  public bool IsTSSBlockedNodeCheck { get; set; }
+  public int NumberOfUses { get; set; }
+  public float InventoryOffsetX { get; set; }
+  public float InventoryOffsetY { get; set; }
+  public float InventoryOffsetZ { get; set; }
+  public long InteractionChar { get; set; }
+  public long CharacterInteractionStartDelay { get; set; }
+  public string GetOnStartEffectPath { get; set; }
+  public string GetOnEndEffectPath { get; set; }
+  public long SummonerCharacterId { get; set; }
+  public int InteractionFrame { get; set; }
+  public long TSAInteractionAddDuration { get; set; }
+  public string InteractionStudentExSkillGroupId { get; set; }
+  public string InteractionSkillCardTexture { get; set; }
+  public string InteractionSkillSpine { get; set; }
+  public int RetreatFrame { get; set; }
+  public int DestroyFrame { get; set; }
+
+  public TacticalSupportSystemExcelT() {
+    this.Id = 0;
+    this.SummonedTime = 0;
+    this.DefaultPersonalityId = 0;
+    this.CanTargeting = false;
+    this.CanCover = false;
+    this.ObstacleUniqueName = null;
+    this.ObstacleCoverRange = 0;
+    this.SummonSkilllGroupId = null;
+    this.CrashObstacleOBBWidth = 0;
+    this.CrashObstacleOBBHeight = 0;
+    this.IsTSSBlockedNodeCheck = false;
+    this.NumberOfUses = 0;
+    this.InventoryOffsetX = 0.0f;
+    this.InventoryOffsetY = 0.0f;
+    this.InventoryOffsetZ = 0.0f;
+    this.InteractionChar = 0;
+    this.CharacterInteractionStartDelay = 0;
+    this.GetOnStartEffectPath = null;
+    this.GetOnEndEffectPath = null;
+    this.SummonerCharacterId = 0;
+    this.InteractionFrame = 0;
+    this.TSAInteractionAddDuration = 0;
+    this.InteractionStudentExSkillGroupId = null;
+    this.InteractionSkillCardTexture = null;
+    this.InteractionSkillSpine = null;
+    this.RetreatFrame = 0;
+    this.DestroyFrame = 0;
   }
 }
 

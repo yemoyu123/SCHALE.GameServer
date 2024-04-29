@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GuideMissionOpenStageConditionExcel : IFlatbufferObject
@@ -95,6 +96,67 @@ public struct GuideMissionOpenStageConditionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel> EndGuideMissionOpenStageConditionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel>(o);
+  }
+  public GuideMissionOpenStageConditionExcelT UnPack() {
+    var _o = new GuideMissionOpenStageConditionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GuideMissionOpenStageConditionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GuideMissionOpenStageCondition");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.OrderNumber = TableEncryptionService.Convert(this.OrderNumber, key);
+    _o.TabLocalizeCode = TableEncryptionService.Convert(this.TabLocalizeCode, key);
+    _o.ClearScenarioModeId = TableEncryptionService.Convert(this.ClearScenarioModeId, key);
+    _o.LockScenarioTextLocailzeCode = TableEncryptionService.Convert(this.LockScenarioTextLocailzeCode, key);
+    _o.ShortcutScenarioUI = TableEncryptionService.Convert(this.ShortcutScenarioUI, key);
+    _o.ClearStageId = TableEncryptionService.Convert(this.ClearStageId, key);
+    _o.LockStageTextLocailzeCode = TableEncryptionService.Convert(this.LockStageTextLocailzeCode, key);
+    _o.ShortcutStageUI = TableEncryptionService.Convert(this.ShortcutStageUI, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel> Pack(FlatBufferBuilder builder, GuideMissionOpenStageConditionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel>);
+    var _TabLocalizeCode = _o.TabLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.TabLocalizeCode);
+    var _LockScenarioTextLocailzeCode = _o.LockScenarioTextLocailzeCode == null ? default(StringOffset) : builder.CreateString(_o.LockScenarioTextLocailzeCode);
+    var _ShortcutScenarioUI = _o.ShortcutScenarioUI == null ? default(StringOffset) : builder.CreateString(_o.ShortcutScenarioUI);
+    var _LockStageTextLocailzeCode = _o.LockStageTextLocailzeCode == null ? default(StringOffset) : builder.CreateString(_o.LockStageTextLocailzeCode);
+    var _ShortcutStageUI = _o.ShortcutStageUI == null ? default(StringOffset) : builder.CreateString(_o.ShortcutStageUI);
+    return CreateGuideMissionOpenStageConditionExcel(
+      builder,
+      _o.SeasonId,
+      _o.OrderNumber,
+      _TabLocalizeCode,
+      _o.ClearScenarioModeId,
+      _LockScenarioTextLocailzeCode,
+      _ShortcutScenarioUI,
+      _o.ClearStageId,
+      _LockStageTextLocailzeCode,
+      _ShortcutStageUI);
+  }
+}
+
+public class GuideMissionOpenStageConditionExcelT
+{
+  public long SeasonId { get; set; }
+  public long OrderNumber { get; set; }
+  public string TabLocalizeCode { get; set; }
+  public long ClearScenarioModeId { get; set; }
+  public string LockScenarioTextLocailzeCode { get; set; }
+  public string ShortcutScenarioUI { get; set; }
+  public long ClearStageId { get; set; }
+  public string LockStageTextLocailzeCode { get; set; }
+  public string ShortcutStageUI { get; set; }
+
+  public GuideMissionOpenStageConditionExcelT() {
+    this.SeasonId = 0;
+    this.OrderNumber = 0;
+    this.TabLocalizeCode = null;
+    this.ClearScenarioModeId = 0;
+    this.LockScenarioTextLocailzeCode = null;
+    this.ShortcutScenarioUI = null;
+    this.ClearStageId = 0;
+    this.LockStageTextLocailzeCode = null;
+    this.ShortcutStageUI = null;
   }
 }
 

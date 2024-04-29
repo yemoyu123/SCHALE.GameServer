@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using MongoDB.EntityFrameworkCore.Extensions;
 using SCHALE.Common.Database.Models;
-using System.Text.Json;
 
 namespace SCHALE.Common.Database
 {

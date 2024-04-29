@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentZoneVisitRewardExcel : IFlatbufferObject
@@ -125,6 +126,88 @@ public struct EventContentZoneVisitRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentZoneVisitRewardExcel> EndEventContentZoneVisitRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentZoneVisitRewardExcel>(o);
+  }
+  public EventContentZoneVisitRewardExcelT UnPack() {
+    var _o = new EventContentZoneVisitRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentZoneVisitRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentZoneVisitReward");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentLocationId = TableEncryptionService.Convert(this.EventContentLocationId, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.CharacterDevName = TableEncryptionService.Convert(this.CharacterDevName, key);
+    _o.VisitRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.VisitRewardParcelTypeLength; ++_j) {_o.VisitRewardParcelType.Add(TableEncryptionService.Convert(this.VisitRewardParcelType(_j), key));}
+    _o.VisitRewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.VisitRewardParcelIdLength; ++_j) {_o.VisitRewardParcelId.Add(TableEncryptionService.Convert(this.VisitRewardParcelId(_j), key));}
+    _o.VisitRewardAmount = new List<long>();
+    for (var _j = 0; _j < this.VisitRewardAmountLength; ++_j) {_o.VisitRewardAmount.Add(TableEncryptionService.Convert(this.VisitRewardAmount(_j), key));}
+    _o.VisitRewardProb = new List<long>();
+    for (var _j = 0; _j < this.VisitRewardProbLength; ++_j) {_o.VisitRewardProb.Add(TableEncryptionService.Convert(this.VisitRewardProb(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentZoneVisitRewardExcel> Pack(FlatBufferBuilder builder, EventContentZoneVisitRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentZoneVisitRewardExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _CharacterDevName = _o.CharacterDevName == null ? default(StringOffset) : builder.CreateString(_o.CharacterDevName);
+    var _VisitRewardParcelType = default(VectorOffset);
+    if (_o.VisitRewardParcelType != null) {
+      var __VisitRewardParcelType = _o.VisitRewardParcelType.ToArray();
+      _VisitRewardParcelType = CreateVisitRewardParcelTypeVector(builder, __VisitRewardParcelType);
+    }
+    var _VisitRewardParcelId = default(VectorOffset);
+    if (_o.VisitRewardParcelId != null) {
+      var __VisitRewardParcelId = _o.VisitRewardParcelId.ToArray();
+      _VisitRewardParcelId = CreateVisitRewardParcelIdVector(builder, __VisitRewardParcelId);
+    }
+    var _VisitRewardAmount = default(VectorOffset);
+    if (_o.VisitRewardAmount != null) {
+      var __VisitRewardAmount = _o.VisitRewardAmount.ToArray();
+      _VisitRewardAmount = CreateVisitRewardAmountVector(builder, __VisitRewardAmount);
+    }
+    var _VisitRewardProb = default(VectorOffset);
+    if (_o.VisitRewardProb != null) {
+      var __VisitRewardProb = _o.VisitRewardProb.ToArray();
+      _VisitRewardProb = CreateVisitRewardProbVector(builder, __VisitRewardProb);
+    }
+    return CreateEventContentZoneVisitRewardExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentLocationId,
+      _DevName,
+      _o.CharacterId,
+      _CharacterDevName,
+      _VisitRewardParcelType,
+      _VisitRewardParcelId,
+      _VisitRewardAmount,
+      _VisitRewardProb);
+  }
+}
+
+public class EventContentZoneVisitRewardExcelT
+{
+  public long EventContentId { get; set; }
+  public long EventContentLocationId { get; set; }
+  public string DevName { get; set; }
+  public long CharacterId { get; set; }
+  public string CharacterDevName { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> VisitRewardParcelType { get; set; }
+  public List<long> VisitRewardParcelId { get; set; }
+  public List<long> VisitRewardAmount { get; set; }
+  public List<long> VisitRewardProb { get; set; }
+
+  public EventContentZoneVisitRewardExcelT() {
+    this.EventContentId = 0;
+    this.EventContentLocationId = 0;
+    this.DevName = null;
+    this.CharacterId = 0;
+    this.CharacterDevName = null;
+    this.VisitRewardParcelType = null;
+    this.VisitRewardParcelId = null;
+    this.VisitRewardAmount = null;
+    this.VisitRewardProb = null;
   }
 }
 

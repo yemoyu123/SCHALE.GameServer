@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyRewardExcel : IFlatbufferObject
@@ -217,6 +218,156 @@ public struct AcademyRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyRewardExcel> EndAcademyRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyRewardExcel>(o);
+  }
+  public AcademyRewardExcelT UnPack() {
+    var _o = new AcademyRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyReward");
+    _o.Location = TableEncryptionService.Convert(this.Location, key);
+    _o.ScheduleGroupId = TableEncryptionService.Convert(this.ScheduleGroupId, key);
+    _o.OrderInGroup = TableEncryptionService.Convert(this.OrderInGroup, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ProgressTexture = TableEncryptionService.Convert(this.ProgressTexture, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.LocationRank = TableEncryptionService.Convert(this.LocationRank, key);
+    _o.FavorExp = TableEncryptionService.Convert(this.FavorExp, key);
+    _o.SecretStoneAmount = TableEncryptionService.Convert(this.SecretStoneAmount, key);
+    _o.SecretStoneProb = TableEncryptionService.Convert(this.SecretStoneProb, key);
+    _o.ExtraFavorExp = TableEncryptionService.Convert(this.ExtraFavorExp, key);
+    _o.ExtraFavorExpProb = TableEncryptionService.Convert(this.ExtraFavorExpProb, key);
+    _o.ExtraRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ExtraRewardParcelTypeLength; ++_j) {_o.ExtraRewardParcelType.Add(TableEncryptionService.Convert(this.ExtraRewardParcelType(_j), key));}
+    _o.ExtraRewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.ExtraRewardParcelIdLength; ++_j) {_o.ExtraRewardParcelId.Add(TableEncryptionService.Convert(this.ExtraRewardParcelId(_j), key));}
+    _o.ExtraRewardAmount = new List<long>();
+    for (var _j = 0; _j < this.ExtraRewardAmountLength; ++_j) {_o.ExtraRewardAmount.Add(TableEncryptionService.Convert(this.ExtraRewardAmount(_j), key));}
+    _o.ExtraRewardProb = new List<long>();
+    for (var _j = 0; _j < this.ExtraRewardProbLength; ++_j) {_o.ExtraRewardProb.Add(TableEncryptionService.Convert(this.ExtraRewardProb(_j), key));}
+    _o.IsExtraRewardDisplayed = new List<bool>();
+    for (var _j = 0; _j < this.IsExtraRewardDisplayedLength; ++_j) {_o.IsExtraRewardDisplayed.Add(TableEncryptionService.Convert(this.IsExtraRewardDisplayed(_j), key));}
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyRewardExcel> Pack(FlatBufferBuilder builder, AcademyRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyRewardExcel>);
+    var _Location = _o.Location == null ? default(StringOffset) : builder.CreateString(_o.Location);
+    var _ProgressTexture = _o.ProgressTexture == null ? default(StringOffset) : builder.CreateString(_o.ProgressTexture);
+    var _ExtraRewardParcelType = default(VectorOffset);
+    if (_o.ExtraRewardParcelType != null) {
+      var __ExtraRewardParcelType = _o.ExtraRewardParcelType.ToArray();
+      _ExtraRewardParcelType = CreateExtraRewardParcelTypeVector(builder, __ExtraRewardParcelType);
+    }
+    var _ExtraRewardParcelId = default(VectorOffset);
+    if (_o.ExtraRewardParcelId != null) {
+      var __ExtraRewardParcelId = _o.ExtraRewardParcelId.ToArray();
+      _ExtraRewardParcelId = CreateExtraRewardParcelIdVector(builder, __ExtraRewardParcelId);
+    }
+    var _ExtraRewardAmount = default(VectorOffset);
+    if (_o.ExtraRewardAmount != null) {
+      var __ExtraRewardAmount = _o.ExtraRewardAmount.ToArray();
+      _ExtraRewardAmount = CreateExtraRewardAmountVector(builder, __ExtraRewardAmount);
+    }
+    var _ExtraRewardProb = default(VectorOffset);
+    if (_o.ExtraRewardProb != null) {
+      var __ExtraRewardProb = _o.ExtraRewardProb.ToArray();
+      _ExtraRewardProb = CreateExtraRewardProbVector(builder, __ExtraRewardProb);
+    }
+    var _IsExtraRewardDisplayed = default(VectorOffset);
+    if (_o.IsExtraRewardDisplayed != null) {
+      var __IsExtraRewardDisplayed = _o.IsExtraRewardDisplayed.ToArray();
+      _IsExtraRewardDisplayed = CreateIsExtraRewardDisplayedVector(builder, __IsExtraRewardDisplayed);
+    }
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    return CreateAcademyRewardExcel(
+      builder,
+      _Location,
+      _o.ScheduleGroupId,
+      _o.OrderInGroup,
+      _o.Id,
+      _ProgressTexture,
+      _o.LocalizeEtcId,
+      _o.LocationRank,
+      _o.FavorExp,
+      _o.SecretStoneAmount,
+      _o.SecretStoneProb,
+      _o.ExtraFavorExp,
+      _o.ExtraFavorExpProb,
+      _ExtraRewardParcelType,
+      _ExtraRewardParcelId,
+      _ExtraRewardAmount,
+      _ExtraRewardProb,
+      _IsExtraRewardDisplayed,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardAmount);
+  }
+}
+
+public class AcademyRewardExcelT
+{
+  public string Location { get; set; }
+  public long ScheduleGroupId { get; set; }
+  public long OrderInGroup { get; set; }
+  public long Id { get; set; }
+  public string ProgressTexture { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public long LocationRank { get; set; }
+  public long FavorExp { get; set; }
+  public long SecretStoneAmount { get; set; }
+  public long SecretStoneProb { get; set; }
+  public long ExtraFavorExp { get; set; }
+  public long ExtraFavorExpProb { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ExtraRewardParcelType { get; set; }
+  public List<long> ExtraRewardParcelId { get; set; }
+  public List<long> ExtraRewardAmount { get; set; }
+  public List<long> ExtraRewardProb { get; set; }
+  public List<bool> IsExtraRewardDisplayed { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardAmount { get; set; }
+
+  public AcademyRewardExcelT() {
+    this.Location = null;
+    this.ScheduleGroupId = 0;
+    this.OrderInGroup = 0;
+    this.Id = 0;
+    this.ProgressTexture = null;
+    this.LocalizeEtcId = 0;
+    this.LocationRank = 0;
+    this.FavorExp = 0;
+    this.SecretStoneAmount = 0;
+    this.SecretStoneProb = 0;
+    this.ExtraFavorExp = 0;
+    this.ExtraFavorExpProb = 0;
+    this.ExtraRewardParcelType = null;
+    this.ExtraRewardParcelId = null;
+    this.ExtraRewardAmount = null;
+    this.ExtraRewardProb = null;
+    this.IsExtraRewardDisplayed = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardAmount = null;
   }
 }
 

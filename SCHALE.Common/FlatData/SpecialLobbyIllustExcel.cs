@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SpecialLobbyIllustExcel : IFlatbufferObject
@@ -77,6 +78,54 @@ public struct SpecialLobbyIllustExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SpecialLobbyIllustExcel> EndSpecialLobbyIllustExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SpecialLobbyIllustExcel>(o);
+  }
+  public SpecialLobbyIllustExcelT UnPack() {
+    var _o = new SpecialLobbyIllustExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SpecialLobbyIllustExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SpecialLobbyIllust");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.CharacterCostumeUniqueId = TableEncryptionService.Convert(this.CharacterCostumeUniqueId, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.SlotTextureName = TableEncryptionService.Convert(this.SlotTextureName, key);
+    _o.RewardTextureName = TableEncryptionService.Convert(this.RewardTextureName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SpecialLobbyIllustExcel> Pack(FlatBufferBuilder builder, SpecialLobbyIllustExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SpecialLobbyIllustExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _SlotTextureName = _o.SlotTextureName == null ? default(StringOffset) : builder.CreateString(_o.SlotTextureName);
+    var _RewardTextureName = _o.RewardTextureName == null ? default(StringOffset) : builder.CreateString(_o.RewardTextureName);
+    return CreateSpecialLobbyIllustExcel(
+      builder,
+      _o.UniqueId,
+      _DevName,
+      _o.CharacterCostumeUniqueId,
+      _PrefabName,
+      _SlotTextureName,
+      _RewardTextureName);
+  }
+}
+
+public class SpecialLobbyIllustExcelT
+{
+  public long UniqueId { get; set; }
+  public string DevName { get; set; }
+  public long CharacterCostumeUniqueId { get; set; }
+  public string PrefabName { get; set; }
+  public string SlotTextureName { get; set; }
+  public string RewardTextureName { get; set; }
+
+  public SpecialLobbyIllustExcelT() {
+    this.UniqueId = 0;
+    this.DevName = null;
+    this.CharacterCostumeUniqueId = 0;
+    this.PrefabName = null;
+    this.SlotTextureName = null;
+    this.RewardTextureName = null;
   }
 }
 

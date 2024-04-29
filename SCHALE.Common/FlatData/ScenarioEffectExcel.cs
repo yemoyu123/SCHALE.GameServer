@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioEffectExcel : IFlatbufferObject
@@ -43,6 +44,35 @@ public struct ScenarioEffectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioEffectExcel> EndScenarioEffectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioEffectExcel>(o);
+  }
+  public ScenarioEffectExcelT UnPack() {
+    var _o = new ScenarioEffectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioEffectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioEffect");
+    _o.EffectName = TableEncryptionService.Convert(this.EffectName, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioEffectExcel> Pack(FlatBufferBuilder builder, ScenarioEffectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioEffectExcel>);
+    var _EffectName = _o.EffectName == null ? default(StringOffset) : builder.CreateString(_o.EffectName);
+    return CreateScenarioEffectExcel(
+      builder,
+      _EffectName,
+      _o.Name);
+  }
+}
+
+public class ScenarioEffectExcelT
+{
+  public string EffectName { get; set; }
+  public uint Name { get; set; }
+
+  public ScenarioEffectExcelT() {
+    this.EffectName = null;
+    this.Name = 0;
   }
 }
 

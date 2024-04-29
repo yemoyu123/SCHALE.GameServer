@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GroundNodeLayerFlat : IFlatbufferObject
@@ -24,6 +25,26 @@ public struct GroundNodeLayerFlat : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GroundNodeLayerFlat> EndGroundNodeLayerFlat(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GroundNodeLayerFlat>(o);
+  }
+  public GroundNodeLayerFlatT UnPack() {
+    var _o = new GroundNodeLayerFlatT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GroundNodeLayerFlatT _o) {
+		byte[] key = { 0 };
+  }
+  public static Offset<SCHALE.Common.FlatData.GroundNodeLayerFlat> Pack(FlatBufferBuilder builder, GroundNodeLayerFlatT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GroundNodeLayerFlat>);
+    StartGroundNodeLayerFlat(builder);
+    return EndGroundNodeLayerFlat(builder);
+  }
+}
+
+public class GroundNodeLayerFlatT
+{
+
+  public GroundNodeLayerFlatT() {
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldStoryStageExcel : IFlatbufferObject
@@ -75,6 +76,67 @@ public struct FieldStoryStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldStoryStageExcel> EndFieldStoryStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldStoryStageExcel>(o);
+  }
+  public FieldStoryStageExcelT UnPack() {
+    var _o = new FieldStoryStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldStoryStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldStoryStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.GroundID = TableEncryptionService.Convert(this.GroundID, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.FixedEchelonId = TableEncryptionService.Convert(this.FixedEchelonId, key);
+    _o.SkipFormationSettings = TableEncryptionService.Convert(this.SkipFormationSettings, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldStoryStageExcel> Pack(FlatBufferBuilder builder, FieldStoryStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldStoryStageExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    return CreateFieldStoryStageExcel(
+      builder,
+      _o.Id,
+      _o.SeasonId,
+      _Name,
+      _o.BattleDuration,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _o.GroundID,
+      _o.BGMId,
+      _o.FixedEchelonId,
+      _o.SkipFormationSettings);
+  }
+}
+
+public class FieldStoryStageExcelT
+{
+  public long Id { get; set; }
+  public long SeasonId { get; set; }
+  public string Name { get; set; }
+  public long BattleDuration { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public int RecommandLevel { get; set; }
+  public long GroundID { get; set; }
+  public long BGMId { get; set; }
+  public long FixedEchelonId { get; set; }
+  public bool SkipFormationSettings { get; set; }
+
+  public FieldStoryStageExcelT() {
+    this.Id = 0;
+    this.SeasonId = 0;
+    this.Name = null;
+    this.BattleDuration = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.GroundID = 0;
+    this.BGMId = 0;
+    this.FixedEchelonId = 0;
+    this.SkipFormationSettings = false;
   }
 }
 

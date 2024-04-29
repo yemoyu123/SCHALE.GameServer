@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ParcelAutoSynthExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ParcelAutoSynthExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcelTable> EndParcelAutoSynthExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcelTable>(o);
+  }
+  public ParcelAutoSynthExcelTableT UnPack() {
+    var _o = new ParcelAutoSynthExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ParcelAutoSynthExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ParcelAutoSynthExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ParcelAutoSynthExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcelTable> Pack(FlatBufferBuilder builder, ParcelAutoSynthExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ParcelAutoSynthExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ParcelAutoSynthExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateParcelAutoSynthExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ParcelAutoSynthExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ParcelAutoSynthExcelT> DataList { get; set; }
+
+  public ParcelAutoSynthExcelTableT() {
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterLevelExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct CharacterLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterLevelExcel> EndCharacterLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterLevelExcel>(o);
+  }
+  public CharacterLevelExcelT UnPack() {
+    var _o = new CharacterLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterLevel");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Exp = TableEncryptionService.Convert(this.Exp, key);
+    _o.TotalExp = TableEncryptionService.Convert(this.TotalExp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterLevelExcel> Pack(FlatBufferBuilder builder, CharacterLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterLevelExcel>);
+    return CreateCharacterLevelExcel(
+      builder,
+      _o.Level,
+      _o.Exp,
+      _o.TotalExp);
+  }
+}
+
+public class CharacterLevelExcelT
+{
+  public int Level { get; set; }
+  public long Exp { get; set; }
+  public long TotalExp { get; set; }
+
+  public CharacterLevelExcelT() {
+    this.Level = 0;
+    this.Exp = 0;
+    this.TotalExp = 0;
   }
 }
 

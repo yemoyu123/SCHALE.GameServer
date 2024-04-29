@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MissionEmergencyCompleteExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct MissionEmergencyCompleteExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MissionEmergencyCompleteExcel> EndMissionEmergencyCompleteExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MissionEmergencyCompleteExcel>(o);
+  }
+  public MissionEmergencyCompleteExcelT UnPack() {
+    var _o = new MissionEmergencyCompleteExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MissionEmergencyCompleteExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MissionEmergencyComplete");
+    _o.MissionId = TableEncryptionService.Convert(this.MissionId, key);
+    _o.EmergencyComplete = TableEncryptionService.Convert(this.EmergencyComplete, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MissionEmergencyCompleteExcel> Pack(FlatBufferBuilder builder, MissionEmergencyCompleteExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MissionEmergencyCompleteExcel>);
+    return CreateMissionEmergencyCompleteExcel(
+      builder,
+      _o.MissionId,
+      _o.EmergencyComplete);
+  }
+}
+
+public class MissionEmergencyCompleteExcelT
+{
+  public long MissionId { get; set; }
+  public bool EmergencyComplete { get; set; }
+
+  public MissionEmergencyCompleteExcelT() {
+    this.MissionId = 0;
+    this.EmergencyComplete = false;
   }
 }
 

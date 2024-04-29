@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BulletArmorDamageFactorExcel : IFlatbufferObject
@@ -67,6 +68,59 @@ public struct BulletArmorDamageFactorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BulletArmorDamageFactorExcel> EndBulletArmorDamageFactorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BulletArmorDamageFactorExcel>(o);
+  }
+  public BulletArmorDamageFactorExcelT UnPack() {
+    var _o = new BulletArmorDamageFactorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BulletArmorDamageFactorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BulletArmorDamageFactor");
+    _o.DamageFactorGroupId = TableEncryptionService.Convert(this.DamageFactorGroupId, key);
+    _o.BulletType = TableEncryptionService.Convert(this.BulletType, key);
+    _o.ArmorType = TableEncryptionService.Convert(this.ArmorType, key);
+    _o.DamageRate = TableEncryptionService.Convert(this.DamageRate, key);
+    _o.DamageAttribute = TableEncryptionService.Convert(this.DamageAttribute, key);
+    _o.MinDamageRate = TableEncryptionService.Convert(this.MinDamageRate, key);
+    _o.MaxDamageRate = TableEncryptionService.Convert(this.MaxDamageRate, key);
+    _o.ShowHighlightFloater = TableEncryptionService.Convert(this.ShowHighlightFloater, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BulletArmorDamageFactorExcel> Pack(FlatBufferBuilder builder, BulletArmorDamageFactorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BulletArmorDamageFactorExcel>);
+    var _DamageFactorGroupId = _o.DamageFactorGroupId == null ? default(StringOffset) : builder.CreateString(_o.DamageFactorGroupId);
+    return CreateBulletArmorDamageFactorExcel(
+      builder,
+      _DamageFactorGroupId,
+      _o.BulletType,
+      _o.ArmorType,
+      _o.DamageRate,
+      _o.DamageAttribute,
+      _o.MinDamageRate,
+      _o.MaxDamageRate,
+      _o.ShowHighlightFloater);
+  }
+}
+
+public class BulletArmorDamageFactorExcelT
+{
+  public string DamageFactorGroupId { get; set; }
+  public SCHALE.Common.FlatData.BulletType BulletType { get; set; }
+  public SCHALE.Common.FlatData.ArmorType ArmorType { get; set; }
+  public long DamageRate { get; set; }
+  public SCHALE.Common.FlatData.DamageAttribute DamageAttribute { get; set; }
+  public long MinDamageRate { get; set; }
+  public long MaxDamageRate { get; set; }
+  public bool ShowHighlightFloater { get; set; }
+
+  public BulletArmorDamageFactorExcelT() {
+    this.DamageFactorGroupId = null;
+    this.BulletType = SCHALE.Common.FlatData.BulletType.Normal;
+    this.ArmorType = SCHALE.Common.FlatData.ArmorType.LightArmor;
+    this.DamageRate = 0;
+    this.DamageAttribute = SCHALE.Common.FlatData.DamageAttribute.Resist;
+    this.MinDamageRate = 0;
+    this.MaxDamageRate = 0;
+    this.ShowHighlightFloater = false;
   }
 }
 

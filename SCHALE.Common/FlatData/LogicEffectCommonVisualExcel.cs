@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LogicEffectCommonVisualExcel : IFlatbufferObject
@@ -129,6 +130,90 @@ public struct LogicEffectCommonVisualExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LogicEffectCommonVisualExcel> EndLogicEffectCommonVisualExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LogicEffectCommonVisualExcel>(o);
+  }
+  public LogicEffectCommonVisualExcelT UnPack() {
+    var _o = new LogicEffectCommonVisualExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LogicEffectCommonVisualExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LogicEffectCommonVisual");
+    _o.StringID = TableEncryptionService.Convert(this.StringID, key);
+    _o.IconSpriteName = TableEncryptionService.Convert(this.IconSpriteName, key);
+    _o.IconDispelColor = new List<float>();
+    for (var _j = 0; _j < this.IconDispelColorLength; ++_j) {_o.IconDispelColor.Add(TableEncryptionService.Convert(this.IconDispelColor(_j), key));}
+    _o.ParticleEnterPath = TableEncryptionService.Convert(this.ParticleEnterPath, key);
+    _o.ParticleEnterSocket = TableEncryptionService.Convert(this.ParticleEnterSocket, key);
+    _o.ParticleLoopPath = TableEncryptionService.Convert(this.ParticleLoopPath, key);
+    _o.ParticleLoopSocket = TableEncryptionService.Convert(this.ParticleLoopSocket, key);
+    _o.ParticleEndPath = TableEncryptionService.Convert(this.ParticleEndPath, key);
+    _o.ParticleEndSocket = TableEncryptionService.Convert(this.ParticleEndSocket, key);
+    _o.ParticleApplyPath = TableEncryptionService.Convert(this.ParticleApplyPath, key);
+    _o.ParticleApplySocket = TableEncryptionService.Convert(this.ParticleApplySocket, key);
+    _o.ParticleRemovedPath = TableEncryptionService.Convert(this.ParticleRemovedPath, key);
+    _o.ParticleRemovedSocket = TableEncryptionService.Convert(this.ParticleRemovedSocket, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LogicEffectCommonVisualExcel> Pack(FlatBufferBuilder builder, LogicEffectCommonVisualExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LogicEffectCommonVisualExcel>);
+    var _IconSpriteName = _o.IconSpriteName == null ? default(StringOffset) : builder.CreateString(_o.IconSpriteName);
+    var _IconDispelColor = default(VectorOffset);
+    if (_o.IconDispelColor != null) {
+      var __IconDispelColor = _o.IconDispelColor.ToArray();
+      _IconDispelColor = CreateIconDispelColorVector(builder, __IconDispelColor);
+    }
+    var _ParticleEnterPath = _o.ParticleEnterPath == null ? default(StringOffset) : builder.CreateString(_o.ParticleEnterPath);
+    var _ParticleLoopPath = _o.ParticleLoopPath == null ? default(StringOffset) : builder.CreateString(_o.ParticleLoopPath);
+    var _ParticleEndPath = _o.ParticleEndPath == null ? default(StringOffset) : builder.CreateString(_o.ParticleEndPath);
+    var _ParticleApplyPath = _o.ParticleApplyPath == null ? default(StringOffset) : builder.CreateString(_o.ParticleApplyPath);
+    var _ParticleRemovedPath = _o.ParticleRemovedPath == null ? default(StringOffset) : builder.CreateString(_o.ParticleRemovedPath);
+    return CreateLogicEffectCommonVisualExcel(
+      builder,
+      _o.StringID,
+      _IconSpriteName,
+      _IconDispelColor,
+      _ParticleEnterPath,
+      _o.ParticleEnterSocket,
+      _ParticleLoopPath,
+      _o.ParticleLoopSocket,
+      _ParticleEndPath,
+      _o.ParticleEndSocket,
+      _ParticleApplyPath,
+      _o.ParticleApplySocket,
+      _ParticleRemovedPath,
+      _o.ParticleRemovedSocket);
+  }
+}
+
+public class LogicEffectCommonVisualExcelT
+{
+  public uint StringID { get; set; }
+  public string IconSpriteName { get; set; }
+  public List<float> IconDispelColor { get; set; }
+  public string ParticleEnterPath { get; set; }
+  public SCHALE.Common.FlatData.EffectBone ParticleEnterSocket { get; set; }
+  public string ParticleLoopPath { get; set; }
+  public SCHALE.Common.FlatData.EffectBone ParticleLoopSocket { get; set; }
+  public string ParticleEndPath { get; set; }
+  public SCHALE.Common.FlatData.EffectBone ParticleEndSocket { get; set; }
+  public string ParticleApplyPath { get; set; }
+  public SCHALE.Common.FlatData.EffectBone ParticleApplySocket { get; set; }
+  public string ParticleRemovedPath { get; set; }
+  public SCHALE.Common.FlatData.EffectBone ParticleRemovedSocket { get; set; }
+
+  public LogicEffectCommonVisualExcelT() {
+    this.StringID = 0;
+    this.IconSpriteName = null;
+    this.IconDispelColor = null;
+    this.ParticleEnterPath = null;
+    this.ParticleEnterSocket = SCHALE.Common.FlatData.EffectBone.None;
+    this.ParticleLoopPath = null;
+    this.ParticleLoopSocket = SCHALE.Common.FlatData.EffectBone.None;
+    this.ParticleEndPath = null;
+    this.ParticleEndSocket = SCHALE.Common.FlatData.EffectBone.None;
+    this.ParticleApplyPath = null;
+    this.ParticleApplySocket = SCHALE.Common.FlatData.EffectBone.None;
+    this.ParticleRemovedPath = null;
+    this.ParticleRemovedSocket = SCHALE.Common.FlatData.EffectBone.None;
   }
 }
 

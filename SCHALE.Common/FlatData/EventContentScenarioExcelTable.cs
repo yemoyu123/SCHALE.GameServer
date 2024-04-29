@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentScenarioExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentScenarioExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentScenarioExcelTable> EndEventContentScenarioExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentScenarioExcelTable>(o);
+  }
+  public EventContentScenarioExcelTableT UnPack() {
+    var _o = new EventContentScenarioExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentScenarioExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentScenarioExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentScenarioExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentScenarioExcelTable> Pack(FlatBufferBuilder builder, EventContentScenarioExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentScenarioExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentScenarioExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentScenarioExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentScenarioExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentScenarioExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentScenarioExcelT> DataList { get; set; }
+
+  public EventContentScenarioExcelTableT() {
+    this.DataList = null;
   }
 }
 

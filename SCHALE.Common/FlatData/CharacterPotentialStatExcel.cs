@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterPotentialStatExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct CharacterPotentialStatExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterPotentialStatExcel> EndCharacterPotentialStatExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterPotentialStatExcel>(o);
+  }
+  public CharacterPotentialStatExcelT UnPack() {
+    var _o = new CharacterPotentialStatExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterPotentialStatExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterPotentialStat");
+    _o.PotentialStatGroupId = TableEncryptionService.Convert(this.PotentialStatGroupId, key);
+    _o.PotentialLevel = TableEncryptionService.Convert(this.PotentialLevel, key);
+    _o.RecipeId = TableEncryptionService.Convert(this.RecipeId, key);
+    _o.StatBonusRate = TableEncryptionService.Convert(this.StatBonusRate, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterPotentialStatExcel> Pack(FlatBufferBuilder builder, CharacterPotentialStatExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterPotentialStatExcel>);
+    return CreateCharacterPotentialStatExcel(
+      builder,
+      _o.PotentialStatGroupId,
+      _o.PotentialLevel,
+      _o.RecipeId,
+      _o.StatBonusRate);
+  }
+}
+
+public class CharacterPotentialStatExcelT
+{
+  public long PotentialStatGroupId { get; set; }
+  public int PotentialLevel { get; set; }
+  public long RecipeId { get; set; }
+  public long StatBonusRate { get; set; }
+
+  public CharacterPotentialStatExcelT() {
+    this.PotentialStatGroupId = 0;
+    this.PotentialLevel = 0;
+    this.RecipeId = 0;
+    this.StatBonusRate = 0;
   }
 }
 

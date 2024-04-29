@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BuffParticleExcel : IFlatbufferObject
@@ -73,6 +74,50 @@ public struct BuffParticleExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BuffParticleExcel> EndBuffParticleExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BuffParticleExcel>(o);
+  }
+  public BuffParticleExcelT UnPack() {
+    var _o = new BuffParticleExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BuffParticleExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BuffParticle");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.UniqueName = TableEncryptionService.Convert(this.UniqueName, key);
+    _o.BuffType = TableEncryptionService.Convert(this.BuffType, key);
+    _o.BuffName = TableEncryptionService.Convert(this.BuffName, key);
+    _o.ResourcePath = TableEncryptionService.Convert(this.ResourcePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BuffParticleExcel> Pack(FlatBufferBuilder builder, BuffParticleExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BuffParticleExcel>);
+    var _UniqueName = _o.UniqueName == null ? default(StringOffset) : builder.CreateString(_o.UniqueName);
+    var _BuffType = _o.BuffType == null ? default(StringOffset) : builder.CreateString(_o.BuffType);
+    var _BuffName = _o.BuffName == null ? default(StringOffset) : builder.CreateString(_o.BuffName);
+    var _ResourcePath = _o.ResourcePath == null ? default(StringOffset) : builder.CreateString(_o.ResourcePath);
+    return CreateBuffParticleExcel(
+      builder,
+      _o.UniqueId,
+      _UniqueName,
+      _BuffType,
+      _BuffName,
+      _ResourcePath);
+  }
+}
+
+public class BuffParticleExcelT
+{
+  public long UniqueId { get; set; }
+  public string UniqueName { get; set; }
+  public string BuffType { get; set; }
+  public string BuffName { get; set; }
+  public string ResourcePath { get; set; }
+
+  public BuffParticleExcelT() {
+    this.UniqueId = 0;
+    this.UniqueName = null;
+    this.BuffType = null;
+    this.BuffName = null;
+    this.ResourcePath = null;
   }
 }
 

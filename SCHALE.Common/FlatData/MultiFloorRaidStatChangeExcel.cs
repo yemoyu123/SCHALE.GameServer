@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MultiFloorRaidStatChangeExcel : IFlatbufferObject
@@ -97,6 +98,70 @@ public struct MultiFloorRaidStatChangeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MultiFloorRaidStatChangeExcel> EndMultiFloorRaidStatChangeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MultiFloorRaidStatChangeExcel>(o);
+  }
+  public MultiFloorRaidStatChangeExcelT UnPack() {
+    var _o = new MultiFloorRaidStatChangeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MultiFloorRaidStatChangeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MultiFloorRaidStatChange");
+    _o.StatChangeId = TableEncryptionService.Convert(this.StatChangeId, key);
+    _o.StatType_ = new List<SCHALE.Common.FlatData.StatType>();
+    for (var _j = 0; _j < this.StatType_Length; ++_j) {_o.StatType_.Add(TableEncryptionService.Convert(this.StatType_(_j), key));}
+    _o.StatAdd = new List<long>();
+    for (var _j = 0; _j < this.StatAddLength; ++_j) {_o.StatAdd.Add(TableEncryptionService.Convert(this.StatAdd(_j), key));}
+    _o.StatMultiply = new List<long>();
+    for (var _j = 0; _j < this.StatMultiplyLength; ++_j) {_o.StatMultiply.Add(TableEncryptionService.Convert(this.StatMultiply(_j), key));}
+    _o.ApplyCharacterId = new List<long>();
+    for (var _j = 0; _j < this.ApplyCharacterIdLength; ++_j) {_o.ApplyCharacterId.Add(TableEncryptionService.Convert(this.ApplyCharacterId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.MultiFloorRaidStatChangeExcel> Pack(FlatBufferBuilder builder, MultiFloorRaidStatChangeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MultiFloorRaidStatChangeExcel>);
+    var _StatType_ = default(VectorOffset);
+    if (_o.StatType_ != null) {
+      var __StatType_ = _o.StatType_.ToArray();
+      _StatType_ = CreateStatType_Vector(builder, __StatType_);
+    }
+    var _StatAdd = default(VectorOffset);
+    if (_o.StatAdd != null) {
+      var __StatAdd = _o.StatAdd.ToArray();
+      _StatAdd = CreateStatAddVector(builder, __StatAdd);
+    }
+    var _StatMultiply = default(VectorOffset);
+    if (_o.StatMultiply != null) {
+      var __StatMultiply = _o.StatMultiply.ToArray();
+      _StatMultiply = CreateStatMultiplyVector(builder, __StatMultiply);
+    }
+    var _ApplyCharacterId = default(VectorOffset);
+    if (_o.ApplyCharacterId != null) {
+      var __ApplyCharacterId = _o.ApplyCharacterId.ToArray();
+      _ApplyCharacterId = CreateApplyCharacterIdVector(builder, __ApplyCharacterId);
+    }
+    return CreateMultiFloorRaidStatChangeExcel(
+      builder,
+      _o.StatChangeId,
+      _StatType_,
+      _StatAdd,
+      _StatMultiply,
+      _ApplyCharacterId);
+  }
+}
+
+public class MultiFloorRaidStatChangeExcelT
+{
+  public long StatChangeId { get; set; }
+  public List<SCHALE.Common.FlatData.StatType> StatType_ { get; set; }
+  public List<long> StatAdd { get; set; }
+  public List<long> StatMultiply { get; set; }
+  public List<long> ApplyCharacterId { get; set; }
+
+  public MultiFloorRaidStatChangeExcelT() {
+    this.StatChangeId = 0;
+    this.StatType_ = null;
+    this.StatAdd = null;
+    this.StatMultiply = null;
+    this.ApplyCharacterId = null;
   }
 }
 

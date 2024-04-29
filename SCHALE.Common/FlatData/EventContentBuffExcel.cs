@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBuffExcel : IFlatbufferObject
@@ -95,6 +96,73 @@ public struct EventContentBuffExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBuffExcel> EndEventContentBuffExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBuffExcel>(o);
+  }
+  public EventContentBuffExcelT UnPack() {
+    var _o = new EventContentBuffExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBuffExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBuff");
+    _o.EventContentBuffId = TableEncryptionService.Convert(this.EventContentBuffId, key);
+    _o.IsBuff = TableEncryptionService.Convert(this.IsBuff, key);
+    _o.CharacterTag = TableEncryptionService.Convert(this.CharacterTag, key);
+    _o.EnumType = TableEncryptionService.Convert(this.EnumType, key);
+    _o.EnumTypeValue = new List<string>();
+    for (var _j = 0; _j < this.EnumTypeValueLength; ++_j) {_o.EnumTypeValue.Add(TableEncryptionService.Convert(this.EnumTypeValue(_j), key));}
+    _o.SkillGroupId = TableEncryptionService.Convert(this.SkillGroupId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.SpriteName = TableEncryptionService.Convert(this.SpriteName, key);
+    _o.BuffDescriptionLocalizeCodeId = TableEncryptionService.Convert(this.BuffDescriptionLocalizeCodeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBuffExcel> Pack(FlatBufferBuilder builder, EventContentBuffExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBuffExcel>);
+    var _EnumTypeValue = default(VectorOffset);
+    if (_o.EnumTypeValue != null) {
+      var __EnumTypeValue = new StringOffset[_o.EnumTypeValue.Count];
+      for (var _j = 0; _j < __EnumTypeValue.Length; ++_j) { __EnumTypeValue[_j] = builder.CreateString(_o.EnumTypeValue[_j]); }
+      _EnumTypeValue = CreateEnumTypeValueVector(builder, __EnumTypeValue);
+    }
+    var _SkillGroupId = _o.SkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.SkillGroupId);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _SpriteName = _o.SpriteName == null ? default(StringOffset) : builder.CreateString(_o.SpriteName);
+    var _BuffDescriptionLocalizeCodeId = _o.BuffDescriptionLocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.BuffDescriptionLocalizeCodeId);
+    return CreateEventContentBuffExcel(
+      builder,
+      _o.EventContentBuffId,
+      _o.IsBuff,
+      _o.CharacterTag,
+      _o.EnumType,
+      _EnumTypeValue,
+      _SkillGroupId,
+      _IconPath,
+      _SpriteName,
+      _BuffDescriptionLocalizeCodeId);
+  }
+}
+
+public class EventContentBuffExcelT
+{
+  public long EventContentBuffId { get; set; }
+  public bool IsBuff { get; set; }
+  public SCHALE.Common.FlatData.Tag CharacterTag { get; set; }
+  public SCHALE.Common.FlatData.EventContentBuffFindRule EnumType { get; set; }
+  public List<string> EnumTypeValue { get; set; }
+  public string SkillGroupId { get; set; }
+  public string IconPath { get; set; }
+  public string SpriteName { get; set; }
+  public string BuffDescriptionLocalizeCodeId { get; set; }
+
+  public EventContentBuffExcelT() {
+    this.EventContentBuffId = 0;
+    this.IsBuff = false;
+    this.CharacterTag = SCHALE.Common.FlatData.Tag.A;
+    this.EnumType = SCHALE.Common.FlatData.EventContentBuffFindRule.None;
+    this.EnumTypeValue = null;
+    this.SkillGroupId = null;
+    this.IconPath = null;
+    this.SpriteName = null;
+    this.BuffDescriptionLocalizeCodeId = null;
   }
 }
 

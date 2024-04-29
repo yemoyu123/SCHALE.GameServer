@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterWeaponExpBonusExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CharacterWeaponExpBonusExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelTable> EndCharacterWeaponExpBonusExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelTable>(o);
+  }
+  public CharacterWeaponExpBonusExcelTableT UnPack() {
+    var _o = new CharacterWeaponExpBonusExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterWeaponExpBonusExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterWeaponExpBonusExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelTable> Pack(FlatBufferBuilder builder, CharacterWeaponExpBonusExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCharacterWeaponExpBonusExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CharacterWeaponExpBonusExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcelT> DataList { get; set; }
+
+  public CharacterWeaponExpBonusExcelTableT() {
+    this.DataList = null;
   }
 }
 

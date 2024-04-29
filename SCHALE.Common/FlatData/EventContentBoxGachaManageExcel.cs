@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBoxGachaManageExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct EventContentBoxGachaManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaManageExcel> EndEventContentBoxGachaManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBoxGachaManageExcel>(o);
+  }
+  public EventContentBoxGachaManageExcelT UnPack() {
+    var _o = new EventContentBoxGachaManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBoxGachaManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBoxGachaManage");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Round = TableEncryptionService.Convert(this.Round, key);
+    _o.GoodsId = TableEncryptionService.Convert(this.GoodsId, key);
+    _o.IsLoop = TableEncryptionService.Convert(this.IsLoop, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaManageExcel> Pack(FlatBufferBuilder builder, EventContentBoxGachaManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBoxGachaManageExcel>);
+    return CreateEventContentBoxGachaManageExcel(
+      builder,
+      _o.EventContentId,
+      _o.Round,
+      _o.GoodsId,
+      _o.IsLoop);
+  }
+}
+
+public class EventContentBoxGachaManageExcelT
+{
+  public long EventContentId { get; set; }
+  public long Round { get; set; }
+  public long GoodsId { get; set; }
+  public bool IsLoop { get; set; }
+
+  public EventContentBoxGachaManageExcelT() {
+    this.EventContentId = 0;
+    this.Round = 0;
+    this.GoodsId = 0;
+    this.IsLoop = false;
   }
 }
 

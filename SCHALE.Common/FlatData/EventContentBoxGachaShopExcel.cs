@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBoxGachaShopExcel : IFlatbufferObject
@@ -73,6 +74,64 @@ public struct EventContentBoxGachaShopExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcel> EndEventContentBoxGachaShopExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcel>(o);
+  }
+  public EventContentBoxGachaShopExcelT UnPack() {
+    var _o = new EventContentBoxGachaShopExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBoxGachaShopExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBoxGachaShop");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.GroupElementAmount = TableEncryptionService.Convert(this.GroupElementAmount, key);
+    _o.Round = TableEncryptionService.Convert(this.Round, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.IsPrize = TableEncryptionService.Convert(this.IsPrize, key);
+    _o.GoodsId = new List<long>();
+    for (var _j = 0; _j < this.GoodsIdLength; ++_j) {_o.GoodsId.Add(TableEncryptionService.Convert(this.GoodsId(_j), key));}
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcel> Pack(FlatBufferBuilder builder, EventContentBoxGachaShopExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcel>);
+    var _GoodsId = default(VectorOffset);
+    if (_o.GoodsId != null) {
+      var __GoodsId = _o.GoodsId.ToArray();
+      _GoodsId = CreateGoodsIdVector(builder, __GoodsId);
+    }
+    return CreateEventContentBoxGachaShopExcel(
+      builder,
+      _o.EventContentId,
+      _o.GroupId,
+      _o.GroupElementAmount,
+      _o.Round,
+      _o.IsLegacy,
+      _o.IsPrize,
+      _GoodsId,
+      _o.DisplayOrder);
+  }
+}
+
+public class EventContentBoxGachaShopExcelT
+{
+  public long EventContentId { get; set; }
+  public long GroupId { get; set; }
+  public long GroupElementAmount { get; set; }
+  public long Round { get; set; }
+  public bool IsLegacy { get; set; }
+  public bool IsPrize { get; set; }
+  public List<long> GoodsId { get; set; }
+  public long DisplayOrder { get; set; }
+
+  public EventContentBoxGachaShopExcelT() {
+    this.EventContentId = 0;
+    this.GroupId = 0;
+    this.GroupElementAmount = 0;
+    this.Round = 0;
+    this.IsLegacy = false;
+    this.IsPrize = false;
+    this.GoodsId = null;
+    this.DisplayOrder = 0;
   }
 }
 

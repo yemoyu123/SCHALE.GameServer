@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GroundNodeFlat : IFlatbufferObject
@@ -53,6 +54,51 @@ public struct GroundNodeFlat : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GroundNodeFlat> EndGroundNodeFlat(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GroundNodeFlat>(o);
+  }
+  public GroundNodeFlatT UnPack() {
+    var _o = new GroundNodeFlatT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GroundNodeFlatT _o) {
+		byte[] key = { 0 };
+    _o.X = TableEncryptionService.Convert(this.X, key);
+    _o.Y = TableEncryptionService.Convert(this.Y, key);
+    _o.IsCanNotUseSkill = TableEncryptionService.Convert(this.IsCanNotUseSkill, key);
+    _o.Position = this.Position.HasValue ? this.Position.Value.UnPack() : null;
+    _o.NodeType = TableEncryptionService.Convert(this.NodeType, key);
+    _o.OriginalNodeType = TableEncryptionService.Convert(this.OriginalNodeType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GroundNodeFlat> Pack(FlatBufferBuilder builder, GroundNodeFlatT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GroundNodeFlat>);
+    var _Position = _o.Position == null ? default(Offset<SCHALE.Common.FlatData.GroundVector3>) : SCHALE.Common.FlatData.GroundVector3.Pack(builder, _o.Position);
+    return CreateGroundNodeFlat(
+      builder,
+      _o.X,
+      _o.Y,
+      _o.IsCanNotUseSkill,
+      _Position,
+      _o.NodeType,
+      _o.OriginalNodeType);
+  }
+}
+
+public class GroundNodeFlatT
+{
+  public int X { get; set; }
+  public int Y { get; set; }
+  public bool IsCanNotUseSkill { get; set; }
+  public SCHALE.Common.FlatData.GroundVector3T Position { get; set; }
+  public SCHALE.Common.FlatData.GroundNodeType NodeType { get; set; }
+  public SCHALE.Common.FlatData.GroundNodeType OriginalNodeType { get; set; }
+
+  public GroundNodeFlatT() {
+    this.X = 0;
+    this.Y = 0;
+    this.IsCanNotUseSkill = false;
+    this.Position = null;
+    this.NodeType = SCHALE.Common.FlatData.GroundNodeType.None;
+    this.OriginalNodeType = SCHALE.Common.FlatData.GroundNodeType.None;
   }
 }
 

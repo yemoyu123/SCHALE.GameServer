@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestErosionExcel : IFlatbufferObject
@@ -121,6 +122,108 @@ public struct ConquestErosionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestErosionExcel> EndConquestErosionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestErosionExcel>(o);
+  }
+  public ConquestErosionExcelT UnPack() {
+    var _o = new ConquestErosionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestErosionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestErosion");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ErosionType = TableEncryptionService.Convert(this.ErosionType, key);
+    _o.Phase = TableEncryptionService.Convert(this.Phase, key);
+    _o.PhaseAlarm = TableEncryptionService.Convert(this.PhaseAlarm, key);
+    _o.StepIndex = TableEncryptionService.Convert(this.StepIndex, key);
+    _o.PhaseStartConditionType = new List<SCHALE.Common.FlatData.ConquestConditionType>();
+    for (var _j = 0; _j < this.PhaseStartConditionTypeLength; ++_j) {_o.PhaseStartConditionType.Add(TableEncryptionService.Convert(this.PhaseStartConditionType(_j), key));}
+    _o.PhaseStartConditionParameter = new List<string>();
+    for (var _j = 0; _j < this.PhaseStartConditionParameterLength; ++_j) {_o.PhaseStartConditionParameter.Add(TableEncryptionService.Convert(this.PhaseStartConditionParameter(_j), key));}
+    _o.PhaseBeforeExposeConditionType = new List<SCHALE.Common.FlatData.ConquestConditionType>();
+    for (var _j = 0; _j < this.PhaseBeforeExposeConditionTypeLength; ++_j) {_o.PhaseBeforeExposeConditionType.Add(TableEncryptionService.Convert(this.PhaseBeforeExposeConditionType(_j), key));}
+    _o.PhaseBeforeExposeConditionParameter = new List<string>();
+    for (var _j = 0; _j < this.PhaseBeforeExposeConditionParameterLength; ++_j) {_o.PhaseBeforeExposeConditionParameter.Add(TableEncryptionService.Convert(this.PhaseBeforeExposeConditionParameter(_j), key));}
+    _o.ErosionBattleConditionParcelType = TableEncryptionService.Convert(this.ErosionBattleConditionParcelType, key);
+    _o.ErosionBattleConditionParcelUniqueId = TableEncryptionService.Convert(this.ErosionBattleConditionParcelUniqueId, key);
+    _o.ErosionBattleConditionParcelAmount = TableEncryptionService.Convert(this.ErosionBattleConditionParcelAmount, key);
+    _o.ConquestRewardId = TableEncryptionService.Convert(this.ConquestRewardId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestErosionExcel> Pack(FlatBufferBuilder builder, ConquestErosionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestErosionExcel>);
+    var _PhaseStartConditionType = default(VectorOffset);
+    if (_o.PhaseStartConditionType != null) {
+      var __PhaseStartConditionType = _o.PhaseStartConditionType.ToArray();
+      _PhaseStartConditionType = CreatePhaseStartConditionTypeVector(builder, __PhaseStartConditionType);
+    }
+    var _PhaseStartConditionParameter = default(VectorOffset);
+    if (_o.PhaseStartConditionParameter != null) {
+      var __PhaseStartConditionParameter = new StringOffset[_o.PhaseStartConditionParameter.Count];
+      for (var _j = 0; _j < __PhaseStartConditionParameter.Length; ++_j) { __PhaseStartConditionParameter[_j] = builder.CreateString(_o.PhaseStartConditionParameter[_j]); }
+      _PhaseStartConditionParameter = CreatePhaseStartConditionParameterVector(builder, __PhaseStartConditionParameter);
+    }
+    var _PhaseBeforeExposeConditionType = default(VectorOffset);
+    if (_o.PhaseBeforeExposeConditionType != null) {
+      var __PhaseBeforeExposeConditionType = _o.PhaseBeforeExposeConditionType.ToArray();
+      _PhaseBeforeExposeConditionType = CreatePhaseBeforeExposeConditionTypeVector(builder, __PhaseBeforeExposeConditionType);
+    }
+    var _PhaseBeforeExposeConditionParameter = default(VectorOffset);
+    if (_o.PhaseBeforeExposeConditionParameter != null) {
+      var __PhaseBeforeExposeConditionParameter = new StringOffset[_o.PhaseBeforeExposeConditionParameter.Count];
+      for (var _j = 0; _j < __PhaseBeforeExposeConditionParameter.Length; ++_j) { __PhaseBeforeExposeConditionParameter[_j] = builder.CreateString(_o.PhaseBeforeExposeConditionParameter[_j]); }
+      _PhaseBeforeExposeConditionParameter = CreatePhaseBeforeExposeConditionParameterVector(builder, __PhaseBeforeExposeConditionParameter);
+    }
+    return CreateConquestErosionExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.ErosionType,
+      _o.Phase,
+      _o.PhaseAlarm,
+      _o.StepIndex,
+      _PhaseStartConditionType,
+      _PhaseStartConditionParameter,
+      _PhaseBeforeExposeConditionType,
+      _PhaseBeforeExposeConditionParameter,
+      _o.ErosionBattleConditionParcelType,
+      _o.ErosionBattleConditionParcelUniqueId,
+      _o.ErosionBattleConditionParcelAmount,
+      _o.ConquestRewardId);
+  }
+}
+
+public class ConquestErosionExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ConquestErosionType ErosionType { get; set; }
+  public int Phase { get; set; }
+  public bool PhaseAlarm { get; set; }
+  public int StepIndex { get; set; }
+  public List<SCHALE.Common.FlatData.ConquestConditionType> PhaseStartConditionType { get; set; }
+  public List<string> PhaseStartConditionParameter { get; set; }
+  public List<SCHALE.Common.FlatData.ConquestConditionType> PhaseBeforeExposeConditionType { get; set; }
+  public List<string> PhaseBeforeExposeConditionParameter { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ErosionBattleConditionParcelType { get; set; }
+  public long ErosionBattleConditionParcelUniqueId { get; set; }
+  public long ErosionBattleConditionParcelAmount { get; set; }
+  public long ConquestRewardId { get; set; }
+
+  public ConquestErosionExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.ErosionType = SCHALE.Common.FlatData.ConquestErosionType.None;
+    this.Phase = 0;
+    this.PhaseAlarm = false;
+    this.StepIndex = 0;
+    this.PhaseStartConditionType = null;
+    this.PhaseStartConditionParameter = null;
+    this.PhaseBeforeExposeConditionType = null;
+    this.PhaseBeforeExposeConditionParameter = null;
+    this.ErosionBattleConditionParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ErosionBattleConditionParcelUniqueId = 0;
+    this.ErosionBattleConditionParcelAmount = 0;
+    this.ConquestRewardId = 0;
   }
 }
 

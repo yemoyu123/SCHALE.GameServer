@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstFieldExcel : IFlatbufferObject
@@ -105,6 +106,102 @@ public struct ConstFieldExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstFieldExcel> EndConstFieldExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstFieldExcel>(o);
+  }
+  public ConstFieldExcelT UnPack() {
+    var _o = new ConstFieldExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstFieldExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstField");
+    _o.DialogSmoothTime = TableEncryptionService.Convert(this.DialogSmoothTime, key);
+    _o.TalkDialogDurationDefault = TableEncryptionService.Convert(this.TalkDialogDurationDefault, key);
+    _o.ThinkDialogDurationDefault = TableEncryptionService.Convert(this.ThinkDialogDurationDefault, key);
+    _o.IdleThinkDelayMin = TableEncryptionService.Convert(this.IdleThinkDelayMin, key);
+    _o.IdleThinkDelayMax = TableEncryptionService.Convert(this.IdleThinkDelayMax, key);
+    _o.ExclaimDurationDefault = TableEncryptionService.Convert(this.ExclaimDurationDefault, key);
+    _o.QuestionDurationDefault = TableEncryptionService.Convert(this.QuestionDurationDefault, key);
+    _o.UpsetDurationDefault = TableEncryptionService.Convert(this.UpsetDurationDefault, key);
+    _o.SurpriseDurationDefault = TableEncryptionService.Convert(this.SurpriseDurationDefault, key);
+    _o.BulbDurationDefault = TableEncryptionService.Convert(this.BulbDurationDefault, key);
+    _o.HeartDurationDefault = TableEncryptionService.Convert(this.HeartDurationDefault, key);
+    _o.SweatDurationDefault = TableEncryptionService.Convert(this.SweatDurationDefault, key);
+    _o.AngryDurationDefault = TableEncryptionService.Convert(this.AngryDurationDefault, key);
+    _o.MusicDurationDefault = TableEncryptionService.Convert(this.MusicDurationDefault, key);
+    _o.DotDurationDefault = TableEncryptionService.Convert(this.DotDurationDefault, key);
+    _o.MomotalkDurationDefault = TableEncryptionService.Convert(this.MomotalkDurationDefault, key);
+    _o.PhoneDurationDefault = TableEncryptionService.Convert(this.PhoneDurationDefault, key);
+    _o.KeywordDurationDefault = TableEncryptionService.Convert(this.KeywordDurationDefault, key);
+    _o.EvidenceDurationDefault = TableEncryptionService.Convert(this.EvidenceDurationDefault, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstFieldExcel> Pack(FlatBufferBuilder builder, ConstFieldExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstFieldExcel>);
+    return CreateConstFieldExcel(
+      builder,
+      _o.DialogSmoothTime,
+      _o.TalkDialogDurationDefault,
+      _o.ThinkDialogDurationDefault,
+      _o.IdleThinkDelayMin,
+      _o.IdleThinkDelayMax,
+      _o.ExclaimDurationDefault,
+      _o.QuestionDurationDefault,
+      _o.UpsetDurationDefault,
+      _o.SurpriseDurationDefault,
+      _o.BulbDurationDefault,
+      _o.HeartDurationDefault,
+      _o.SweatDurationDefault,
+      _o.AngryDurationDefault,
+      _o.MusicDurationDefault,
+      _o.DotDurationDefault,
+      _o.MomotalkDurationDefault,
+      _o.PhoneDurationDefault,
+      _o.KeywordDurationDefault,
+      _o.EvidenceDurationDefault);
+  }
+}
+
+public class ConstFieldExcelT
+{
+  public int DialogSmoothTime { get; set; }
+  public int TalkDialogDurationDefault { get; set; }
+  public int ThinkDialogDurationDefault { get; set; }
+  public int IdleThinkDelayMin { get; set; }
+  public int IdleThinkDelayMax { get; set; }
+  public int ExclaimDurationDefault { get; set; }
+  public int QuestionDurationDefault { get; set; }
+  public int UpsetDurationDefault { get; set; }
+  public int SurpriseDurationDefault { get; set; }
+  public int BulbDurationDefault { get; set; }
+  public int HeartDurationDefault { get; set; }
+  public int SweatDurationDefault { get; set; }
+  public int AngryDurationDefault { get; set; }
+  public int MusicDurationDefault { get; set; }
+  public int DotDurationDefault { get; set; }
+  public int MomotalkDurationDefault { get; set; }
+  public int PhoneDurationDefault { get; set; }
+  public int KeywordDurationDefault { get; set; }
+  public int EvidenceDurationDefault { get; set; }
+
+  public ConstFieldExcelT() {
+    this.DialogSmoothTime = 0;
+    this.TalkDialogDurationDefault = 0;
+    this.ThinkDialogDurationDefault = 0;
+    this.IdleThinkDelayMin = 0;
+    this.IdleThinkDelayMax = 0;
+    this.ExclaimDurationDefault = 0;
+    this.QuestionDurationDefault = 0;
+    this.UpsetDurationDefault = 0;
+    this.SurpriseDurationDefault = 0;
+    this.BulbDurationDefault = 0;
+    this.HeartDurationDefault = 0;
+    this.SweatDurationDefault = 0;
+    this.AngryDurationDefault = 0;
+    this.MusicDurationDefault = 0;
+    this.DotDurationDefault = 0;
+    this.MomotalkDurationDefault = 0;
+    this.PhoneDurationDefault = 0;
+    this.KeywordDurationDefault = 0;
+    this.EvidenceDurationDefault = 0;
   }
 }
 

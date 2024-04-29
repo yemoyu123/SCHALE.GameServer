@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldWorldMapZoneExcel : IFlatbufferObject
@@ -69,6 +70,66 @@ public struct FieldWorldMapZoneExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcel> EndFieldWorldMapZoneExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcel>(o);
+  }
+  public FieldWorldMapZoneExcelT UnPack() {
+    var _o = new FieldWorldMapZoneExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldWorldMapZoneExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldWorldMapZone");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.Date = TableEncryptionService.Convert(this.Date, key);
+    _o.OpenConditionType = TableEncryptionService.Convert(this.OpenConditionType, key);
+    _o.OpenConditionId = TableEncryptionService.Convert(this.OpenConditionId, key);
+    _o.CloseConditionType = TableEncryptionService.Convert(this.CloseConditionType, key);
+    _o.CloseConditionId = TableEncryptionService.Convert(this.CloseConditionId, key);
+    _o.ResultFieldScene = TableEncryptionService.Convert(this.ResultFieldScene, key);
+    _o.FieldStageInteractionId = TableEncryptionService.Convert(this.FieldStageInteractionId, key);
+    _o.LocalizeCode = TableEncryptionService.Convert(this.LocalizeCode, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcel> Pack(FlatBufferBuilder builder, FieldWorldMapZoneExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcel>);
+    return CreateFieldWorldMapZoneExcel(
+      builder,
+      _o.Id,
+      _o.GroupId,
+      _o.Date,
+      _o.OpenConditionType,
+      _o.OpenConditionId,
+      _o.CloseConditionType,
+      _o.CloseConditionId,
+      _o.ResultFieldScene,
+      _o.FieldStageInteractionId,
+      _o.LocalizeCode);
+  }
+}
+
+public class FieldWorldMapZoneExcelT
+{
+  public long Id { get; set; }
+  public int GroupId { get; set; }
+  public int Date { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionType OpenConditionType { get; set; }
+  public long OpenConditionId { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionType CloseConditionType { get; set; }
+  public long CloseConditionId { get; set; }
+  public long ResultFieldScene { get; set; }
+  public long FieldStageInteractionId { get; set; }
+  public uint LocalizeCode { get; set; }
+
+  public FieldWorldMapZoneExcelT() {
+    this.Id = 0;
+    this.GroupId = 0;
+    this.Date = 0;
+    this.OpenConditionType = SCHALE.Common.FlatData.FieldConditionType.Invalid;
+    this.OpenConditionId = 0;
+    this.CloseConditionType = SCHALE.Common.FlatData.FieldConditionType.Invalid;
+    this.CloseConditionId = 0;
+    this.ResultFieldScene = 0;
+    this.FieldStageInteractionId = 0;
+    this.LocalizeCode = 0;
   }
 }
 

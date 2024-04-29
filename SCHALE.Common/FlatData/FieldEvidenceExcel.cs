@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldEvidenceExcel : IFlatbufferObject
@@ -73,6 +74,50 @@ public struct FieldEvidenceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldEvidenceExcel> EndFieldEvidenceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldEvidenceExcel>(o);
+  }
+  public FieldEvidenceExcelT UnPack() {
+    var _o = new FieldEvidenceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldEvidenceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldEvidence");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.NameLocalizeKey = TableEncryptionService.Convert(this.NameLocalizeKey, key);
+    _o.DescriptionLocalizeKey = TableEncryptionService.Convert(this.DescriptionLocalizeKey, key);
+    _o.DetailLocalizeKey = TableEncryptionService.Convert(this.DetailLocalizeKey, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldEvidenceExcel> Pack(FlatBufferBuilder builder, FieldEvidenceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldEvidenceExcel>);
+    var _NameLocalizeKey = _o.NameLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.NameLocalizeKey);
+    var _DescriptionLocalizeKey = _o.DescriptionLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.DescriptionLocalizeKey);
+    var _DetailLocalizeKey = _o.DetailLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.DetailLocalizeKey);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    return CreateFieldEvidenceExcel(
+      builder,
+      _o.UniqueId,
+      _NameLocalizeKey,
+      _DescriptionLocalizeKey,
+      _DetailLocalizeKey,
+      _ImagePath);
+  }
+}
+
+public class FieldEvidenceExcelT
+{
+  public long UniqueId { get; set; }
+  public string NameLocalizeKey { get; set; }
+  public string DescriptionLocalizeKey { get; set; }
+  public string DetailLocalizeKey { get; set; }
+  public string ImagePath { get; set; }
+
+  public FieldEvidenceExcelT() {
+    this.UniqueId = 0;
+    this.NameLocalizeKey = null;
+    this.DescriptionLocalizeKey = null;
+    this.DetailLocalizeKey = null;
+    this.ImagePath = null;
   }
 }
 

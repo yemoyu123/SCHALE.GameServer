@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyMessanger3ExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct AcademyMessanger3ExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyMessanger3ExcelTable> EndAcademyMessanger3ExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyMessanger3ExcelTable>(o);
+  }
+  public AcademyMessanger3ExcelTableT UnPack() {
+    var _o = new AcademyMessanger3ExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyMessanger3ExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyMessanger3Excel");
+    _o.DataList = new List<SCHALE.Common.FlatData.AcademyMessanger3ExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyMessanger3ExcelTable> Pack(FlatBufferBuilder builder, AcademyMessanger3ExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyMessanger3ExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.AcademyMessanger3Excel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.AcademyMessanger3Excel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateAcademyMessanger3ExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class AcademyMessanger3ExcelTableT
+{
+  public List<SCHALE.Common.FlatData.AcademyMessanger3ExcelT> DataList { get; set; }
+
+  public AcademyMessanger3ExcelTableT() {
+    this.DataList = null;
   }
 }
 

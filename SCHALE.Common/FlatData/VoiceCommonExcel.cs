@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct VoiceCommonExcel : IFlatbufferObject
@@ -53,6 +54,44 @@ public struct VoiceCommonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.VoiceCommonExcel> EndVoiceCommonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.VoiceCommonExcel>(o);
+  }
+  public VoiceCommonExcelT UnPack() {
+    var _o = new VoiceCommonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(VoiceCommonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("VoiceCommon");
+    _o.VoiceEvent = TableEncryptionService.Convert(this.VoiceEvent, key);
+    _o.Rate = TableEncryptionService.Convert(this.Rate, key);
+    _o.VoiceHash = new List<uint>();
+    for (var _j = 0; _j < this.VoiceHashLength; ++_j) {_o.VoiceHash.Add(TableEncryptionService.Convert(this.VoiceHash(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.VoiceCommonExcel> Pack(FlatBufferBuilder builder, VoiceCommonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.VoiceCommonExcel>);
+    var _VoiceHash = default(VectorOffset);
+    if (_o.VoiceHash != null) {
+      var __VoiceHash = _o.VoiceHash.ToArray();
+      _VoiceHash = CreateVoiceHashVector(builder, __VoiceHash);
+    }
+    return CreateVoiceCommonExcel(
+      builder,
+      _o.VoiceEvent,
+      _o.Rate,
+      _VoiceHash);
+  }
+}
+
+public class VoiceCommonExcelT
+{
+  public SCHALE.Common.FlatData.VoiceEvent VoiceEvent { get; set; }
+  public long Rate { get; set; }
+  public List<uint> VoiceHash { get; set; }
+
+  public VoiceCommonExcelT() {
+    this.VoiceEvent = SCHALE.Common.FlatData.VoiceEvent.OnTSA;
+    this.Rate = 0;
+    this.VoiceHash = null;
   }
 }
 

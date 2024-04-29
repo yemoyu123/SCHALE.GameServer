@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBoxGachaElementExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentBoxGachaElementExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelTable> EndEventContentBoxGachaElementExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelTable>(o);
+  }
+  public EventContentBoxGachaElementExcelTableT UnPack() {
+    var _o = new EventContentBoxGachaElementExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBoxGachaElementExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBoxGachaElementExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelTable> Pack(FlatBufferBuilder builder, EventContentBoxGachaElementExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentBoxGachaElementExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentBoxGachaElementExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentBoxGachaElementExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentBoxGachaElementExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentBoxGachaElementExcelT> DataList { get; set; }
+
+  public EventContentBoxGachaElementExcelTableT() {
+    this.DataList = null;
   }
 }
 

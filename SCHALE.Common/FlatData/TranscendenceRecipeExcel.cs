@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TranscendenceRecipeExcel : IFlatbufferObject
@@ -99,6 +100,73 @@ public struct TranscendenceRecipeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TranscendenceRecipeExcel> EndTranscendenceRecipeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TranscendenceRecipeExcel>(o);
+  }
+  public TranscendenceRecipeExcelT UnPack() {
+    var _o = new TranscendenceRecipeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TranscendenceRecipeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TranscendenceRecipe");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.CostCurrencyType = TableEncryptionService.Convert(this.CostCurrencyType, key);
+    _o.CostCurrencyAmount = TableEncryptionService.Convert(this.CostCurrencyAmount, key);
+    _o.ParcelType_ = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ParcelType_Length; ++_j) {_o.ParcelType_.Add(TableEncryptionService.Convert(this.ParcelType_(_j), key));}
+    _o.ParcelId = new List<long>();
+    for (var _j = 0; _j < this.ParcelIdLength; ++_j) {_o.ParcelId.Add(TableEncryptionService.Convert(this.ParcelId(_j), key));}
+    _o.ParcelAmount = new List<int>();
+    for (var _j = 0; _j < this.ParcelAmountLength; ++_j) {_o.ParcelAmount.Add(TableEncryptionService.Convert(this.ParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TranscendenceRecipeExcel> Pack(FlatBufferBuilder builder, TranscendenceRecipeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TranscendenceRecipeExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _ParcelType_ = default(VectorOffset);
+    if (_o.ParcelType_ != null) {
+      var __ParcelType_ = _o.ParcelType_.ToArray();
+      _ParcelType_ = CreateParcelType_Vector(builder, __ParcelType_);
+    }
+    var _ParcelId = default(VectorOffset);
+    if (_o.ParcelId != null) {
+      var __ParcelId = _o.ParcelId.ToArray();
+      _ParcelId = CreateParcelIdVector(builder, __ParcelId);
+    }
+    var _ParcelAmount = default(VectorOffset);
+    if (_o.ParcelAmount != null) {
+      var __ParcelAmount = _o.ParcelAmount.ToArray();
+      _ParcelAmount = CreateParcelAmountVector(builder, __ParcelAmount);
+    }
+    return CreateTranscendenceRecipeExcel(
+      builder,
+      _o.Id,
+      _DevName,
+      _o.CostCurrencyType,
+      _o.CostCurrencyAmount,
+      _ParcelType_,
+      _ParcelId,
+      _ParcelAmount);
+  }
+}
+
+public class TranscendenceRecipeExcelT
+{
+  public long Id { get; set; }
+  public string DevName { get; set; }
+  public SCHALE.Common.FlatData.CurrencyTypes CostCurrencyType { get; set; }
+  public long CostCurrencyAmount { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ParcelType_ { get; set; }
+  public List<long> ParcelId { get; set; }
+  public List<int> ParcelAmount { get; set; }
+
+  public TranscendenceRecipeExcelT() {
+    this.Id = 0;
+    this.DevName = null;
+    this.CostCurrencyType = SCHALE.Common.FlatData.CurrencyTypes.Invalid;
+    this.CostCurrencyAmount = 0;
+    this.ParcelType_ = null;
+    this.ParcelId = null;
+    this.ParcelAmount = null;
   }
 }
 

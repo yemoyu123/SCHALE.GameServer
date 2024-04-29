@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StrategyObjectBuffDefineExcel : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct StrategyObjectBuffDefineExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StrategyObjectBuffDefineExcel> EndStrategyObjectBuffDefineExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StrategyObjectBuffDefineExcel>(o);
+  }
+  public StrategyObjectBuffDefineExcelT UnPack() {
+    var _o = new StrategyObjectBuffDefineExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StrategyObjectBuffDefineExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StrategyObjectBuffDefine");
+    _o.StrategyObjectBuffID = TableEncryptionService.Convert(this.StrategyObjectBuffID, key);
+    _o.StrategyObjectTurn = TableEncryptionService.Convert(this.StrategyObjectTurn, key);
+    _o.SkillGroupId = TableEncryptionService.Convert(this.SkillGroupId, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StrategyObjectBuffDefineExcel> Pack(FlatBufferBuilder builder, StrategyObjectBuffDefineExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StrategyObjectBuffDefineExcel>);
+    var _SkillGroupId = _o.SkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.SkillGroupId);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    return CreateStrategyObjectBuffDefineExcel(
+      builder,
+      _o.StrategyObjectBuffID,
+      _o.StrategyObjectTurn,
+      _SkillGroupId,
+      _o.LocalizeCodeId,
+      _IconPath);
+  }
+}
+
+public class StrategyObjectBuffDefineExcelT
+{
+  public long StrategyObjectBuffID { get; set; }
+  public int StrategyObjectTurn { get; set; }
+  public string SkillGroupId { get; set; }
+  public uint LocalizeCodeId { get; set; }
+  public string IconPath { get; set; }
+
+  public StrategyObjectBuffDefineExcelT() {
+    this.StrategyObjectBuffID = 0;
+    this.StrategyObjectTurn = 0;
+    this.SkillGroupId = null;
+    this.LocalizeCodeId = 0;
+    this.IconPath = null;
   }
 }
 

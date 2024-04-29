@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeEtcExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct LocalizeEtcExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeEtcExcelTable> EndLocalizeEtcExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeEtcExcelTable>(o);
+  }
+  public LocalizeEtcExcelTableT UnPack() {
+    var _o = new LocalizeEtcExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeEtcExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeEtcExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.LocalizeEtcExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeEtcExcelTable> Pack(FlatBufferBuilder builder, LocalizeEtcExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeEtcExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.LocalizeEtcExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.LocalizeEtcExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateLocalizeEtcExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class LocalizeEtcExcelTableT
+{
+  public List<SCHALE.Common.FlatData.LocalizeEtcExcelT> DataList { get; set; }
+
+  public LocalizeEtcExcelTableT() {
+    this.DataList = null;
   }
 }
 

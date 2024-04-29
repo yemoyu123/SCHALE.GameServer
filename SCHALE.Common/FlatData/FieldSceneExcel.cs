@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldSceneExcel : IFlatbufferObject
@@ -129,6 +130,92 @@ public struct FieldSceneExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldSceneExcel> EndFieldSceneExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldSceneExcel>(o);
+  }
+  public FieldSceneExcelT UnPack() {
+    var _o = new FieldSceneExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldSceneExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldScene");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.DateId = TableEncryptionService.Convert(this.DateId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.ArtLevelPath = TableEncryptionService.Convert(this.ArtLevelPath, key);
+    _o.DesignLevelPath = TableEncryptionService.Convert(this.DesignLevelPath, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.ConditionalBGMQuestId = new List<long>();
+    for (var _j = 0; _j < this.ConditionalBGMQuestIdLength; ++_j) {_o.ConditionalBGMQuestId.Add(TableEncryptionService.Convert(this.ConditionalBGMQuestId(_j), key));}
+    _o.BeginConditionalBGMScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.BeginConditionalBGMScenarioGroupIdLength; ++_j) {_o.BeginConditionalBGMScenarioGroupId.Add(TableEncryptionService.Convert(this.BeginConditionalBGMScenarioGroupId(_j), key));}
+    _o.EndConditionalBGMScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.EndConditionalBGMScenarioGroupIdLength; ++_j) {_o.EndConditionalBGMScenarioGroupId.Add(TableEncryptionService.Convert(this.EndConditionalBGMScenarioGroupId(_j), key));}
+    _o.ConditionalBGMId = new List<long>();
+    for (var _j = 0; _j < this.ConditionalBGMIdLength; ++_j) {_o.ConditionalBGMId.Add(TableEncryptionService.Convert(this.ConditionalBGMId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldSceneExcel> Pack(FlatBufferBuilder builder, FieldSceneExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldSceneExcel>);
+    var _ArtLevelPath = _o.ArtLevelPath == null ? default(StringOffset) : builder.CreateString(_o.ArtLevelPath);
+    var _DesignLevelPath = _o.DesignLevelPath == null ? default(StringOffset) : builder.CreateString(_o.DesignLevelPath);
+    var _ConditionalBGMQuestId = default(VectorOffset);
+    if (_o.ConditionalBGMQuestId != null) {
+      var __ConditionalBGMQuestId = _o.ConditionalBGMQuestId.ToArray();
+      _ConditionalBGMQuestId = CreateConditionalBGMQuestIdVector(builder, __ConditionalBGMQuestId);
+    }
+    var _BeginConditionalBGMScenarioGroupId = default(VectorOffset);
+    if (_o.BeginConditionalBGMScenarioGroupId != null) {
+      var __BeginConditionalBGMScenarioGroupId = _o.BeginConditionalBGMScenarioGroupId.ToArray();
+      _BeginConditionalBGMScenarioGroupId = CreateBeginConditionalBGMScenarioGroupIdVector(builder, __BeginConditionalBGMScenarioGroupId);
+    }
+    var _EndConditionalBGMScenarioGroupId = default(VectorOffset);
+    if (_o.EndConditionalBGMScenarioGroupId != null) {
+      var __EndConditionalBGMScenarioGroupId = _o.EndConditionalBGMScenarioGroupId.ToArray();
+      _EndConditionalBGMScenarioGroupId = CreateEndConditionalBGMScenarioGroupIdVector(builder, __EndConditionalBGMScenarioGroupId);
+    }
+    var _ConditionalBGMId = default(VectorOffset);
+    if (_o.ConditionalBGMId != null) {
+      var __ConditionalBGMId = _o.ConditionalBGMId.ToArray();
+      _ConditionalBGMId = CreateConditionalBGMIdVector(builder, __ConditionalBGMId);
+    }
+    return CreateFieldSceneExcel(
+      builder,
+      _o.UniqueId,
+      _o.DateId,
+      _o.GroupId,
+      _ArtLevelPath,
+      _DesignLevelPath,
+      _o.BGMId,
+      _ConditionalBGMQuestId,
+      _BeginConditionalBGMScenarioGroupId,
+      _EndConditionalBGMScenarioGroupId,
+      _ConditionalBGMId);
+  }
+}
+
+public class FieldSceneExcelT
+{
+  public long UniqueId { get; set; }
+  public long DateId { get; set; }
+  public long GroupId { get; set; }
+  public string ArtLevelPath { get; set; }
+  public string DesignLevelPath { get; set; }
+  public long BGMId { get; set; }
+  public List<long> ConditionalBGMQuestId { get; set; }
+  public List<long> BeginConditionalBGMScenarioGroupId { get; set; }
+  public List<long> EndConditionalBGMScenarioGroupId { get; set; }
+  public List<long> ConditionalBGMId { get; set; }
+
+  public FieldSceneExcelT() {
+    this.UniqueId = 0;
+    this.DateId = 0;
+    this.GroupId = 0;
+    this.ArtLevelPath = null;
+    this.DesignLevelPath = null;
+    this.BGMId = 0;
+    this.ConditionalBGMQuestId = null;
+    this.BeginConditionalBGMScenarioGroupId = null;
+    this.EndConditionalBGMScenarioGroupId = null;
+    this.ConditionalBGMId = null;
   }
 }
 

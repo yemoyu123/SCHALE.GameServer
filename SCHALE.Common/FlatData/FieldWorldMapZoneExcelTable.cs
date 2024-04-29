@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldWorldMapZoneExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct FieldWorldMapZoneExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcelTable> EndFieldWorldMapZoneExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcelTable>(o);
+  }
+  public FieldWorldMapZoneExcelTableT UnPack() {
+    var _o = new FieldWorldMapZoneExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldWorldMapZoneExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldWorldMapZoneExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.FieldWorldMapZoneExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcelTable> Pack(FlatBufferBuilder builder, FieldWorldMapZoneExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.FieldWorldMapZoneExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.FieldWorldMapZoneExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateFieldWorldMapZoneExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class FieldWorldMapZoneExcelTableT
+{
+  public List<SCHALE.Common.FlatData.FieldWorldMapZoneExcelT> DataList { get; set; }
+
+  public FieldWorldMapZoneExcelTableT() {
+    this.DataList = null;
   }
 }
 

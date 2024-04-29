@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShiftingCraftRecipeExcel : IFlatbufferObject
@@ -85,6 +86,76 @@ public struct ShiftingCraftRecipeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShiftingCraftRecipeExcel> EndShiftingCraftRecipeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShiftingCraftRecipeExcel>(o);
+  }
+  public ShiftingCraftRecipeExcelT UnPack() {
+    var _o = new ShiftingCraftRecipeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShiftingCraftRecipeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShiftingCraftRecipe");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.NotificationId = TableEncryptionService.Convert(this.NotificationId, key);
+    _o.ResultParcel = TableEncryptionService.Convert(this.ResultParcel, key);
+    _o.ResultId = TableEncryptionService.Convert(this.ResultId, key);
+    _o.ResultAmount = TableEncryptionService.Convert(this.ResultAmount, key);
+    _o.RequireItemId = TableEncryptionService.Convert(this.RequireItemId, key);
+    _o.RequireItemAmount = TableEncryptionService.Convert(this.RequireItemAmount, key);
+    _o.RequireGold = TableEncryptionService.Convert(this.RequireGold, key);
+    _o.IngredientTag = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.IngredientTagLength; ++_j) {_o.IngredientTag.Add(TableEncryptionService.Convert(this.IngredientTag(_j), key));}
+    _o.IngredientExp = TableEncryptionService.Convert(this.IngredientExp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShiftingCraftRecipeExcel> Pack(FlatBufferBuilder builder, ShiftingCraftRecipeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShiftingCraftRecipeExcel>);
+    var _IngredientTag = default(VectorOffset);
+    if (_o.IngredientTag != null) {
+      var __IngredientTag = _o.IngredientTag.ToArray();
+      _IngredientTag = CreateIngredientTagVector(builder, __IngredientTag);
+    }
+    return CreateShiftingCraftRecipeExcel(
+      builder,
+      _o.Id,
+      _o.DisplayOrder,
+      _o.NotificationId,
+      _o.ResultParcel,
+      _o.ResultId,
+      _o.ResultAmount,
+      _o.RequireItemId,
+      _o.RequireItemAmount,
+      _o.RequireGold,
+      _IngredientTag,
+      _o.IngredientExp);
+  }
+}
+
+public class ShiftingCraftRecipeExcelT
+{
+  public long Id { get; set; }
+  public long DisplayOrder { get; set; }
+  public int NotificationId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ResultParcel { get; set; }
+  public long ResultId { get; set; }
+  public long ResultAmount { get; set; }
+  public long RequireItemId { get; set; }
+  public long RequireItemAmount { get; set; }
+  public long RequireGold { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> IngredientTag { get; set; }
+  public long IngredientExp { get; set; }
+
+  public ShiftingCraftRecipeExcelT() {
+    this.Id = 0;
+    this.DisplayOrder = 0;
+    this.NotificationId = 0;
+    this.ResultParcel = SCHALE.Common.FlatData.ParcelType.None;
+    this.ResultId = 0;
+    this.ResultAmount = 0;
+    this.RequireItemId = 0;
+    this.RequireItemAmount = 0;
+    this.RequireGold = 0;
+    this.IngredientTag = null;
+    this.IngredientExp = 0;
   }
 }
 

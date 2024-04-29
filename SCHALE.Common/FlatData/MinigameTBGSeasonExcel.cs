@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGSeasonExcel : IFlatbufferObject
@@ -169,6 +170,136 @@ public struct MinigameTBGSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGSeasonExcel> EndMinigameTBGSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGSeasonExcel>(o);
+  }
+  public MinigameTBGSeasonExcelT UnPack() {
+    var _o = new MinigameTBGSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGSeason");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ItemSlot = TableEncryptionService.Convert(this.ItemSlot, key);
+    _o.DefaultEchelonHp = TableEncryptionService.Convert(this.DefaultEchelonHp, key);
+    _o.DefaultItemDiceId = TableEncryptionService.Convert(this.DefaultItemDiceId, key);
+    _o.EchelonSlot1CharacterId = TableEncryptionService.Convert(this.EchelonSlot1CharacterId, key);
+    _o.EchelonSlot2CharacterId = TableEncryptionService.Convert(this.EchelonSlot2CharacterId, key);
+    _o.EchelonSlot3CharacterId = TableEncryptionService.Convert(this.EchelonSlot3CharacterId, key);
+    _o.EchelonSlot4CharacterId = TableEncryptionService.Convert(this.EchelonSlot4CharacterId, key);
+    _o.EchelonSlot1Portrait = TableEncryptionService.Convert(this.EchelonSlot1Portrait, key);
+    _o.EchelonSlot2Portrait = TableEncryptionService.Convert(this.EchelonSlot2Portrait, key);
+    _o.EchelonSlot3Portrait = TableEncryptionService.Convert(this.EchelonSlot3Portrait, key);
+    _o.EchelonSlot4Portrait = TableEncryptionService.Convert(this.EchelonSlot4Portrait, key);
+    _o.EventUseCostType = TableEncryptionService.Convert(this.EventUseCostType, key);
+    _o.EventUseCostId = TableEncryptionService.Convert(this.EventUseCostId, key);
+    _o.EchelonRevivalCostType = TableEncryptionService.Convert(this.EchelonRevivalCostType, key);
+    _o.EchelonRevivalCostId = TableEncryptionService.Convert(this.EchelonRevivalCostId, key);
+    _o.EchelonRevivalCostAmount = TableEncryptionService.Convert(this.EchelonRevivalCostAmount, key);
+    _o.EnemyBossHP = TableEncryptionService.Convert(this.EnemyBossHP, key);
+    _o.EnemyMinionHP = TableEncryptionService.Convert(this.EnemyMinionHP, key);
+    _o.AttackDamage = TableEncryptionService.Convert(this.AttackDamage, key);
+    _o.CriticalAttackDamage = TableEncryptionService.Convert(this.CriticalAttackDamage, key);
+    _o.RoundItemSelectLimit = TableEncryptionService.Convert(this.RoundItemSelectLimit, key);
+    _o.InstantClearRound = TableEncryptionService.Convert(this.InstantClearRound, key);
+    _o.MaxHp = TableEncryptionService.Convert(this.MaxHp, key);
+    _o.MapImagePath = TableEncryptionService.Convert(this.MapImagePath, key);
+    _o.MapNameLocalize = TableEncryptionService.Convert(this.MapNameLocalize, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGSeasonExcel> Pack(FlatBufferBuilder builder, MinigameTBGSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGSeasonExcel>);
+    var _EchelonSlot1Portrait = _o.EchelonSlot1Portrait == null ? default(StringOffset) : builder.CreateString(_o.EchelonSlot1Portrait);
+    var _EchelonSlot2Portrait = _o.EchelonSlot2Portrait == null ? default(StringOffset) : builder.CreateString(_o.EchelonSlot2Portrait);
+    var _EchelonSlot3Portrait = _o.EchelonSlot3Portrait == null ? default(StringOffset) : builder.CreateString(_o.EchelonSlot3Portrait);
+    var _EchelonSlot4Portrait = _o.EchelonSlot4Portrait == null ? default(StringOffset) : builder.CreateString(_o.EchelonSlot4Portrait);
+    var _MapImagePath = _o.MapImagePath == null ? default(StringOffset) : builder.CreateString(_o.MapImagePath);
+    var _MapNameLocalize = _o.MapNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.MapNameLocalize);
+    return CreateMinigameTBGSeasonExcel(
+      builder,
+      _o.EventContentId,
+      _o.ItemSlot,
+      _o.DefaultEchelonHp,
+      _o.DefaultItemDiceId,
+      _o.EchelonSlot1CharacterId,
+      _o.EchelonSlot2CharacterId,
+      _o.EchelonSlot3CharacterId,
+      _o.EchelonSlot4CharacterId,
+      _EchelonSlot1Portrait,
+      _EchelonSlot2Portrait,
+      _EchelonSlot3Portrait,
+      _EchelonSlot4Portrait,
+      _o.EventUseCostType,
+      _o.EventUseCostId,
+      _o.EchelonRevivalCostType,
+      _o.EchelonRevivalCostId,
+      _o.EchelonRevivalCostAmount,
+      _o.EnemyBossHP,
+      _o.EnemyMinionHP,
+      _o.AttackDamage,
+      _o.CriticalAttackDamage,
+      _o.RoundItemSelectLimit,
+      _o.InstantClearRound,
+      _o.MaxHp,
+      _MapImagePath,
+      _MapNameLocalize);
+  }
+}
+
+public class MinigameTBGSeasonExcelT
+{
+  public long EventContentId { get; set; }
+  public int ItemSlot { get; set; }
+  public int DefaultEchelonHp { get; set; }
+  public long DefaultItemDiceId { get; set; }
+  public long EchelonSlot1CharacterId { get; set; }
+  public long EchelonSlot2CharacterId { get; set; }
+  public long EchelonSlot3CharacterId { get; set; }
+  public long EchelonSlot4CharacterId { get; set; }
+  public string EchelonSlot1Portrait { get; set; }
+  public string EchelonSlot2Portrait { get; set; }
+  public string EchelonSlot3Portrait { get; set; }
+  public string EchelonSlot4Portrait { get; set; }
+  public SCHALE.Common.FlatData.ParcelType EventUseCostType { get; set; }
+  public long EventUseCostId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType EchelonRevivalCostType { get; set; }
+  public long EchelonRevivalCostId { get; set; }
+  public int EchelonRevivalCostAmount { get; set; }
+  public int EnemyBossHP { get; set; }
+  public int EnemyMinionHP { get; set; }
+  public int AttackDamage { get; set; }
+  public int CriticalAttackDamage { get; set; }
+  public int RoundItemSelectLimit { get; set; }
+  public int InstantClearRound { get; set; }
+  public int MaxHp { get; set; }
+  public string MapImagePath { get; set; }
+  public string MapNameLocalize { get; set; }
+
+  public MinigameTBGSeasonExcelT() {
+    this.EventContentId = 0;
+    this.ItemSlot = 0;
+    this.DefaultEchelonHp = 0;
+    this.DefaultItemDiceId = 0;
+    this.EchelonSlot1CharacterId = 0;
+    this.EchelonSlot2CharacterId = 0;
+    this.EchelonSlot3CharacterId = 0;
+    this.EchelonSlot4CharacterId = 0;
+    this.EchelonSlot1Portrait = null;
+    this.EchelonSlot2Portrait = null;
+    this.EchelonSlot3Portrait = null;
+    this.EchelonSlot4Portrait = null;
+    this.EventUseCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.EventUseCostId = 0;
+    this.EchelonRevivalCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.EchelonRevivalCostId = 0;
+    this.EchelonRevivalCostAmount = 0;
+    this.EnemyBossHP = 0;
+    this.EnemyMinionHP = 0;
+    this.AttackDamage = 0;
+    this.CriticalAttackDamage = 0;
+    this.RoundItemSelectLimit = 0;
+    this.InstantClearRound = 0;
+    this.MaxHp = 0;
+    this.MapImagePath = null;
+    this.MapNameLocalize = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaGroupExcel : IFlatbufferObject
@@ -51,6 +52,43 @@ public struct GachaGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaGroupExcel> EndGachaGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaGroupExcel>(o);
+  }
+  public GachaGroupExcelT UnPack() {
+    var _o = new GachaGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaGroup");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.NameKr = TableEncryptionService.Convert(this.NameKr, key);
+    _o.IsRecursive = TableEncryptionService.Convert(this.IsRecursive, key);
+    _o.GroupType = TableEncryptionService.Convert(this.GroupType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaGroupExcel> Pack(FlatBufferBuilder builder, GachaGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaGroupExcel>);
+    var _NameKr = _o.NameKr == null ? default(StringOffset) : builder.CreateString(_o.NameKr);
+    return CreateGachaGroupExcel(
+      builder,
+      _o.ID,
+      _NameKr,
+      _o.IsRecursive,
+      _o.GroupType);
+  }
+}
+
+public class GachaGroupExcelT
+{
+  public long ID { get; set; }
+  public string NameKr { get; set; }
+  public bool IsRecursive { get; set; }
+  public SCHALE.Common.FlatData.GachaGroupType GroupType { get; set; }
+
+  public GachaGroupExcelT() {
+    this.ID = 0;
+    this.NameKr = null;
+    this.IsRecursive = false;
+    this.GroupType = SCHALE.Common.FlatData.GachaGroupType.None;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioTransitionExcel : IFlatbufferObject
@@ -81,6 +82,58 @@ public struct ScenarioTransitionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioTransitionExcel> EndScenarioTransitionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioTransitionExcel>(o);
+  }
+  public ScenarioTransitionExcelT UnPack() {
+    var _o = new ScenarioTransitionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioTransitionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioTransition");
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.TransitionOut = TableEncryptionService.Convert(this.TransitionOut, key);
+    _o.TransitionOutDuration = TableEncryptionService.Convert(this.TransitionOutDuration, key);
+    _o.TransitionOutResource = TableEncryptionService.Convert(this.TransitionOutResource, key);
+    _o.TransitionIn = TableEncryptionService.Convert(this.TransitionIn, key);
+    _o.TransitionInDuration = TableEncryptionService.Convert(this.TransitionInDuration, key);
+    _o.TransitionInResource = TableEncryptionService.Convert(this.TransitionInResource, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioTransitionExcel> Pack(FlatBufferBuilder builder, ScenarioTransitionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioTransitionExcel>);
+    var _TransitionOut = _o.TransitionOut == null ? default(StringOffset) : builder.CreateString(_o.TransitionOut);
+    var _TransitionOutResource = _o.TransitionOutResource == null ? default(StringOffset) : builder.CreateString(_o.TransitionOutResource);
+    var _TransitionIn = _o.TransitionIn == null ? default(StringOffset) : builder.CreateString(_o.TransitionIn);
+    var _TransitionInResource = _o.TransitionInResource == null ? default(StringOffset) : builder.CreateString(_o.TransitionInResource);
+    return CreateScenarioTransitionExcel(
+      builder,
+      _o.Name,
+      _TransitionOut,
+      _o.TransitionOutDuration,
+      _TransitionOutResource,
+      _TransitionIn,
+      _o.TransitionInDuration,
+      _TransitionInResource);
+  }
+}
+
+public class ScenarioTransitionExcelT
+{
+  public uint Name { get; set; }
+  public string TransitionOut { get; set; }
+  public long TransitionOutDuration { get; set; }
+  public string TransitionOutResource { get; set; }
+  public string TransitionIn { get; set; }
+  public long TransitionInDuration { get; set; }
+  public string TransitionInResource { get; set; }
+
+  public ScenarioTransitionExcelT() {
+    this.Name = 0;
+    this.TransitionOut = null;
+    this.TransitionOutDuration = 0;
+    this.TransitionOutResource = null;
+    this.TransitionIn = null;
+    this.TransitionInDuration = 0;
+    this.TransitionInResource = null;
   }
 }
 

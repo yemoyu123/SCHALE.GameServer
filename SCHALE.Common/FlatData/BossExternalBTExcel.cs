@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BossExternalBTExcel : IFlatbufferObject
@@ -73,6 +74,60 @@ public struct BossExternalBTExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BossExternalBTExcel> EndBossExternalBTExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BossExternalBTExcel>(o);
+  }
+  public BossExternalBTExcelT UnPack() {
+    var _o = new BossExternalBTExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BossExternalBTExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BossExternalBT");
+    _o.ExternalBTId = TableEncryptionService.Convert(this.ExternalBTId, key);
+    _o.AIPhase = TableEncryptionService.Convert(this.AIPhase, key);
+    _o.ExternalBTNodeType = TableEncryptionService.Convert(this.ExternalBTNodeType, key);
+    _o.ExternalBTTrigger = TableEncryptionService.Convert(this.ExternalBTTrigger, key);
+    _o.TriggerArgument = TableEncryptionService.Convert(this.TriggerArgument, key);
+    _o.BehaviorRate = TableEncryptionService.Convert(this.BehaviorRate, key);
+    _o.ExternalBehavior = TableEncryptionService.Convert(this.ExternalBehavior, key);
+    _o.BehaviorArgument = TableEncryptionService.Convert(this.BehaviorArgument, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BossExternalBTExcel> Pack(FlatBufferBuilder builder, BossExternalBTExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BossExternalBTExcel>);
+    var _TriggerArgument = _o.TriggerArgument == null ? default(StringOffset) : builder.CreateString(_o.TriggerArgument);
+    var _BehaviorArgument = _o.BehaviorArgument == null ? default(StringOffset) : builder.CreateString(_o.BehaviorArgument);
+    return CreateBossExternalBTExcel(
+      builder,
+      _o.ExternalBTId,
+      _o.AIPhase,
+      _o.ExternalBTNodeType,
+      _o.ExternalBTTrigger,
+      _TriggerArgument,
+      _o.BehaviorRate,
+      _o.ExternalBehavior,
+      _BehaviorArgument);
+  }
+}
+
+public class BossExternalBTExcelT
+{
+  public long ExternalBTId { get; set; }
+  public long AIPhase { get; set; }
+  public SCHALE.Common.FlatData.ExternalBTNodeType ExternalBTNodeType { get; set; }
+  public SCHALE.Common.FlatData.ExternalBTTrigger ExternalBTTrigger { get; set; }
+  public string TriggerArgument { get; set; }
+  public long BehaviorRate { get; set; }
+  public SCHALE.Common.FlatData.ExternalBehavior ExternalBehavior { get; set; }
+  public string BehaviorArgument { get; set; }
+
+  public BossExternalBTExcelT() {
+    this.ExternalBTId = 0;
+    this.AIPhase = 0;
+    this.ExternalBTNodeType = SCHALE.Common.FlatData.ExternalBTNodeType.Sequence;
+    this.ExternalBTTrigger = SCHALE.Common.FlatData.ExternalBTTrigger.None;
+    this.TriggerArgument = null;
+    this.BehaviorRate = 0;
+    this.ExternalBehavior = SCHALE.Common.FlatData.ExternalBehavior.UseNextExSkill;
+    this.BehaviorArgument = null;
   }
 }
 

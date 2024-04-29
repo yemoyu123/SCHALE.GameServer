@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LimitedStageExcel : IFlatbufferObject
@@ -211,6 +212,171 @@ public struct LimitedStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LimitedStageExcel> EndLimitedStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LimitedStageExcel>(o);
+  }
+  public LimitedStageExcelT UnPack() {
+    var _o = new LimitedStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LimitedStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LimitedStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.StageDifficulty = TableEncryptionService.Convert(this.StageDifficulty, key);
+    _o.StageNumber = TableEncryptionService.Convert(this.StageNumber, key);
+    _o.StageDisplay = TableEncryptionService.Convert(this.StageDisplay, key);
+    _o.PrevStageId = TableEncryptionService.Convert(this.PrevStageId, key);
+    _o.OpenDate = TableEncryptionService.Convert(this.OpenDate, key);
+    _o.OpenEventPoint = TableEncryptionService.Convert(this.OpenEventPoint, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.StageEnterCostType = TableEncryptionService.Convert(this.StageEnterCostType, key);
+    _o.StageEnterCostId = TableEncryptionService.Convert(this.StageEnterCostId, key);
+    _o.StageEnterCostAmount = TableEncryptionService.Convert(this.StageEnterCostAmount, key);
+    _o.StageEnterEchelonCount = TableEncryptionService.Convert(this.StageEnterEchelonCount, key);
+    _o.StarConditionTacticRankSCount = TableEncryptionService.Convert(this.StarConditionTacticRankSCount, key);
+    _o.StarConditionTurnCount = TableEncryptionService.Convert(this.StarConditionTurnCount, key);
+    _o.EnterScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.EnterScenarioGroupIdLength; ++_j) {_o.EnterScenarioGroupId.Add(TableEncryptionService.Convert(this.EnterScenarioGroupId(_j), key));}
+    _o.ClearScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.ClearScenarioGroupIdLength; ++_j) {_o.ClearScenarioGroupId.Add(TableEncryptionService.Convert(this.ClearScenarioGroupId(_j), key));}
+    _o.StrategyMap = TableEncryptionService.Convert(this.StrategyMap, key);
+    _o.StrategyMapBG = TableEncryptionService.Convert(this.StrategyMapBG, key);
+    _o.StageRewardId = TableEncryptionService.Convert(this.StageRewardId, key);
+    _o.MaxTurn = TableEncryptionService.Convert(this.MaxTurn, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.BgmId = TableEncryptionService.Convert(this.BgmId, key);
+    _o.StrategyEnvironment = TableEncryptionService.Convert(this.StrategyEnvironment, key);
+    _o.GroundID = TableEncryptionService.Convert(this.GroundID, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.InstantClear = TableEncryptionService.Convert(this.InstantClear, key);
+    _o.BuffContentId = TableEncryptionService.Convert(this.BuffContentId, key);
+    _o.ChallengeDisplay = TableEncryptionService.Convert(this.ChallengeDisplay, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LimitedStageExcel> Pack(FlatBufferBuilder builder, LimitedStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LimitedStageExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _StageNumber = _o.StageNumber == null ? default(StringOffset) : builder.CreateString(_o.StageNumber);
+    var _EnterScenarioGroupId = default(VectorOffset);
+    if (_o.EnterScenarioGroupId != null) {
+      var __EnterScenarioGroupId = _o.EnterScenarioGroupId.ToArray();
+      _EnterScenarioGroupId = CreateEnterScenarioGroupIdVector(builder, __EnterScenarioGroupId);
+    }
+    var _ClearScenarioGroupId = default(VectorOffset);
+    if (_o.ClearScenarioGroupId != null) {
+      var __ClearScenarioGroupId = _o.ClearScenarioGroupId.ToArray();
+      _ClearScenarioGroupId = CreateClearScenarioGroupIdVector(builder, __ClearScenarioGroupId);
+    }
+    var _StrategyMap = _o.StrategyMap == null ? default(StringOffset) : builder.CreateString(_o.StrategyMap);
+    var _StrategyMapBG = _o.StrategyMapBG == null ? default(StringOffset) : builder.CreateString(_o.StrategyMapBG);
+    var _BgmId = _o.BgmId == null ? default(StringOffset) : builder.CreateString(_o.BgmId);
+    return CreateLimitedStageExcel(
+      builder,
+      _o.Id,
+      _Name,
+      _o.SeasonId,
+      _o.StageDifficulty,
+      _StageNumber,
+      _o.StageDisplay,
+      _o.PrevStageId,
+      _o.OpenDate,
+      _o.OpenEventPoint,
+      _o.BattleDuration,
+      _o.StageEnterCostType,
+      _o.StageEnterCostId,
+      _o.StageEnterCostAmount,
+      _o.StageEnterEchelonCount,
+      _o.StarConditionTacticRankSCount,
+      _o.StarConditionTurnCount,
+      _EnterScenarioGroupId,
+      _ClearScenarioGroupId,
+      _StrategyMap,
+      _StrategyMapBG,
+      _o.StageRewardId,
+      _o.MaxTurn,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _BgmId,
+      _o.StrategyEnvironment,
+      _o.GroundID,
+      _o.ContentType,
+      _o.BGMId,
+      _o.InstantClear,
+      _o.BuffContentId,
+      _o.ChallengeDisplay);
+  }
+}
+
+public class LimitedStageExcelT
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public long SeasonId { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty StageDifficulty { get; set; }
+  public string StageNumber { get; set; }
+  public int StageDisplay { get; set; }
+  public long PrevStageId { get; set; }
+  public long OpenDate { get; set; }
+  public long OpenEventPoint { get; set; }
+  public long BattleDuration { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StageEnterCostType { get; set; }
+  public long StageEnterCostId { get; set; }
+  public int StageEnterCostAmount { get; set; }
+  public int StageEnterEchelonCount { get; set; }
+  public long StarConditionTacticRankSCount { get; set; }
+  public long StarConditionTurnCount { get; set; }
+  public List<long> EnterScenarioGroupId { get; set; }
+  public List<long> ClearScenarioGroupId { get; set; }
+  public string StrategyMap { get; set; }
+  public string StrategyMapBG { get; set; }
+  public long StageRewardId { get; set; }
+  public int MaxTurn { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public int RecommandLevel { get; set; }
+  public string BgmId { get; set; }
+  public SCHALE.Common.FlatData.StrategyEnvironment StrategyEnvironment { get; set; }
+  public long GroundID { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long BGMId { get; set; }
+  public bool InstantClear { get; set; }
+  public long BuffContentId { get; set; }
+  public bool ChallengeDisplay { get; set; }
+
+  public LimitedStageExcelT() {
+    this.Id = 0;
+    this.Name = null;
+    this.SeasonId = 0;
+    this.StageDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.StageNumber = null;
+    this.StageDisplay = 0;
+    this.PrevStageId = 0;
+    this.OpenDate = 0;
+    this.OpenEventPoint = 0;
+    this.BattleDuration = 0;
+    this.StageEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StageEnterCostId = 0;
+    this.StageEnterCostAmount = 0;
+    this.StageEnterEchelonCount = 0;
+    this.StarConditionTacticRankSCount = 0;
+    this.StarConditionTurnCount = 0;
+    this.EnterScenarioGroupId = null;
+    this.ClearScenarioGroupId = null;
+    this.StrategyMap = null;
+    this.StrategyMapBG = null;
+    this.StageRewardId = 0;
+    this.MaxTurn = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.BgmId = null;
+    this.StrategyEnvironment = SCHALE.Common.FlatData.StrategyEnvironment.None;
+    this.GroundID = 0;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.BGMId = 0;
+    this.InstantClear = false;
+    this.BuffContentId = 0;
+    this.ChallengeDisplay = false;
   }
 }
 

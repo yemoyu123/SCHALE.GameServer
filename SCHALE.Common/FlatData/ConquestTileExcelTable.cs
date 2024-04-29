@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestTileExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ConquestTileExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestTileExcelTable> EndConquestTileExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestTileExcelTable>(o);
+  }
+  public ConquestTileExcelTableT UnPack() {
+    var _o = new ConquestTileExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestTileExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestTileExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ConquestTileExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestTileExcelTable> Pack(FlatBufferBuilder builder, ConquestTileExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestTileExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ConquestTileExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ConquestTileExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateConquestTileExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ConquestTileExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ConquestTileExcelT> DataList { get; set; }
+
+  public ConquestTileExcelTableT() {
+    this.DataList = null;
   }
 }
 

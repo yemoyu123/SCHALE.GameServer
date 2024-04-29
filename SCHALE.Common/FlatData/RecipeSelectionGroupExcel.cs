@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RecipeSelectionGroupExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct RecipeSelectionGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RecipeSelectionGroupExcel> EndRecipeSelectionGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RecipeSelectionGroupExcel>(o);
+  }
+  public RecipeSelectionGroupExcelT UnPack() {
+    var _o = new RecipeSelectionGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RecipeSelectionGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RecipeSelectionGroup");
+    _o.RecipeSelectionGroupId = TableEncryptionService.Convert(this.RecipeSelectionGroupId, key);
+    _o.RecipeSelectionGroupComponentId = TableEncryptionService.Convert(this.RecipeSelectionGroupComponentId, key);
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelId = TableEncryptionService.Convert(this.ParcelId, key);
+    _o.ResultAmountMin = TableEncryptionService.Convert(this.ResultAmountMin, key);
+    _o.ResultAmountMax = TableEncryptionService.Convert(this.ResultAmountMax, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.RecipeSelectionGroupExcel> Pack(FlatBufferBuilder builder, RecipeSelectionGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RecipeSelectionGroupExcel>);
+    return CreateRecipeSelectionGroupExcel(
+      builder,
+      _o.RecipeSelectionGroupId,
+      _o.RecipeSelectionGroupComponentId,
+      _o.ParcelType,
+      _o.ParcelId,
+      _o.ResultAmountMin,
+      _o.ResultAmountMax);
+  }
+}
+
+public class RecipeSelectionGroupExcelT
+{
+  public long RecipeSelectionGroupId { get; set; }
+  public long RecipeSelectionGroupComponentId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelId { get; set; }
+  public long ResultAmountMin { get; set; }
+  public long ResultAmountMax { get; set; }
+
+  public RecipeSelectionGroupExcelT() {
+    this.RecipeSelectionGroupId = 0;
+    this.RecipeSelectionGroupComponentId = 0;
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelId = 0;
+    this.ResultAmountMin = 0;
+    this.ResultAmountMax = 0;
   }
 }
 

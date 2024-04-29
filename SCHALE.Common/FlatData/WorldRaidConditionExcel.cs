@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidConditionExcel : IFlatbufferObject
@@ -113,6 +114,88 @@ public struct WorldRaidConditionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidConditionExcel> EndWorldRaidConditionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidConditionExcel>(o);
+  }
+  public WorldRaidConditionExcelT UnPack() {
+    var _o = new WorldRaidConditionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidConditionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidCondition");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LockUI = new List<string>();
+    for (var _j = 0; _j < this.LockUILength; ++_j) {_o.LockUI.Add(TableEncryptionService.Convert(this.LockUI(_j), key));}
+    _o.HideWhenLocked = TableEncryptionService.Convert(this.HideWhenLocked, key);
+    _o.AccountLevel = TableEncryptionService.Convert(this.AccountLevel, key);
+    _o.ScenarioModeId = new List<long>();
+    for (var _j = 0; _j < this.ScenarioModeIdLength; ++_j) {_o.ScenarioModeId.Add(TableEncryptionService.Convert(this.ScenarioModeId(_j), key));}
+    _o.CampaignStageID = new List<long>();
+    for (var _j = 0; _j < this.CampaignStageIDLength; ++_j) {_o.CampaignStageID.Add(TableEncryptionService.Convert(this.CampaignStageID(_j), key));}
+    _o.MultipleConditionCheckType = TableEncryptionService.Convert(this.MultipleConditionCheckType, key);
+    _o.AfterWhenDate = TableEncryptionService.Convert(this.AfterWhenDate, key);
+    _o.WorldRaidBossKill = new List<long>();
+    for (var _j = 0; _j < this.WorldRaidBossKillLength; ++_j) {_o.WorldRaidBossKill.Add(TableEncryptionService.Convert(this.WorldRaidBossKill(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidConditionExcel> Pack(FlatBufferBuilder builder, WorldRaidConditionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidConditionExcel>);
+    var _LockUI = default(VectorOffset);
+    if (_o.LockUI != null) {
+      var __LockUI = new StringOffset[_o.LockUI.Count];
+      for (var _j = 0; _j < __LockUI.Length; ++_j) { __LockUI[_j] = builder.CreateString(_o.LockUI[_j]); }
+      _LockUI = CreateLockUIVector(builder, __LockUI);
+    }
+    var _ScenarioModeId = default(VectorOffset);
+    if (_o.ScenarioModeId != null) {
+      var __ScenarioModeId = _o.ScenarioModeId.ToArray();
+      _ScenarioModeId = CreateScenarioModeIdVector(builder, __ScenarioModeId);
+    }
+    var _CampaignStageID = default(VectorOffset);
+    if (_o.CampaignStageID != null) {
+      var __CampaignStageID = _o.CampaignStageID.ToArray();
+      _CampaignStageID = CreateCampaignStageIDVector(builder, __CampaignStageID);
+    }
+    var _AfterWhenDate = _o.AfterWhenDate == null ? default(StringOffset) : builder.CreateString(_o.AfterWhenDate);
+    var _WorldRaidBossKill = default(VectorOffset);
+    if (_o.WorldRaidBossKill != null) {
+      var __WorldRaidBossKill = _o.WorldRaidBossKill.ToArray();
+      _WorldRaidBossKill = CreateWorldRaidBossKillVector(builder, __WorldRaidBossKill);
+    }
+    return CreateWorldRaidConditionExcel(
+      builder,
+      _o.Id,
+      _LockUI,
+      _o.HideWhenLocked,
+      _o.AccountLevel,
+      _ScenarioModeId,
+      _CampaignStageID,
+      _o.MultipleConditionCheckType,
+      _AfterWhenDate,
+      _WorldRaidBossKill);
+  }
+}
+
+public class WorldRaidConditionExcelT
+{
+  public long Id { get; set; }
+  public List<string> LockUI { get; set; }
+  public bool HideWhenLocked { get; set; }
+  public long AccountLevel { get; set; }
+  public List<long> ScenarioModeId { get; set; }
+  public List<long> CampaignStageID { get; set; }
+  public SCHALE.Common.FlatData.MultipleConditionCheckType MultipleConditionCheckType { get; set; }
+  public string AfterWhenDate { get; set; }
+  public List<long> WorldRaidBossKill { get; set; }
+
+  public WorldRaidConditionExcelT() {
+    this.Id = 0;
+    this.LockUI = null;
+    this.HideWhenLocked = false;
+    this.AccountLevel = 0;
+    this.ScenarioModeId = null;
+    this.CampaignStageID = null;
+    this.MultipleConditionCheckType = SCHALE.Common.FlatData.MultipleConditionCheckType.And;
+    this.AfterWhenDate = null;
+    this.WorldRaidBossKill = null;
   }
 }
 

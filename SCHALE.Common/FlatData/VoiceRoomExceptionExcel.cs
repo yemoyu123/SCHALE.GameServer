@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct VoiceRoomExceptionExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct VoiceRoomExceptionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.VoiceRoomExceptionExcel> EndVoiceRoomExceptionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.VoiceRoomExceptionExcel>(o);
+  }
+  public VoiceRoomExceptionExcelT UnPack() {
+    var _o = new VoiceRoomExceptionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(VoiceRoomExceptionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("VoiceRoomException");
+    _o.CostumeUniqueId = TableEncryptionService.Convert(this.CostumeUniqueId, key);
+    _o.LinkedCharacterVoicePrintType = TableEncryptionService.Convert(this.LinkedCharacterVoicePrintType, key);
+    _o.LinkedCostumeUniqueId = TableEncryptionService.Convert(this.LinkedCostumeUniqueId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.VoiceRoomExceptionExcel> Pack(FlatBufferBuilder builder, VoiceRoomExceptionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.VoiceRoomExceptionExcel>);
+    return CreateVoiceRoomExceptionExcel(
+      builder,
+      _o.CostumeUniqueId,
+      _o.LinkedCharacterVoicePrintType,
+      _o.LinkedCostumeUniqueId);
+  }
+}
+
+public class VoiceRoomExceptionExcelT
+{
+  public long CostumeUniqueId { get; set; }
+  public SCHALE.Common.FlatData.CVPrintType LinkedCharacterVoicePrintType { get; set; }
+  public long LinkedCostumeUniqueId { get; set; }
+
+  public VoiceRoomExceptionExcelT() {
+    this.CostumeUniqueId = 0;
+    this.LinkedCharacterVoicePrintType = SCHALE.Common.FlatData.CVPrintType.CharacterOverwrite;
+    this.LinkedCostumeUniqueId = 0;
   }
 }
 

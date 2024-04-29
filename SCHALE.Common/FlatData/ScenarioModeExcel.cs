@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioModeExcel : IFlatbufferObject
@@ -225,6 +226,194 @@ public struct ScenarioModeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioModeExcel> EndScenarioModeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioModeExcel>(o);
+  }
+  public ScenarioModeExcelT UnPack() {
+    var _o = new ScenarioModeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioModeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioMode");
+    _o.ModeId = TableEncryptionService.Convert(this.ModeId, key);
+    _o.ModeType = TableEncryptionService.Convert(this.ModeType, key);
+    _o.SubType = TableEncryptionService.Convert(this.SubType, key);
+    _o.VolumeId = TableEncryptionService.Convert(this.VolumeId, key);
+    _o.ChapterId = TableEncryptionService.Convert(this.ChapterId, key);
+    _o.EpisodeId = TableEncryptionService.Convert(this.EpisodeId, key);
+    _o.Hide = TableEncryptionService.Convert(this.Hide, key);
+    _o.Open = TableEncryptionService.Convert(this.Open, key);
+    _o.IsContinue = TableEncryptionService.Convert(this.IsContinue, key);
+    _o.EpisodeContinueModeId = TableEncryptionService.Convert(this.EpisodeContinueModeId, key);
+    _o.FrontScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.FrontScenarioGroupIdLength; ++_j) {_o.FrontScenarioGroupId.Add(TableEncryptionService.Convert(this.FrontScenarioGroupId(_j), key));}
+    _o.StrategyId = TableEncryptionService.Convert(this.StrategyId, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.IsDefeatBattle = TableEncryptionService.Convert(this.IsDefeatBattle, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.BackScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.BackScenarioGroupIdLength; ++_j) {_o.BackScenarioGroupId.Add(TableEncryptionService.Convert(this.BackScenarioGroupId(_j), key));}
+    _o.ClearedModeId = new List<long>();
+    for (var _j = 0; _j < this.ClearedModeIdLength; ++_j) {_o.ClearedModeId.Add(TableEncryptionService.Convert(this.ClearedModeId(_j), key));}
+    _o.ScenarioModeRewardId = TableEncryptionService.Convert(this.ScenarioModeRewardId, key);
+    _o.IsScenarioSpecialReward = TableEncryptionService.Convert(this.IsScenarioSpecialReward, key);
+    _o.AccountLevelLimit = TableEncryptionService.Convert(this.AccountLevelLimit, key);
+    _o.ClearedStageId = TableEncryptionService.Convert(this.ClearedStageId, key);
+    _o.NeedClub = TableEncryptionService.Convert(this.NeedClub, key);
+    _o.NeedClubStudentCount = TableEncryptionService.Convert(this.NeedClubStudentCount, key);
+    _o.NeedTSS = TableEncryptionService.Convert(this.NeedTSS, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentType = TableEncryptionService.Convert(this.EventContentType, key);
+    _o.EventContentCondition = TableEncryptionService.Convert(this.EventContentCondition, key);
+    _o.EventContentConditionGroup = TableEncryptionService.Convert(this.EventContentConditionGroup, key);
+    _o.MapDifficulty = TableEncryptionService.Convert(this.MapDifficulty, key);
+    _o.StepIndex = TableEncryptionService.Convert(this.StepIndex, key);
+    _o.RecommendLevel = TableEncryptionService.Convert(this.RecommendLevel, key);
+    _o.EventIconParcelPath = TableEncryptionService.Convert(this.EventIconParcelPath, key);
+    _o.Lof = TableEncryptionService.Convert(this.Lof, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.FixedEchelonId = TableEncryptionService.Convert(this.FixedEchelonId, key);
+    _o.CompleteReportEventName = TableEncryptionService.Convert(this.CompleteReportEventName, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioModeExcel> Pack(FlatBufferBuilder builder, ScenarioModeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioModeExcel>);
+    var _FrontScenarioGroupId = default(VectorOffset);
+    if (_o.FrontScenarioGroupId != null) {
+      var __FrontScenarioGroupId = _o.FrontScenarioGroupId.ToArray();
+      _FrontScenarioGroupId = CreateFrontScenarioGroupIdVector(builder, __FrontScenarioGroupId);
+    }
+    var _BackScenarioGroupId = default(VectorOffset);
+    if (_o.BackScenarioGroupId != null) {
+      var __BackScenarioGroupId = _o.BackScenarioGroupId.ToArray();
+      _BackScenarioGroupId = CreateBackScenarioGroupIdVector(builder, __BackScenarioGroupId);
+    }
+    var _ClearedModeId = default(VectorOffset);
+    if (_o.ClearedModeId != null) {
+      var __ClearedModeId = _o.ClearedModeId.ToArray();
+      _ClearedModeId = CreateClearedModeIdVector(builder, __ClearedModeId);
+    }
+    var _EventIconParcelPath = _o.EventIconParcelPath == null ? default(StringOffset) : builder.CreateString(_o.EventIconParcelPath);
+    var _CompleteReportEventName = _o.CompleteReportEventName == null ? default(StringOffset) : builder.CreateString(_o.CompleteReportEventName);
+    return CreateScenarioModeExcel(
+      builder,
+      _o.ModeId,
+      _o.ModeType,
+      _o.SubType,
+      _o.VolumeId,
+      _o.ChapterId,
+      _o.EpisodeId,
+      _o.Hide,
+      _o.Open,
+      _o.IsContinue,
+      _o.EpisodeContinueModeId,
+      _FrontScenarioGroupId,
+      _o.StrategyId,
+      _o.GroundId,
+      _o.IsDefeatBattle,
+      _o.BattleDuration,
+      _BackScenarioGroupId,
+      _ClearedModeId,
+      _o.ScenarioModeRewardId,
+      _o.IsScenarioSpecialReward,
+      _o.AccountLevelLimit,
+      _o.ClearedStageId,
+      _o.NeedClub,
+      _o.NeedClubStudentCount,
+      _o.NeedTSS,
+      _o.EventContentId,
+      _o.EventContentType,
+      _o.EventContentCondition,
+      _o.EventContentConditionGroup,
+      _o.MapDifficulty,
+      _o.StepIndex,
+      _o.RecommendLevel,
+      _EventIconParcelPath,
+      _o.Lof,
+      _o.StageTopography,
+      _o.FixedEchelonId,
+      _CompleteReportEventName,
+      _o.EchelonExtensionType);
+  }
+}
+
+public class ScenarioModeExcelT
+{
+  public long ModeId { get; set; }
+  public SCHALE.Common.FlatData.ScenarioModeTypes ModeType { get; set; }
+  public SCHALE.Common.FlatData.ScenarioModeSubTypes SubType { get; set; }
+  public long VolumeId { get; set; }
+  public long ChapterId { get; set; }
+  public long EpisodeId { get; set; }
+  public bool Hide { get; set; }
+  public bool Open { get; set; }
+  public bool IsContinue { get; set; }
+  public long EpisodeContinueModeId { get; set; }
+  public List<long> FrontScenarioGroupId { get; set; }
+  public long StrategyId { get; set; }
+  public long GroundId { get; set; }
+  public bool IsDefeatBattle { get; set; }
+  public long BattleDuration { get; set; }
+  public List<long> BackScenarioGroupId { get; set; }
+  public List<long> ClearedModeId { get; set; }
+  public long ScenarioModeRewardId { get; set; }
+  public bool IsScenarioSpecialReward { get; set; }
+  public long AccountLevelLimit { get; set; }
+  public long ClearedStageId { get; set; }
+  public SCHALE.Common.FlatData.Club NeedClub { get; set; }
+  public int NeedClubStudentCount { get; set; }
+  public long NeedTSS { get; set; }
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentType EventContentType { get; set; }
+  public long EventContentCondition { get; set; }
+  public long EventContentConditionGroup { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty MapDifficulty { get; set; }
+  public int StepIndex { get; set; }
+  public int RecommendLevel { get; set; }
+  public string EventIconParcelPath { get; set; }
+  public bool Lof { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public long FixedEchelonId { get; set; }
+  public string CompleteReportEventName { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+
+  public ScenarioModeExcelT() {
+    this.ModeId = 0;
+    this.ModeType = SCHALE.Common.FlatData.ScenarioModeTypes.None;
+    this.SubType = SCHALE.Common.FlatData.ScenarioModeSubTypes.None;
+    this.VolumeId = 0;
+    this.ChapterId = 0;
+    this.EpisodeId = 0;
+    this.Hide = false;
+    this.Open = false;
+    this.IsContinue = false;
+    this.EpisodeContinueModeId = 0;
+    this.FrontScenarioGroupId = null;
+    this.StrategyId = 0;
+    this.GroundId = 0;
+    this.IsDefeatBattle = false;
+    this.BattleDuration = 0;
+    this.BackScenarioGroupId = null;
+    this.ClearedModeId = null;
+    this.ScenarioModeRewardId = 0;
+    this.IsScenarioSpecialReward = false;
+    this.AccountLevelLimit = 0;
+    this.ClearedStageId = 0;
+    this.NeedClub = SCHALE.Common.FlatData.Club.None;
+    this.NeedClubStudentCount = 0;
+    this.NeedTSS = 0;
+    this.EventContentId = 0;
+    this.EventContentType = SCHALE.Common.FlatData.EventContentType.Stage;
+    this.EventContentCondition = 0;
+    this.EventContentConditionGroup = 0;
+    this.MapDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.StepIndex = 0;
+    this.RecommendLevel = 0;
+    this.EventIconParcelPath = null;
+    this.Lof = false;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.FixedEchelonId = 0;
+    this.CompleteReportEventName = null;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
   }
 }
 

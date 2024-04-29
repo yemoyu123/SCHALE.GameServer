@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeFieldExcel : IFlatbufferObject
@@ -53,6 +54,40 @@ public struct LocalizeFieldExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeFieldExcel> EndLocalizeFieldExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeFieldExcel>(o);
+  }
+  public LocalizeFieldExcelT UnPack() {
+    var _o = new LocalizeFieldExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeFieldExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeField");
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.Kr = TableEncryptionService.Convert(this.Kr, key);
+    _o.Jp = TableEncryptionService.Convert(this.Jp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeFieldExcel> Pack(FlatBufferBuilder builder, LocalizeFieldExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeFieldExcel>);
+    var _Kr = _o.Kr == null ? default(StringOffset) : builder.CreateString(_o.Kr);
+    var _Jp = _o.Jp == null ? default(StringOffset) : builder.CreateString(_o.Jp);
+    return CreateLocalizeFieldExcel(
+      builder,
+      _o.Key,
+      _Kr,
+      _Jp);
+  }
+}
+
+public class LocalizeFieldExcelT
+{
+  public uint Key { get; set; }
+  public string Kr { get; set; }
+  public string Jp { get; set; }
+
+  public LocalizeFieldExcelT() {
+    this.Key = 0;
+    this.Kr = null;
+    this.Jp = null;
   }
 }
 

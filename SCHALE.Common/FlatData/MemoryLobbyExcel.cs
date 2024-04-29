@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MemoryLobbyExcel : IFlatbufferObject
@@ -103,6 +104,75 @@ public struct MemoryLobbyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MemoryLobbyExcel> EndMemoryLobbyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MemoryLobbyExcel>(o);
+  }
+  public MemoryLobbyExcelT UnPack() {
+    var _o = new MemoryLobbyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MemoryLobbyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MemoryLobby");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.MemoryLobbyCategory = TableEncryptionService.Convert(this.MemoryLobbyCategory, key);
+    _o.SlotTextureName = TableEncryptionService.Convert(this.SlotTextureName, key);
+    _o.RewardTextureName = TableEncryptionService.Convert(this.RewardTextureName, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.AudioClipJp = TableEncryptionService.Convert(this.AudioClipJp, key);
+    _o.AudioClipKr = TableEncryptionService.Convert(this.AudioClipKr, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MemoryLobbyExcel> Pack(FlatBufferBuilder builder, MemoryLobbyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MemoryLobbyExcel>);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _SlotTextureName = _o.SlotTextureName == null ? default(StringOffset) : builder.CreateString(_o.SlotTextureName);
+    var _RewardTextureName = _o.RewardTextureName == null ? default(StringOffset) : builder.CreateString(_o.RewardTextureName);
+    var _AudioClipJp = _o.AudioClipJp == null ? default(StringOffset) : builder.CreateString(_o.AudioClipJp);
+    var _AudioClipKr = _o.AudioClipKr == null ? default(StringOffset) : builder.CreateString(_o.AudioClipKr);
+    return CreateMemoryLobbyExcel(
+      builder,
+      _o.Id,
+      _o.ProductionStep,
+      _o.LocalizeEtcId,
+      _o.CharacterId,
+      _PrefabName,
+      _o.MemoryLobbyCategory,
+      _SlotTextureName,
+      _RewardTextureName,
+      _o.BGMId,
+      _AudioClipJp,
+      _AudioClipKr);
+  }
+}
+
+public class MemoryLobbyExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public long CharacterId { get; set; }
+  public string PrefabName { get; set; }
+  public SCHALE.Common.FlatData.MemoryLobbyCategory MemoryLobbyCategory { get; set; }
+  public string SlotTextureName { get; set; }
+  public string RewardTextureName { get; set; }
+  public long BGMId { get; set; }
+  public string AudioClipJp { get; set; }
+  public string AudioClipKr { get; set; }
+
+  public MemoryLobbyExcelT() {
+    this.Id = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.LocalizeEtcId = 0;
+    this.CharacterId = 0;
+    this.PrefabName = null;
+    this.MemoryLobbyCategory = SCHALE.Common.FlatData.MemoryLobbyCategory.None;
+    this.SlotTextureName = null;
+    this.RewardTextureName = null;
+    this.BGMId = 0;
+    this.AudioClipJp = null;
+    this.AudioClipKr = null;
   }
 }
 

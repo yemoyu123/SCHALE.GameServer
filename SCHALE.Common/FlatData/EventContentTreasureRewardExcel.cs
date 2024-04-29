@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentTreasureRewardExcel : IFlatbufferObject
@@ -123,6 +124,87 @@ public struct EventContentTreasureRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentTreasureRewardExcel> EndEventContentTreasureRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentTreasureRewardExcel>(o);
+  }
+  public EventContentTreasureRewardExcelT UnPack() {
+    var _o = new EventContentTreasureRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentTreasureRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentTreasureReward");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeCodeID = TableEncryptionService.Convert(this.LocalizeCodeID, key);
+    _o.CellUnderImageWidth = TableEncryptionService.Convert(this.CellUnderImageWidth, key);
+    _o.CellUnderImageHeight = TableEncryptionService.Convert(this.CellUnderImageHeight, key);
+    _o.HiddenImage = TableEncryptionService.Convert(this.HiddenImage, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+    _o.CellUnderImagePath = TableEncryptionService.Convert(this.CellUnderImagePath, key);
+    _o.TreasureSmallImagePath = TableEncryptionService.Convert(this.TreasureSmallImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentTreasureRewardExcel> Pack(FlatBufferBuilder builder, EventContentTreasureRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentTreasureRewardExcel>);
+    var _LocalizeCodeID = _o.LocalizeCodeID == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCodeID);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    var _CellUnderImagePath = _o.CellUnderImagePath == null ? default(StringOffset) : builder.CreateString(_o.CellUnderImagePath);
+    var _TreasureSmallImagePath = _o.TreasureSmallImagePath == null ? default(StringOffset) : builder.CreateString(_o.TreasureSmallImagePath);
+    return CreateEventContentTreasureRewardExcel(
+      builder,
+      _o.Id,
+      _LocalizeCodeID,
+      _o.CellUnderImageWidth,
+      _o.CellUnderImageHeight,
+      _o.HiddenImage,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount,
+      _CellUnderImagePath,
+      _TreasureSmallImagePath);
+  }
+}
+
+public class EventContentTreasureRewardExcelT
+{
+  public long Id { get; set; }
+  public string LocalizeCodeID { get; set; }
+  public int CellUnderImageWidth { get; set; }
+  public int CellUnderImageHeight { get; set; }
+  public bool HiddenImage { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+  public string CellUnderImagePath { get; set; }
+  public string TreasureSmallImagePath { get; set; }
+
+  public EventContentTreasureRewardExcelT() {
+    this.Id = 0;
+    this.LocalizeCodeID = null;
+    this.CellUnderImageWidth = 0;
+    this.CellUnderImageHeight = 0;
+    this.HiddenImage = false;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
+    this.CellUnderImagePath = null;
+    this.TreasureSmallImagePath = null;
   }
 }
 

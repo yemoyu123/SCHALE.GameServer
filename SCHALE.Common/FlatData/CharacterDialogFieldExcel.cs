@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterDialogFieldExcel : IFlatbufferObject
@@ -87,6 +88,69 @@ public struct CharacterDialogFieldExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterDialogFieldExcel> EndCharacterDialogFieldExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterDialogFieldExcel>(o);
+  }
+  public CharacterDialogFieldExcelT UnPack() {
+    var _o = new CharacterDialogFieldExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterDialogFieldExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterDialogField");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.Phase = TableEncryptionService.Convert(this.Phase, key);
+    _o.TargetIndex = TableEncryptionService.Convert(this.TargetIndex, key);
+    _o.DialogType = TableEncryptionService.Convert(this.DialogType, key);
+    _o.Duration = TableEncryptionService.Convert(this.Duration, key);
+    _o.MotionName = TableEncryptionService.Convert(this.MotionName, key);
+    _o.IsInteractionDialog = TableEncryptionService.Convert(this.IsInteractionDialog, key);
+    _o.HideUI = TableEncryptionService.Convert(this.HideUI, key);
+    _o.LocalizeKR = TableEncryptionService.Convert(this.LocalizeKR, key);
+    _o.LocalizeJP = TableEncryptionService.Convert(this.LocalizeJP, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterDialogFieldExcel> Pack(FlatBufferBuilder builder, CharacterDialogFieldExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterDialogFieldExcel>);
+    var _MotionName = _o.MotionName == null ? default(StringOffset) : builder.CreateString(_o.MotionName);
+    var _LocalizeKR = _o.LocalizeKR == null ? default(StringOffset) : builder.CreateString(_o.LocalizeKR);
+    var _LocalizeJP = _o.LocalizeJP == null ? default(StringOffset) : builder.CreateString(_o.LocalizeJP);
+    return CreateCharacterDialogFieldExcel(
+      builder,
+      _o.GroupId,
+      _o.Phase,
+      _o.TargetIndex,
+      _o.DialogType,
+      _o.Duration,
+      _MotionName,
+      _o.IsInteractionDialog,
+      _o.HideUI,
+      _LocalizeKR,
+      _LocalizeJP);
+  }
+}
+
+public class CharacterDialogFieldExcelT
+{
+  public long GroupId { get; set; }
+  public int Phase { get; set; }
+  public int TargetIndex { get; set; }
+  public SCHALE.Common.FlatData.FieldDialogType DialogType { get; set; }
+  public long Duration { get; set; }
+  public string MotionName { get; set; }
+  public bool IsInteractionDialog { get; set; }
+  public bool HideUI { get; set; }
+  public string LocalizeKR { get; set; }
+  public string LocalizeJP { get; set; }
+
+  public CharacterDialogFieldExcelT() {
+    this.GroupId = 0;
+    this.Phase = 0;
+    this.TargetIndex = 0;
+    this.DialogType = SCHALE.Common.FlatData.FieldDialogType.None;
+    this.Duration = 0;
+    this.MotionName = null;
+    this.IsInteractionDialog = false;
+    this.HideUI = false;
+    this.LocalizeKR = null;
+    this.LocalizeJP = null;
   }
 }
 

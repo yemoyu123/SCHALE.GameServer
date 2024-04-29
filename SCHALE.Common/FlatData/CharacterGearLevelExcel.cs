@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterGearLevelExcel : IFlatbufferObject
@@ -65,6 +66,50 @@ public struct CharacterGearLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterGearLevelExcel> EndCharacterGearLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterGearLevelExcel>(o);
+  }
+  public CharacterGearLevelExcelT UnPack() {
+    var _o = new CharacterGearLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterGearLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterGearLevel");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.TierLevelExp = new List<long>();
+    for (var _j = 0; _j < this.TierLevelExpLength; ++_j) {_o.TierLevelExp.Add(TableEncryptionService.Convert(this.TierLevelExp(_j), key));}
+    _o.TotalExp = new List<long>();
+    for (var _j = 0; _j < this.TotalExpLength; ++_j) {_o.TotalExp.Add(TableEncryptionService.Convert(this.TotalExp(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterGearLevelExcel> Pack(FlatBufferBuilder builder, CharacterGearLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterGearLevelExcel>);
+    var _TierLevelExp = default(VectorOffset);
+    if (_o.TierLevelExp != null) {
+      var __TierLevelExp = _o.TierLevelExp.ToArray();
+      _TierLevelExp = CreateTierLevelExpVector(builder, __TierLevelExp);
+    }
+    var _TotalExp = default(VectorOffset);
+    if (_o.TotalExp != null) {
+      var __TotalExp = _o.TotalExp.ToArray();
+      _TotalExp = CreateTotalExpVector(builder, __TotalExp);
+    }
+    return CreateCharacterGearLevelExcel(
+      builder,
+      _o.Level,
+      _TierLevelExp,
+      _TotalExp);
+  }
+}
+
+public class CharacterGearLevelExcelT
+{
+  public int Level { get; set; }
+  public List<long> TierLevelExp { get; set; }
+  public List<long> TotalExp { get; set; }
+
+  public CharacterGearLevelExcelT() {
+    this.Level = 0;
+    this.TierLevelExp = null;
+    this.TotalExp = null;
   }
 }
 

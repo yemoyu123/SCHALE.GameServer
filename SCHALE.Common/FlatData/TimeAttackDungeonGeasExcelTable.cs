@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TimeAttackDungeonGeasExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct TimeAttackDungeonGeasExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelTable> EndTimeAttackDungeonGeasExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelTable>(o);
+  }
+  public TimeAttackDungeonGeasExcelTableT UnPack() {
+    var _o = new TimeAttackDungeonGeasExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TimeAttackDungeonGeasExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TimeAttackDungeonGeasExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelTable> Pack(FlatBufferBuilder builder, TimeAttackDungeonGeasExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateTimeAttackDungeonGeasExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class TimeAttackDungeonGeasExcelTableT
+{
+  public List<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcelT> DataList { get; set; }
+
+  public TimeAttackDungeonGeasExcelTableT() {
+    this.DataList = null;
   }
 }
 

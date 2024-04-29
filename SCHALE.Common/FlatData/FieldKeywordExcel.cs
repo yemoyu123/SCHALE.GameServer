@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldKeywordExcel : IFlatbufferObject
@@ -63,6 +64,45 @@ public struct FieldKeywordExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldKeywordExcel> EndFieldKeywordExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldKeywordExcel>(o);
+  }
+  public FieldKeywordExcelT UnPack() {
+    var _o = new FieldKeywordExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldKeywordExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldKeyword");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.NameLocalizeKey = TableEncryptionService.Convert(this.NameLocalizeKey, key);
+    _o.DescriptionLocalizeKey = TableEncryptionService.Convert(this.DescriptionLocalizeKey, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldKeywordExcel> Pack(FlatBufferBuilder builder, FieldKeywordExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldKeywordExcel>);
+    var _NameLocalizeKey = _o.NameLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.NameLocalizeKey);
+    var _DescriptionLocalizeKey = _o.DescriptionLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.DescriptionLocalizeKey);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    return CreateFieldKeywordExcel(
+      builder,
+      _o.UniqueId,
+      _NameLocalizeKey,
+      _DescriptionLocalizeKey,
+      _ImagePath);
+  }
+}
+
+public class FieldKeywordExcelT
+{
+  public long UniqueId { get; set; }
+  public string NameLocalizeKey { get; set; }
+  public string DescriptionLocalizeKey { get; set; }
+  public string ImagePath { get; set; }
+
+  public FieldKeywordExcelT() {
+    this.UniqueId = 0;
+    this.NameLocalizeKey = null;
+    this.DescriptionLocalizeKey = null;
+    this.ImagePath = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestGroupBonusExcel : IFlatbufferObject
@@ -181,6 +182,124 @@ public struct ConquestGroupBonusExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcel> EndConquestGroupBonusExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcel>(o);
+  }
+  public ConquestGroupBonusExcelT UnPack() {
+    var _o = new ConquestGroupBonusExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestGroupBonusExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestGroupBonus");
+    _o.ConquestBonusId = TableEncryptionService.Convert(this.ConquestBonusId, key);
+    _o.School_ = new List<SCHALE.Common.FlatData.School>();
+    for (var _j = 0; _j < this.School_Length; ++_j) {_o.School_.Add(TableEncryptionService.Convert(this.School_(_j), key));}
+    _o.RecommandLocalizeEtcId = TableEncryptionService.Convert(this.RecommandLocalizeEtcId, key);
+    _o.BonusParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.BonusParcelTypeLength; ++_j) {_o.BonusParcelType.Add(TableEncryptionService.Convert(this.BonusParcelType(_j), key));}
+    _o.BonusId = new List<long>();
+    for (var _j = 0; _j < this.BonusIdLength; ++_j) {_o.BonusId.Add(TableEncryptionService.Convert(this.BonusId(_j), key));}
+    _o.BonusCharacterCount1 = new List<int>();
+    for (var _j = 0; _j < this.BonusCharacterCount1Length; ++_j) {_o.BonusCharacterCount1.Add(TableEncryptionService.Convert(this.BonusCharacterCount1(_j), key));}
+    _o.BonusPercentage1 = new List<long>();
+    for (var _j = 0; _j < this.BonusPercentage1Length; ++_j) {_o.BonusPercentage1.Add(TableEncryptionService.Convert(this.BonusPercentage1(_j), key));}
+    _o.BonusCharacterCount2 = new List<int>();
+    for (var _j = 0; _j < this.BonusCharacterCount2Length; ++_j) {_o.BonusCharacterCount2.Add(TableEncryptionService.Convert(this.BonusCharacterCount2(_j), key));}
+    _o.BonusPercentage2 = new List<long>();
+    for (var _j = 0; _j < this.BonusPercentage2Length; ++_j) {_o.BonusPercentage2.Add(TableEncryptionService.Convert(this.BonusPercentage2(_j), key));}
+    _o.BonusCharacterCount3 = new List<int>();
+    for (var _j = 0; _j < this.BonusCharacterCount3Length; ++_j) {_o.BonusCharacterCount3.Add(TableEncryptionService.Convert(this.BonusCharacterCount3(_j), key));}
+    _o.BonusPercentage3 = new List<long>();
+    for (var _j = 0; _j < this.BonusPercentage3Length; ++_j) {_o.BonusPercentage3.Add(TableEncryptionService.Convert(this.BonusPercentage3(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcel> Pack(FlatBufferBuilder builder, ConquestGroupBonusExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcel>);
+    var _School_ = default(VectorOffset);
+    if (_o.School_ != null) {
+      var __School_ = _o.School_.ToArray();
+      _School_ = CreateSchool_Vector(builder, __School_);
+    }
+    var _BonusParcelType = default(VectorOffset);
+    if (_o.BonusParcelType != null) {
+      var __BonusParcelType = _o.BonusParcelType.ToArray();
+      _BonusParcelType = CreateBonusParcelTypeVector(builder, __BonusParcelType);
+    }
+    var _BonusId = default(VectorOffset);
+    if (_o.BonusId != null) {
+      var __BonusId = _o.BonusId.ToArray();
+      _BonusId = CreateBonusIdVector(builder, __BonusId);
+    }
+    var _BonusCharacterCount1 = default(VectorOffset);
+    if (_o.BonusCharacterCount1 != null) {
+      var __BonusCharacterCount1 = _o.BonusCharacterCount1.ToArray();
+      _BonusCharacterCount1 = CreateBonusCharacterCount1Vector(builder, __BonusCharacterCount1);
+    }
+    var _BonusPercentage1 = default(VectorOffset);
+    if (_o.BonusPercentage1 != null) {
+      var __BonusPercentage1 = _o.BonusPercentage1.ToArray();
+      _BonusPercentage1 = CreateBonusPercentage1Vector(builder, __BonusPercentage1);
+    }
+    var _BonusCharacterCount2 = default(VectorOffset);
+    if (_o.BonusCharacterCount2 != null) {
+      var __BonusCharacterCount2 = _o.BonusCharacterCount2.ToArray();
+      _BonusCharacterCount2 = CreateBonusCharacterCount2Vector(builder, __BonusCharacterCount2);
+    }
+    var _BonusPercentage2 = default(VectorOffset);
+    if (_o.BonusPercentage2 != null) {
+      var __BonusPercentage2 = _o.BonusPercentage2.ToArray();
+      _BonusPercentage2 = CreateBonusPercentage2Vector(builder, __BonusPercentage2);
+    }
+    var _BonusCharacterCount3 = default(VectorOffset);
+    if (_o.BonusCharacterCount3 != null) {
+      var __BonusCharacterCount3 = _o.BonusCharacterCount3.ToArray();
+      _BonusCharacterCount3 = CreateBonusCharacterCount3Vector(builder, __BonusCharacterCount3);
+    }
+    var _BonusPercentage3 = default(VectorOffset);
+    if (_o.BonusPercentage3 != null) {
+      var __BonusPercentage3 = _o.BonusPercentage3.ToArray();
+      _BonusPercentage3 = CreateBonusPercentage3Vector(builder, __BonusPercentage3);
+    }
+    return CreateConquestGroupBonusExcel(
+      builder,
+      _o.ConquestBonusId,
+      _School_,
+      _o.RecommandLocalizeEtcId,
+      _BonusParcelType,
+      _BonusId,
+      _BonusCharacterCount1,
+      _BonusPercentage1,
+      _BonusCharacterCount2,
+      _BonusPercentage2,
+      _BonusCharacterCount3,
+      _BonusPercentage3);
+  }
+}
+
+public class ConquestGroupBonusExcelT
+{
+  public long ConquestBonusId { get; set; }
+  public List<SCHALE.Common.FlatData.School> School_ { get; set; }
+  public uint RecommandLocalizeEtcId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> BonusParcelType { get; set; }
+  public List<long> BonusId { get; set; }
+  public List<int> BonusCharacterCount1 { get; set; }
+  public List<long> BonusPercentage1 { get; set; }
+  public List<int> BonusCharacterCount2 { get; set; }
+  public List<long> BonusPercentage2 { get; set; }
+  public List<int> BonusCharacterCount3 { get; set; }
+  public List<long> BonusPercentage3 { get; set; }
+
+  public ConquestGroupBonusExcelT() {
+    this.ConquestBonusId = 0;
+    this.School_ = null;
+    this.RecommandLocalizeEtcId = 0;
+    this.BonusParcelType = null;
+    this.BonusId = null;
+    this.BonusCharacterCount1 = null;
+    this.BonusPercentage1 = null;
+    this.BonusCharacterCount2 = null;
+    this.BonusPercentage2 = null;
+    this.BonusCharacterCount3 = null;
+    this.BonusPercentage3 = null;
   }
 }
 

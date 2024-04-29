@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentSpoilerPopupExcel : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct ContentSpoilerPopupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentSpoilerPopupExcel> EndContentSpoilerPopupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentSpoilerPopupExcel>(o);
+  }
+  public ContentSpoilerPopupExcelT UnPack() {
+    var _o = new ContentSpoilerPopupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentSpoilerPopupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentSpoilerPopup");
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.SpoilerPopupTitle = TableEncryptionService.Convert(this.SpoilerPopupTitle, key);
+    _o.SpoilerPopupDescription = TableEncryptionService.Convert(this.SpoilerPopupDescription, key);
+    _o.IsWarningPopUp = TableEncryptionService.Convert(this.IsWarningPopUp, key);
+    _o.ConditionScenarioModeId = TableEncryptionService.Convert(this.ConditionScenarioModeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentSpoilerPopupExcel> Pack(FlatBufferBuilder builder, ContentSpoilerPopupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentSpoilerPopupExcel>);
+    var _SpoilerPopupTitle = _o.SpoilerPopupTitle == null ? default(StringOffset) : builder.CreateString(_o.SpoilerPopupTitle);
+    var _SpoilerPopupDescription = _o.SpoilerPopupDescription == null ? default(StringOffset) : builder.CreateString(_o.SpoilerPopupDescription);
+    return CreateContentSpoilerPopupExcel(
+      builder,
+      _o.ContentType,
+      _SpoilerPopupTitle,
+      _SpoilerPopupDescription,
+      _o.IsWarningPopUp,
+      _o.ConditionScenarioModeId);
+  }
+}
+
+public class ContentSpoilerPopupExcelT
+{
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public string SpoilerPopupTitle { get; set; }
+  public string SpoilerPopupDescription { get; set; }
+  public bool IsWarningPopUp { get; set; }
+  public long ConditionScenarioModeId { get; set; }
+
+  public ContentSpoilerPopupExcelT() {
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.SpoilerPopupTitle = null;
+    this.SpoilerPopupDescription = null;
+    this.IsWarningPopUp = false;
+    this.ConditionScenarioModeId = 0;
   }
 }
 

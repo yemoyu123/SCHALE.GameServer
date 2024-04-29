@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMiniEventTokenExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct EventContentMiniEventTokenExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcel> EndEventContentMiniEventTokenExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcel>(o);
+  }
+  public EventContentMiniEventTokenExcelT UnPack() {
+    var _o = new EventContentMiniEventTokenExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMiniEventTokenExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMiniEventToken");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ItemUniqueId = TableEncryptionService.Convert(this.ItemUniqueId, key);
+    _o.MaximumAmount = TableEncryptionService.Convert(this.MaximumAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcel> Pack(FlatBufferBuilder builder, EventContentMiniEventTokenExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcel>);
+    return CreateEventContentMiniEventTokenExcel(
+      builder,
+      _o.EventContentId,
+      _o.ItemUniqueId,
+      _o.MaximumAmount);
+  }
+}
+
+public class EventContentMiniEventTokenExcelT
+{
+  public long EventContentId { get; set; }
+  public long ItemUniqueId { get; set; }
+  public long MaximumAmount { get; set; }
+
+  public EventContentMiniEventTokenExcelT() {
+    this.EventContentId = 0;
+    this.ItemUniqueId = 0;
+    this.MaximumAmount = 0;
   }
 }
 

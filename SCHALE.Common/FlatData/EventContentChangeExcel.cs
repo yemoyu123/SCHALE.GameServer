@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentChangeExcel : IFlatbufferObject
@@ -65,6 +66,62 @@ public struct EventContentChangeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentChangeExcel> EndEventContentChangeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentChangeExcel>(o);
+  }
+  public EventContentChangeExcelT UnPack() {
+    var _o = new EventContentChangeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentChangeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentChange");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ChangeCount = TableEncryptionService.Convert(this.ChangeCount, key);
+    _o.IsLast = TableEncryptionService.Convert(this.IsLast, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.RewardAmount = TableEncryptionService.Convert(this.RewardAmount, key);
+    _o.ChangeCostType = TableEncryptionService.Convert(this.ChangeCostType, key);
+    _o.ChangeCostId = TableEncryptionService.Convert(this.ChangeCostId, key);
+    _o.ChangeCostAmount = TableEncryptionService.Convert(this.ChangeCostAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentChangeExcel> Pack(FlatBufferBuilder builder, EventContentChangeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentChangeExcel>);
+    return CreateEventContentChangeExcel(
+      builder,
+      _o.EventContentId,
+      _o.ChangeCount,
+      _o.IsLast,
+      _o.RewardParcelType,
+      _o.RewardId,
+      _o.RewardAmount,
+      _o.ChangeCostType,
+      _o.ChangeCostId,
+      _o.ChangeCostAmount);
+  }
+}
+
+public class EventContentChangeExcelT
+{
+  public long EventContentId { get; set; }
+  public long ChangeCount { get; set; }
+  public bool IsLast { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardId { get; set; }
+  public int RewardAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ChangeCostType { get; set; }
+  public long ChangeCostId { get; set; }
+  public int ChangeCostAmount { get; set; }
+
+  public EventContentChangeExcelT() {
+    this.EventContentId = 0;
+    this.ChangeCount = 0;
+    this.IsLast = false;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardId = 0;
+    this.RewardAmount = 0;
+    this.ChangeCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ChangeCostId = 0;
+    this.ChangeCostAmount = 0;
   }
 }
 

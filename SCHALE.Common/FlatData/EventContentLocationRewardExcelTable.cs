@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentLocationRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentLocationRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentLocationRewardExcelTable> EndEventContentLocationRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentLocationRewardExcelTable>(o);
+  }
+  public EventContentLocationRewardExcelTableT UnPack() {
+    var _o = new EventContentLocationRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentLocationRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentLocationRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentLocationRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentLocationRewardExcelTable> Pack(FlatBufferBuilder builder, EventContentLocationRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentLocationRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentLocationRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentLocationRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentLocationRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentLocationRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentLocationRewardExcelT> DataList { get; set; }
+
+  public EventContentLocationRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterLevelExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CharacterLevelExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterLevelExcelTable> EndCharacterLevelExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterLevelExcelTable>(o);
+  }
+  public CharacterLevelExcelTableT UnPack() {
+    var _o = new CharacterLevelExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterLevelExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterLevelExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CharacterLevelExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterLevelExcelTable> Pack(FlatBufferBuilder builder, CharacterLevelExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterLevelExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CharacterLevelExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CharacterLevelExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCharacterLevelExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CharacterLevelExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CharacterLevelExcelT> DataList { get; set; }
+
+  public CharacterLevelExcelTableT() {
+    this.DataList = null;
   }
 }
 

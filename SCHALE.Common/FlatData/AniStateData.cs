@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AniStateData : IFlatbufferObject
@@ -119,6 +120,87 @@ public struct AniStateData : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AniStateData> EndAniStateData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AniStateData>(o);
+  }
+  public AniStateDataT UnPack() {
+    var _o = new AniStateDataT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AniStateDataT _o) {
+		byte[] key = { 0 };
+    _o.StateName = TableEncryptionService.Convert(this.StateName, key);
+    _o.StatePrefix = TableEncryptionService.Convert(this.StatePrefix, key);
+    _o.StateNameWithPrefix = TableEncryptionService.Convert(this.StateNameWithPrefix, key);
+    _o.Tag = TableEncryptionService.Convert(this.Tag, key);
+    _o.SpeedParameterName = TableEncryptionService.Convert(this.SpeedParameterName, key);
+    _o.SpeedParamter = TableEncryptionService.Convert(this.SpeedParamter, key);
+    _o.StateSpeed = TableEncryptionService.Convert(this.StateSpeed, key);
+    _o.ClipName = TableEncryptionService.Convert(this.ClipName, key);
+    _o.Length = TableEncryptionService.Convert(this.Length, key);
+    _o.FrameRate = TableEncryptionService.Convert(this.FrameRate, key);
+    _o.IsLooping = TableEncryptionService.Convert(this.IsLooping, key);
+    _o.Events = new List<SCHALE.Common.FlatData.AniEventDataT>();
+    for (var _j = 0; _j < this.EventsLength; ++_j) {_o.Events.Add(this.Events(_j).HasValue ? this.Events(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.AniStateData> Pack(FlatBufferBuilder builder, AniStateDataT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AniStateData>);
+    var _StateName = _o.StateName == null ? default(StringOffset) : builder.CreateString(_o.StateName);
+    var _StatePrefix = _o.StatePrefix == null ? default(StringOffset) : builder.CreateString(_o.StatePrefix);
+    var _StateNameWithPrefix = _o.StateNameWithPrefix == null ? default(StringOffset) : builder.CreateString(_o.StateNameWithPrefix);
+    var _Tag = _o.Tag == null ? default(StringOffset) : builder.CreateString(_o.Tag);
+    var _SpeedParameterName = _o.SpeedParameterName == null ? default(StringOffset) : builder.CreateString(_o.SpeedParameterName);
+    var _ClipName = _o.ClipName == null ? default(StringOffset) : builder.CreateString(_o.ClipName);
+    var _Events = default(VectorOffset);
+    if (_o.Events != null) {
+      var __Events = new Offset<SCHALE.Common.FlatData.AniEventData>[_o.Events.Count];
+      for (var _j = 0; _j < __Events.Length; ++_j) { __Events[_j] = SCHALE.Common.FlatData.AniEventData.Pack(builder, _o.Events[_j]); }
+      _Events = CreateEventsVector(builder, __Events);
+    }
+    return CreateAniStateData(
+      builder,
+      _StateName,
+      _StatePrefix,
+      _StateNameWithPrefix,
+      _Tag,
+      _SpeedParameterName,
+      _o.SpeedParamter,
+      _o.StateSpeed,
+      _ClipName,
+      _o.Length,
+      _o.FrameRate,
+      _o.IsLooping,
+      _Events);
+  }
+}
+
+public class AniStateDataT
+{
+  public string StateName { get; set; }
+  public string StatePrefix { get; set; }
+  public string StateNameWithPrefix { get; set; }
+  public string Tag { get; set; }
+  public string SpeedParameterName { get; set; }
+  public float SpeedParamter { get; set; }
+  public float StateSpeed { get; set; }
+  public string ClipName { get; set; }
+  public float Length { get; set; }
+  public float FrameRate { get; set; }
+  public bool IsLooping { get; set; }
+  public List<SCHALE.Common.FlatData.AniEventDataT> Events { get; set; }
+
+  public AniStateDataT() {
+    this.StateName = null;
+    this.StatePrefix = null;
+    this.StateNameWithPrefix = null;
+    this.Tag = null;
+    this.SpeedParameterName = null;
+    this.SpeedParamter = 0.0f;
+    this.StateSpeed = 0.0f;
+    this.ClipName = null;
+    this.Length = 0.0f;
+    this.FrameRate = 0.0f;
+    this.IsLooping = false;
+    this.Events = null;
   }
 }
 

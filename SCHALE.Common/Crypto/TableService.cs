@@ -1,5 +1,9 @@
-﻿using MersenneTwister;
+﻿using Google.FlatBuffers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using SCHALE.Common.Crypto.XXHash;
+using SCHALE.Common.FlatData;
+using System.Reflection;
 using System.Text;
 
 namespace SCHALE.Common.Crypto
@@ -19,17 +23,39 @@ namespace SCHALE.Common.Crypto
             using var xxhash = XXHash32.Create();
             xxhash.ComputeHash(Encoding.UTF8.GetBytes(key));
 
-            var mt = MTRandom.Create((int)xxhash.HashUInt32);
+            var mt = new MersenneTwister((int)xxhash.HashUInt32);
 
             int i = 0;
             while (i < password.Length)
             {
-                // IDK why the random result is off by one in this implementation compared to the game's
-                Array.Copy(BitConverter.GetBytes(mt.Next() + 1), 0, password, i, Math.Min(4, password.Length - i));
+                Array.Copy(BitConverter.GetBytes(mt.Next()), 0, password, i, Math.Min(4, password.Length - i));
                 i += 4;
             }
 
             return password;
         }
+
+#if DEBUG
+        public static void DumpExcels(string bytesDir, string destDir)
+        {
+            foreach (var type in Assembly.GetAssembly(typeof(AcademyFavorScheduleExcelTable))!.GetTypes().Where(t => t.IsAssignableTo(typeof(IFlatbufferObject)) && t.Name.EndsWith("ExcelTable")))
+            {
+                var bytesFilePath = Path.Join(bytesDir, $"{type.Name}.bytes");
+                if (!File.Exists(bytesFilePath))
+                {
+                    Console.WriteLine($"bytes files for {type.Name} not found. skipping...");
+                    continue;
+                }
+
+                var bytes = File.ReadAllBytes(bytesFilePath);
+                TableEncryptionService.XOR(type.Name, bytes);
+                var inst = type.GetMethod($"GetRootAs{type.Name}", BindingFlags.Static | BindingFlags.Public, [typeof(ByteBuffer)])!.Invoke(null, [new ByteBuffer(bytes)]);
+
+                var obj = type.GetMethod("UnPack", BindingFlags.Instance | BindingFlags.Public)!.Invoke(inst, null);
+                File.WriteAllText(Path.Join(destDir, $"{type.Name}.json"), JsonConvert.SerializeObject(obj, Formatting.Indented, new StringEnumConverter()));
+                Console.WriteLine($"Dumped {type.Name} successfully");
+            }
+        }
+#endif
     }
 }

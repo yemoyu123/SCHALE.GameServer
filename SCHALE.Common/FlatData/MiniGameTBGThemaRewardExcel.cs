@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameTBGThemaRewardExcel : IFlatbufferObject
@@ -97,6 +98,76 @@ public struct MiniGameTBGThemaRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameTBGThemaRewardExcel> EndMiniGameTBGThemaRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameTBGThemaRewardExcel>(o);
+  }
+  public MiniGameTBGThemaRewardExcelT UnPack() {
+    var _o = new MiniGameTBGThemaRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameTBGThemaRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameTBGThemaReward");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ThemaRound = TableEncryptionService.Convert(this.ThemaRound, key);
+    _o.ThemaUniqueId = TableEncryptionService.Convert(this.ThemaUniqueId, key);
+    _o.IsLoop = TableEncryptionService.Convert(this.IsLoop, key);
+    _o.MiniGameTBGThemaRewardType = TableEncryptionService.Convert(this.MiniGameTBGThemaRewardType, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<int>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameTBGThemaRewardExcel> Pack(FlatBufferBuilder builder, MiniGameTBGThemaRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameTBGThemaRewardExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateMiniGameTBGThemaRewardExcel(
+      builder,
+      _o.EventContentId,
+      _o.ThemaRound,
+      _o.ThemaUniqueId,
+      _o.IsLoop,
+      _o.MiniGameTBGThemaRewardType,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class MiniGameTBGThemaRewardExcelT
+{
+  public long EventContentId { get; set; }
+  public int ThemaRound { get; set; }
+  public int ThemaUniqueId { get; set; }
+  public bool IsLoop { get; set; }
+  public SCHALE.Common.FlatData.MiniGameTBGThemaRewardType MiniGameTBGThemaRewardType { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<int> RewardParcelAmount { get; set; }
+
+  public MiniGameTBGThemaRewardExcelT() {
+    this.EventContentId = 0;
+    this.ThemaRound = 0;
+    this.ThemaUniqueId = 0;
+    this.IsLoop = false;
+    this.MiniGameTBGThemaRewardType = SCHALE.Common.FlatData.MiniGameTBGThemaRewardType.TreasureReward;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GroundModuleRewardExcel : IFlatbufferObject
@@ -63,6 +64,55 @@ public struct GroundModuleRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GroundModuleRewardExcel> EndGroundModuleRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GroundModuleRewardExcel>(o);
+  }
+  public GroundModuleRewardExcelT UnPack() {
+    var _o = new GroundModuleRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GroundModuleRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GroundModuleReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+    _o.RewardParcelProbability = TableEncryptionService.Convert(this.RewardParcelProbability, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+    _o.DropItemModelPrefabPath = TableEncryptionService.Convert(this.DropItemModelPrefabPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GroundModuleRewardExcel> Pack(FlatBufferBuilder builder, GroundModuleRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GroundModuleRewardExcel>);
+    var _DropItemModelPrefabPath = _o.DropItemModelPrefabPath == null ? default(StringOffset) : builder.CreateString(_o.DropItemModelPrefabPath);
+    return CreateGroundModuleRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount,
+      _o.RewardParcelProbability,
+      _o.IsDisplayed,
+      _DropItemModelPrefabPath);
+  }
+}
+
+public class GroundModuleRewardExcelT
+{
+  public uint GroupId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+  public long RewardParcelProbability { get; set; }
+  public bool IsDisplayed { get; set; }
+  public string DropItemModelPrefabPath { get; set; }
+
+  public GroundModuleRewardExcelT() {
+    this.GroupId = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
+    this.RewardParcelProbability = 0;
+    this.IsDisplayed = false;
+    this.DropItemModelPrefabPath = null;
   }
 }
 

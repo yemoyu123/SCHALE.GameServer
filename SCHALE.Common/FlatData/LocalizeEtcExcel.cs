@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeEtcExcel : IFlatbufferObject
@@ -73,6 +74,50 @@ public struct LocalizeEtcExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeEtcExcel> EndLocalizeEtcExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeEtcExcel>(o);
+  }
+  public LocalizeEtcExcelT UnPack() {
+    var _o = new LocalizeEtcExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeEtcExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeEtc");
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.NameKr = TableEncryptionService.Convert(this.NameKr, key);
+    _o.DescriptionKr = TableEncryptionService.Convert(this.DescriptionKr, key);
+    _o.NameJp = TableEncryptionService.Convert(this.NameJp, key);
+    _o.DescriptionJp = TableEncryptionService.Convert(this.DescriptionJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeEtcExcel> Pack(FlatBufferBuilder builder, LocalizeEtcExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeEtcExcel>);
+    var _NameKr = _o.NameKr == null ? default(StringOffset) : builder.CreateString(_o.NameKr);
+    var _DescriptionKr = _o.DescriptionKr == null ? default(StringOffset) : builder.CreateString(_o.DescriptionKr);
+    var _NameJp = _o.NameJp == null ? default(StringOffset) : builder.CreateString(_o.NameJp);
+    var _DescriptionJp = _o.DescriptionJp == null ? default(StringOffset) : builder.CreateString(_o.DescriptionJp);
+    return CreateLocalizeEtcExcel(
+      builder,
+      _o.Key,
+      _NameKr,
+      _DescriptionKr,
+      _NameJp,
+      _DescriptionJp);
+  }
+}
+
+public class LocalizeEtcExcelT
+{
+  public uint Key { get; set; }
+  public string NameKr { get; set; }
+  public string DescriptionKr { get; set; }
+  public string NameJp { get; set; }
+  public string DescriptionJp { get; set; }
+
+  public LocalizeEtcExcelT() {
+    this.Key = 0;
+    this.NameKr = null;
+    this.DescriptionKr = null;
+    this.NameJp = null;
+    this.DescriptionJp = null;
   }
 }
 

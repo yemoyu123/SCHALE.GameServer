@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignStageExcel : IFlatbufferObject
@@ -86,18 +87,19 @@ public struct CampaignStageExcel : IFlatbufferObject
   public byte[] GetBgmIdArray() { return __p.__vector_as_array<byte>(44); }
   public SCHALE.Common.FlatData.StrategyEnvironment StrategyEnvironment { get { int o = __p.__offset(46); return o != 0 ? (SCHALE.Common.FlatData.StrategyEnvironment)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.StrategyEnvironment.None; } }
   public long GroundId { get { int o = __p.__offset(48); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
-  public SCHALE.Common.FlatData.ContentType ContentType { get { int o = __p.__offset(50); return o != 0 ? (SCHALE.Common.FlatData.ContentType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.ContentType.None; } }
-  public long BGMId { get { int o = __p.__offset(52); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
-  public string FirstClearReportEventName { get { int o = __p.__offset(54); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
+  public int StrategySkipGroundId { get { int o = __p.__offset(50); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
+  public SCHALE.Common.FlatData.ContentType ContentType { get { int o = __p.__offset(52); return o != 0 ? (SCHALE.Common.FlatData.ContentType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.ContentType.None; } }
+  public long BGMId { get { int o = __p.__offset(54); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
+  public string FirstClearReportEventName { get { int o = __p.__offset(56); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
-  public Span<byte> GetFirstClearReportEventNameBytes() { return __p.__vector_as_span<byte>(54, 1); }
+  public Span<byte> GetFirstClearReportEventNameBytes() { return __p.__vector_as_span<byte>(56, 1); }
 #else
-  public ArraySegment<byte>? GetFirstClearReportEventNameBytes() { return __p.__vector_as_arraysegment(54); }
+  public ArraySegment<byte>? GetFirstClearReportEventNameBytes() { return __p.__vector_as_arraysegment(56); }
 #endif
-  public byte[] GetFirstClearReportEventNameArray() { return __p.__vector_as_array<byte>(54); }
-  public long TacticRewardExp { get { int o = __p.__offset(56); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
-  public long FixedEchelonId { get { int o = __p.__offset(58); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
-  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get { int o = __p.__offset(60); return o != 0 ? (SCHALE.Common.FlatData.EchelonExtensionType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.EchelonExtensionType.Base; } }
+  public byte[] GetFirstClearReportEventNameArray() { return __p.__vector_as_array<byte>(56); }
+  public long TacticRewardExp { get { int o = __p.__offset(58); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
+  public long FixedEchelonId { get { int o = __p.__offset(60); return o != 0 ? __p.bb.GetLong(o + __p.bb_pos) : (long)0; } }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get { int o = __p.__offset(62); return o != 0 ? (SCHALE.Common.FlatData.EchelonExtensionType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.EchelonExtensionType.Base; } }
 
   public static Offset<SCHALE.Common.FlatData.CampaignStageExcel> CreateCampaignStageExcel(FlatBufferBuilder builder,
       long Id = 0,
@@ -123,13 +125,14 @@ public struct CampaignStageExcel : IFlatbufferObject
       StringOffset BgmIdOffset = default(StringOffset),
       SCHALE.Common.FlatData.StrategyEnvironment StrategyEnvironment = SCHALE.Common.FlatData.StrategyEnvironment.None,
       long GroundId = 0,
+      int StrategySkipGroundId = 0,
       SCHALE.Common.FlatData.ContentType ContentType = SCHALE.Common.FlatData.ContentType.None,
       long BGMId = 0,
       StringOffset FirstClearReportEventNameOffset = default(StringOffset),
       long TacticRewardExp = 0,
       long FixedEchelonId = 0,
       SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base) {
-    builder.StartTable(29);
+    builder.StartTable(30);
     CampaignStageExcel.AddFixedEchelonId(builder, FixedEchelonId);
     CampaignStageExcel.AddTacticRewardExp(builder, TacticRewardExp);
     CampaignStageExcel.AddBGMId(builder, BGMId);
@@ -144,6 +147,7 @@ public struct CampaignStageExcel : IFlatbufferObject
     CampaignStageExcel.AddEchelonExtensionType(builder, EchelonExtensionType);
     CampaignStageExcel.AddFirstClearReportEventName(builder, FirstClearReportEventNameOffset);
     CampaignStageExcel.AddContentType(builder, ContentType);
+    CampaignStageExcel.AddStrategySkipGroundId(builder, StrategySkipGroundId);
     CampaignStageExcel.AddStrategyEnvironment(builder, StrategyEnvironment);
     CampaignStageExcel.AddBgmId(builder, BgmIdOffset);
     CampaignStageExcel.AddRecommandLevel(builder, RecommandLevel);
@@ -162,7 +166,7 @@ public struct CampaignStageExcel : IFlatbufferObject
     return CampaignStageExcel.EndCampaignStageExcel(builder);
   }
 
-  public static void StartCampaignStageExcel(FlatBufferBuilder builder) { builder.StartTable(29); }
+  public static void StartCampaignStageExcel(FlatBufferBuilder builder) { builder.StartTable(30); }
   public static void AddId(FlatBufferBuilder builder, long id) { builder.AddLong(0, id, 0); }
   public static void AddDeprecated(FlatBufferBuilder builder, bool deprecated) { builder.AddBool(1, deprecated, false); }
   public static void AddName(FlatBufferBuilder builder, StringOffset nameOffset) { builder.AddOffset(2, nameOffset.Value, 0); }
@@ -196,15 +200,174 @@ public struct CampaignStageExcel : IFlatbufferObject
   public static void AddBgmId(FlatBufferBuilder builder, StringOffset bgmIdOffset) { builder.AddOffset(20, bgmIdOffset.Value, 0); }
   public static void AddStrategyEnvironment(FlatBufferBuilder builder, SCHALE.Common.FlatData.StrategyEnvironment strategyEnvironment) { builder.AddInt(21, (int)strategyEnvironment, 0); }
   public static void AddGroundId(FlatBufferBuilder builder, long groundId) { builder.AddLong(22, groundId, 0); }
-  public static void AddContentType(FlatBufferBuilder builder, SCHALE.Common.FlatData.ContentType contentType) { builder.AddInt(23, (int)contentType, 0); }
-  public static void AddBGMId(FlatBufferBuilder builder, long bGMId) { builder.AddLong(24, bGMId, 0); }
-  public static void AddFirstClearReportEventName(FlatBufferBuilder builder, StringOffset firstClearReportEventNameOffset) { builder.AddOffset(25, firstClearReportEventNameOffset.Value, 0); }
-  public static void AddTacticRewardExp(FlatBufferBuilder builder, long tacticRewardExp) { builder.AddLong(26, tacticRewardExp, 0); }
-  public static void AddFixedEchelonId(FlatBufferBuilder builder, long fixedEchelonId) { builder.AddLong(27, fixedEchelonId, 0); }
-  public static void AddEchelonExtensionType(FlatBufferBuilder builder, SCHALE.Common.FlatData.EchelonExtensionType echelonExtensionType) { builder.AddInt(28, (int)echelonExtensionType, 0); }
+  public static void AddStrategySkipGroundId(FlatBufferBuilder builder, int strategySkipGroundId) { builder.AddInt(23, strategySkipGroundId, 0); }
+  public static void AddContentType(FlatBufferBuilder builder, SCHALE.Common.FlatData.ContentType contentType) { builder.AddInt(24, (int)contentType, 0); }
+  public static void AddBGMId(FlatBufferBuilder builder, long bGMId) { builder.AddLong(25, bGMId, 0); }
+  public static void AddFirstClearReportEventName(FlatBufferBuilder builder, StringOffset firstClearReportEventNameOffset) { builder.AddOffset(26, firstClearReportEventNameOffset.Value, 0); }
+  public static void AddTacticRewardExp(FlatBufferBuilder builder, long tacticRewardExp) { builder.AddLong(27, tacticRewardExp, 0); }
+  public static void AddFixedEchelonId(FlatBufferBuilder builder, long fixedEchelonId) { builder.AddLong(28, fixedEchelonId, 0); }
+  public static void AddEchelonExtensionType(FlatBufferBuilder builder, SCHALE.Common.FlatData.EchelonExtensionType echelonExtensionType) { builder.AddInt(29, (int)echelonExtensionType, 0); }
   public static Offset<SCHALE.Common.FlatData.CampaignStageExcel> EndCampaignStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignStageExcel>(o);
+  }
+  public CampaignStageExcelT UnPack() {
+    var _o = new CampaignStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Deprecated = TableEncryptionService.Convert(this.Deprecated, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.StageNumber = TableEncryptionService.Convert(this.StageNumber, key);
+    _o.CleardScenarioId = TableEncryptionService.Convert(this.CleardScenarioId, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.StageEnterCostType = TableEncryptionService.Convert(this.StageEnterCostType, key);
+    _o.StageEnterCostId = TableEncryptionService.Convert(this.StageEnterCostId, key);
+    _o.StageEnterCostAmount = TableEncryptionService.Convert(this.StageEnterCostAmount, key);
+    _o.StageEnterEchelonCount = TableEncryptionService.Convert(this.StageEnterEchelonCount, key);
+    _o.StarConditionTacticRankSCount = TableEncryptionService.Convert(this.StarConditionTacticRankSCount, key);
+    _o.StarConditionTurnCount = TableEncryptionService.Convert(this.StarConditionTurnCount, key);
+    _o.EnterScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.EnterScenarioGroupIdLength; ++_j) {_o.EnterScenarioGroupId.Add(TableEncryptionService.Convert(this.EnterScenarioGroupId(_j), key));}
+    _o.ClearScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.ClearScenarioGroupIdLength; ++_j) {_o.ClearScenarioGroupId.Add(TableEncryptionService.Convert(this.ClearScenarioGroupId(_j), key));}
+    _o.StrategyMap = TableEncryptionService.Convert(this.StrategyMap, key);
+    _o.StrategyMapBG = TableEncryptionService.Convert(this.StrategyMapBG, key);
+    _o.CampaignStageRewardId = TableEncryptionService.Convert(this.CampaignStageRewardId, key);
+    _o.MaxTurn = TableEncryptionService.Convert(this.MaxTurn, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.BgmId = TableEncryptionService.Convert(this.BgmId, key);
+    _o.StrategyEnvironment = TableEncryptionService.Convert(this.StrategyEnvironment, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.StrategySkipGroundId = TableEncryptionService.Convert(this.StrategySkipGroundId, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.FirstClearReportEventName = TableEncryptionService.Convert(this.FirstClearReportEventName, key);
+    _o.TacticRewardExp = TableEncryptionService.Convert(this.TacticRewardExp, key);
+    _o.FixedEchelonId = TableEncryptionService.Convert(this.FixedEchelonId, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignStageExcel> Pack(FlatBufferBuilder builder, CampaignStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignStageExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _StageNumber = _o.StageNumber == null ? default(StringOffset) : builder.CreateString(_o.StageNumber);
+    var _EnterScenarioGroupId = default(VectorOffset);
+    if (_o.EnterScenarioGroupId != null) {
+      var __EnterScenarioGroupId = _o.EnterScenarioGroupId.ToArray();
+      _EnterScenarioGroupId = CreateEnterScenarioGroupIdVector(builder, __EnterScenarioGroupId);
+    }
+    var _ClearScenarioGroupId = default(VectorOffset);
+    if (_o.ClearScenarioGroupId != null) {
+      var __ClearScenarioGroupId = _o.ClearScenarioGroupId.ToArray();
+      _ClearScenarioGroupId = CreateClearScenarioGroupIdVector(builder, __ClearScenarioGroupId);
+    }
+    var _StrategyMap = _o.StrategyMap == null ? default(StringOffset) : builder.CreateString(_o.StrategyMap);
+    var _StrategyMapBG = _o.StrategyMapBG == null ? default(StringOffset) : builder.CreateString(_o.StrategyMapBG);
+    var _BgmId = _o.BgmId == null ? default(StringOffset) : builder.CreateString(_o.BgmId);
+    var _FirstClearReportEventName = _o.FirstClearReportEventName == null ? default(StringOffset) : builder.CreateString(_o.FirstClearReportEventName);
+    return CreateCampaignStageExcel(
+      builder,
+      _o.Id,
+      _o.Deprecated,
+      _Name,
+      _StageNumber,
+      _o.CleardScenarioId,
+      _o.BattleDuration,
+      _o.StageEnterCostType,
+      _o.StageEnterCostId,
+      _o.StageEnterCostAmount,
+      _o.StageEnterEchelonCount,
+      _o.StarConditionTacticRankSCount,
+      _o.StarConditionTurnCount,
+      _EnterScenarioGroupId,
+      _ClearScenarioGroupId,
+      _StrategyMap,
+      _StrategyMapBG,
+      _o.CampaignStageRewardId,
+      _o.MaxTurn,
+      _o.StageTopography,
+      _o.RecommandLevel,
+      _BgmId,
+      _o.StrategyEnvironment,
+      _o.GroundId,
+      _o.StrategySkipGroundId,
+      _o.ContentType,
+      _o.BGMId,
+      _FirstClearReportEventName,
+      _o.TacticRewardExp,
+      _o.FixedEchelonId,
+      _o.EchelonExtensionType);
+  }
+}
+
+public class CampaignStageExcelT
+{
+  public long Id { get; set; }
+  public bool Deprecated { get; set; }
+  public string Name { get; set; }
+  public string StageNumber { get; set; }
+  public long CleardScenarioId { get; set; }
+  public long BattleDuration { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StageEnterCostType { get; set; }
+  public long StageEnterCostId { get; set; }
+  public int StageEnterCostAmount { get; set; }
+  public int StageEnterEchelonCount { get; set; }
+  public long StarConditionTacticRankSCount { get; set; }
+  public long StarConditionTurnCount { get; set; }
+  public List<long> EnterScenarioGroupId { get; set; }
+  public List<long> ClearScenarioGroupId { get; set; }
+  public string StrategyMap { get; set; }
+  public string StrategyMapBG { get; set; }
+  public long CampaignStageRewardId { get; set; }
+  public int MaxTurn { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public int RecommandLevel { get; set; }
+  public string BgmId { get; set; }
+  public SCHALE.Common.FlatData.StrategyEnvironment StrategyEnvironment { get; set; }
+  public long GroundId { get; set; }
+  public int StrategySkipGroundId { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long BGMId { get; set; }
+  public string FirstClearReportEventName { get; set; }
+  public long TacticRewardExp { get; set; }
+  public long FixedEchelonId { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+
+  public CampaignStageExcelT() {
+    this.Id = 0;
+    this.Deprecated = false;
+    this.Name = null;
+    this.StageNumber = null;
+    this.CleardScenarioId = 0;
+    this.BattleDuration = 0;
+    this.StageEnterCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StageEnterCostId = 0;
+    this.StageEnterCostAmount = 0;
+    this.StageEnterEchelonCount = 0;
+    this.StarConditionTacticRankSCount = 0;
+    this.StarConditionTurnCount = 0;
+    this.EnterScenarioGroupId = null;
+    this.ClearScenarioGroupId = null;
+    this.StrategyMap = null;
+    this.StrategyMapBG = null;
+    this.CampaignStageRewardId = 0;
+    this.MaxTurn = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.RecommandLevel = 0;
+    this.BgmId = null;
+    this.StrategyEnvironment = SCHALE.Common.FlatData.StrategyEnvironment.None;
+    this.GroundId = 0;
+    this.StrategySkipGroundId = 0;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.BGMId = 0;
+    this.FirstClearReportEventName = null;
+    this.TacticRewardExp = 0;
+    this.FixedEchelonId = 0;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
   }
 }
 
@@ -237,12 +400,13 @@ static public class CampaignStageExcelVerify
       && verifier.VerifyString(tablePos, 44 /*BgmId*/, false)
       && verifier.VerifyField(tablePos, 46 /*StrategyEnvironment*/, 4 /*SCHALE.Common.FlatData.StrategyEnvironment*/, 4, false)
       && verifier.VerifyField(tablePos, 48 /*GroundId*/, 8 /*long*/, 8, false)
-      && verifier.VerifyField(tablePos, 50 /*ContentType*/, 4 /*SCHALE.Common.FlatData.ContentType*/, 4, false)
-      && verifier.VerifyField(tablePos, 52 /*BGMId*/, 8 /*long*/, 8, false)
-      && verifier.VerifyString(tablePos, 54 /*FirstClearReportEventName*/, false)
-      && verifier.VerifyField(tablePos, 56 /*TacticRewardExp*/, 8 /*long*/, 8, false)
-      && verifier.VerifyField(tablePos, 58 /*FixedEchelonId*/, 8 /*long*/, 8, false)
-      && verifier.VerifyField(tablePos, 60 /*EchelonExtensionType*/, 4 /*SCHALE.Common.FlatData.EchelonExtensionType*/, 4, false)
+      && verifier.VerifyField(tablePos, 50 /*StrategySkipGroundId*/, 4 /*int*/, 4, false)
+      && verifier.VerifyField(tablePos, 52 /*ContentType*/, 4 /*SCHALE.Common.FlatData.ContentType*/, 4, false)
+      && verifier.VerifyField(tablePos, 54 /*BGMId*/, 8 /*long*/, 8, false)
+      && verifier.VerifyString(tablePos, 56 /*FirstClearReportEventName*/, false)
+      && verifier.VerifyField(tablePos, 58 /*TacticRewardExp*/, 8 /*long*/, 8, false)
+      && verifier.VerifyField(tablePos, 60 /*FixedEchelonId*/, 8 /*long*/, 8, false)
+      && verifier.VerifyField(tablePos, 62 /*EchelonExtensionType*/, 4 /*SCHALE.Common.FlatData.EchelonExtensionType*/, 4, false)
       && verifier.VerifyTableEnd(tablePos);
   }
 }

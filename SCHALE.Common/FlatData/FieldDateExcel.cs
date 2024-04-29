@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldDateExcel : IFlatbufferObject
@@ -89,6 +90,76 @@ public struct FieldDateExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldDateExcel> EndFieldDateExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldDateExcel>(o);
+  }
+  public FieldDateExcelT UnPack() {
+    var _o = new FieldDateExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldDateExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldDate");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.OpenDate = TableEncryptionService.Convert(this.OpenDate, key);
+    _o.DateLocalizeKey = TableEncryptionService.Convert(this.DateLocalizeKey, key);
+    _o.EntrySceneId = TableEncryptionService.Convert(this.EntrySceneId, key);
+    _o.StartConditionType = TableEncryptionService.Convert(this.StartConditionType, key);
+    _o.StartConditionId = TableEncryptionService.Convert(this.StartConditionId, key);
+    _o.EndConditionType = TableEncryptionService.Convert(this.EndConditionType, key);
+    _o.EndConditionId = TableEncryptionService.Convert(this.EndConditionId, key);
+    _o.OpenConditionStage = TableEncryptionService.Convert(this.OpenConditionStage, key);
+    _o.DateResultSpinePath = TableEncryptionService.Convert(this.DateResultSpinePath, key);
+    _o.DateResultSpineOffsetX = TableEncryptionService.Convert(this.DateResultSpineOffsetX, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldDateExcel> Pack(FlatBufferBuilder builder, FieldDateExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldDateExcel>);
+    var _DateLocalizeKey = _o.DateLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.DateLocalizeKey);
+    var _DateResultSpinePath = _o.DateResultSpinePath == null ? default(StringOffset) : builder.CreateString(_o.DateResultSpinePath);
+    return CreateFieldDateExcel(
+      builder,
+      _o.UniqueId,
+      _o.SeasonId,
+      _o.OpenDate,
+      _DateLocalizeKey,
+      _o.EntrySceneId,
+      _o.StartConditionType,
+      _o.StartConditionId,
+      _o.EndConditionType,
+      _o.EndConditionId,
+      _o.OpenConditionStage,
+      _DateResultSpinePath,
+      _o.DateResultSpineOffsetX);
+  }
+}
+
+public class FieldDateExcelT
+{
+  public long UniqueId { get; set; }
+  public long SeasonId { get; set; }
+  public long OpenDate { get; set; }
+  public string DateLocalizeKey { get; set; }
+  public long EntrySceneId { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionType StartConditionType { get; set; }
+  public long StartConditionId { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionType EndConditionType { get; set; }
+  public long EndConditionId { get; set; }
+  public long OpenConditionStage { get; set; }
+  public string DateResultSpinePath { get; set; }
+  public float DateResultSpineOffsetX { get; set; }
+
+  public FieldDateExcelT() {
+    this.UniqueId = 0;
+    this.SeasonId = 0;
+    this.OpenDate = 0;
+    this.DateLocalizeKey = null;
+    this.EntrySceneId = 0;
+    this.StartConditionType = SCHALE.Common.FlatData.FieldConditionType.Invalid;
+    this.StartConditionId = 0;
+    this.EndConditionType = SCHALE.Common.FlatData.FieldConditionType.Invalid;
+    this.EndConditionId = 0;
+    this.OpenConditionStage = 0;
+    this.DateResultSpinePath = null;
+    this.DateResultSpineOffsetX = 0.0f;
   }
 }
 

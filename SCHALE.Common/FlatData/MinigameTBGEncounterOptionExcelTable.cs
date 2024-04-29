@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGEncounterOptionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct MinigameTBGEncounterOptionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelTable> EndMinigameTBGEncounterOptionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelTable>(o);
+  }
+  public MinigameTBGEncounterOptionExcelTableT UnPack() {
+    var _o = new MinigameTBGEncounterOptionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGEncounterOptionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGEncounterOptionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelTable> Pack(FlatBufferBuilder builder, MinigameTBGEncounterOptionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateMinigameTBGEncounterOptionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class MinigameTBGEncounterOptionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.MinigameTBGEncounterOptionExcelT> DataList { get; set; }
+
+  public MinigameTBGEncounterOptionExcelTableT() {
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FarmingDungeonLocationManageExcel : IFlatbufferObject
@@ -87,6 +88,69 @@ public struct FarmingDungeonLocationManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FarmingDungeonLocationManageExcel> EndFarmingDungeonLocationManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FarmingDungeonLocationManageExcel>(o);
+  }
+  public FarmingDungeonLocationManageExcelT UnPack() {
+    var _o = new FarmingDungeonLocationManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FarmingDungeonLocationManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FarmingDungeonLocationManage");
+    _o.FarmingDungeonLocationId = TableEncryptionService.Convert(this.FarmingDungeonLocationId, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.WeekDungeonType = TableEncryptionService.Convert(this.WeekDungeonType, key);
+    _o.SchoolDungeonType = TableEncryptionService.Convert(this.SchoolDungeonType, key);
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.OpenStartDateTime = TableEncryptionService.Convert(this.OpenStartDateTime, key);
+    _o.OpenEndDateTime = TableEncryptionService.Convert(this.OpenEndDateTime, key);
+    _o.LocationButtonImagePath = TableEncryptionService.Convert(this.LocationButtonImagePath, key);
+    _o.LocalizeCodeTitle = TableEncryptionService.Convert(this.LocalizeCodeTitle, key);
+    _o.LocalizeCodeInfo = TableEncryptionService.Convert(this.LocalizeCodeInfo, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FarmingDungeonLocationManageExcel> Pack(FlatBufferBuilder builder, FarmingDungeonLocationManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FarmingDungeonLocationManageExcel>);
+    var _OpenStartDateTime = _o.OpenStartDateTime == null ? default(StringOffset) : builder.CreateString(_o.OpenStartDateTime);
+    var _OpenEndDateTime = _o.OpenEndDateTime == null ? default(StringOffset) : builder.CreateString(_o.OpenEndDateTime);
+    var _LocationButtonImagePath = _o.LocationButtonImagePath == null ? default(StringOffset) : builder.CreateString(_o.LocationButtonImagePath);
+    return CreateFarmingDungeonLocationManageExcel(
+      builder,
+      _o.FarmingDungeonLocationId,
+      _o.ContentType,
+      _o.WeekDungeonType,
+      _o.SchoolDungeonType,
+      _o.Order,
+      _OpenStartDateTime,
+      _OpenEndDateTime,
+      _LocationButtonImagePath,
+      _o.LocalizeCodeTitle,
+      _o.LocalizeCodeInfo);
+  }
+}
+
+public class FarmingDungeonLocationManageExcelT
+{
+  public long FarmingDungeonLocationId { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public SCHALE.Common.FlatData.WeekDungeonType WeekDungeonType { get; set; }
+  public SCHALE.Common.FlatData.SchoolDungeonType SchoolDungeonType { get; set; }
+  public long Order { get; set; }
+  public string OpenStartDateTime { get; set; }
+  public string OpenEndDateTime { get; set; }
+  public string LocationButtonImagePath { get; set; }
+  public uint LocalizeCodeTitle { get; set; }
+  public uint LocalizeCodeInfo { get; set; }
+
+  public FarmingDungeonLocationManageExcelT() {
+    this.FarmingDungeonLocationId = 0;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.WeekDungeonType = SCHALE.Common.FlatData.WeekDungeonType.None;
+    this.SchoolDungeonType = SCHALE.Common.FlatData.SchoolDungeonType.SchoolA;
+    this.Order = 0;
+    this.OpenStartDateTime = null;
+    this.OpenEndDateTime = null;
+    this.LocationButtonImagePath = null;
+    this.LocalizeCodeTitle = 0;
+    this.LocalizeCodeInfo = 0;
   }
 }
 

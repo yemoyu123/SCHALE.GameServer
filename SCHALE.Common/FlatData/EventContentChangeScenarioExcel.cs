@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentChangeScenarioExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct EventContentChangeScenarioExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentChangeScenarioExcel> EndEventContentChangeScenarioExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentChangeScenarioExcel>(o);
+  }
+  public EventContentChangeScenarioExcelT UnPack() {
+    var _o = new EventContentChangeScenarioExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentChangeScenarioExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentChangeScenario");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ChangeType = TableEncryptionService.Convert(this.ChangeType, key);
+    _o.ChangeCount = TableEncryptionService.Convert(this.ChangeCount, key);
+    _o.ScenarioGroupId = TableEncryptionService.Convert(this.ScenarioGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentChangeScenarioExcel> Pack(FlatBufferBuilder builder, EventContentChangeScenarioExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentChangeScenarioExcel>);
+    return CreateEventContentChangeScenarioExcel(
+      builder,
+      _o.EventContentId,
+      _o.ChangeType,
+      _o.ChangeCount,
+      _o.ScenarioGroupId);
+  }
+}
+
+public class EventContentChangeScenarioExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventChangeType ChangeType { get; set; }
+  public long ChangeCount { get; set; }
+  public long ScenarioGroupId { get; set; }
+
+  public EventContentChangeScenarioExcelT() {
+    this.EventContentId = 0;
+    this.ChangeType = SCHALE.Common.FlatData.EventChangeType.MainSub;
+    this.ChangeCount = 0;
+    this.ScenarioGroupId = 0;
   }
 }
 

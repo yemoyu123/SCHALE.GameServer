@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGObjectExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct MinigameTBGObjectExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcelTable> EndMinigameTBGObjectExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcelTable>(o);
+  }
+  public MinigameTBGObjectExcelTableT UnPack() {
+    var _o = new MinigameTBGObjectExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGObjectExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGObjectExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.MinigameTBGObjectExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcelTable> Pack(FlatBufferBuilder builder, MinigameTBGObjectExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.MinigameTBGObjectExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.MinigameTBGObjectExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateMinigameTBGObjectExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class MinigameTBGObjectExcelTableT
+{
+  public List<SCHALE.Common.FlatData.MinigameTBGObjectExcelT> DataList { get; set; }
+
+  public MinigameTBGObjectExcelTableT() {
+    this.DataList = null;
   }
 }
 

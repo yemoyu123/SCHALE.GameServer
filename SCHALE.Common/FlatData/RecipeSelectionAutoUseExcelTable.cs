@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RecipeSelectionAutoUseExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct RecipeSelectionAutoUseExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelTable> EndRecipeSelectionAutoUseExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelTable>(o);
+  }
+  public RecipeSelectionAutoUseExcelTableT UnPack() {
+    var _o = new RecipeSelectionAutoUseExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RecipeSelectionAutoUseExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RecipeSelectionAutoUseExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelTable> Pack(FlatBufferBuilder builder, RecipeSelectionAutoUseExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.RecipeSelectionAutoUseExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateRecipeSelectionAutoUseExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class RecipeSelectionAutoUseExcelTableT
+{
+  public List<SCHALE.Common.FlatData.RecipeSelectionAutoUseExcelT> DataList { get; set; }
+
+  public RecipeSelectionAutoUseExcelTableT() {
+    this.DataList = null;
   }
 }
 

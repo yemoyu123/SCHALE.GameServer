@@ -1,5 +1,6 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.NetworkProtocol;
+using SCHALE.GameServer.Controllers.Api;
 
 namespace SCHALE.GameServer.Services
 {
@@ -26,7 +27,7 @@ namespace SCHALE.GameServer.Services
                     return account;
             }
 
-            throw new InvalidSessionKeyException();
+            throw new WebAPIException(WebAPIErrorCode.SessionNotFound, "Failed to get AccountDB from session");
         }
 
         public SessionKey? Create(long publisherAccountId)
@@ -64,12 +65,5 @@ namespace SCHALE.GameServer.Services
     {
         public SessionKey? Create(long publisherAccountId);
         public AccountDB GetAccount(SessionKey sessionKey);
-    }
-
-    public class InvalidSessionKeyException : Exception
-    {
-        public InvalidSessionKeyException() : base() { }
-        public InvalidSessionKeyException(string message) : base(message) { }
-        public InvalidSessionKeyException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

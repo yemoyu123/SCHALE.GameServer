@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterWeaponExpBonusExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct CharacterWeaponExpBonusExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel> EndCharacterWeaponExpBonusExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel>(o);
+  }
+  public CharacterWeaponExpBonusExcelT UnPack() {
+    var _o = new CharacterWeaponExpBonusExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterWeaponExpBonusExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterWeaponExpBonus");
+    _o.WeaponType = TableEncryptionService.Convert(this.WeaponType, key);
+    _o.WeaponExpGrowthA = TableEncryptionService.Convert(this.WeaponExpGrowthA, key);
+    _o.WeaponExpGrowthB = TableEncryptionService.Convert(this.WeaponExpGrowthB, key);
+    _o.WeaponExpGrowthC = TableEncryptionService.Convert(this.WeaponExpGrowthC, key);
+    _o.WeaponExpGrowthZ = TableEncryptionService.Convert(this.WeaponExpGrowthZ, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel> Pack(FlatBufferBuilder builder, CharacterWeaponExpBonusExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterWeaponExpBonusExcel>);
+    return CreateCharacterWeaponExpBonusExcel(
+      builder,
+      _o.WeaponType,
+      _o.WeaponExpGrowthA,
+      _o.WeaponExpGrowthB,
+      _o.WeaponExpGrowthC,
+      _o.WeaponExpGrowthZ);
+  }
+}
+
+public class CharacterWeaponExpBonusExcelT
+{
+  public SCHALE.Common.FlatData.WeaponType WeaponType { get; set; }
+  public int WeaponExpGrowthA { get; set; }
+  public int WeaponExpGrowthB { get; set; }
+  public int WeaponExpGrowthC { get; set; }
+  public int WeaponExpGrowthZ { get; set; }
+
+  public CharacterWeaponExpBonusExcelT() {
+    this.WeaponType = SCHALE.Common.FlatData.WeaponType.None;
+    this.WeaponExpGrowthA = 0;
+    this.WeaponExpGrowthB = 0;
+    this.WeaponExpGrowthC = 0;
+    this.WeaponExpGrowthZ = 0;
   }
 }
 

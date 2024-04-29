@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterStatExcel : IFlatbufferObject
@@ -293,6 +294,290 @@ public struct CharacterStatExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterStatExcel> EndCharacterStatExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterStatExcel>(o);
+  }
+  public CharacterStatExcelT UnPack() {
+    var _o = new CharacterStatExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterStatExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterStat");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.StabilityRate = TableEncryptionService.Convert(this.StabilityRate, key);
+    _o.StabilityPoint = TableEncryptionService.Convert(this.StabilityPoint, key);
+    _o.AttackPower1 = TableEncryptionService.Convert(this.AttackPower1, key);
+    _o.AttackPower100 = TableEncryptionService.Convert(this.AttackPower100, key);
+    _o.MaxHP1 = TableEncryptionService.Convert(this.MaxHP1, key);
+    _o.MaxHP100 = TableEncryptionService.Convert(this.MaxHP100, key);
+    _o.DefensePower1 = TableEncryptionService.Convert(this.DefensePower1, key);
+    _o.DefensePower100 = TableEncryptionService.Convert(this.DefensePower100, key);
+    _o.HealPower1 = TableEncryptionService.Convert(this.HealPower1, key);
+    _o.HealPower100 = TableEncryptionService.Convert(this.HealPower100, key);
+    _o.DodgePoint = TableEncryptionService.Convert(this.DodgePoint, key);
+    _o.AccuracyPoint = TableEncryptionService.Convert(this.AccuracyPoint, key);
+    _o.CriticalPoint = TableEncryptionService.Convert(this.CriticalPoint, key);
+    _o.CriticalResistPoint = TableEncryptionService.Convert(this.CriticalResistPoint, key);
+    _o.CriticalDamageRate = TableEncryptionService.Convert(this.CriticalDamageRate, key);
+    _o.CriticalDamageResistRate = TableEncryptionService.Convert(this.CriticalDamageResistRate, key);
+    _o.BlockRate = TableEncryptionService.Convert(this.BlockRate, key);
+    _o.HealEffectivenessRate = TableEncryptionService.Convert(this.HealEffectivenessRate, key);
+    _o.OppressionPower = TableEncryptionService.Convert(this.OppressionPower, key);
+    _o.OppressionResist = TableEncryptionService.Convert(this.OppressionResist, key);
+    _o.DefensePenetration1 = TableEncryptionService.Convert(this.DefensePenetration1, key);
+    _o.DefensePenetration100 = TableEncryptionService.Convert(this.DefensePenetration100, key);
+    _o.DefensePenetrationResist1 = TableEncryptionService.Convert(this.DefensePenetrationResist1, key);
+    _o.DefensePenetrationResist100 = TableEncryptionService.Convert(this.DefensePenetrationResist100, key);
+    _o.EnhanceExplosionRate = TableEncryptionService.Convert(this.EnhanceExplosionRate, key);
+    _o.EnhancePierceRate = TableEncryptionService.Convert(this.EnhancePierceRate, key);
+    _o.EnhanceMysticRate = TableEncryptionService.Convert(this.EnhanceMysticRate, key);
+    _o.EnhanceSonicRate = TableEncryptionService.Convert(this.EnhanceSonicRate, key);
+    _o.EnhanceSiegeRate = TableEncryptionService.Convert(this.EnhanceSiegeRate, key);
+    _o.EnhanceNormalRate = TableEncryptionService.Convert(this.EnhanceNormalRate, key);
+    _o.EnhanceLightArmorRate = TableEncryptionService.Convert(this.EnhanceLightArmorRate, key);
+    _o.EnhanceHeavyArmorRate = TableEncryptionService.Convert(this.EnhanceHeavyArmorRate, key);
+    _o.EnhanceUnarmedRate = TableEncryptionService.Convert(this.EnhanceUnarmedRate, key);
+    _o.EnhanceElasticArmorRate = TableEncryptionService.Convert(this.EnhanceElasticArmorRate, key);
+    _o.EnhanceStructureRate = TableEncryptionService.Convert(this.EnhanceStructureRate, key);
+    _o.EnhanceNormalArmorRate = TableEncryptionService.Convert(this.EnhanceNormalArmorRate, key);
+    _o.ExtendBuffDuration = TableEncryptionService.Convert(this.ExtendBuffDuration, key);
+    _o.ExtendDebuffDuration = TableEncryptionService.Convert(this.ExtendDebuffDuration, key);
+    _o.ExtendCrowdControlDuration = TableEncryptionService.Convert(this.ExtendCrowdControlDuration, key);
+    _o.AmmoCount = TableEncryptionService.Convert(this.AmmoCount, key);
+    _o.AmmoCost = TableEncryptionService.Convert(this.AmmoCost, key);
+    _o.IgnoreDelayCount = TableEncryptionService.Convert(this.IgnoreDelayCount, key);
+    _o.NormalAttackSpeed = TableEncryptionService.Convert(this.NormalAttackSpeed, key);
+    _o.Range = TableEncryptionService.Convert(this.Range, key);
+    _o.InitialRangeRate = TableEncryptionService.Convert(this.InitialRangeRate, key);
+    _o.MoveSpeed = TableEncryptionService.Convert(this.MoveSpeed, key);
+    _o.SightPoint = TableEncryptionService.Convert(this.SightPoint, key);
+    _o.ActiveGauge = TableEncryptionService.Convert(this.ActiveGauge, key);
+    _o.GroggyGauge = TableEncryptionService.Convert(this.GroggyGauge, key);
+    _o.GroggyTime = TableEncryptionService.Convert(this.GroggyTime, key);
+    _o.StrategyMobility = TableEncryptionService.Convert(this.StrategyMobility, key);
+    _o.ActionCount = TableEncryptionService.Convert(this.ActionCount, key);
+    _o.StrategySightRange = TableEncryptionService.Convert(this.StrategySightRange, key);
+    _o.DamageRatio = TableEncryptionService.Convert(this.DamageRatio, key);
+    _o.DamagedRatio = TableEncryptionService.Convert(this.DamagedRatio, key);
+    _o.DamageRatio2Increase = TableEncryptionService.Convert(this.DamageRatio2Increase, key);
+    _o.DamageRatio2Decrease = TableEncryptionService.Convert(this.DamageRatio2Decrease, key);
+    _o.DamagedRatio2Increase = TableEncryptionService.Convert(this.DamagedRatio2Increase, key);
+    _o.DamagedRatio2Decrease = TableEncryptionService.Convert(this.DamagedRatio2Decrease, key);
+    _o.ExDamagedRatioIncrease = TableEncryptionService.Convert(this.ExDamagedRatioIncrease, key);
+    _o.ExDamagedRatioDecrease = TableEncryptionService.Convert(this.ExDamagedRatioDecrease, key);
+    _o.StreetBattleAdaptation = TableEncryptionService.Convert(this.StreetBattleAdaptation, key);
+    _o.OutdoorBattleAdaptation = TableEncryptionService.Convert(this.OutdoorBattleAdaptation, key);
+    _o.IndoorBattleAdaptation = TableEncryptionService.Convert(this.IndoorBattleAdaptation, key);
+    _o.RegenCost = TableEncryptionService.Convert(this.RegenCost, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterStatExcel> Pack(FlatBufferBuilder builder, CharacterStatExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterStatExcel>);
+    return CreateCharacterStatExcel(
+      builder,
+      _o.CharacterId,
+      _o.StabilityRate,
+      _o.StabilityPoint,
+      _o.AttackPower1,
+      _o.AttackPower100,
+      _o.MaxHP1,
+      _o.MaxHP100,
+      _o.DefensePower1,
+      _o.DefensePower100,
+      _o.HealPower1,
+      _o.HealPower100,
+      _o.DodgePoint,
+      _o.AccuracyPoint,
+      _o.CriticalPoint,
+      _o.CriticalResistPoint,
+      _o.CriticalDamageRate,
+      _o.CriticalDamageResistRate,
+      _o.BlockRate,
+      _o.HealEffectivenessRate,
+      _o.OppressionPower,
+      _o.OppressionResist,
+      _o.DefensePenetration1,
+      _o.DefensePenetration100,
+      _o.DefensePenetrationResist1,
+      _o.DefensePenetrationResist100,
+      _o.EnhanceExplosionRate,
+      _o.EnhancePierceRate,
+      _o.EnhanceMysticRate,
+      _o.EnhanceSonicRate,
+      _o.EnhanceSiegeRate,
+      _o.EnhanceNormalRate,
+      _o.EnhanceLightArmorRate,
+      _o.EnhanceHeavyArmorRate,
+      _o.EnhanceUnarmedRate,
+      _o.EnhanceElasticArmorRate,
+      _o.EnhanceStructureRate,
+      _o.EnhanceNormalArmorRate,
+      _o.ExtendBuffDuration,
+      _o.ExtendDebuffDuration,
+      _o.ExtendCrowdControlDuration,
+      _o.AmmoCount,
+      _o.AmmoCost,
+      _o.IgnoreDelayCount,
+      _o.NormalAttackSpeed,
+      _o.Range,
+      _o.InitialRangeRate,
+      _o.MoveSpeed,
+      _o.SightPoint,
+      _o.ActiveGauge,
+      _o.GroggyGauge,
+      _o.GroggyTime,
+      _o.StrategyMobility,
+      _o.ActionCount,
+      _o.StrategySightRange,
+      _o.DamageRatio,
+      _o.DamagedRatio,
+      _o.DamageRatio2Increase,
+      _o.DamageRatio2Decrease,
+      _o.DamagedRatio2Increase,
+      _o.DamagedRatio2Decrease,
+      _o.ExDamagedRatioIncrease,
+      _o.ExDamagedRatioDecrease,
+      _o.StreetBattleAdaptation,
+      _o.OutdoorBattleAdaptation,
+      _o.IndoorBattleAdaptation,
+      _o.RegenCost);
+  }
+}
+
+public class CharacterStatExcelT
+{
+  public long CharacterId { get; set; }
+  public long StabilityRate { get; set; }
+  public long StabilityPoint { get; set; }
+  public long AttackPower1 { get; set; }
+  public long AttackPower100 { get; set; }
+  public long MaxHP1 { get; set; }
+  public long MaxHP100 { get; set; }
+  public long DefensePower1 { get; set; }
+  public long DefensePower100 { get; set; }
+  public long HealPower1 { get; set; }
+  public long HealPower100 { get; set; }
+  public long DodgePoint { get; set; }
+  public long AccuracyPoint { get; set; }
+  public long CriticalPoint { get; set; }
+  public long CriticalResistPoint { get; set; }
+  public long CriticalDamageRate { get; set; }
+  public long CriticalDamageResistRate { get; set; }
+  public long BlockRate { get; set; }
+  public long HealEffectivenessRate { get; set; }
+  public long OppressionPower { get; set; }
+  public long OppressionResist { get; set; }
+  public long DefensePenetration1 { get; set; }
+  public long DefensePenetration100 { get; set; }
+  public long DefensePenetrationResist1 { get; set; }
+  public long DefensePenetrationResist100 { get; set; }
+  public long EnhanceExplosionRate { get; set; }
+  public long EnhancePierceRate { get; set; }
+  public long EnhanceMysticRate { get; set; }
+  public long EnhanceSonicRate { get; set; }
+  public long EnhanceSiegeRate { get; set; }
+  public long EnhanceNormalRate { get; set; }
+  public long EnhanceLightArmorRate { get; set; }
+  public long EnhanceHeavyArmorRate { get; set; }
+  public long EnhanceUnarmedRate { get; set; }
+  public long EnhanceElasticArmorRate { get; set; }
+  public long EnhanceStructureRate { get; set; }
+  public long EnhanceNormalArmorRate { get; set; }
+  public long ExtendBuffDuration { get; set; }
+  public long ExtendDebuffDuration { get; set; }
+  public long ExtendCrowdControlDuration { get; set; }
+  public long AmmoCount { get; set; }
+  public long AmmoCost { get; set; }
+  public long IgnoreDelayCount { get; set; }
+  public long NormalAttackSpeed { get; set; }
+  public long Range { get; set; }
+  public long InitialRangeRate { get; set; }
+  public long MoveSpeed { get; set; }
+  public long SightPoint { get; set; }
+  public long ActiveGauge { get; set; }
+  public int GroggyGauge { get; set; }
+  public int GroggyTime { get; set; }
+  public long StrategyMobility { get; set; }
+  public long ActionCount { get; set; }
+  public long StrategySightRange { get; set; }
+  public long DamageRatio { get; set; }
+  public long DamagedRatio { get; set; }
+  public long DamageRatio2Increase { get; set; }
+  public long DamageRatio2Decrease { get; set; }
+  public long DamagedRatio2Increase { get; set; }
+  public long DamagedRatio2Decrease { get; set; }
+  public long ExDamagedRatioIncrease { get; set; }
+  public long ExDamagedRatioDecrease { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat StreetBattleAdaptation { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat OutdoorBattleAdaptation { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat IndoorBattleAdaptation { get; set; }
+  public long RegenCost { get; set; }
+
+  public CharacterStatExcelT() {
+    this.CharacterId = 0;
+    this.StabilityRate = 0;
+    this.StabilityPoint = 0;
+    this.AttackPower1 = 0;
+    this.AttackPower100 = 0;
+    this.MaxHP1 = 0;
+    this.MaxHP100 = 0;
+    this.DefensePower1 = 0;
+    this.DefensePower100 = 0;
+    this.HealPower1 = 0;
+    this.HealPower100 = 0;
+    this.DodgePoint = 0;
+    this.AccuracyPoint = 0;
+    this.CriticalPoint = 0;
+    this.CriticalResistPoint = 0;
+    this.CriticalDamageRate = 0;
+    this.CriticalDamageResistRate = 0;
+    this.BlockRate = 0;
+    this.HealEffectivenessRate = 0;
+    this.OppressionPower = 0;
+    this.OppressionResist = 0;
+    this.DefensePenetration1 = 0;
+    this.DefensePenetration100 = 0;
+    this.DefensePenetrationResist1 = 0;
+    this.DefensePenetrationResist100 = 0;
+    this.EnhanceExplosionRate = 0;
+    this.EnhancePierceRate = 0;
+    this.EnhanceMysticRate = 0;
+    this.EnhanceSonicRate = 0;
+    this.EnhanceSiegeRate = 0;
+    this.EnhanceNormalRate = 0;
+    this.EnhanceLightArmorRate = 0;
+    this.EnhanceHeavyArmorRate = 0;
+    this.EnhanceUnarmedRate = 0;
+    this.EnhanceElasticArmorRate = 0;
+    this.EnhanceStructureRate = 0;
+    this.EnhanceNormalArmorRate = 0;
+    this.ExtendBuffDuration = 0;
+    this.ExtendDebuffDuration = 0;
+    this.ExtendCrowdControlDuration = 0;
+    this.AmmoCount = 0;
+    this.AmmoCost = 0;
+    this.IgnoreDelayCount = 0;
+    this.NormalAttackSpeed = 0;
+    this.Range = 0;
+    this.InitialRangeRate = 0;
+    this.MoveSpeed = 0;
+    this.SightPoint = 0;
+    this.ActiveGauge = 0;
+    this.GroggyGauge = 0;
+    this.GroggyTime = 0;
+    this.StrategyMobility = 0;
+    this.ActionCount = 0;
+    this.StrategySightRange = 0;
+    this.DamageRatio = 0;
+    this.DamagedRatio = 0;
+    this.DamageRatio2Increase = 0;
+    this.DamageRatio2Decrease = 0;
+    this.DamagedRatio2Increase = 0;
+    this.DamagedRatio2Decrease = 0;
+    this.ExDamagedRatioIncrease = 0;
+    this.ExDamagedRatioDecrease = 0;
+    this.StreetBattleAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.OutdoorBattleAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.IndoorBattleAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.RegenCost = 0;
   }
 }
 

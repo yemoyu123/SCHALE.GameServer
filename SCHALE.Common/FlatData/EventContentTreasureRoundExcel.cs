@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentTreasureRoundExcel : IFlatbufferObject
@@ -107,6 +108,81 @@ public struct EventContentTreasureRoundExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentTreasureRoundExcel> EndEventContentTreasureRoundExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentTreasureRoundExcel>(o);
+  }
+  public EventContentTreasureRoundExcelT UnPack() {
+    var _o = new EventContentTreasureRoundExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentTreasureRoundExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentTreasureRound");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.TreasureRound = TableEncryptionService.Convert(this.TreasureRound, key);
+    _o.TreasureRoundSize = new List<int>();
+    for (var _j = 0; _j < this.TreasureRoundSizeLength; ++_j) {_o.TreasureRoundSize.Add(TableEncryptionService.Convert(this.TreasureRoundSize(_j), key));}
+    _o.CellVisualSortUnstructed = TableEncryptionService.Convert(this.CellVisualSortUnstructed, key);
+    _o.CellCheckGoodsId = TableEncryptionService.Convert(this.CellCheckGoodsId, key);
+    _o.CellRewardId = TableEncryptionService.Convert(this.CellRewardId, key);
+    _o.RewardID = new List<long>();
+    for (var _j = 0; _j < this.RewardIDLength; ++_j) {_o.RewardID.Add(TableEncryptionService.Convert(this.RewardID(_j), key));}
+    _o.RewardAmount = new List<int>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+    _o.TreasureCellImagePath = TableEncryptionService.Convert(this.TreasureCellImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentTreasureRoundExcel> Pack(FlatBufferBuilder builder, EventContentTreasureRoundExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentTreasureRoundExcel>);
+    var _TreasureRoundSize = default(VectorOffset);
+    if (_o.TreasureRoundSize != null) {
+      var __TreasureRoundSize = _o.TreasureRoundSize.ToArray();
+      _TreasureRoundSize = CreateTreasureRoundSizeVector(builder, __TreasureRoundSize);
+    }
+    var _RewardID = default(VectorOffset);
+    if (_o.RewardID != null) {
+      var __RewardID = _o.RewardID.ToArray();
+      _RewardID = CreateRewardIDVector(builder, __RewardID);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    var _TreasureCellImagePath = _o.TreasureCellImagePath == null ? default(StringOffset) : builder.CreateString(_o.TreasureCellImagePath);
+    return CreateEventContentTreasureRoundExcel(
+      builder,
+      _o.EventContentId,
+      _o.TreasureRound,
+      _TreasureRoundSize,
+      _o.CellVisualSortUnstructed,
+      _o.CellCheckGoodsId,
+      _o.CellRewardId,
+      _RewardID,
+      _RewardAmount,
+      _TreasureCellImagePath);
+  }
+}
+
+public class EventContentTreasureRoundExcelT
+{
+  public long EventContentId { get; set; }
+  public int TreasureRound { get; set; }
+  public List<int> TreasureRoundSize { get; set; }
+  public bool CellVisualSortUnstructed { get; set; }
+  public long CellCheckGoodsId { get; set; }
+  public long CellRewardId { get; set; }
+  public List<long> RewardID { get; set; }
+  public List<int> RewardAmount { get; set; }
+  public string TreasureCellImagePath { get; set; }
+
+  public EventContentTreasureRoundExcelT() {
+    this.EventContentId = 0;
+    this.TreasureRound = 0;
+    this.TreasureRoundSize = null;
+    this.CellVisualSortUnstructed = false;
+    this.CellCheckGoodsId = 0;
+    this.CellRewardId = 0;
+    this.RewardID = null;
+    this.RewardAmount = null;
+    this.TreasureCellImagePath = null;
   }
 }
 

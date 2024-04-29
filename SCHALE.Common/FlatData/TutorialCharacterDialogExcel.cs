@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TutorialCharacterDialogExcel : IFlatbufferObject
@@ -67,6 +68,49 @@ public struct TutorialCharacterDialogExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TutorialCharacterDialogExcel> EndTutorialCharacterDialogExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TutorialCharacterDialogExcel>(o);
+  }
+  public TutorialCharacterDialogExcelT UnPack() {
+    var _o = new TutorialCharacterDialogExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TutorialCharacterDialogExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TutorialCharacterDialog");
+    _o.TalkId = TableEncryptionService.Convert(this.TalkId, key);
+    _o.AnimationName = TableEncryptionService.Convert(this.AnimationName, key);
+    _o.LocalizeKR = TableEncryptionService.Convert(this.LocalizeKR, key);
+    _o.LocalizeJP = TableEncryptionService.Convert(this.LocalizeJP, key);
+    _o.VoiceId = TableEncryptionService.Convert(this.VoiceId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TutorialCharacterDialogExcel> Pack(FlatBufferBuilder builder, TutorialCharacterDialogExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TutorialCharacterDialogExcel>);
+    var _AnimationName = _o.AnimationName == null ? default(StringOffset) : builder.CreateString(_o.AnimationName);
+    var _LocalizeKR = _o.LocalizeKR == null ? default(StringOffset) : builder.CreateString(_o.LocalizeKR);
+    var _LocalizeJP = _o.LocalizeJP == null ? default(StringOffset) : builder.CreateString(_o.LocalizeJP);
+    return CreateTutorialCharacterDialogExcel(
+      builder,
+      _o.TalkId,
+      _AnimationName,
+      _LocalizeKR,
+      _LocalizeJP,
+      _o.VoiceId);
+  }
+}
+
+public class TutorialCharacterDialogExcelT
+{
+  public long TalkId { get; set; }
+  public string AnimationName { get; set; }
+  public string LocalizeKR { get; set; }
+  public string LocalizeJP { get; set; }
+  public uint VoiceId { get; set; }
+
+  public TutorialCharacterDialogExcelT() {
+    this.TalkId = 0;
+    this.AnimationName = null;
+    this.LocalizeKR = null;
+    this.LocalizeJP = null;
+    this.VoiceId = 0;
   }
 }
 

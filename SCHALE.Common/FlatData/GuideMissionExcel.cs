@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GuideMissionExcel : IFlatbufferObject
@@ -32,13 +33,7 @@ public struct GuideMissionExcel : IFlatbufferObject
   public ArraySegment<byte>? GetPreMissionIdBytes() { return __p.__vector_as_arraysegment(14); }
 #endif
   public long[] GetPreMissionIdArray() { return __p.__vector_as_array<long>(14); }
-  public string Description { get { int o = __p.__offset(16); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetDescriptionBytes() { return __p.__vector_as_span<byte>(16, 1); }
-#else
-  public ArraySegment<byte>? GetDescriptionBytes() { return __p.__vector_as_arraysegment(16); }
-#endif
-  public byte[] GetDescriptionArray() { return __p.__vector_as_array<byte>(16); }
+  public uint Description { get { int o = __p.__offset(16); return o != 0 ? __p.bb.GetUint(o + __p.bb_pos) : (uint)0; } }
   public SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType { get { int o = __p.__offset(18); return o != 0 ? (SCHALE.Common.FlatData.MissionToastDisplayConditionType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always; } }
   public string ToastImagePath { get { int o = __p.__offset(20); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
@@ -100,7 +95,7 @@ public struct GuideMissionExcel : IFlatbufferObject
       bool IsLegacy = false,
       long TabNumber = 0,
       VectorOffset PreMissionIdOffset = default(VectorOffset),
-      StringOffset DescriptionOffset = default(StringOffset),
+      uint Description = 0,
       SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType = SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always,
       StringOffset ToastImagePathOffset = default(StringOffset),
       VectorOffset ShortcutUIOffset = default(VectorOffset),
@@ -126,7 +121,7 @@ public struct GuideMissionExcel : IFlatbufferObject
     GuideMissionExcel.AddShortcutUI(builder, ShortcutUIOffset);
     GuideMissionExcel.AddToastImagePath(builder, ToastImagePathOffset);
     GuideMissionExcel.AddToastDisplayType(builder, ToastDisplayType);
-    GuideMissionExcel.AddDescription(builder, DescriptionOffset);
+    GuideMissionExcel.AddDescription(builder, Description);
     GuideMissionExcel.AddPreMissionId(builder, PreMissionIdOffset);
     GuideMissionExcel.AddCategory(builder, Category);
     GuideMissionExcel.AddIsAutoClearForScenario(builder, IsAutoClearForScenario);
@@ -146,7 +141,7 @@ public struct GuideMissionExcel : IFlatbufferObject
   public static VectorOffset CreatePreMissionIdVectorBlock(FlatBufferBuilder builder, ArraySegment<long> data) { builder.StartVector(8, data.Count, 8); builder.Add(data); return builder.EndVector(); }
   public static VectorOffset CreatePreMissionIdVectorBlock(FlatBufferBuilder builder, IntPtr dataPtr, int sizeInBytes) { builder.StartVector(1, sizeInBytes, 1); builder.Add<long>(dataPtr, sizeInBytes); return builder.EndVector(); }
   public static void StartPreMissionIdVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 8); }
-  public static void AddDescription(FlatBufferBuilder builder, StringOffset descriptionOffset) { builder.AddOffset(6, descriptionOffset.Value, 0); }
+  public static void AddDescription(FlatBufferBuilder builder, uint description) { builder.AddUint(6, description, 0); }
   public static void AddToastDisplayType(FlatBufferBuilder builder, SCHALE.Common.FlatData.MissionToastDisplayConditionType toastDisplayType) { builder.AddInt(7, (int)toastDisplayType, 0); }
   public static void AddToastImagePath(FlatBufferBuilder builder, StringOffset toastImagePathOffset) { builder.AddOffset(8, toastImagePathOffset.Value, 0); }
   public static void AddShortcutUI(FlatBufferBuilder builder, VectorOffset shortcutUIOffset) { builder.AddOffset(9, shortcutUIOffset.Value, 0); }
@@ -192,6 +187,142 @@ public struct GuideMissionExcel : IFlatbufferObject
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GuideMissionExcel>(o);
   }
+  public GuideMissionExcelT UnPack() {
+    var _o = new GuideMissionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GuideMissionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GuideMission");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Category = TableEncryptionService.Convert(this.Category, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.TabNumber = TableEncryptionService.Convert(this.TabNumber, key);
+    _o.PreMissionId = new List<long>();
+    for (var _j = 0; _j < this.PreMissionIdLength; ++_j) {_o.PreMissionId.Add(TableEncryptionService.Convert(this.PreMissionId(_j), key));}
+    _o.Description = TableEncryptionService.Convert(this.Description, key);
+    _o.ToastDisplayType = TableEncryptionService.Convert(this.ToastDisplayType, key);
+    _o.ToastImagePath = TableEncryptionService.Convert(this.ToastImagePath, key);
+    _o.ShortcutUI = new List<string>();
+    for (var _j = 0; _j < this.ShortcutUILength; ++_j) {_o.ShortcutUI.Add(TableEncryptionService.Convert(this.ShortcutUI(_j), key));}
+    _o.CompleteConditionType = TableEncryptionService.Convert(this.CompleteConditionType, key);
+    _o.CompleteConditionCount = TableEncryptionService.Convert(this.CompleteConditionCount, key);
+    _o.CompleteConditionParameter = new List<long>();
+    for (var _j = 0; _j < this.CompleteConditionParameterLength; ++_j) {_o.CompleteConditionParameter.Add(TableEncryptionService.Convert(this.CompleteConditionParameter(_j), key));}
+    _o.CompleteConditionParameterTag = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.CompleteConditionParameterTagLength; ++_j) {_o.CompleteConditionParameterTag.Add(TableEncryptionService.Convert(this.CompleteConditionParameterTag(_j), key));}
+    _o.IsAutoClearForScenario = TableEncryptionService.Convert(this.IsAutoClearForScenario, key);
+    _o.MissionRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.MissionRewardParcelTypeLength; ++_j) {_o.MissionRewardParcelType.Add(TableEncryptionService.Convert(this.MissionRewardParcelType(_j), key));}
+    _o.MissionRewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.MissionRewardParcelIdLength; ++_j) {_o.MissionRewardParcelId.Add(TableEncryptionService.Convert(this.MissionRewardParcelId(_j), key));}
+    _o.MissionRewardAmount = new List<int>();
+    for (var _j = 0; _j < this.MissionRewardAmountLength; ++_j) {_o.MissionRewardAmount.Add(TableEncryptionService.Convert(this.MissionRewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.GuideMissionExcel> Pack(FlatBufferBuilder builder, GuideMissionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GuideMissionExcel>);
+    var _PreMissionId = default(VectorOffset);
+    if (_o.PreMissionId != null) {
+      var __PreMissionId = _o.PreMissionId.ToArray();
+      _PreMissionId = CreatePreMissionIdVector(builder, __PreMissionId);
+    }
+    var _ToastImagePath = _o.ToastImagePath == null ? default(StringOffset) : builder.CreateString(_o.ToastImagePath);
+    var _ShortcutUI = default(VectorOffset);
+    if (_o.ShortcutUI != null) {
+      var __ShortcutUI = new StringOffset[_o.ShortcutUI.Count];
+      for (var _j = 0; _j < __ShortcutUI.Length; ++_j) { __ShortcutUI[_j] = builder.CreateString(_o.ShortcutUI[_j]); }
+      _ShortcutUI = CreateShortcutUIVector(builder, __ShortcutUI);
+    }
+    var _CompleteConditionParameter = default(VectorOffset);
+    if (_o.CompleteConditionParameter != null) {
+      var __CompleteConditionParameter = _o.CompleteConditionParameter.ToArray();
+      _CompleteConditionParameter = CreateCompleteConditionParameterVector(builder, __CompleteConditionParameter);
+    }
+    var _CompleteConditionParameterTag = default(VectorOffset);
+    if (_o.CompleteConditionParameterTag != null) {
+      var __CompleteConditionParameterTag = _o.CompleteConditionParameterTag.ToArray();
+      _CompleteConditionParameterTag = CreateCompleteConditionParameterTagVector(builder, __CompleteConditionParameterTag);
+    }
+    var _MissionRewardParcelType = default(VectorOffset);
+    if (_o.MissionRewardParcelType != null) {
+      var __MissionRewardParcelType = _o.MissionRewardParcelType.ToArray();
+      _MissionRewardParcelType = CreateMissionRewardParcelTypeVector(builder, __MissionRewardParcelType);
+    }
+    var _MissionRewardParcelId = default(VectorOffset);
+    if (_o.MissionRewardParcelId != null) {
+      var __MissionRewardParcelId = _o.MissionRewardParcelId.ToArray();
+      _MissionRewardParcelId = CreateMissionRewardParcelIdVector(builder, __MissionRewardParcelId);
+    }
+    var _MissionRewardAmount = default(VectorOffset);
+    if (_o.MissionRewardAmount != null) {
+      var __MissionRewardAmount = _o.MissionRewardAmount.ToArray();
+      _MissionRewardAmount = CreateMissionRewardAmountVector(builder, __MissionRewardAmount);
+    }
+    return CreateGuideMissionExcel(
+      builder,
+      _o.SeasonId,
+      _o.Id,
+      _o.Category,
+      _o.IsLegacy,
+      _o.TabNumber,
+      _PreMissionId,
+      _o.Description,
+      _o.ToastDisplayType,
+      _ToastImagePath,
+      _ShortcutUI,
+      _o.CompleteConditionType,
+      _o.CompleteConditionCount,
+      _CompleteConditionParameter,
+      _CompleteConditionParameterTag,
+      _o.IsAutoClearForScenario,
+      _MissionRewardParcelType,
+      _MissionRewardParcelId,
+      _MissionRewardAmount);
+  }
+}
+
+public class GuideMissionExcelT
+{
+  public long SeasonId { get; set; }
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.MissionCategory Category { get; set; }
+  public bool IsLegacy { get; set; }
+  public long TabNumber { get; set; }
+  public List<long> PreMissionId { get; set; }
+  public uint Description { get; set; }
+  public SCHALE.Common.FlatData.MissionToastDisplayConditionType ToastDisplayType { get; set; }
+  public string ToastImagePath { get; set; }
+  public List<string> ShortcutUI { get; set; }
+  public SCHALE.Common.FlatData.MissionCompleteConditionType CompleteConditionType { get; set; }
+  public long CompleteConditionCount { get; set; }
+  public List<long> CompleteConditionParameter { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> CompleteConditionParameterTag { get; set; }
+  public bool IsAutoClearForScenario { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> MissionRewardParcelType { get; set; }
+  public List<long> MissionRewardParcelId { get; set; }
+  public List<int> MissionRewardAmount { get; set; }
+
+  public GuideMissionExcelT() {
+    this.SeasonId = 0;
+    this.Id = 0;
+    this.Category = SCHALE.Common.FlatData.MissionCategory.Challenge;
+    this.IsLegacy = false;
+    this.TabNumber = 0;
+    this.PreMissionId = null;
+    this.Description = 0;
+    this.ToastDisplayType = SCHALE.Common.FlatData.MissionToastDisplayConditionType.Always;
+    this.ToastImagePath = null;
+    this.ShortcutUI = null;
+    this.CompleteConditionType = SCHALE.Common.FlatData.MissionCompleteConditionType.None;
+    this.CompleteConditionCount = 0;
+    this.CompleteConditionParameter = null;
+    this.CompleteConditionParameterTag = null;
+    this.IsAutoClearForScenario = false;
+    this.MissionRewardParcelType = null;
+    this.MissionRewardParcelId = null;
+    this.MissionRewardAmount = null;
+  }
 }
 
 
@@ -206,7 +337,7 @@ static public class GuideMissionExcelVerify
       && verifier.VerifyField(tablePos, 10 /*IsLegacy*/, 1 /*bool*/, 1, false)
       && verifier.VerifyField(tablePos, 12 /*TabNumber*/, 8 /*long*/, 8, false)
       && verifier.VerifyVectorOfData(tablePos, 14 /*PreMissionId*/, 8 /*long*/, false)
-      && verifier.VerifyString(tablePos, 16 /*Description*/, false)
+      && verifier.VerifyField(tablePos, 16 /*Description*/, 4 /*uint*/, 4, false)
       && verifier.VerifyField(tablePos, 18 /*ToastDisplayType*/, 4 /*SCHALE.Common.FlatData.MissionToastDisplayConditionType*/, 4, false)
       && verifier.VerifyString(tablePos, 20 /*ToastImagePath*/, false)
       && verifier.VerifyVectorOfStrings(tablePos, 22 /*ShortcutUI*/, false)

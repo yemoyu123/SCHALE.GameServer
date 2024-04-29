@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidStageLimitedRewardExcel : IFlatbufferObject
@@ -81,6 +82,60 @@ public struct EliminateRaidStageLimitedRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel> EndEliminateRaidStageLimitedRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel>(o);
+  }
+  public EliminateRaidStageLimitedRewardExcelT UnPack() {
+    var _o = new EliminateRaidStageLimitedRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidStageLimitedRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidStageLimitedReward");
+    _o.LimitedRewardId = TableEncryptionService.Convert(this.LimitedRewardId, key);
+    _o.LimitedRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.LimitedRewardParcelTypeLength; ++_j) {_o.LimitedRewardParcelType.Add(TableEncryptionService.Convert(this.LimitedRewardParcelType(_j), key));}
+    _o.LimitedRewardParcelUniqueId = new List<long>();
+    for (var _j = 0; _j < this.LimitedRewardParcelUniqueIdLength; ++_j) {_o.LimitedRewardParcelUniqueId.Add(TableEncryptionService.Convert(this.LimitedRewardParcelUniqueId(_j), key));}
+    _o.LimitedRewardAmount = new List<long>();
+    for (var _j = 0; _j < this.LimitedRewardAmountLength; ++_j) {_o.LimitedRewardAmount.Add(TableEncryptionService.Convert(this.LimitedRewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel> Pack(FlatBufferBuilder builder, EliminateRaidStageLimitedRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel>);
+    var _LimitedRewardParcelType = default(VectorOffset);
+    if (_o.LimitedRewardParcelType != null) {
+      var __LimitedRewardParcelType = _o.LimitedRewardParcelType.ToArray();
+      _LimitedRewardParcelType = CreateLimitedRewardParcelTypeVector(builder, __LimitedRewardParcelType);
+    }
+    var _LimitedRewardParcelUniqueId = default(VectorOffset);
+    if (_o.LimitedRewardParcelUniqueId != null) {
+      var __LimitedRewardParcelUniqueId = _o.LimitedRewardParcelUniqueId.ToArray();
+      _LimitedRewardParcelUniqueId = CreateLimitedRewardParcelUniqueIdVector(builder, __LimitedRewardParcelUniqueId);
+    }
+    var _LimitedRewardAmount = default(VectorOffset);
+    if (_o.LimitedRewardAmount != null) {
+      var __LimitedRewardAmount = _o.LimitedRewardAmount.ToArray();
+      _LimitedRewardAmount = CreateLimitedRewardAmountVector(builder, __LimitedRewardAmount);
+    }
+    return CreateEliminateRaidStageLimitedRewardExcel(
+      builder,
+      _o.LimitedRewardId,
+      _LimitedRewardParcelType,
+      _LimitedRewardParcelUniqueId,
+      _LimitedRewardAmount);
+  }
+}
+
+public class EliminateRaidStageLimitedRewardExcelT
+{
+  public long LimitedRewardId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> LimitedRewardParcelType { get; set; }
+  public List<long> LimitedRewardParcelUniqueId { get; set; }
+  public List<long> LimitedRewardAmount { get; set; }
+
+  public EliminateRaidStageLimitedRewardExcelT() {
+    this.LimitedRewardId = 0;
+    this.LimitedRewardParcelType = null;
+    this.LimitedRewardParcelUniqueId = null;
+    this.LimitedRewardAmount = null;
   }
 }
 

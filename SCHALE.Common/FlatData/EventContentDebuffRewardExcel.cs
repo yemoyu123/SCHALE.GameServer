@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentDebuffRewardExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct EventContentDebuffRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentDebuffRewardExcel> EndEventContentDebuffRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentDebuffRewardExcel>(o);
+  }
+  public EventContentDebuffRewardExcelT UnPack() {
+    var _o = new EventContentDebuffRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentDebuffRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentDebuffReward");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventStageId = TableEncryptionService.Convert(this.EventStageId, key);
+    _o.EventContentItemType = TableEncryptionService.Convert(this.EventContentItemType, key);
+    _o.RewardPercentage = TableEncryptionService.Convert(this.RewardPercentage, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentDebuffRewardExcel> Pack(FlatBufferBuilder builder, EventContentDebuffRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentDebuffRewardExcel>);
+    return CreateEventContentDebuffRewardExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventStageId,
+      _o.EventContentItemType,
+      _o.RewardPercentage);
+  }
+}
+
+public class EventContentDebuffRewardExcelT
+{
+  public long EventContentId { get; set; }
+  public long EventStageId { get; set; }
+  public SCHALE.Common.FlatData.EventContentItemType EventContentItemType { get; set; }
+  public long RewardPercentage { get; set; }
+
+  public EventContentDebuffRewardExcelT() {
+    this.EventContentId = 0;
+    this.EventStageId = 0;
+    this.EventContentItemType = SCHALE.Common.FlatData.EventContentItemType.EventPoint;
+    this.RewardPercentage = 0;
   }
 }
 

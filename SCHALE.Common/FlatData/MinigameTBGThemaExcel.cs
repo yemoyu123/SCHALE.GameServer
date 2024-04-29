@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGThemaExcel : IFlatbufferObject
@@ -139,6 +140,101 @@ public struct MinigameTBGThemaExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGThemaExcel> EndMinigameTBGThemaExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGThemaExcel>(o);
+  }
+  public MinigameTBGThemaExcelT UnPack() {
+    var _o = new MinigameTBGThemaExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGThemaExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGThema");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.ThemaIndex = TableEncryptionService.Convert(this.ThemaIndex, key);
+    _o.ThemaType = TableEncryptionService.Convert(this.ThemaType, key);
+    _o.ThemaMap = TableEncryptionService.Convert(this.ThemaMap, key);
+    _o.ThemaMapBG = TableEncryptionService.Convert(this.ThemaMapBG, key);
+    _o.PortalCondition = new List<SCHALE.Common.FlatData.TBGPortalCondition>();
+    for (var _j = 0; _j < this.PortalConditionLength; ++_j) {_o.PortalCondition.Add(TableEncryptionService.Convert(this.PortalCondition(_j), key));}
+    _o.PortalConditionParameter = new List<string>();
+    for (var _j = 0; _j < this.PortalConditionParameterLength; ++_j) {_o.PortalConditionParameter.Add(TableEncryptionService.Convert(this.PortalConditionParameter(_j), key));}
+    _o.ThemaNameLocalize = TableEncryptionService.Convert(this.ThemaNameLocalize, key);
+    _o.ThemaLoadingImage = TableEncryptionService.Convert(this.ThemaLoadingImage, key);
+    _o.ThemaPlayerPrefab = TableEncryptionService.Convert(this.ThemaPlayerPrefab, key);
+    _o.ThemaLeaderId = TableEncryptionService.Convert(this.ThemaLeaderId, key);
+    _o.ThemaGoalLocalize = TableEncryptionService.Convert(this.ThemaGoalLocalize, key);
+    _o.InstantClearCostAmount = TableEncryptionService.Convert(this.InstantClearCostAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGThemaExcel> Pack(FlatBufferBuilder builder, MinigameTBGThemaExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGThemaExcel>);
+    var _ThemaMap = _o.ThemaMap == null ? default(StringOffset) : builder.CreateString(_o.ThemaMap);
+    var _ThemaMapBG = _o.ThemaMapBG == null ? default(StringOffset) : builder.CreateString(_o.ThemaMapBG);
+    var _PortalCondition = default(VectorOffset);
+    if (_o.PortalCondition != null) {
+      var __PortalCondition = _o.PortalCondition.ToArray();
+      _PortalCondition = CreatePortalConditionVector(builder, __PortalCondition);
+    }
+    var _PortalConditionParameter = default(VectorOffset);
+    if (_o.PortalConditionParameter != null) {
+      var __PortalConditionParameter = new StringOffset[_o.PortalConditionParameter.Count];
+      for (var _j = 0; _j < __PortalConditionParameter.Length; ++_j) { __PortalConditionParameter[_j] = builder.CreateString(_o.PortalConditionParameter[_j]); }
+      _PortalConditionParameter = CreatePortalConditionParameterVector(builder, __PortalConditionParameter);
+    }
+    var _ThemaNameLocalize = _o.ThemaNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.ThemaNameLocalize);
+    var _ThemaLoadingImage = _o.ThemaLoadingImage == null ? default(StringOffset) : builder.CreateString(_o.ThemaLoadingImage);
+    var _ThemaPlayerPrefab = _o.ThemaPlayerPrefab == null ? default(StringOffset) : builder.CreateString(_o.ThemaPlayerPrefab);
+    var _ThemaGoalLocalize = _o.ThemaGoalLocalize == null ? default(StringOffset) : builder.CreateString(_o.ThemaGoalLocalize);
+    return CreateMinigameTBGThemaExcel(
+      builder,
+      _o.EventContentId,
+      _o.UniqueId,
+      _o.ThemaIndex,
+      _o.ThemaType,
+      _ThemaMap,
+      _ThemaMapBG,
+      _PortalCondition,
+      _PortalConditionParameter,
+      _ThemaNameLocalize,
+      _ThemaLoadingImage,
+      _ThemaPlayerPrefab,
+      _o.ThemaLeaderId,
+      _ThemaGoalLocalize,
+      _o.InstantClearCostAmount);
+  }
+}
+
+public class MinigameTBGThemaExcelT
+{
+  public long EventContentId { get; set; }
+  public long UniqueId { get; set; }
+  public int ThemaIndex { get; set; }
+  public SCHALE.Common.FlatData.TBGThemaType ThemaType { get; set; }
+  public string ThemaMap { get; set; }
+  public string ThemaMapBG { get; set; }
+  public List<SCHALE.Common.FlatData.TBGPortalCondition> PortalCondition { get; set; }
+  public List<string> PortalConditionParameter { get; set; }
+  public string ThemaNameLocalize { get; set; }
+  public string ThemaLoadingImage { get; set; }
+  public string ThemaPlayerPrefab { get; set; }
+  public long ThemaLeaderId { get; set; }
+  public string ThemaGoalLocalize { get; set; }
+  public long InstantClearCostAmount { get; set; }
+
+  public MinigameTBGThemaExcelT() {
+    this.EventContentId = 0;
+    this.UniqueId = 0;
+    this.ThemaIndex = 0;
+    this.ThemaType = SCHALE.Common.FlatData.TBGThemaType.None;
+    this.ThemaMap = null;
+    this.ThemaMapBG = null;
+    this.PortalCondition = null;
+    this.PortalConditionParameter = null;
+    this.ThemaNameLocalize = null;
+    this.ThemaLoadingImage = null;
+    this.ThemaPlayerPrefab = null;
+    this.ThemaLeaderId = 0;
+    this.ThemaGoalLocalize = null;
+    this.InstantClearCostAmount = 0;
   }
 }
 

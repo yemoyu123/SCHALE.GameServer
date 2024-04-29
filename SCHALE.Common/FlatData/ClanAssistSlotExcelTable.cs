@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ClanAssistSlotExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ClanAssistSlotExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ClanAssistSlotExcelTable> EndClanAssistSlotExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ClanAssistSlotExcelTable>(o);
+  }
+  public ClanAssistSlotExcelTableT UnPack() {
+    var _o = new ClanAssistSlotExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ClanAssistSlotExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ClanAssistSlotExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ClanAssistSlotExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ClanAssistSlotExcelTable> Pack(FlatBufferBuilder builder, ClanAssistSlotExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ClanAssistSlotExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ClanAssistSlotExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ClanAssistSlotExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateClanAssistSlotExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ClanAssistSlotExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ClanAssistSlotExcelT> DataList { get; set; }
+
+  public ClanAssistSlotExcelTableT() {
+    this.DataList = null;
   }
 }
 

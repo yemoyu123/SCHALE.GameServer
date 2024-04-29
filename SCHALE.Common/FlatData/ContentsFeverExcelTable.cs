@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentsFeverExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ContentsFeverExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentsFeverExcelTable> EndContentsFeverExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentsFeverExcelTable>(o);
+  }
+  public ContentsFeverExcelTableT UnPack() {
+    var _o = new ContentsFeverExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentsFeverExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentsFeverExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ContentsFeverExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentsFeverExcelTable> Pack(FlatBufferBuilder builder, ContentsFeverExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentsFeverExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ContentsFeverExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ContentsFeverExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateContentsFeverExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ContentsFeverExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ContentsFeverExcelT> DataList { get; set; }
+
+  public ContentsFeverExcelTableT() {
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PresetCharacterGroupExcel : IFlatbufferObject
@@ -52,11 +53,11 @@ public struct PresetCharacterGroupExcel : IFlatbufferObject
   public bool EquipCharacterGear { get { int o = __p.__offset(52); return o != 0 ? 0!=__p.bb.Get(o + __p.bb_pos) : (bool)false; } }
   public int EquipCharacterGearTier { get { int o = __p.__offset(54); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
   public int EquipCharacterGearLevel { get { int o = __p.__offset(56); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public SCHALE.Common.FlatData.StatType PotentialType01 { get { int o = __p.__offset(58); return o != 0 ? (SCHALE.Common.FlatData.StatType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.StatType.None; } }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType01 { get { int o = __p.__offset(58); return o != 0 ? (SCHALE.Common.FlatData.PotentialStatBonusRateType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.PotentialStatBonusRateType.None; } }
   public int PotentialLevel01 { get { int o = __p.__offset(60); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public SCHALE.Common.FlatData.StatType PotentialType02 { get { int o = __p.__offset(62); return o != 0 ? (SCHALE.Common.FlatData.StatType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.StatType.None; } }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType02 { get { int o = __p.__offset(62); return o != 0 ? (SCHALE.Common.FlatData.PotentialStatBonusRateType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.PotentialStatBonusRateType.None; } }
   public int PotentialLevel02 { get { int o = __p.__offset(64); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
-  public SCHALE.Common.FlatData.StatType PotentialType03 { get { int o = __p.__offset(66); return o != 0 ? (SCHALE.Common.FlatData.StatType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.StatType.None; } }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType03 { get { int o = __p.__offset(66); return o != 0 ? (SCHALE.Common.FlatData.PotentialStatBonusRateType)__p.bb.GetInt(o + __p.bb_pos) : SCHALE.Common.FlatData.PotentialStatBonusRateType.None; } }
   public int PotentialLevel03 { get { int o = __p.__offset(68); return o != 0 ? __p.bb.GetInt(o + __p.bb_pos) : (int)0; } }
 
   public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupExcel> CreatePresetCharacterGroupExcel(FlatBufferBuilder builder,
@@ -87,11 +88,11 @@ public struct PresetCharacterGroupExcel : IFlatbufferObject
       bool EquipCharacterGear = false,
       int EquipCharacterGearTier = 0,
       int EquipCharacterGearLevel = 0,
-      SCHALE.Common.FlatData.StatType PotentialType01 = SCHALE.Common.FlatData.StatType.None,
+      SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType01 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None,
       int PotentialLevel01 = 0,
-      SCHALE.Common.FlatData.StatType PotentialType02 = SCHALE.Common.FlatData.StatType.None,
+      SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType02 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None,
       int PotentialLevel02 = 0,
-      SCHALE.Common.FlatData.StatType PotentialType03 = SCHALE.Common.FlatData.StatType.None,
+      SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType03 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None,
       int PotentialLevel03 = 0) {
     builder.StartTable(33);
     PresetCharacterGroupExcel.AddPresetCharacterGroupId(builder, PresetCharacterGroupId);
@@ -158,15 +159,168 @@ public struct PresetCharacterGroupExcel : IFlatbufferObject
   public static void AddEquipCharacterGear(FlatBufferBuilder builder, bool equipCharacterGear) { builder.AddBool(24, equipCharacterGear, false); }
   public static void AddEquipCharacterGearTier(FlatBufferBuilder builder, int equipCharacterGearTier) { builder.AddInt(25, equipCharacterGearTier, 0); }
   public static void AddEquipCharacterGearLevel(FlatBufferBuilder builder, int equipCharacterGearLevel) { builder.AddInt(26, equipCharacterGearLevel, 0); }
-  public static void AddPotentialType01(FlatBufferBuilder builder, SCHALE.Common.FlatData.StatType potentialType01) { builder.AddInt(27, (int)potentialType01, 0); }
+  public static void AddPotentialType01(FlatBufferBuilder builder, SCHALE.Common.FlatData.PotentialStatBonusRateType potentialType01) { builder.AddInt(27, (int)potentialType01, 0); }
   public static void AddPotentialLevel01(FlatBufferBuilder builder, int potentialLevel01) { builder.AddInt(28, potentialLevel01, 0); }
-  public static void AddPotentialType02(FlatBufferBuilder builder, SCHALE.Common.FlatData.StatType potentialType02) { builder.AddInt(29, (int)potentialType02, 0); }
+  public static void AddPotentialType02(FlatBufferBuilder builder, SCHALE.Common.FlatData.PotentialStatBonusRateType potentialType02) { builder.AddInt(29, (int)potentialType02, 0); }
   public static void AddPotentialLevel02(FlatBufferBuilder builder, int potentialLevel02) { builder.AddInt(30, potentialLevel02, 0); }
-  public static void AddPotentialType03(FlatBufferBuilder builder, SCHALE.Common.FlatData.StatType potentialType03) { builder.AddInt(31, (int)potentialType03, 0); }
+  public static void AddPotentialType03(FlatBufferBuilder builder, SCHALE.Common.FlatData.PotentialStatBonusRateType potentialType03) { builder.AddInt(31, (int)potentialType03, 0); }
   public static void AddPotentialLevel03(FlatBufferBuilder builder, int potentialLevel03) { builder.AddInt(32, potentialLevel03, 0); }
   public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupExcel> EndPresetCharacterGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PresetCharacterGroupExcel>(o);
+  }
+  public PresetCharacterGroupExcelT UnPack() {
+    var _o = new PresetCharacterGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PresetCharacterGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PresetCharacterGroup");
+    _o.PresetCharacterGroupId = TableEncryptionService.Convert(this.PresetCharacterGroupId, key);
+    _o.GetPresetType = TableEncryptionService.Convert(this.GetPresetType, key);
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Exp = TableEncryptionService.Convert(this.Exp, key);
+    _o.FavorExp = TableEncryptionService.Convert(this.FavorExp, key);
+    _o.FavorRank = TableEncryptionService.Convert(this.FavorRank, key);
+    _o.StarGrade = TableEncryptionService.Convert(this.StarGrade, key);
+    _o.ExSkillLevel = TableEncryptionService.Convert(this.ExSkillLevel, key);
+    _o.PassiveSkillLevel = TableEncryptionService.Convert(this.PassiveSkillLevel, key);
+    _o.ExtraPassiveSkillLevel = TableEncryptionService.Convert(this.ExtraPassiveSkillLevel, key);
+    _o.CommonSkillLevel = TableEncryptionService.Convert(this.CommonSkillLevel, key);
+    _o.LeaderSkillLevel = TableEncryptionService.Convert(this.LeaderSkillLevel, key);
+    _o.EquipSlot01 = TableEncryptionService.Convert(this.EquipSlot01, key);
+    _o.EquipSlotTier01 = TableEncryptionService.Convert(this.EquipSlotTier01, key);
+    _o.EquipSlotLevel01 = TableEncryptionService.Convert(this.EquipSlotLevel01, key);
+    _o.EquipSlot02 = TableEncryptionService.Convert(this.EquipSlot02, key);
+    _o.EquipSlotTier02 = TableEncryptionService.Convert(this.EquipSlotTier02, key);
+    _o.EquipSlotLevel02 = TableEncryptionService.Convert(this.EquipSlotLevel02, key);
+    _o.EquipSlot03 = TableEncryptionService.Convert(this.EquipSlot03, key);
+    _o.EquipSlotTier03 = TableEncryptionService.Convert(this.EquipSlotTier03, key);
+    _o.EquipSlotLevel03 = TableEncryptionService.Convert(this.EquipSlotLevel03, key);
+    _o.EquipCharacterWeapon = TableEncryptionService.Convert(this.EquipCharacterWeapon, key);
+    _o.EquipCharacterWeaponTier = TableEncryptionService.Convert(this.EquipCharacterWeaponTier, key);
+    _o.EquipCharacterWeaponLevel = TableEncryptionService.Convert(this.EquipCharacterWeaponLevel, key);
+    _o.EquipCharacterGear = TableEncryptionService.Convert(this.EquipCharacterGear, key);
+    _o.EquipCharacterGearTier = TableEncryptionService.Convert(this.EquipCharacterGearTier, key);
+    _o.EquipCharacterGearLevel = TableEncryptionService.Convert(this.EquipCharacterGearLevel, key);
+    _o.PotentialType01 = TableEncryptionService.Convert(this.PotentialType01, key);
+    _o.PotentialLevel01 = TableEncryptionService.Convert(this.PotentialLevel01, key);
+    _o.PotentialType02 = TableEncryptionService.Convert(this.PotentialType02, key);
+    _o.PotentialLevel02 = TableEncryptionService.Convert(this.PotentialLevel02, key);
+    _o.PotentialType03 = TableEncryptionService.Convert(this.PotentialType03, key);
+    _o.PotentialLevel03 = TableEncryptionService.Convert(this.PotentialLevel03, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupExcel> Pack(FlatBufferBuilder builder, PresetCharacterGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PresetCharacterGroupExcel>);
+    var _GetPresetType = _o.GetPresetType == null ? default(StringOffset) : builder.CreateString(_o.GetPresetType);
+    return CreatePresetCharacterGroupExcel(
+      builder,
+      _o.PresetCharacterGroupId,
+      _GetPresetType,
+      _o.Level,
+      _o.Exp,
+      _o.FavorExp,
+      _o.FavorRank,
+      _o.StarGrade,
+      _o.ExSkillLevel,
+      _o.PassiveSkillLevel,
+      _o.ExtraPassiveSkillLevel,
+      _o.CommonSkillLevel,
+      _o.LeaderSkillLevel,
+      _o.EquipSlot01,
+      _o.EquipSlotTier01,
+      _o.EquipSlotLevel01,
+      _o.EquipSlot02,
+      _o.EquipSlotTier02,
+      _o.EquipSlotLevel02,
+      _o.EquipSlot03,
+      _o.EquipSlotTier03,
+      _o.EquipSlotLevel03,
+      _o.EquipCharacterWeapon,
+      _o.EquipCharacterWeaponTier,
+      _o.EquipCharacterWeaponLevel,
+      _o.EquipCharacterGear,
+      _o.EquipCharacterGearTier,
+      _o.EquipCharacterGearLevel,
+      _o.PotentialType01,
+      _o.PotentialLevel01,
+      _o.PotentialType02,
+      _o.PotentialLevel02,
+      _o.PotentialType03,
+      _o.PotentialLevel03);
+  }
+}
+
+public class PresetCharacterGroupExcelT
+{
+  public long PresetCharacterGroupId { get; set; }
+  public string GetPresetType { get; set; }
+  public int Level { get; set; }
+  public int Exp { get; set; }
+  public int FavorExp { get; set; }
+  public int FavorRank { get; set; }
+  public int StarGrade { get; set; }
+  public int ExSkillLevel { get; set; }
+  public int PassiveSkillLevel { get; set; }
+  public int ExtraPassiveSkillLevel { get; set; }
+  public int CommonSkillLevel { get; set; }
+  public int LeaderSkillLevel { get; set; }
+  public bool EquipSlot01 { get; set; }
+  public int EquipSlotTier01 { get; set; }
+  public int EquipSlotLevel01 { get; set; }
+  public bool EquipSlot02 { get; set; }
+  public int EquipSlotTier02 { get; set; }
+  public int EquipSlotLevel02 { get; set; }
+  public bool EquipSlot03 { get; set; }
+  public int EquipSlotTier03 { get; set; }
+  public int EquipSlotLevel03 { get; set; }
+  public bool EquipCharacterWeapon { get; set; }
+  public int EquipCharacterWeaponTier { get; set; }
+  public int EquipCharacterWeaponLevel { get; set; }
+  public bool EquipCharacterGear { get; set; }
+  public int EquipCharacterGearTier { get; set; }
+  public int EquipCharacterGearLevel { get; set; }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType01 { get; set; }
+  public int PotentialLevel01 { get; set; }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType02 { get; set; }
+  public int PotentialLevel02 { get; set; }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialType03 { get; set; }
+  public int PotentialLevel03 { get; set; }
+
+  public PresetCharacterGroupExcelT() {
+    this.PresetCharacterGroupId = 0;
+    this.GetPresetType = null;
+    this.Level = 0;
+    this.Exp = 0;
+    this.FavorExp = 0;
+    this.FavorRank = 0;
+    this.StarGrade = 0;
+    this.ExSkillLevel = 0;
+    this.PassiveSkillLevel = 0;
+    this.ExtraPassiveSkillLevel = 0;
+    this.CommonSkillLevel = 0;
+    this.LeaderSkillLevel = 0;
+    this.EquipSlot01 = false;
+    this.EquipSlotTier01 = 0;
+    this.EquipSlotLevel01 = 0;
+    this.EquipSlot02 = false;
+    this.EquipSlotTier02 = 0;
+    this.EquipSlotLevel02 = 0;
+    this.EquipSlot03 = false;
+    this.EquipSlotTier03 = 0;
+    this.EquipSlotLevel03 = 0;
+    this.EquipCharacterWeapon = false;
+    this.EquipCharacterWeaponTier = 0;
+    this.EquipCharacterWeaponLevel = 0;
+    this.EquipCharacterGear = false;
+    this.EquipCharacterGearTier = 0;
+    this.EquipCharacterGearLevel = 0;
+    this.PotentialType01 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None;
+    this.PotentialLevel01 = 0;
+    this.PotentialType02 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None;
+    this.PotentialLevel02 = 0;
+    this.PotentialType03 = SCHALE.Common.FlatData.PotentialStatBonusRateType.None;
+    this.PotentialLevel03 = 0;
   }
 }
 
@@ -203,11 +357,11 @@ static public class PresetCharacterGroupExcelVerify
       && verifier.VerifyField(tablePos, 52 /*EquipCharacterGear*/, 1 /*bool*/, 1, false)
       && verifier.VerifyField(tablePos, 54 /*EquipCharacterGearTier*/, 4 /*int*/, 4, false)
       && verifier.VerifyField(tablePos, 56 /*EquipCharacterGearLevel*/, 4 /*int*/, 4, false)
-      && verifier.VerifyField(tablePos, 58 /*PotentialType01*/, 4 /*SCHALE.Common.FlatData.StatType*/, 4, false)
+      && verifier.VerifyField(tablePos, 58 /*PotentialType01*/, 4 /*SCHALE.Common.FlatData.PotentialStatBonusRateType*/, 4, false)
       && verifier.VerifyField(tablePos, 60 /*PotentialLevel01*/, 4 /*int*/, 4, false)
-      && verifier.VerifyField(tablePos, 62 /*PotentialType02*/, 4 /*SCHALE.Common.FlatData.StatType*/, 4, false)
+      && verifier.VerifyField(tablePos, 62 /*PotentialType02*/, 4 /*SCHALE.Common.FlatData.PotentialStatBonusRateType*/, 4, false)
       && verifier.VerifyField(tablePos, 64 /*PotentialLevel02*/, 4 /*int*/, 4, false)
-      && verifier.VerifyField(tablePos, 66 /*PotentialType03*/, 4 /*SCHALE.Common.FlatData.StatType*/, 4, false)
+      && verifier.VerifyField(tablePos, 66 /*PotentialType03*/, 4 /*SCHALE.Common.FlatData.PotentialStatBonusRateType*/, 4, false)
       && verifier.VerifyField(tablePos, 68 /*PotentialLevel03*/, 4 /*int*/, 4, false)
       && verifier.VerifyTableEnd(tablePos);
   }

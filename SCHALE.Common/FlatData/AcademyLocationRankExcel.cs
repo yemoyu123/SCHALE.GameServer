@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyLocationRankExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct AcademyLocationRankExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyLocationRankExcel> EndAcademyLocationRankExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyLocationRankExcel>(o);
+  }
+  public AcademyLocationRankExcelT UnPack() {
+    var _o = new AcademyLocationRankExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyLocationRankExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyLocationRank");
+    _o.Rank = TableEncryptionService.Convert(this.Rank, key);
+    _o.RankExp = TableEncryptionService.Convert(this.RankExp, key);
+    _o.TotalExp = TableEncryptionService.Convert(this.TotalExp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyLocationRankExcel> Pack(FlatBufferBuilder builder, AcademyLocationRankExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyLocationRankExcel>);
+    return CreateAcademyLocationRankExcel(
+      builder,
+      _o.Rank,
+      _o.RankExp,
+      _o.TotalExp);
+  }
+}
+
+public class AcademyLocationRankExcelT
+{
+  public long Rank { get; set; }
+  public long RankExp { get; set; }
+  public long TotalExp { get; set; }
+
+  public AcademyLocationRankExcelT() {
+    this.Rank = 0;
+    this.RankExp = 0;
+    this.TotalExp = 0;
   }
 }
 

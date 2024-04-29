@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ProductExcel : IFlatbufferObject
@@ -117,6 +118,86 @@ public struct ProductExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ProductExcel> EndProductExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ProductExcel>(o);
+  }
+  public ProductExcelT UnPack() {
+    var _o = new ProductExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ProductExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Product");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ProductId = TableEncryptionService.Convert(this.ProductId, key);
+    _o.StoreType = TableEncryptionService.Convert(this.StoreType, key);
+    _o.Price = TableEncryptionService.Convert(this.Price, key);
+    _o.PriceReference = TableEncryptionService.Convert(this.PriceReference, key);
+    _o.PurchasePeriodType = TableEncryptionService.Convert(this.PurchasePeriodType, key);
+    _o.PurchasePeriodLimit = TableEncryptionService.Convert(this.PurchasePeriodLimit, key);
+    _o.ParcelType_ = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ParcelType_Length; ++_j) {_o.ParcelType_.Add(TableEncryptionService.Convert(this.ParcelType_(_j), key));}
+    _o.ParcelId = new List<long>();
+    for (var _j = 0; _j < this.ParcelIdLength; ++_j) {_o.ParcelId.Add(TableEncryptionService.Convert(this.ParcelId(_j), key));}
+    _o.ParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.ParcelAmountLength; ++_j) {_o.ParcelAmount.Add(TableEncryptionService.Convert(this.ParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ProductExcel> Pack(FlatBufferBuilder builder, ProductExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ProductExcel>);
+    var _ProductId = _o.ProductId == null ? default(StringOffset) : builder.CreateString(_o.ProductId);
+    var _PriceReference = _o.PriceReference == null ? default(StringOffset) : builder.CreateString(_o.PriceReference);
+    var _ParcelType_ = default(VectorOffset);
+    if (_o.ParcelType_ != null) {
+      var __ParcelType_ = _o.ParcelType_.ToArray();
+      _ParcelType_ = CreateParcelType_Vector(builder, __ParcelType_);
+    }
+    var _ParcelId = default(VectorOffset);
+    if (_o.ParcelId != null) {
+      var __ParcelId = _o.ParcelId.ToArray();
+      _ParcelId = CreateParcelIdVector(builder, __ParcelId);
+    }
+    var _ParcelAmount = default(VectorOffset);
+    if (_o.ParcelAmount != null) {
+      var __ParcelAmount = _o.ParcelAmount.ToArray();
+      _ParcelAmount = CreateParcelAmountVector(builder, __ParcelAmount);
+    }
+    return CreateProductExcel(
+      builder,
+      _o.Id,
+      _ProductId,
+      _o.StoreType,
+      _o.Price,
+      _PriceReference,
+      _o.PurchasePeriodType,
+      _o.PurchasePeriodLimit,
+      _ParcelType_,
+      _ParcelId,
+      _ParcelAmount);
+  }
+}
+
+public class ProductExcelT
+{
+  public long Id { get; set; }
+  public string ProductId { get; set; }
+  public SCHALE.Common.FlatData.StoreType StoreType { get; set; }
+  public long Price { get; set; }
+  public string PriceReference { get; set; }
+  public SCHALE.Common.FlatData.PurchasePeriodType PurchasePeriodType { get; set; }
+  public long PurchasePeriodLimit { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ParcelType_ { get; set; }
+  public List<long> ParcelId { get; set; }
+  public List<long> ParcelAmount { get; set; }
+
+  public ProductExcelT() {
+    this.Id = 0;
+    this.ProductId = null;
+    this.StoreType = SCHALE.Common.FlatData.StoreType.None;
+    this.Price = 0;
+    this.PriceReference = null;
+    this.PurchasePeriodType = SCHALE.Common.FlatData.PurchasePeriodType.None;
+    this.PurchasePeriodLimit = 0;
+    this.ParcelType_ = null;
+    this.ParcelId = null;
+    this.ParcelAmount = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticSkipExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct TacticSkipExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticSkipExcel> EndTacticSkipExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticSkipExcel>(o);
+  }
+  public TacticSkipExcelT UnPack() {
+    var _o = new TacticSkipExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticSkipExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticSkip");
+    _o.LevelDiff = TableEncryptionService.Convert(this.LevelDiff, key);
+    _o.HPResult = TableEncryptionService.Convert(this.HPResult, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticSkipExcel> Pack(FlatBufferBuilder builder, TacticSkipExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticSkipExcel>);
+    return CreateTacticSkipExcel(
+      builder,
+      _o.LevelDiff,
+      _o.HPResult);
+  }
+}
+
+public class TacticSkipExcelT
+{
+  public int LevelDiff { get; set; }
+  public long HPResult { get; set; }
+
+  public TacticSkipExcelT() {
+    this.LevelDiff = 0;
+    this.HPResult = 0;
   }
 }
 

@@ -38,6 +38,7 @@ public enum EventContentType : int
   Treasure = 28,
   Field = 29,
   MultiFloorRaid = 30,
+  MinigameDreamMaker = 31,
 };
 
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentDiceRaceExcel : IFlatbufferObject
@@ -65,6 +66,58 @@ public struct EventContentDiceRaceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceExcel> EndEventContentDiceRaceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentDiceRaceExcel>(o);
+  }
+  public EventContentDiceRaceExcelT UnPack() {
+    var _o = new EventContentDiceRaceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentDiceRaceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentDiceRace");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.DiceCostGoodsId = TableEncryptionService.Convert(this.DiceCostGoodsId, key);
+    _o.SkipableLap = TableEncryptionService.Convert(this.SkipableLap, key);
+    _o.DiceRacePawnPrefab = TableEncryptionService.Convert(this.DiceRacePawnPrefab, key);
+    _o.IsUsingFixedDice = TableEncryptionService.Convert(this.IsUsingFixedDice, key);
+    _o.DiceRaceEventType = new List<string>();
+    for (var _j = 0; _j < this.DiceRaceEventTypeLength; ++_j) {_o.DiceRaceEventType.Add(TableEncryptionService.Convert(this.DiceRaceEventType(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceExcel> Pack(FlatBufferBuilder builder, EventContentDiceRaceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentDiceRaceExcel>);
+    var _DiceRacePawnPrefab = _o.DiceRacePawnPrefab == null ? default(StringOffset) : builder.CreateString(_o.DiceRacePawnPrefab);
+    var _DiceRaceEventType = default(VectorOffset);
+    if (_o.DiceRaceEventType != null) {
+      var __DiceRaceEventType = new StringOffset[_o.DiceRaceEventType.Count];
+      for (var _j = 0; _j < __DiceRaceEventType.Length; ++_j) { __DiceRaceEventType[_j] = builder.CreateString(_o.DiceRaceEventType[_j]); }
+      _DiceRaceEventType = CreateDiceRaceEventTypeVector(builder, __DiceRaceEventType);
+    }
+    return CreateEventContentDiceRaceExcel(
+      builder,
+      _o.EventContentId,
+      _o.DiceCostGoodsId,
+      _o.SkipableLap,
+      _DiceRacePawnPrefab,
+      _o.IsUsingFixedDice,
+      _DiceRaceEventType);
+  }
+}
+
+public class EventContentDiceRaceExcelT
+{
+  public long EventContentId { get; set; }
+  public long DiceCostGoodsId { get; set; }
+  public int SkipableLap { get; set; }
+  public string DiceRacePawnPrefab { get; set; }
+  public bool IsUsingFixedDice { get; set; }
+  public List<string> DiceRaceEventType { get; set; }
+
+  public EventContentDiceRaceExcelT() {
+    this.EventContentId = 0;
+    this.DiceCostGoodsId = 0;
+    this.SkipableLap = 0;
+    this.DiceRacePawnPrefab = null;
+    this.IsUsingFixedDice = false;
+    this.DiceRaceEventType = null;
   }
 }
 

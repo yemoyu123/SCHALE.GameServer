@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultParcelExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct DefaultParcelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultParcelExcel> EndDefaultParcelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultParcelExcel>(o);
+  }
+  public DefaultParcelExcelT UnPack() {
+    var _o = new DefaultParcelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultParcelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultParcel");
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelId = TableEncryptionService.Convert(this.ParcelId, key);
+    _o.ParcelAmount = TableEncryptionService.Convert(this.ParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultParcelExcel> Pack(FlatBufferBuilder builder, DefaultParcelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultParcelExcel>);
+    return CreateDefaultParcelExcel(
+      builder,
+      _o.ParcelType,
+      _o.ParcelId,
+      _o.ParcelAmount);
+  }
+}
+
+public class DefaultParcelExcelT
+{
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelId { get; set; }
+  public long ParcelAmount { get; set; }
+
+  public DefaultParcelExcelT() {
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelId = 0;
+    this.ParcelAmount = 0;
   }
 }
 

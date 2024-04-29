@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GuideMissionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct GuideMissionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GuideMissionExcelTable> EndGuideMissionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GuideMissionExcelTable>(o);
+  }
+  public GuideMissionExcelTableT UnPack() {
+    var _o = new GuideMissionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GuideMissionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GuideMissionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.GuideMissionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.GuideMissionExcelTable> Pack(FlatBufferBuilder builder, GuideMissionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GuideMissionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.GuideMissionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.GuideMissionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateGuideMissionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class GuideMissionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.GuideMissionExcelT> DataList { get; set; }
+
+  public GuideMissionExcelTableT() {
+    this.DataList = null;
   }
 }
 

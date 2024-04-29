@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentCurrencyItemExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct EventContentCurrencyItemExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentCurrencyItemExcel> EndEventContentCurrencyItemExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentCurrencyItemExcel>(o);
+  }
+  public EventContentCurrencyItemExcelT UnPack() {
+    var _o = new EventContentCurrencyItemExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentCurrencyItemExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentCurrencyItem");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentItemType = TableEncryptionService.Convert(this.EventContentItemType, key);
+    _o.ItemUniqueId = TableEncryptionService.Convert(this.ItemUniqueId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentCurrencyItemExcel> Pack(FlatBufferBuilder builder, EventContentCurrencyItemExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentCurrencyItemExcel>);
+    return CreateEventContentCurrencyItemExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentItemType,
+      _o.ItemUniqueId);
+  }
+}
+
+public class EventContentCurrencyItemExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentItemType EventContentItemType { get; set; }
+  public long ItemUniqueId { get; set; }
+
+  public EventContentCurrencyItemExcelT() {
+    this.EventContentId = 0;
+    this.EventContentItemType = SCHALE.Common.FlatData.EventContentItemType.EventPoint;
+    this.ItemUniqueId = 0;
   }
 }
 

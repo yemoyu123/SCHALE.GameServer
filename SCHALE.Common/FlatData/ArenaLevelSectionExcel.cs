@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaLevelSectionExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct ArenaLevelSectionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcel> EndArenaLevelSectionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcel>(o);
+  }
+  public ArenaLevelSectionExcelT UnPack() {
+    var _o = new ArenaLevelSectionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaLevelSectionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaLevelSection");
+    _o.ArenaSeasonId = TableEncryptionService.Convert(this.ArenaSeasonId, key);
+    _o.StartLevel = TableEncryptionService.Convert(this.StartLevel, key);
+    _o.LastLevel = TableEncryptionService.Convert(this.LastLevel, key);
+    _o.UserCount = TableEncryptionService.Convert(this.UserCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcel> Pack(FlatBufferBuilder builder, ArenaLevelSectionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaLevelSectionExcel>);
+    return CreateArenaLevelSectionExcel(
+      builder,
+      _o.ArenaSeasonId,
+      _o.StartLevel,
+      _o.LastLevel,
+      _o.UserCount);
+  }
+}
+
+public class ArenaLevelSectionExcelT
+{
+  public long ArenaSeasonId { get; set; }
+  public long StartLevel { get; set; }
+  public long LastLevel { get; set; }
+  public long UserCount { get; set; }
+
+  public ArenaLevelSectionExcelT() {
+    this.ArenaSeasonId = 0;
+    this.StartLevel = 0;
+    this.LastLevel = 0;
+    this.UserCount = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SkillExcel : IFlatbufferObject
@@ -181,6 +182,148 @@ public struct SkillExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SkillExcel> EndSkillExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SkillExcel>(o);
+  }
+  public SkillExcelT UnPack() {
+    var _o = new SkillExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SkillExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Skill");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeSkillId = TableEncryptionService.Convert(this.LocalizeSkillId, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.SkillDataKey = TableEncryptionService.Convert(this.SkillDataKey, key);
+    _o.VisualDataKey = TableEncryptionService.Convert(this.VisualDataKey, key);
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.SkillCost = TableEncryptionService.Convert(this.SkillCost, key);
+    _o.ExtraSkillCost = TableEncryptionService.Convert(this.ExtraSkillCost, key);
+    _o.EnemySkillCost = TableEncryptionService.Convert(this.EnemySkillCost, key);
+    _o.ExtraEnemySkillCost = TableEncryptionService.Convert(this.ExtraEnemySkillCost, key);
+    _o.NPCSkillCost = TableEncryptionService.Convert(this.NPCSkillCost, key);
+    _o.ExtraNPCSkillCost = TableEncryptionService.Convert(this.ExtraNPCSkillCost, key);
+    _o.BulletType = TableEncryptionService.Convert(this.BulletType, key);
+    _o.StartCoolTime = TableEncryptionService.Convert(this.StartCoolTime, key);
+    _o.CoolTime = TableEncryptionService.Convert(this.CoolTime, key);
+    _o.EnemyStartCoolTime = TableEncryptionService.Convert(this.EnemyStartCoolTime, key);
+    _o.EnemyCoolTime = TableEncryptionService.Convert(this.EnemyCoolTime, key);
+    _o.NPCStartCoolTime = TableEncryptionService.Convert(this.NPCStartCoolTime, key);
+    _o.NPCCoolTime = TableEncryptionService.Convert(this.NPCCoolTime, key);
+    _o.UseAtg = TableEncryptionService.Convert(this.UseAtg, key);
+    _o.RequireCharacterLevel = TableEncryptionService.Convert(this.RequireCharacterLevel, key);
+    _o.RequireLevelUpMaterial = TableEncryptionService.Convert(this.RequireLevelUpMaterial, key);
+    _o.IconName = TableEncryptionService.Convert(this.IconName, key);
+    _o.IsShowInfo = TableEncryptionService.Convert(this.IsShowInfo, key);
+    _o.IsShowSpeechbubble = TableEncryptionService.Convert(this.IsShowSpeechbubble, key);
+    _o.PublicSpeechDuration = TableEncryptionService.Convert(this.PublicSpeechDuration, key);
+    _o.AdditionalToolTipId = TableEncryptionService.Convert(this.AdditionalToolTipId, key);
+    _o.TextureSkillCardForFormConversion = TableEncryptionService.Convert(this.TextureSkillCardForFormConversion, key);
+    _o.SkillCardLabelPath = TableEncryptionService.Convert(this.SkillCardLabelPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SkillExcel> Pack(FlatBufferBuilder builder, SkillExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SkillExcel>);
+    var _GroupId = _o.GroupId == null ? default(StringOffset) : builder.CreateString(_o.GroupId);
+    var _SkillDataKey = _o.SkillDataKey == null ? default(StringOffset) : builder.CreateString(_o.SkillDataKey);
+    var _VisualDataKey = _o.VisualDataKey == null ? default(StringOffset) : builder.CreateString(_o.VisualDataKey);
+    var _IconName = _o.IconName == null ? default(StringOffset) : builder.CreateString(_o.IconName);
+    var _TextureSkillCardForFormConversion = _o.TextureSkillCardForFormConversion == null ? default(StringOffset) : builder.CreateString(_o.TextureSkillCardForFormConversion);
+    var _SkillCardLabelPath = _o.SkillCardLabelPath == null ? default(StringOffset) : builder.CreateString(_o.SkillCardLabelPath);
+    return CreateSkillExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeSkillId,
+      _GroupId,
+      _SkillDataKey,
+      _VisualDataKey,
+      _o.Level,
+      _o.SkillCost,
+      _o.ExtraSkillCost,
+      _o.EnemySkillCost,
+      _o.ExtraEnemySkillCost,
+      _o.NPCSkillCost,
+      _o.ExtraNPCSkillCost,
+      _o.BulletType,
+      _o.StartCoolTime,
+      _o.CoolTime,
+      _o.EnemyStartCoolTime,
+      _o.EnemyCoolTime,
+      _o.NPCStartCoolTime,
+      _o.NPCCoolTime,
+      _o.UseAtg,
+      _o.RequireCharacterLevel,
+      _o.RequireLevelUpMaterial,
+      _IconName,
+      _o.IsShowInfo,
+      _o.IsShowSpeechbubble,
+      _o.PublicSpeechDuration,
+      _o.AdditionalToolTipId,
+      _TextureSkillCardForFormConversion,
+      _SkillCardLabelPath);
+  }
+}
+
+public class SkillExcelT
+{
+  public long Id { get; set; }
+  public uint LocalizeSkillId { get; set; }
+  public string GroupId { get; set; }
+  public string SkillDataKey { get; set; }
+  public string VisualDataKey { get; set; }
+  public int Level { get; set; }
+  public int SkillCost { get; set; }
+  public int ExtraSkillCost { get; set; }
+  public int EnemySkillCost { get; set; }
+  public int ExtraEnemySkillCost { get; set; }
+  public int NPCSkillCost { get; set; }
+  public int ExtraNPCSkillCost { get; set; }
+  public SCHALE.Common.FlatData.BulletType BulletType { get; set; }
+  public int StartCoolTime { get; set; }
+  public int CoolTime { get; set; }
+  public int EnemyStartCoolTime { get; set; }
+  public int EnemyCoolTime { get; set; }
+  public int NPCStartCoolTime { get; set; }
+  public int NPCCoolTime { get; set; }
+  public int UseAtg { get; set; }
+  public int RequireCharacterLevel { get; set; }
+  public long RequireLevelUpMaterial { get; set; }
+  public string IconName { get; set; }
+  public bool IsShowInfo { get; set; }
+  public bool IsShowSpeechbubble { get; set; }
+  public int PublicSpeechDuration { get; set; }
+  public long AdditionalToolTipId { get; set; }
+  public string TextureSkillCardForFormConversion { get; set; }
+  public string SkillCardLabelPath { get; set; }
+
+  public SkillExcelT() {
+    this.Id = 0;
+    this.LocalizeSkillId = 0;
+    this.GroupId = null;
+    this.SkillDataKey = null;
+    this.VisualDataKey = null;
+    this.Level = 0;
+    this.SkillCost = 0;
+    this.ExtraSkillCost = 0;
+    this.EnemySkillCost = 0;
+    this.ExtraEnemySkillCost = 0;
+    this.NPCSkillCost = 0;
+    this.ExtraNPCSkillCost = 0;
+    this.BulletType = SCHALE.Common.FlatData.BulletType.Normal;
+    this.StartCoolTime = 0;
+    this.CoolTime = 0;
+    this.EnemyStartCoolTime = 0;
+    this.EnemyCoolTime = 0;
+    this.NPCStartCoolTime = 0;
+    this.NPCCoolTime = 0;
+    this.UseAtg = 0;
+    this.RequireCharacterLevel = 0;
+    this.RequireLevelUpMaterial = 0;
+    this.IconName = null;
+    this.IsShowInfo = false;
+    this.IsShowSpeechbubble = false;
+    this.PublicSpeechDuration = 0;
+    this.AdditionalToolTipId = 0;
+    this.TextureSkillCardForFormConversion = null;
+    this.SkillCardLabelPath = null;
   }
 }
 

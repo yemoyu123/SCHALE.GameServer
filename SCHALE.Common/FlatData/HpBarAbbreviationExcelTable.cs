@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct HpBarAbbreviationExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct HpBarAbbreviationExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcelTable> EndHpBarAbbreviationExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcelTable>(o);
+  }
+  public HpBarAbbreviationExcelTableT UnPack() {
+    var _o = new HpBarAbbreviationExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(HpBarAbbreviationExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("HpBarAbbreviationExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.HpBarAbbreviationExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcelTable> Pack(FlatBufferBuilder builder, HpBarAbbreviationExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.HpBarAbbreviationExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.HpBarAbbreviationExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateHpBarAbbreviationExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class HpBarAbbreviationExcelTableT
+{
+  public List<SCHALE.Common.FlatData.HpBarAbbreviationExcelT> DataList { get; set; }
+
+  public HpBarAbbreviationExcelTableT() {
+    this.DataList = null;
   }
 }
 

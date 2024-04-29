@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstMinigameTBGExcel : IFlatbufferObject
@@ -149,6 +150,116 @@ public struct ConstMinigameTBGExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstMinigameTBGExcel> EndConstMinigameTBGExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstMinigameTBGExcel>(o);
+  }
+  public ConstMinigameTBGExcelT UnPack() {
+    var _o = new ConstMinigameTBGExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstMinigameTBGExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstMinigameTBG");
+    _o.ConquestMapBoundaryOffsetLeft = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetLeft, key);
+    _o.ConquestMapBoundaryOffsetRight = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetRight, key);
+    _o.ConquestMapBoundaryOffsetTop = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetTop, key);
+    _o.ConquestMapBoundaryOffsetBottom = TableEncryptionService.Convert(this.ConquestMapBoundaryOffsetBottom, key);
+    _o.ConquestMapCenterOffsetX = TableEncryptionService.Convert(this.ConquestMapCenterOffsetX, key);
+    _o.ConquestMapCenterOffsetY = TableEncryptionService.Convert(this.ConquestMapCenterOffsetY, key);
+    _o.CameraAngle = TableEncryptionService.Convert(this.CameraAngle, key);
+    _o.CameraZoomMax = TableEncryptionService.Convert(this.CameraZoomMax, key);
+    _o.CameraZoomMin = TableEncryptionService.Convert(this.CameraZoomMin, key);
+    _o.CameraZoomDefault = TableEncryptionService.Convert(this.CameraZoomDefault, key);
+    _o.ThemaLoadingProgressTime = TableEncryptionService.Convert(this.ThemaLoadingProgressTime, key);
+    _o.MapAllyRotation = TableEncryptionService.Convert(this.MapAllyRotation, key);
+    _o.AniAllyBattleAttack = TableEncryptionService.Convert(this.AniAllyBattleAttack, key);
+    _o.EffectAllyBattleAttack = TableEncryptionService.Convert(this.EffectAllyBattleAttack, key);
+    _o.EffectAllyBattleDamage = TableEncryptionService.Convert(this.EffectAllyBattleDamage, key);
+    _o.AniEnemyBattleAttack = TableEncryptionService.Convert(this.AniEnemyBattleAttack, key);
+    _o.EffectEnemyBattleAttack = TableEncryptionService.Convert(this.EffectEnemyBattleAttack, key);
+    _o.EffectEnemyBattleDamage = TableEncryptionService.Convert(this.EffectEnemyBattleDamage, key);
+    _o.EncounterAllyRotation = TableEncryptionService.Convert(this.EncounterAllyRotation, key);
+    _o.EncounterEnemyRotation = TableEncryptionService.Convert(this.EncounterEnemyRotation, key);
+    _o.EncounterRewardReceiveIndex = TableEncryptionService.Convert(this.EncounterRewardReceiveIndex, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstMinigameTBGExcel> Pack(FlatBufferBuilder builder, ConstMinigameTBGExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstMinigameTBGExcel>);
+    var _AniAllyBattleAttack = _o.AniAllyBattleAttack == null ? default(StringOffset) : builder.CreateString(_o.AniAllyBattleAttack);
+    var _EffectAllyBattleAttack = _o.EffectAllyBattleAttack == null ? default(StringOffset) : builder.CreateString(_o.EffectAllyBattleAttack);
+    var _EffectAllyBattleDamage = _o.EffectAllyBattleDamage == null ? default(StringOffset) : builder.CreateString(_o.EffectAllyBattleDamage);
+    var _AniEnemyBattleAttack = _o.AniEnemyBattleAttack == null ? default(StringOffset) : builder.CreateString(_o.AniEnemyBattleAttack);
+    var _EffectEnemyBattleAttack = _o.EffectEnemyBattleAttack == null ? default(StringOffset) : builder.CreateString(_o.EffectEnemyBattleAttack);
+    var _EffectEnemyBattleDamage = _o.EffectEnemyBattleDamage == null ? default(StringOffset) : builder.CreateString(_o.EffectEnemyBattleDamage);
+    return CreateConstMinigameTBGExcel(
+      builder,
+      _o.ConquestMapBoundaryOffsetLeft,
+      _o.ConquestMapBoundaryOffsetRight,
+      _o.ConquestMapBoundaryOffsetTop,
+      _o.ConquestMapBoundaryOffsetBottom,
+      _o.ConquestMapCenterOffsetX,
+      _o.ConquestMapCenterOffsetY,
+      _o.CameraAngle,
+      _o.CameraZoomMax,
+      _o.CameraZoomMin,
+      _o.CameraZoomDefault,
+      _o.ThemaLoadingProgressTime,
+      _o.MapAllyRotation,
+      _AniAllyBattleAttack,
+      _EffectAllyBattleAttack,
+      _EffectAllyBattleDamage,
+      _AniEnemyBattleAttack,
+      _EffectEnemyBattleAttack,
+      _EffectEnemyBattleDamage,
+      _o.EncounterAllyRotation,
+      _o.EncounterEnemyRotation,
+      _o.EncounterRewardReceiveIndex);
+  }
+}
+
+public class ConstMinigameTBGExcelT
+{
+  public float ConquestMapBoundaryOffsetLeft { get; set; }
+  public float ConquestMapBoundaryOffsetRight { get; set; }
+  public float ConquestMapBoundaryOffsetTop { get; set; }
+  public float ConquestMapBoundaryOffsetBottom { get; set; }
+  public float ConquestMapCenterOffsetX { get; set; }
+  public float ConquestMapCenterOffsetY { get; set; }
+  public float CameraAngle { get; set; }
+  public float CameraZoomMax { get; set; }
+  public float CameraZoomMin { get; set; }
+  public float CameraZoomDefault { get; set; }
+  public float ThemaLoadingProgressTime { get; set; }
+  public float MapAllyRotation { get; set; }
+  public string AniAllyBattleAttack { get; set; }
+  public string EffectAllyBattleAttack { get; set; }
+  public string EffectAllyBattleDamage { get; set; }
+  public string AniEnemyBattleAttack { get; set; }
+  public string EffectEnemyBattleAttack { get; set; }
+  public string EffectEnemyBattleDamage { get; set; }
+  public float EncounterAllyRotation { get; set; }
+  public float EncounterEnemyRotation { get; set; }
+  public int EncounterRewardReceiveIndex { get; set; }
+
+  public ConstMinigameTBGExcelT() {
+    this.ConquestMapBoundaryOffsetLeft = 0.0f;
+    this.ConquestMapBoundaryOffsetRight = 0.0f;
+    this.ConquestMapBoundaryOffsetTop = 0.0f;
+    this.ConquestMapBoundaryOffsetBottom = 0.0f;
+    this.ConquestMapCenterOffsetX = 0.0f;
+    this.ConquestMapCenterOffsetY = 0.0f;
+    this.CameraAngle = 0.0f;
+    this.CameraZoomMax = 0.0f;
+    this.CameraZoomMin = 0.0f;
+    this.CameraZoomDefault = 0.0f;
+    this.ThemaLoadingProgressTime = 0.0f;
+    this.MapAllyRotation = 0.0f;
+    this.AniAllyBattleAttack = null;
+    this.EffectAllyBattleAttack = null;
+    this.EffectAllyBattleDamage = null;
+    this.AniEnemyBattleAttack = null;
+    this.EffectEnemyBattleAttack = null;
+    this.EffectEnemyBattleDamage = null;
+    this.EncounterAllyRotation = 0.0f;
+    this.EncounterEnemyRotation = 0.0f;
+    this.EncounterRewardReceiveIndex = 0;
   }
 }
 

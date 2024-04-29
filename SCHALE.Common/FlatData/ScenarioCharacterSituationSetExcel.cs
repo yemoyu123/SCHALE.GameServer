@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioCharacterSituationSetExcel : IFlatbufferObject
@@ -81,6 +82,58 @@ public struct ScenarioCharacterSituationSetExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioCharacterSituationSetExcel> EndScenarioCharacterSituationSetExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioCharacterSituationSetExcel>(o);
+  }
+  public ScenarioCharacterSituationSetExcelT UnPack() {
+    var _o = new ScenarioCharacterSituationSetExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioCharacterSituationSetExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioCharacterSituationSet");
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Face = TableEncryptionService.Convert(this.Face, key);
+    _o.Behavior = TableEncryptionService.Convert(this.Behavior, key);
+    _o.Action = TableEncryptionService.Convert(this.Action, key);
+    _o.Shape = TableEncryptionService.Convert(this.Shape, key);
+    _o.Effect = TableEncryptionService.Convert(this.Effect, key);
+    _o.Emotion = TableEncryptionService.Convert(this.Emotion, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioCharacterSituationSetExcel> Pack(FlatBufferBuilder builder, ScenarioCharacterSituationSetExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioCharacterSituationSetExcel>);
+    var _Face = _o.Face == null ? default(StringOffset) : builder.CreateString(_o.Face);
+    var _Behavior = _o.Behavior == null ? default(StringOffset) : builder.CreateString(_o.Behavior);
+    var _Action = _o.Action == null ? default(StringOffset) : builder.CreateString(_o.Action);
+    var _Shape = _o.Shape == null ? default(StringOffset) : builder.CreateString(_o.Shape);
+    return CreateScenarioCharacterSituationSetExcel(
+      builder,
+      _o.Name,
+      _Face,
+      _Behavior,
+      _Action,
+      _Shape,
+      _o.Effect,
+      _o.Emotion);
+  }
+}
+
+public class ScenarioCharacterSituationSetExcelT
+{
+  public uint Name { get; set; }
+  public string Face { get; set; }
+  public string Behavior { get; set; }
+  public string Action { get; set; }
+  public string Shape { get; set; }
+  public uint Effect { get; set; }
+  public uint Emotion { get; set; }
+
+  public ScenarioCharacterSituationSetExcelT() {
+    this.Name = 0;
+    this.Face = null;
+    this.Behavior = null;
+    this.Action = null;
+    this.Shape = null;
+    this.Effect = 0;
+    this.Emotion = 0;
   }
 }
 

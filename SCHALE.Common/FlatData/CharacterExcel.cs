@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterExcel : IFlatbufferObject
@@ -331,6 +332,291 @@ public struct CharacterExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterExcel> EndCharacterExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterExcel>(o);
+  }
+  public CharacterExcelT UnPack() {
+    var _o = new CharacterExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Character");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.CostumeGroupId = TableEncryptionService.Convert(this.CostumeGroupId, key);
+    _o.IsPlayable = TableEncryptionService.Convert(this.IsPlayable, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.ReleaseDate = TableEncryptionService.Convert(this.ReleaseDate, key);
+    _o.CollectionVisibleStartDate = TableEncryptionService.Convert(this.CollectionVisibleStartDate, key);
+    _o.CollectionVisibleEndDate = TableEncryptionService.Convert(this.CollectionVisibleEndDate, key);
+    _o.IsPlayableCharacter = TableEncryptionService.Convert(this.IsPlayableCharacter, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.IsNPC = TableEncryptionService.Convert(this.IsNPC, key);
+    _o.TacticEntityType = TableEncryptionService.Convert(this.TacticEntityType, key);
+    _o.CanSurvive = TableEncryptionService.Convert(this.CanSurvive, key);
+    _o.IsDummy = TableEncryptionService.Convert(this.IsDummy, key);
+    _o.SubPartsCount = TableEncryptionService.Convert(this.SubPartsCount, key);
+    _o.TacticRole = TableEncryptionService.Convert(this.TacticRole, key);
+    _o.WeaponType = TableEncryptionService.Convert(this.WeaponType, key);
+    _o.TacticRange = TableEncryptionService.Convert(this.TacticRange, key);
+    _o.BulletType = TableEncryptionService.Convert(this.BulletType, key);
+    _o.ArmorType = TableEncryptionService.Convert(this.ArmorType, key);
+    _o.AimIKType = TableEncryptionService.Convert(this.AimIKType, key);
+    _o.School = TableEncryptionService.Convert(this.School, key);
+    _o.Club = TableEncryptionService.Convert(this.Club, key);
+    _o.DefaultStarGrade = TableEncryptionService.Convert(this.DefaultStarGrade, key);
+    _o.MaxStarGrade = TableEncryptionService.Convert(this.MaxStarGrade, key);
+    _o.StatLevelUpType = TableEncryptionService.Convert(this.StatLevelUpType, key);
+    _o.SquadType = TableEncryptionService.Convert(this.SquadType, key);
+    _o.Jumpable = TableEncryptionService.Convert(this.Jumpable, key);
+    _o.PersonalityId = TableEncryptionService.Convert(this.PersonalityId, key);
+    _o.CharacterAIId = TableEncryptionService.Convert(this.CharacterAIId, key);
+    _o.ExternalBTId = TableEncryptionService.Convert(this.ExternalBTId, key);
+    _o.ScenarioCharacter = TableEncryptionService.Convert(this.ScenarioCharacter, key);
+    _o.SpawnTemplateId = TableEncryptionService.Convert(this.SpawnTemplateId, key);
+    _o.FavorLevelupType = TableEncryptionService.Convert(this.FavorLevelupType, key);
+    _o.EquipmentSlot = new List<SCHALE.Common.FlatData.EquipmentCategory>();
+    for (var _j = 0; _j < this.EquipmentSlotLength; ++_j) {_o.EquipmentSlot.Add(TableEncryptionService.Convert(this.EquipmentSlot(_j), key));}
+    _o.WeaponLocalizeId = TableEncryptionService.Convert(this.WeaponLocalizeId, key);
+    _o.DisplayEnemyInfo = TableEncryptionService.Convert(this.DisplayEnemyInfo, key);
+    _o.BodyRadius = TableEncryptionService.Convert(this.BodyRadius, key);
+    _o.RandomEffectRadius = TableEncryptionService.Convert(this.RandomEffectRadius, key);
+    _o.HPBarHide = TableEncryptionService.Convert(this.HPBarHide, key);
+    _o.HpBarHeight = TableEncryptionService.Convert(this.HpBarHeight, key);
+    _o.HighlightFloaterHeight = TableEncryptionService.Convert(this.HighlightFloaterHeight, key);
+    _o.EmojiOffsetX = TableEncryptionService.Convert(this.EmojiOffsetX, key);
+    _o.EmojiOffsetY = TableEncryptionService.Convert(this.EmojiOffsetY, key);
+    _o.MoveStartFrame = TableEncryptionService.Convert(this.MoveStartFrame, key);
+    _o.MoveEndFrame = TableEncryptionService.Convert(this.MoveEndFrame, key);
+    _o.JumpMotionFrame = TableEncryptionService.Convert(this.JumpMotionFrame, key);
+    _o.AppearFrame = TableEncryptionService.Convert(this.AppearFrame, key);
+    _o.CanMove = TableEncryptionService.Convert(this.CanMove, key);
+    _o.CanFix = TableEncryptionService.Convert(this.CanFix, key);
+    _o.CanCrowdControl = TableEncryptionService.Convert(this.CanCrowdControl, key);
+    _o.CanBattleItemMove = TableEncryptionService.Convert(this.CanBattleItemMove, key);
+    _o.IsAirUnit = TableEncryptionService.Convert(this.IsAirUnit, key);
+    _o.AirUnitHeight = TableEncryptionService.Convert(this.AirUnitHeight, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+    _o.SecretStoneItemId = TableEncryptionService.Convert(this.SecretStoneItemId, key);
+    _o.SecretStoneItemAmount = TableEncryptionService.Convert(this.SecretStoneItemAmount, key);
+    _o.CharacterPieceItemId = TableEncryptionService.Convert(this.CharacterPieceItemId, key);
+    _o.CharacterPieceItemAmount = TableEncryptionService.Convert(this.CharacterPieceItemAmount, key);
+    _o.CombineRecipeId = TableEncryptionService.Convert(this.CombineRecipeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterExcel> Pack(FlatBufferBuilder builder, CharacterExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _ReleaseDate = _o.ReleaseDate == null ? default(StringOffset) : builder.CreateString(_o.ReleaseDate);
+    var _CollectionVisibleStartDate = _o.CollectionVisibleStartDate == null ? default(StringOffset) : builder.CreateString(_o.CollectionVisibleStartDate);
+    var _CollectionVisibleEndDate = _o.CollectionVisibleEndDate == null ? default(StringOffset) : builder.CreateString(_o.CollectionVisibleEndDate);
+    var _ScenarioCharacter = _o.ScenarioCharacter == null ? default(StringOffset) : builder.CreateString(_o.ScenarioCharacter);
+    var _EquipmentSlot = default(VectorOffset);
+    if (_o.EquipmentSlot != null) {
+      var __EquipmentSlot = _o.EquipmentSlot.ToArray();
+      _EquipmentSlot = CreateEquipmentSlotVector(builder, __EquipmentSlot);
+    }
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    return CreateCharacterExcel(
+      builder,
+      _o.Id,
+      _DevName,
+      _o.CostumeGroupId,
+      _o.IsPlayable,
+      _o.ProductionStep,
+      _o.CollectionVisible,
+      _ReleaseDate,
+      _CollectionVisibleStartDate,
+      _CollectionVisibleEndDate,
+      _o.IsPlayableCharacter,
+      _o.LocalizeEtcId,
+      _o.Rarity,
+      _o.IsNPC,
+      _o.TacticEntityType,
+      _o.CanSurvive,
+      _o.IsDummy,
+      _o.SubPartsCount,
+      _o.TacticRole,
+      _o.WeaponType,
+      _o.TacticRange,
+      _o.BulletType,
+      _o.ArmorType,
+      _o.AimIKType,
+      _o.School,
+      _o.Club,
+      _o.DefaultStarGrade,
+      _o.MaxStarGrade,
+      _o.StatLevelUpType,
+      _o.SquadType,
+      _o.Jumpable,
+      _o.PersonalityId,
+      _o.CharacterAIId,
+      _o.ExternalBTId,
+      _ScenarioCharacter,
+      _o.SpawnTemplateId,
+      _o.FavorLevelupType,
+      _EquipmentSlot,
+      _o.WeaponLocalizeId,
+      _o.DisplayEnemyInfo,
+      _o.BodyRadius,
+      _o.RandomEffectRadius,
+      _o.HPBarHide,
+      _o.HpBarHeight,
+      _o.HighlightFloaterHeight,
+      _o.EmojiOffsetX,
+      _o.EmojiOffsetY,
+      _o.MoveStartFrame,
+      _o.MoveEndFrame,
+      _o.JumpMotionFrame,
+      _o.AppearFrame,
+      _o.CanMove,
+      _o.CanFix,
+      _o.CanCrowdControl,
+      _o.CanBattleItemMove,
+      _o.IsAirUnit,
+      _o.AirUnitHeight,
+      _Tags,
+      _o.SecretStoneItemId,
+      _o.SecretStoneItemAmount,
+      _o.CharacterPieceItemId,
+      _o.CharacterPieceItemAmount,
+      _o.CombineRecipeId);
+  }
+}
+
+public class CharacterExcelT
+{
+  public long Id { get; set; }
+  public string DevName { get; set; }
+  public long CostumeGroupId { get; set; }
+  public bool IsPlayable { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public bool CollectionVisible { get; set; }
+  public string ReleaseDate { get; set; }
+  public string CollectionVisibleStartDate { get; set; }
+  public string CollectionVisibleEndDate { get; set; }
+  public bool IsPlayableCharacter { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public bool IsNPC { get; set; }
+  public SCHALE.Common.FlatData.TacticEntityType TacticEntityType { get; set; }
+  public bool CanSurvive { get; set; }
+  public bool IsDummy { get; set; }
+  public int SubPartsCount { get; set; }
+  public SCHALE.Common.FlatData.TacticRole TacticRole { get; set; }
+  public SCHALE.Common.FlatData.WeaponType WeaponType { get; set; }
+  public SCHALE.Common.FlatData.TacticRange TacticRange { get; set; }
+  public SCHALE.Common.FlatData.BulletType BulletType { get; set; }
+  public SCHALE.Common.FlatData.ArmorType ArmorType { get; set; }
+  public SCHALE.Common.FlatData.AimIKType AimIKType { get; set; }
+  public SCHALE.Common.FlatData.School School { get; set; }
+  public SCHALE.Common.FlatData.Club Club { get; set; }
+  public int DefaultStarGrade { get; set; }
+  public int MaxStarGrade { get; set; }
+  public SCHALE.Common.FlatData.StatLevelUpType StatLevelUpType { get; set; }
+  public SCHALE.Common.FlatData.SquadType SquadType { get; set; }
+  public bool Jumpable { get; set; }
+  public long PersonalityId { get; set; }
+  public long CharacterAIId { get; set; }
+  public long ExternalBTId { get; set; }
+  public string ScenarioCharacter { get; set; }
+  public uint SpawnTemplateId { get; set; }
+  public int FavorLevelupType { get; set; }
+  public List<SCHALE.Common.FlatData.EquipmentCategory> EquipmentSlot { get; set; }
+  public uint WeaponLocalizeId { get; set; }
+  public bool DisplayEnemyInfo { get; set; }
+  public long BodyRadius { get; set; }
+  public long RandomEffectRadius { get; set; }
+  public bool HPBarHide { get; set; }
+  public float HpBarHeight { get; set; }
+  public float HighlightFloaterHeight { get; set; }
+  public float EmojiOffsetX { get; set; }
+  public float EmojiOffsetY { get; set; }
+  public int MoveStartFrame { get; set; }
+  public int MoveEndFrame { get; set; }
+  public int JumpMotionFrame { get; set; }
+  public int AppearFrame { get; set; }
+  public bool CanMove { get; set; }
+  public bool CanFix { get; set; }
+  public bool CanCrowdControl { get; set; }
+  public bool CanBattleItemMove { get; set; }
+  public bool IsAirUnit { get; set; }
+  public long AirUnitHeight { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+  public long SecretStoneItemId { get; set; }
+  public int SecretStoneItemAmount { get; set; }
+  public long CharacterPieceItemId { get; set; }
+  public int CharacterPieceItemAmount { get; set; }
+  public long CombineRecipeId { get; set; }
+
+  public CharacterExcelT() {
+    this.Id = 0;
+    this.DevName = null;
+    this.CostumeGroupId = 0;
+    this.IsPlayable = false;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.CollectionVisible = false;
+    this.ReleaseDate = null;
+    this.CollectionVisibleStartDate = null;
+    this.CollectionVisibleEndDate = null;
+    this.IsPlayableCharacter = false;
+    this.LocalizeEtcId = 0;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.IsNPC = false;
+    this.TacticEntityType = SCHALE.Common.FlatData.TacticEntityType.None;
+    this.CanSurvive = false;
+    this.IsDummy = false;
+    this.SubPartsCount = 0;
+    this.TacticRole = SCHALE.Common.FlatData.TacticRole.None;
+    this.WeaponType = SCHALE.Common.FlatData.WeaponType.None;
+    this.TacticRange = SCHALE.Common.FlatData.TacticRange.Back;
+    this.BulletType = SCHALE.Common.FlatData.BulletType.Normal;
+    this.ArmorType = SCHALE.Common.FlatData.ArmorType.LightArmor;
+    this.AimIKType = SCHALE.Common.FlatData.AimIKType.None;
+    this.School = SCHALE.Common.FlatData.School.None;
+    this.Club = SCHALE.Common.FlatData.Club.None;
+    this.DefaultStarGrade = 0;
+    this.MaxStarGrade = 0;
+    this.StatLevelUpType = SCHALE.Common.FlatData.StatLevelUpType.Standard;
+    this.SquadType = SCHALE.Common.FlatData.SquadType.None;
+    this.Jumpable = false;
+    this.PersonalityId = 0;
+    this.CharacterAIId = 0;
+    this.ExternalBTId = 0;
+    this.ScenarioCharacter = null;
+    this.SpawnTemplateId = 0;
+    this.FavorLevelupType = 0;
+    this.EquipmentSlot = null;
+    this.WeaponLocalizeId = 0;
+    this.DisplayEnemyInfo = false;
+    this.BodyRadius = 0;
+    this.RandomEffectRadius = 0;
+    this.HPBarHide = false;
+    this.HpBarHeight = 0.0f;
+    this.HighlightFloaterHeight = 0.0f;
+    this.EmojiOffsetX = 0.0f;
+    this.EmojiOffsetY = 0.0f;
+    this.MoveStartFrame = 0;
+    this.MoveEndFrame = 0;
+    this.JumpMotionFrame = 0;
+    this.AppearFrame = 0;
+    this.CanMove = false;
+    this.CanFix = false;
+    this.CanCrowdControl = false;
+    this.CanBattleItemMove = false;
+    this.IsAirUnit = false;
+    this.AirUnitHeight = 0;
+    this.Tags = null;
+    this.SecretStoneItemId = 0;
+    this.SecretStoneItemAmount = 0;
+    this.CharacterPieceItemId = 0;
+    this.CharacterPieceItemAmount = 0;
+    this.CombineRecipeId = 0;
   }
 }
 

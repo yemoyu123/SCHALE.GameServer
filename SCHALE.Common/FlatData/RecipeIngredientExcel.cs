@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RecipeIngredientExcel : IFlatbufferObject
@@ -137,6 +138,98 @@ public struct RecipeIngredientExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RecipeIngredientExcel> EndRecipeIngredientExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RecipeIngredientExcel>(o);
+  }
+  public RecipeIngredientExcelT UnPack() {
+    var _o = new RecipeIngredientExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RecipeIngredientExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RecipeIngredient");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.RecipeType = TableEncryptionService.Convert(this.RecipeType, key);
+    _o.CostParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.CostParcelTypeLength; ++_j) {_o.CostParcelType.Add(TableEncryptionService.Convert(this.CostParcelType(_j), key));}
+    _o.CostId = new List<long>();
+    for (var _j = 0; _j < this.CostIdLength; ++_j) {_o.CostId.Add(TableEncryptionService.Convert(this.CostId(_j), key));}
+    _o.CostAmount = new List<long>();
+    for (var _j = 0; _j < this.CostAmountLength; ++_j) {_o.CostAmount.Add(TableEncryptionService.Convert(this.CostAmount(_j), key));}
+    _o.IngredientParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.IngredientParcelTypeLength; ++_j) {_o.IngredientParcelType.Add(TableEncryptionService.Convert(this.IngredientParcelType(_j), key));}
+    _o.IngredientId = new List<long>();
+    for (var _j = 0; _j < this.IngredientIdLength; ++_j) {_o.IngredientId.Add(TableEncryptionService.Convert(this.IngredientId(_j), key));}
+    _o.IngredientAmount = new List<long>();
+    for (var _j = 0; _j < this.IngredientAmountLength; ++_j) {_o.IngredientAmount.Add(TableEncryptionService.Convert(this.IngredientAmount(_j), key));}
+    _o.CostTimeInSecond = TableEncryptionService.Convert(this.CostTimeInSecond, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.RecipeIngredientExcel> Pack(FlatBufferBuilder builder, RecipeIngredientExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RecipeIngredientExcel>);
+    var _CostParcelType = default(VectorOffset);
+    if (_o.CostParcelType != null) {
+      var __CostParcelType = _o.CostParcelType.ToArray();
+      _CostParcelType = CreateCostParcelTypeVector(builder, __CostParcelType);
+    }
+    var _CostId = default(VectorOffset);
+    if (_o.CostId != null) {
+      var __CostId = _o.CostId.ToArray();
+      _CostId = CreateCostIdVector(builder, __CostId);
+    }
+    var _CostAmount = default(VectorOffset);
+    if (_o.CostAmount != null) {
+      var __CostAmount = _o.CostAmount.ToArray();
+      _CostAmount = CreateCostAmountVector(builder, __CostAmount);
+    }
+    var _IngredientParcelType = default(VectorOffset);
+    if (_o.IngredientParcelType != null) {
+      var __IngredientParcelType = _o.IngredientParcelType.ToArray();
+      _IngredientParcelType = CreateIngredientParcelTypeVector(builder, __IngredientParcelType);
+    }
+    var _IngredientId = default(VectorOffset);
+    if (_o.IngredientId != null) {
+      var __IngredientId = _o.IngredientId.ToArray();
+      _IngredientId = CreateIngredientIdVector(builder, __IngredientId);
+    }
+    var _IngredientAmount = default(VectorOffset);
+    if (_o.IngredientAmount != null) {
+      var __IngredientAmount = _o.IngredientAmount.ToArray();
+      _IngredientAmount = CreateIngredientAmountVector(builder, __IngredientAmount);
+    }
+    return CreateRecipeIngredientExcel(
+      builder,
+      _o.Id,
+      _o.RecipeType,
+      _CostParcelType,
+      _CostId,
+      _CostAmount,
+      _IngredientParcelType,
+      _IngredientId,
+      _IngredientAmount,
+      _o.CostTimeInSecond);
+  }
+}
+
+public class RecipeIngredientExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.RecipeType RecipeType { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> CostParcelType { get; set; }
+  public List<long> CostId { get; set; }
+  public List<long> CostAmount { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> IngredientParcelType { get; set; }
+  public List<long> IngredientId { get; set; }
+  public List<long> IngredientAmount { get; set; }
+  public long CostTimeInSecond { get; set; }
+
+  public RecipeIngredientExcelT() {
+    this.Id = 0;
+    this.RecipeType = SCHALE.Common.FlatData.RecipeType.None;
+    this.CostParcelType = null;
+    this.CostId = null;
+    this.CostAmount = null;
+    this.IngredientParcelType = null;
+    this.IngredientId = null;
+    this.IngredientAmount = null;
+    this.CostTimeInSecond = 0;
   }
 }
 

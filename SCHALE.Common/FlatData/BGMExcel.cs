@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BGMExcel : IFlatbufferObject
@@ -139,6 +140,101 @@ public struct BGMExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BGMExcel> EndBGMExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BGMExcel>(o);
+  }
+  public BGMExcelT UnPack() {
+    var _o = new BGMExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BGMExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BGM");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Nation_ = new List<SCHALE.Common.FlatData.Nation>();
+    for (var _j = 0; _j < this.Nation_Length; ++_j) {_o.Nation_.Add(TableEncryptionService.Convert(this.Nation_(_j), key));}
+    _o.Path = new List<string>();
+    for (var _j = 0; _j < this.PathLength; ++_j) {_o.Path.Add(TableEncryptionService.Convert(this.Path(_j), key));}
+    _o.Volume = new List<float>();
+    for (var _j = 0; _j < this.VolumeLength; ++_j) {_o.Volume.Add(TableEncryptionService.Convert(this.Volume(_j), key));}
+    _o.LoopStartTime = new List<float>();
+    for (var _j = 0; _j < this.LoopStartTimeLength; ++_j) {_o.LoopStartTime.Add(TableEncryptionService.Convert(this.LoopStartTime(_j), key));}
+    _o.LoopEndTime = new List<float>();
+    for (var _j = 0; _j < this.LoopEndTimeLength; ++_j) {_o.LoopEndTime.Add(TableEncryptionService.Convert(this.LoopEndTime(_j), key));}
+    _o.LoopTranstionTime = new List<float>();
+    for (var _j = 0; _j < this.LoopTranstionTimeLength; ++_j) {_o.LoopTranstionTime.Add(TableEncryptionService.Convert(this.LoopTranstionTime(_j), key));}
+    _o.LoopOffsetTime = new List<float>();
+    for (var _j = 0; _j < this.LoopOffsetTimeLength; ++_j) {_o.LoopOffsetTime.Add(TableEncryptionService.Convert(this.LoopOffsetTime(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.BGMExcel> Pack(FlatBufferBuilder builder, BGMExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BGMExcel>);
+    var _Nation_ = default(VectorOffset);
+    if (_o.Nation_ != null) {
+      var __Nation_ = _o.Nation_.ToArray();
+      _Nation_ = CreateNation_Vector(builder, __Nation_);
+    }
+    var _Path = default(VectorOffset);
+    if (_o.Path != null) {
+      var __Path = new StringOffset[_o.Path.Count];
+      for (var _j = 0; _j < __Path.Length; ++_j) { __Path[_j] = builder.CreateString(_o.Path[_j]); }
+      _Path = CreatePathVector(builder, __Path);
+    }
+    var _Volume = default(VectorOffset);
+    if (_o.Volume != null) {
+      var __Volume = _o.Volume.ToArray();
+      _Volume = CreateVolumeVector(builder, __Volume);
+    }
+    var _LoopStartTime = default(VectorOffset);
+    if (_o.LoopStartTime != null) {
+      var __LoopStartTime = _o.LoopStartTime.ToArray();
+      _LoopStartTime = CreateLoopStartTimeVector(builder, __LoopStartTime);
+    }
+    var _LoopEndTime = default(VectorOffset);
+    if (_o.LoopEndTime != null) {
+      var __LoopEndTime = _o.LoopEndTime.ToArray();
+      _LoopEndTime = CreateLoopEndTimeVector(builder, __LoopEndTime);
+    }
+    var _LoopTranstionTime = default(VectorOffset);
+    if (_o.LoopTranstionTime != null) {
+      var __LoopTranstionTime = _o.LoopTranstionTime.ToArray();
+      _LoopTranstionTime = CreateLoopTranstionTimeVector(builder, __LoopTranstionTime);
+    }
+    var _LoopOffsetTime = default(VectorOffset);
+    if (_o.LoopOffsetTime != null) {
+      var __LoopOffsetTime = _o.LoopOffsetTime.ToArray();
+      _LoopOffsetTime = CreateLoopOffsetTimeVector(builder, __LoopOffsetTime);
+    }
+    return CreateBGMExcel(
+      builder,
+      _o.Id,
+      _Nation_,
+      _Path,
+      _Volume,
+      _LoopStartTime,
+      _LoopEndTime,
+      _LoopTranstionTime,
+      _LoopOffsetTime);
+  }
+}
+
+public class BGMExcelT
+{
+  public long Id { get; set; }
+  public List<SCHALE.Common.FlatData.Nation> Nation_ { get; set; }
+  public List<string> Path { get; set; }
+  public List<float> Volume { get; set; }
+  public List<float> LoopStartTime { get; set; }
+  public List<float> LoopEndTime { get; set; }
+  public List<float> LoopTranstionTime { get; set; }
+  public List<float> LoopOffsetTime { get; set; }
+
+  public BGMExcelT() {
+    this.Id = 0;
+    this.Nation_ = null;
+    this.Path = null;
+    this.Volume = null;
+    this.LoopStartTime = null;
+    this.LoopEndTime = null;
+    this.LoopTranstionTime = null;
+    this.LoopOffsetTime = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldTutorialExcel : IFlatbufferObject
@@ -81,6 +82,60 @@ public struct FieldTutorialExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldTutorialExcel> EndFieldTutorialExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldTutorialExcel>(o);
+  }
+  public FieldTutorialExcelT UnPack() {
+    var _o = new FieldTutorialExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldTutorialExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldTutorial");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.TutorialType = new List<SCHALE.Common.FlatData.FieldTutorialType>();
+    for (var _j = 0; _j < this.TutorialTypeLength; ++_j) {_o.TutorialType.Add(TableEncryptionService.Convert(this.TutorialType(_j), key));}
+    _o.ConditionType = new List<SCHALE.Common.FlatData.FieldConditionType>();
+    for (var _j = 0; _j < this.ConditionTypeLength; ++_j) {_o.ConditionType.Add(TableEncryptionService.Convert(this.ConditionType(_j), key));}
+    _o.ConditionId = new List<long>();
+    for (var _j = 0; _j < this.ConditionIdLength; ++_j) {_o.ConditionId.Add(TableEncryptionService.Convert(this.ConditionId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldTutorialExcel> Pack(FlatBufferBuilder builder, FieldTutorialExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldTutorialExcel>);
+    var _TutorialType = default(VectorOffset);
+    if (_o.TutorialType != null) {
+      var __TutorialType = _o.TutorialType.ToArray();
+      _TutorialType = CreateTutorialTypeVector(builder, __TutorialType);
+    }
+    var _ConditionType = default(VectorOffset);
+    if (_o.ConditionType != null) {
+      var __ConditionType = _o.ConditionType.ToArray();
+      _ConditionType = CreateConditionTypeVector(builder, __ConditionType);
+    }
+    var _ConditionId = default(VectorOffset);
+    if (_o.ConditionId != null) {
+      var __ConditionId = _o.ConditionId.ToArray();
+      _ConditionId = CreateConditionIdVector(builder, __ConditionId);
+    }
+    return CreateFieldTutorialExcel(
+      builder,
+      _o.SeasonId,
+      _TutorialType,
+      _ConditionType,
+      _ConditionId);
+  }
+}
+
+public class FieldTutorialExcelT
+{
+  public long SeasonId { get; set; }
+  public List<SCHALE.Common.FlatData.FieldTutorialType> TutorialType { get; set; }
+  public List<SCHALE.Common.FlatData.FieldConditionType> ConditionType { get; set; }
+  public List<long> ConditionId { get; set; }
+
+  public FieldTutorialExcelT() {
+    this.SeasonId = 0;
+    this.TutorialType = null;
+    this.ConditionType = null;
+    this.ConditionId = null;
   }
 }
 

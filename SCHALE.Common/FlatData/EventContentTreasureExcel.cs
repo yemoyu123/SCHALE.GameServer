@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentTreasureExcel : IFlatbufferObject
@@ -67,6 +68,49 @@ public struct EventContentTreasureExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentTreasureExcel> EndEventContentTreasureExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentTreasureExcel>(o);
+  }
+  public EventContentTreasureExcelT UnPack() {
+    var _o = new EventContentTreasureExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentTreasureExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentTreasure");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.TitleLocalize = TableEncryptionService.Convert(this.TitleLocalize, key);
+    _o.LoopRound = TableEncryptionService.Convert(this.LoopRound, key);
+    _o.UsePrefabName = TableEncryptionService.Convert(this.UsePrefabName, key);
+    _o.TreasureBGImagePath = TableEncryptionService.Convert(this.TreasureBGImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentTreasureExcel> Pack(FlatBufferBuilder builder, EventContentTreasureExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentTreasureExcel>);
+    var _TitleLocalize = _o.TitleLocalize == null ? default(StringOffset) : builder.CreateString(_o.TitleLocalize);
+    var _UsePrefabName = _o.UsePrefabName == null ? default(StringOffset) : builder.CreateString(_o.UsePrefabName);
+    var _TreasureBGImagePath = _o.TreasureBGImagePath == null ? default(StringOffset) : builder.CreateString(_o.TreasureBGImagePath);
+    return CreateEventContentTreasureExcel(
+      builder,
+      _o.EventContentId,
+      _TitleLocalize,
+      _o.LoopRound,
+      _UsePrefabName,
+      _TreasureBGImagePath);
+  }
+}
+
+public class EventContentTreasureExcelT
+{
+  public long EventContentId { get; set; }
+  public string TitleLocalize { get; set; }
+  public int LoopRound { get; set; }
+  public string UsePrefabName { get; set; }
+  public string TreasureBGImagePath { get; set; }
+
+  public EventContentTreasureExcelT() {
+    this.EventContentId = 0;
+    this.TitleLocalize = null;
+    this.LoopRound = 0;
+    this.UsePrefabName = null;
+    this.TreasureBGImagePath = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GroundExcel : IFlatbufferObject
@@ -305,6 +306,278 @@ public struct GroundExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GroundExcel> EndGroundExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GroundExcel>(o);
+  }
+  public GroundExcelT UnPack() {
+    var _o = new GroundExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GroundExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Ground");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StageFileName = new List<string>();
+    for (var _j = 0; _j < this.StageFileNameLength; ++_j) {_o.StageFileName.Add(TableEncryptionService.Convert(this.StageFileName(_j), key));}
+    _o.GroundSceneName = TableEncryptionService.Convert(this.GroundSceneName, key);
+    _o.FormationGroupId = TableEncryptionService.Convert(this.FormationGroupId, key);
+    _o.StageTopography = TableEncryptionService.Convert(this.StageTopography, key);
+    _o.EnemyBulletType = TableEncryptionService.Convert(this.EnemyBulletType, key);
+    _o.EnemyArmorType = TableEncryptionService.Convert(this.EnemyArmorType, key);
+    _o.LevelNPC = TableEncryptionService.Convert(this.LevelNPC, key);
+    _o.LevelMinion = TableEncryptionService.Convert(this.LevelMinion, key);
+    _o.LevelElite = TableEncryptionService.Convert(this.LevelElite, key);
+    _o.LevelChampion = TableEncryptionService.Convert(this.LevelChampion, key);
+    _o.LevelBoss = TableEncryptionService.Convert(this.LevelBoss, key);
+    _o.ObstacleLevel = TableEncryptionService.Convert(this.ObstacleLevel, key);
+    _o.GradeNPC = TableEncryptionService.Convert(this.GradeNPC, key);
+    _o.GradeMinion = TableEncryptionService.Convert(this.GradeMinion, key);
+    _o.GradeElite = TableEncryptionService.Convert(this.GradeElite, key);
+    _o.GradeChampion = TableEncryptionService.Convert(this.GradeChampion, key);
+    _o.GradeBoss = TableEncryptionService.Convert(this.GradeBoss, key);
+    _o.PlayerSightPointAdd = TableEncryptionService.Convert(this.PlayerSightPointAdd, key);
+    _o.PlayerSightPointRate = TableEncryptionService.Convert(this.PlayerSightPointRate, key);
+    _o.PlayerAttackRangeAdd = TableEncryptionService.Convert(this.PlayerAttackRangeAdd, key);
+    _o.PlayerAttackRangeRate = TableEncryptionService.Convert(this.PlayerAttackRangeRate, key);
+    _o.EnemySightPointAdd = TableEncryptionService.Convert(this.EnemySightPointAdd, key);
+    _o.EnemySightPointRate = TableEncryptionService.Convert(this.EnemySightPointRate, key);
+    _o.EnemyAttackRangeAdd = TableEncryptionService.Convert(this.EnemyAttackRangeAdd, key);
+    _o.EnemyAttackRangeRate = TableEncryptionService.Convert(this.EnemyAttackRangeRate, key);
+    _o.PlayerSkillRangeAdd = TableEncryptionService.Convert(this.PlayerSkillRangeAdd, key);
+    _o.PlayerSkillRangeRate = TableEncryptionService.Convert(this.PlayerSkillRangeRate, key);
+    _o.EnemySkillRangeAdd = TableEncryptionService.Convert(this.EnemySkillRangeAdd, key);
+    _o.EnemySkillRangeRate = TableEncryptionService.Convert(this.EnemySkillRangeRate, key);
+    _o.PlayerMinimumPositionGapRate = TableEncryptionService.Convert(this.PlayerMinimumPositionGapRate, key);
+    _o.EnemyMinimumPositionGapRate = TableEncryptionService.Convert(this.EnemyMinimumPositionGapRate, key);
+    _o.PlayerSightRangeMax = TableEncryptionService.Convert(this.PlayerSightRangeMax, key);
+    _o.EnemySightRangeMax = TableEncryptionService.Convert(this.EnemySightRangeMax, key);
+    _o.TSSAirUnitHeight = TableEncryptionService.Convert(this.TSSAirUnitHeight, key);
+    _o.IsPhaseBGM = TableEncryptionService.Convert(this.IsPhaseBGM, key);
+    _o.BGMId = TableEncryptionService.Convert(this.BGMId, key);
+    _o.WarningUI = TableEncryptionService.Convert(this.WarningUI, key);
+    _o.TSSHatchOpen = TableEncryptionService.Convert(this.TSSHatchOpen, key);
+    _o.ForcedTacticSpeed = TableEncryptionService.Convert(this.ForcedTacticSpeed, key);
+    _o.ForcedSkillUse = TableEncryptionService.Convert(this.ForcedSkillUse, key);
+    _o.ShowNPCSkillCutIn = TableEncryptionService.Convert(this.ShowNPCSkillCutIn, key);
+    _o.ImmuneHitBeforeTimeOutEnd = TableEncryptionService.Convert(this.ImmuneHitBeforeTimeOutEnd, key);
+    _o.UIBattleHideFromScratch = TableEncryptionService.Convert(this.UIBattleHideFromScratch, key);
+    _o.BattleReadyTimelinePath = TableEncryptionService.Convert(this.BattleReadyTimelinePath, key);
+    _o.BeforeVictoryTimelinePath = TableEncryptionService.Convert(this.BeforeVictoryTimelinePath, key);
+    _o.HideNPCWhenBattleEnd = TableEncryptionService.Convert(this.HideNPCWhenBattleEnd, key);
+    _o.UIHpScale = TableEncryptionService.Convert(this.UIHpScale, key);
+    _o.UIEmojiScale = TableEncryptionService.Convert(this.UIEmojiScale, key);
+    _o.UISkillMainLogScale = TableEncryptionService.Convert(this.UISkillMainLogScale, key);
+    _o.AllyPassiveSkillId = new List<string>();
+    for (var _j = 0; _j < this.AllyPassiveSkillIdLength; ++_j) {_o.AllyPassiveSkillId.Add(TableEncryptionService.Convert(this.AllyPassiveSkillId(_j), key));}
+    _o.AllyPassiveSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.AllyPassiveSkillLevelLength; ++_j) {_o.AllyPassiveSkillLevel.Add(TableEncryptionService.Convert(this.AllyPassiveSkillLevel(_j), key));}
+    _o.EnemyPassiveSkillId = new List<string>();
+    for (var _j = 0; _j < this.EnemyPassiveSkillIdLength; ++_j) {_o.EnemyPassiveSkillId.Add(TableEncryptionService.Convert(this.EnemyPassiveSkillId(_j), key));}
+    _o.EnemyPassiveSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.EnemyPassiveSkillLevelLength; ++_j) {_o.EnemyPassiveSkillLevel.Add(TableEncryptionService.Convert(this.EnemyPassiveSkillLevel(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.GroundExcel> Pack(FlatBufferBuilder builder, GroundExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GroundExcel>);
+    var _StageFileName = default(VectorOffset);
+    if (_o.StageFileName != null) {
+      var __StageFileName = new StringOffset[_o.StageFileName.Count];
+      for (var _j = 0; _j < __StageFileName.Length; ++_j) { __StageFileName[_j] = builder.CreateString(_o.StageFileName[_j]); }
+      _StageFileName = CreateStageFileNameVector(builder, __StageFileName);
+    }
+    var _GroundSceneName = _o.GroundSceneName == null ? default(StringOffset) : builder.CreateString(_o.GroundSceneName);
+    var _BattleReadyTimelinePath = _o.BattleReadyTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.BattleReadyTimelinePath);
+    var _BeforeVictoryTimelinePath = _o.BeforeVictoryTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.BeforeVictoryTimelinePath);
+    var _AllyPassiveSkillId = default(VectorOffset);
+    if (_o.AllyPassiveSkillId != null) {
+      var __AllyPassiveSkillId = new StringOffset[_o.AllyPassiveSkillId.Count];
+      for (var _j = 0; _j < __AllyPassiveSkillId.Length; ++_j) { __AllyPassiveSkillId[_j] = builder.CreateString(_o.AllyPassiveSkillId[_j]); }
+      _AllyPassiveSkillId = CreateAllyPassiveSkillIdVector(builder, __AllyPassiveSkillId);
+    }
+    var _AllyPassiveSkillLevel = default(VectorOffset);
+    if (_o.AllyPassiveSkillLevel != null) {
+      var __AllyPassiveSkillLevel = _o.AllyPassiveSkillLevel.ToArray();
+      _AllyPassiveSkillLevel = CreateAllyPassiveSkillLevelVector(builder, __AllyPassiveSkillLevel);
+    }
+    var _EnemyPassiveSkillId = default(VectorOffset);
+    if (_o.EnemyPassiveSkillId != null) {
+      var __EnemyPassiveSkillId = new StringOffset[_o.EnemyPassiveSkillId.Count];
+      for (var _j = 0; _j < __EnemyPassiveSkillId.Length; ++_j) { __EnemyPassiveSkillId[_j] = builder.CreateString(_o.EnemyPassiveSkillId[_j]); }
+      _EnemyPassiveSkillId = CreateEnemyPassiveSkillIdVector(builder, __EnemyPassiveSkillId);
+    }
+    var _EnemyPassiveSkillLevel = default(VectorOffset);
+    if (_o.EnemyPassiveSkillLevel != null) {
+      var __EnemyPassiveSkillLevel = _o.EnemyPassiveSkillLevel.ToArray();
+      _EnemyPassiveSkillLevel = CreateEnemyPassiveSkillLevelVector(builder, __EnemyPassiveSkillLevel);
+    }
+    return CreateGroundExcel(
+      builder,
+      _o.Id,
+      _StageFileName,
+      _GroundSceneName,
+      _o.FormationGroupId,
+      _o.StageTopography,
+      _o.EnemyBulletType,
+      _o.EnemyArmorType,
+      _o.LevelNPC,
+      _o.LevelMinion,
+      _o.LevelElite,
+      _o.LevelChampion,
+      _o.LevelBoss,
+      _o.ObstacleLevel,
+      _o.GradeNPC,
+      _o.GradeMinion,
+      _o.GradeElite,
+      _o.GradeChampion,
+      _o.GradeBoss,
+      _o.PlayerSightPointAdd,
+      _o.PlayerSightPointRate,
+      _o.PlayerAttackRangeAdd,
+      _o.PlayerAttackRangeRate,
+      _o.EnemySightPointAdd,
+      _o.EnemySightPointRate,
+      _o.EnemyAttackRangeAdd,
+      _o.EnemyAttackRangeRate,
+      _o.PlayerSkillRangeAdd,
+      _o.PlayerSkillRangeRate,
+      _o.EnemySkillRangeAdd,
+      _o.EnemySkillRangeRate,
+      _o.PlayerMinimumPositionGapRate,
+      _o.EnemyMinimumPositionGapRate,
+      _o.PlayerSightRangeMax,
+      _o.EnemySightRangeMax,
+      _o.TSSAirUnitHeight,
+      _o.IsPhaseBGM,
+      _o.BGMId,
+      _o.WarningUI,
+      _o.TSSHatchOpen,
+      _o.ForcedTacticSpeed,
+      _o.ForcedSkillUse,
+      _o.ShowNPCSkillCutIn,
+      _o.ImmuneHitBeforeTimeOutEnd,
+      _o.UIBattleHideFromScratch,
+      _BattleReadyTimelinePath,
+      _BeforeVictoryTimelinePath,
+      _o.HideNPCWhenBattleEnd,
+      _o.UIHpScale,
+      _o.UIEmojiScale,
+      _o.UISkillMainLogScale,
+      _AllyPassiveSkillId,
+      _AllyPassiveSkillLevel,
+      _EnemyPassiveSkillId,
+      _EnemyPassiveSkillLevel);
+  }
+}
+
+public class GroundExcelT
+{
+  public long Id { get; set; }
+  public List<string> StageFileName { get; set; }
+  public string GroundSceneName { get; set; }
+  public long FormationGroupId { get; set; }
+  public SCHALE.Common.FlatData.StageTopography StageTopography { get; set; }
+  public SCHALE.Common.FlatData.BulletType EnemyBulletType { get; set; }
+  public SCHALE.Common.FlatData.ArmorType EnemyArmorType { get; set; }
+  public long LevelNPC { get; set; }
+  public long LevelMinion { get; set; }
+  public long LevelElite { get; set; }
+  public long LevelChampion { get; set; }
+  public long LevelBoss { get; set; }
+  public long ObstacleLevel { get; set; }
+  public long GradeNPC { get; set; }
+  public long GradeMinion { get; set; }
+  public long GradeElite { get; set; }
+  public long GradeChampion { get; set; }
+  public long GradeBoss { get; set; }
+  public long PlayerSightPointAdd { get; set; }
+  public long PlayerSightPointRate { get; set; }
+  public long PlayerAttackRangeAdd { get; set; }
+  public long PlayerAttackRangeRate { get; set; }
+  public long EnemySightPointAdd { get; set; }
+  public long EnemySightPointRate { get; set; }
+  public long EnemyAttackRangeAdd { get; set; }
+  public long EnemyAttackRangeRate { get; set; }
+  public long PlayerSkillRangeAdd { get; set; }
+  public long PlayerSkillRangeRate { get; set; }
+  public long EnemySkillRangeAdd { get; set; }
+  public long EnemySkillRangeRate { get; set; }
+  public long PlayerMinimumPositionGapRate { get; set; }
+  public long EnemyMinimumPositionGapRate { get; set; }
+  public bool PlayerSightRangeMax { get; set; }
+  public bool EnemySightRangeMax { get; set; }
+  public long TSSAirUnitHeight { get; set; }
+  public bool IsPhaseBGM { get; set; }
+  public long BGMId { get; set; }
+  public bool WarningUI { get; set; }
+  public bool TSSHatchOpen { get; set; }
+  public SCHALE.Common.FlatData.TacticSpeed ForcedTacticSpeed { get; set; }
+  public SCHALE.Common.FlatData.TacticSkillUse ForcedSkillUse { get; set; }
+  public SCHALE.Common.FlatData.ShowSkillCutIn ShowNPCSkillCutIn { get; set; }
+  public bool ImmuneHitBeforeTimeOutEnd { get; set; }
+  public bool UIBattleHideFromScratch { get; set; }
+  public string BattleReadyTimelinePath { get; set; }
+  public string BeforeVictoryTimelinePath { get; set; }
+  public bool HideNPCWhenBattleEnd { get; set; }
+  public float UIHpScale { get; set; }
+  public float UIEmojiScale { get; set; }
+  public float UISkillMainLogScale { get; set; }
+  public List<string> AllyPassiveSkillId { get; set; }
+  public List<int> AllyPassiveSkillLevel { get; set; }
+  public List<string> EnemyPassiveSkillId { get; set; }
+  public List<int> EnemyPassiveSkillLevel { get; set; }
+
+  public GroundExcelT() {
+    this.Id = 0;
+    this.StageFileName = null;
+    this.GroundSceneName = null;
+    this.FormationGroupId = 0;
+    this.StageTopography = SCHALE.Common.FlatData.StageTopography.Street;
+    this.EnemyBulletType = SCHALE.Common.FlatData.BulletType.Normal;
+    this.EnemyArmorType = SCHALE.Common.FlatData.ArmorType.LightArmor;
+    this.LevelNPC = 0;
+    this.LevelMinion = 0;
+    this.LevelElite = 0;
+    this.LevelChampion = 0;
+    this.LevelBoss = 0;
+    this.ObstacleLevel = 0;
+    this.GradeNPC = 0;
+    this.GradeMinion = 0;
+    this.GradeElite = 0;
+    this.GradeChampion = 0;
+    this.GradeBoss = 0;
+    this.PlayerSightPointAdd = 0;
+    this.PlayerSightPointRate = 0;
+    this.PlayerAttackRangeAdd = 0;
+    this.PlayerAttackRangeRate = 0;
+    this.EnemySightPointAdd = 0;
+    this.EnemySightPointRate = 0;
+    this.EnemyAttackRangeAdd = 0;
+    this.EnemyAttackRangeRate = 0;
+    this.PlayerSkillRangeAdd = 0;
+    this.PlayerSkillRangeRate = 0;
+    this.EnemySkillRangeAdd = 0;
+    this.EnemySkillRangeRate = 0;
+    this.PlayerMinimumPositionGapRate = 0;
+    this.EnemyMinimumPositionGapRate = 0;
+    this.PlayerSightRangeMax = false;
+    this.EnemySightRangeMax = false;
+    this.TSSAirUnitHeight = 0;
+    this.IsPhaseBGM = false;
+    this.BGMId = 0;
+    this.WarningUI = false;
+    this.TSSHatchOpen = false;
+    this.ForcedTacticSpeed = SCHALE.Common.FlatData.TacticSpeed.None;
+    this.ForcedSkillUse = SCHALE.Common.FlatData.TacticSkillUse.None;
+    this.ShowNPCSkillCutIn = SCHALE.Common.FlatData.ShowSkillCutIn.None;
+    this.ImmuneHitBeforeTimeOutEnd = false;
+    this.UIBattleHideFromScratch = false;
+    this.BattleReadyTimelinePath = null;
+    this.BeforeVictoryTimelinePath = null;
+    this.HideNPCWhenBattleEnd = false;
+    this.UIHpScale = 0.0f;
+    this.UIEmojiScale = 0.0f;
+    this.UISkillMainLogScale = 0.0f;
+    this.AllyPassiveSkillId = null;
+    this.AllyPassiveSkillLevel = null;
+    this.EnemyPassiveSkillId = null;
+    this.EnemyPassiveSkillLevel = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CouponStuffExcel : IFlatbufferObject
@@ -55,6 +56,47 @@ public struct CouponStuffExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CouponStuffExcel> EndCouponStuffExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CouponStuffExcel>(o);
+  }
+  public CouponStuffExcelT UnPack() {
+    var _o = new CouponStuffExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CouponStuffExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CouponStuff");
+    _o.StuffId = TableEncryptionService.Convert(this.StuffId, key);
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelId = TableEncryptionService.Convert(this.ParcelId, key);
+    _o.LimitAmount = TableEncryptionService.Convert(this.LimitAmount, key);
+    _o.CouponStuffNameLocalizeKey = TableEncryptionService.Convert(this.CouponStuffNameLocalizeKey, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CouponStuffExcel> Pack(FlatBufferBuilder builder, CouponStuffExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CouponStuffExcel>);
+    var _CouponStuffNameLocalizeKey = _o.CouponStuffNameLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.CouponStuffNameLocalizeKey);
+    return CreateCouponStuffExcel(
+      builder,
+      _o.StuffId,
+      _o.ParcelType,
+      _o.ParcelId,
+      _o.LimitAmount,
+      _CouponStuffNameLocalizeKey);
+  }
+}
+
+public class CouponStuffExcelT
+{
+  public long StuffId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelId { get; set; }
+  public int LimitAmount { get; set; }
+  public string CouponStuffNameLocalizeKey { get; set; }
+
+  public CouponStuffExcelT() {
+    this.StuffId = 0;
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelId = 0;
+    this.LimitAmount = 0;
+    this.CouponStuffNameLocalizeKey = null;
   }
 }
 

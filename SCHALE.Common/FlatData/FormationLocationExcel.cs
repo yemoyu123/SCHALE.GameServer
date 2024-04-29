@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FormationLocationExcel : IFlatbufferObject
@@ -69,6 +70,54 @@ public struct FormationLocationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FormationLocationExcel> EndFormationLocationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FormationLocationExcel>(o);
+  }
+  public FormationLocationExcelT UnPack() {
+    var _o = new FormationLocationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FormationLocationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FormationLocation");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.GroupID = TableEncryptionService.Convert(this.GroupID, key);
+    _o.SlotZ = new List<float>();
+    for (var _j = 0; _j < this.SlotZLength; ++_j) {_o.SlotZ.Add(TableEncryptionService.Convert(this.SlotZ(_j), key));}
+    _o.SlotX = new List<float>();
+    for (var _j = 0; _j < this.SlotXLength; ++_j) {_o.SlotX.Add(TableEncryptionService.Convert(this.SlotX(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FormationLocationExcel> Pack(FlatBufferBuilder builder, FormationLocationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FormationLocationExcel>);
+    var _SlotZ = default(VectorOffset);
+    if (_o.SlotZ != null) {
+      var __SlotZ = _o.SlotZ.ToArray();
+      _SlotZ = CreateSlotZVector(builder, __SlotZ);
+    }
+    var _SlotX = default(VectorOffset);
+    if (_o.SlotX != null) {
+      var __SlotX = _o.SlotX.ToArray();
+      _SlotX = CreateSlotXVector(builder, __SlotX);
+    }
+    return CreateFormationLocationExcel(
+      builder,
+      _o.Id,
+      _o.GroupID,
+      _SlotZ,
+      _SlotX);
+  }
+}
+
+public class FormationLocationExcelT
+{
+  public long Id { get; set; }
+  public long GroupID { get; set; }
+  public List<float> SlotZ { get; set; }
+  public List<float> SlotX { get; set; }
+
+  public FormationLocationExcelT() {
+    this.Id = 0;
+    this.GroupID = 0;
+    this.SlotZ = null;
+    this.SlotX = null;
   }
 }
 

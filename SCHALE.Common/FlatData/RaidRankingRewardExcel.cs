@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RaidRankingRewardExcel : IFlatbufferObject
@@ -115,6 +116,95 @@ public struct RaidRankingRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RaidRankingRewardExcel> EndRaidRankingRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RaidRankingRewardExcel>(o);
+  }
+  public RaidRankingRewardExcelT UnPack() {
+    var _o = new RaidRankingRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RaidRankingRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RaidRankingReward");
+    _o.RankingRewardGroupId = TableEncryptionService.Convert(this.RankingRewardGroupId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.RankStart = TableEncryptionService.Convert(this.RankStart, key);
+    _o.RankEnd = TableEncryptionService.Convert(this.RankEnd, key);
+    _o.PercentRankStart = TableEncryptionService.Convert(this.PercentRankStart, key);
+    _o.PercentRankEnd = TableEncryptionService.Convert(this.PercentRankEnd, key);
+    _o.Tier = TableEncryptionService.Convert(this.Tier, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelUniqueId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelUniqueIdLength; ++_j) {_o.RewardParcelUniqueId.Add(TableEncryptionService.Convert(this.RewardParcelUniqueId(_j), key));}
+    _o.RewardParcelUniqueName = new List<string>();
+    for (var _j = 0; _j < this.RewardParcelUniqueNameLength; ++_j) {_o.RewardParcelUniqueName.Add(TableEncryptionService.Convert(this.RewardParcelUniqueName(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.RaidRankingRewardExcel> Pack(FlatBufferBuilder builder, RaidRankingRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RaidRankingRewardExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelUniqueId = default(VectorOffset);
+    if (_o.RewardParcelUniqueId != null) {
+      var __RewardParcelUniqueId = _o.RewardParcelUniqueId.ToArray();
+      _RewardParcelUniqueId = CreateRewardParcelUniqueIdVector(builder, __RewardParcelUniqueId);
+    }
+    var _RewardParcelUniqueName = default(VectorOffset);
+    if (_o.RewardParcelUniqueName != null) {
+      var __RewardParcelUniqueName = new StringOffset[_o.RewardParcelUniqueName.Count];
+      for (var _j = 0; _j < __RewardParcelUniqueName.Length; ++_j) { __RewardParcelUniqueName[_j] = builder.CreateString(_o.RewardParcelUniqueName[_j]); }
+      _RewardParcelUniqueName = CreateRewardParcelUniqueNameVector(builder, __RewardParcelUniqueName);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateRaidRankingRewardExcel(
+      builder,
+      _o.RankingRewardGroupId,
+      _o.Id,
+      _o.RankStart,
+      _o.RankEnd,
+      _o.PercentRankStart,
+      _o.PercentRankEnd,
+      _o.Tier,
+      _RewardParcelType,
+      _RewardParcelUniqueId,
+      _RewardParcelUniqueName,
+      _RewardParcelAmount);
+  }
+}
+
+public class RaidRankingRewardExcelT
+{
+  public long RankingRewardGroupId { get; set; }
+  public long Id { get; set; }
+  public long RankStart { get; set; }
+  public long RankEnd { get; set; }
+  public long PercentRankStart { get; set; }
+  public long PercentRankEnd { get; set; }
+  public int Tier { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelUniqueId { get; set; }
+  public List<string> RewardParcelUniqueName { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public RaidRankingRewardExcelT() {
+    this.RankingRewardGroupId = 0;
+    this.Id = 0;
+    this.RankStart = 0;
+    this.RankEnd = 0;
+    this.PercentRankStart = 0;
+    this.PercentRankEnd = 0;
+    this.Tier = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelUniqueId = null;
+    this.RewardParcelUniqueName = null;
+    this.RewardParcelAmount = null;
   }
 }
 

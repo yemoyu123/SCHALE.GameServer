@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterDialogExcel : IFlatbufferObject
@@ -183,6 +184,139 @@ public struct CharacterDialogExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterDialogExcel> EndCharacterDialogExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterDialogExcel>(o);
+  }
+  public CharacterDialogExcelT UnPack() {
+    var _o = new CharacterDialogExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterDialogExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterDialog");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.CostumeUniqueId = TableEncryptionService.Convert(this.CostumeUniqueId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.DialogCategory = TableEncryptionService.Convert(this.DialogCategory, key);
+    _o.DialogCondition = TableEncryptionService.Convert(this.DialogCondition, key);
+    _o.Anniversary = TableEncryptionService.Convert(this.Anniversary, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.DialogType = TableEncryptionService.Convert(this.DialogType, key);
+    _o.ActionName = TableEncryptionService.Convert(this.ActionName, key);
+    _o.Duration = TableEncryptionService.Convert(this.Duration, key);
+    _o.AnimationName = TableEncryptionService.Convert(this.AnimationName, key);
+    _o.LocalizeKR = TableEncryptionService.Convert(this.LocalizeKR, key);
+    _o.LocalizeJP = TableEncryptionService.Convert(this.LocalizeJP, key);
+    _o.VoiceId = new List<uint>();
+    for (var _j = 0; _j < this.VoiceIdLength; ++_j) {_o.VoiceId.Add(TableEncryptionService.Convert(this.VoiceId(_j), key));}
+    _o.ApplyPosition = TableEncryptionService.Convert(this.ApplyPosition, key);
+    _o.PosX = TableEncryptionService.Convert(this.PosX, key);
+    _o.PosY = TableEncryptionService.Convert(this.PosY, key);
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.CVCollectionType = TableEncryptionService.Convert(this.CVCollectionType, key);
+    _o.UnlockFavorRank = TableEncryptionService.Convert(this.UnlockFavorRank, key);
+    _o.UnlockEquipWeapon = TableEncryptionService.Convert(this.UnlockEquipWeapon, key);
+    _o.LocalizeCVGroup = TableEncryptionService.Convert(this.LocalizeCVGroup, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterDialogExcel> Pack(FlatBufferBuilder builder, CharacterDialogExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterDialogExcel>);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    var _ActionName = _o.ActionName == null ? default(StringOffset) : builder.CreateString(_o.ActionName);
+    var _AnimationName = _o.AnimationName == null ? default(StringOffset) : builder.CreateString(_o.AnimationName);
+    var _LocalizeKR = _o.LocalizeKR == null ? default(StringOffset) : builder.CreateString(_o.LocalizeKR);
+    var _LocalizeJP = _o.LocalizeJP == null ? default(StringOffset) : builder.CreateString(_o.LocalizeJP);
+    var _VoiceId = default(VectorOffset);
+    if (_o.VoiceId != null) {
+      var __VoiceId = _o.VoiceId.ToArray();
+      _VoiceId = CreateVoiceIdVector(builder, __VoiceId);
+    }
+    var _LocalizeCVGroup = _o.LocalizeCVGroup == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCVGroup);
+    return CreateCharacterDialogExcel(
+      builder,
+      _o.CharacterId,
+      _o.CostumeUniqueId,
+      _o.DisplayOrder,
+      _o.ProductionStep,
+      _o.DialogCategory,
+      _o.DialogCondition,
+      _o.Anniversary,
+      _StartDate,
+      _EndDate,
+      _o.GroupId,
+      _o.DialogType,
+      _ActionName,
+      _o.Duration,
+      _AnimationName,
+      _LocalizeKR,
+      _LocalizeJP,
+      _VoiceId,
+      _o.ApplyPosition,
+      _o.PosX,
+      _o.PosY,
+      _o.CollectionVisible,
+      _o.CVCollectionType,
+      _o.UnlockFavorRank,
+      _o.UnlockEquipWeapon,
+      _LocalizeCVGroup);
+  }
+}
+
+public class CharacterDialogExcelT
+{
+  public long CharacterId { get; set; }
+  public long CostumeUniqueId { get; set; }
+  public long DisplayOrder { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public SCHALE.Common.FlatData.DialogCategory DialogCategory { get; set; }
+  public SCHALE.Common.FlatData.DialogCondition DialogCondition { get; set; }
+  public SCHALE.Common.FlatData.Anniversary Anniversary { get; set; }
+  public string StartDate { get; set; }
+  public string EndDate { get; set; }
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.DialogType DialogType { get; set; }
+  public string ActionName { get; set; }
+  public long Duration { get; set; }
+  public string AnimationName { get; set; }
+  public string LocalizeKR { get; set; }
+  public string LocalizeJP { get; set; }
+  public List<uint> VoiceId { get; set; }
+  public bool ApplyPosition { get; set; }
+  public float PosX { get; set; }
+  public float PosY { get; set; }
+  public bool CollectionVisible { get; set; }
+  public SCHALE.Common.FlatData.CVCollectionType CVCollectionType { get; set; }
+  public long UnlockFavorRank { get; set; }
+  public bool UnlockEquipWeapon { get; set; }
+  public string LocalizeCVGroup { get; set; }
+
+  public CharacterDialogExcelT() {
+    this.CharacterId = 0;
+    this.CostumeUniqueId = 0;
+    this.DisplayOrder = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.DialogCategory = SCHALE.Common.FlatData.DialogCategory.Cafe;
+    this.DialogCondition = SCHALE.Common.FlatData.DialogCondition.Idle;
+    this.Anniversary = SCHALE.Common.FlatData.Anniversary.None;
+    this.StartDate = null;
+    this.EndDate = null;
+    this.GroupId = 0;
+    this.DialogType = SCHALE.Common.FlatData.DialogType.Talk;
+    this.ActionName = null;
+    this.Duration = 0;
+    this.AnimationName = null;
+    this.LocalizeKR = null;
+    this.LocalizeJP = null;
+    this.VoiceId = null;
+    this.ApplyPosition = false;
+    this.PosX = 0.0f;
+    this.PosY = 0.0f;
+    this.CollectionVisible = false;
+    this.CVCollectionType = SCHALE.Common.FlatData.CVCollectionType.CVNormal;
+    this.UnlockFavorRank = 0;
+    this.UnlockEquipWeapon = false;
+    this.LocalizeCVGroup = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CombatEmojiExcel : IFlatbufferObject
@@ -61,6 +62,58 @@ public struct CombatEmojiExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CombatEmojiExcel> EndCombatEmojiExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CombatEmojiExcel>(o);
+  }
+  public CombatEmojiExcelT UnPack() {
+    var _o = new CombatEmojiExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CombatEmojiExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CombatEmoji");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.EmojiEvent = TableEncryptionService.Convert(this.EmojiEvent, key);
+    _o.OrderOfPriority = TableEncryptionService.Convert(this.OrderOfPriority, key);
+    _o.EmojiDuration = TableEncryptionService.Convert(this.EmojiDuration, key);
+    _o.EmojiReversal = TableEncryptionService.Convert(this.EmojiReversal, key);
+    _o.EmojiTurnOn = TableEncryptionService.Convert(this.EmojiTurnOn, key);
+    _o.ShowEmojiDelay = TableEncryptionService.Convert(this.ShowEmojiDelay, key);
+    _o.ShowDefaultBG = TableEncryptionService.Convert(this.ShowDefaultBG, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CombatEmojiExcel> Pack(FlatBufferBuilder builder, CombatEmojiExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CombatEmojiExcel>);
+    return CreateCombatEmojiExcel(
+      builder,
+      _o.UniqueId,
+      _o.EmojiEvent,
+      _o.OrderOfPriority,
+      _o.EmojiDuration,
+      _o.EmojiReversal,
+      _o.EmojiTurnOn,
+      _o.ShowEmojiDelay,
+      _o.ShowDefaultBG);
+  }
+}
+
+public class CombatEmojiExcelT
+{
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.EmojiEvent EmojiEvent { get; set; }
+  public int OrderOfPriority { get; set; }
+  public bool EmojiDuration { get; set; }
+  public bool EmojiReversal { get; set; }
+  public bool EmojiTurnOn { get; set; }
+  public int ShowEmojiDelay { get; set; }
+  public bool ShowDefaultBG { get; set; }
+
+  public CombatEmojiExcelT() {
+    this.UniqueId = 0;
+    this.EmojiEvent = SCHALE.Common.FlatData.EmojiEvent.EnterConver;
+    this.OrderOfPriority = 0;
+    this.EmojiDuration = false;
+    this.EmojiReversal = false;
+    this.EmojiTurnOn = false;
+    this.ShowEmojiDelay = 0;
+    this.ShowDefaultBG = false;
   }
 }
 

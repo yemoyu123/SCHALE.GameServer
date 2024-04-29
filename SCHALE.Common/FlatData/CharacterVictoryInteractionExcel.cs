@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterVictoryInteractionExcel : IFlatbufferObject
@@ -201,6 +202,138 @@ public struct CharacterVictoryInteractionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterVictoryInteractionExcel> EndCharacterVictoryInteractionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterVictoryInteractionExcel>(o);
+  }
+  public CharacterVictoryInteractionExcelT UnPack() {
+    var _o = new CharacterVictoryInteractionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterVictoryInteractionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterVictoryInteraction");
+    _o.InteractionId = TableEncryptionService.Convert(this.InteractionId, key);
+    _o.CostumeId01 = TableEncryptionService.Convert(this.CostumeId01, key);
+    _o.PositionIndex01 = TableEncryptionService.Convert(this.PositionIndex01, key);
+    _o.VictoryStartAnimationPath01 = TableEncryptionService.Convert(this.VictoryStartAnimationPath01, key);
+    _o.VictoryEndAnimationPath01 = TableEncryptionService.Convert(this.VictoryEndAnimationPath01, key);
+    _o.CostumeId02 = TableEncryptionService.Convert(this.CostumeId02, key);
+    _o.PositionIndex02 = TableEncryptionService.Convert(this.PositionIndex02, key);
+    _o.VictoryStartAnimationPath02 = TableEncryptionService.Convert(this.VictoryStartAnimationPath02, key);
+    _o.VictoryEndAnimationPath02 = TableEncryptionService.Convert(this.VictoryEndAnimationPath02, key);
+    _o.CostumeId03 = TableEncryptionService.Convert(this.CostumeId03, key);
+    _o.PositionIndex03 = TableEncryptionService.Convert(this.PositionIndex03, key);
+    _o.VictoryStartAnimationPath03 = TableEncryptionService.Convert(this.VictoryStartAnimationPath03, key);
+    _o.VictoryEndAnimationPath03 = TableEncryptionService.Convert(this.VictoryEndAnimationPath03, key);
+    _o.CostumeId04 = TableEncryptionService.Convert(this.CostumeId04, key);
+    _o.PositionIndex04 = TableEncryptionService.Convert(this.PositionIndex04, key);
+    _o.VictoryStartAnimationPath04 = TableEncryptionService.Convert(this.VictoryStartAnimationPath04, key);
+    _o.VictoryEndAnimationPath04 = TableEncryptionService.Convert(this.VictoryEndAnimationPath04, key);
+    _o.CostumeId05 = TableEncryptionService.Convert(this.CostumeId05, key);
+    _o.PositionIndex05 = TableEncryptionService.Convert(this.PositionIndex05, key);
+    _o.VictoryStartAnimationPath05 = TableEncryptionService.Convert(this.VictoryStartAnimationPath05, key);
+    _o.VictoryEndAnimationPath05 = TableEncryptionService.Convert(this.VictoryEndAnimationPath05, key);
+    _o.CostumeId06 = TableEncryptionService.Convert(this.CostumeId06, key);
+    _o.PositionIndex06 = TableEncryptionService.Convert(this.PositionIndex06, key);
+    _o.VictoryStartAnimationPath06 = TableEncryptionService.Convert(this.VictoryStartAnimationPath06, key);
+    _o.VictoryEndAnimationPath06 = TableEncryptionService.Convert(this.VictoryEndAnimationPath06, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterVictoryInteractionExcel> Pack(FlatBufferBuilder builder, CharacterVictoryInteractionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterVictoryInteractionExcel>);
+    var _VictoryStartAnimationPath01 = _o.VictoryStartAnimationPath01 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath01);
+    var _VictoryEndAnimationPath01 = _o.VictoryEndAnimationPath01 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath01);
+    var _VictoryStartAnimationPath02 = _o.VictoryStartAnimationPath02 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath02);
+    var _VictoryEndAnimationPath02 = _o.VictoryEndAnimationPath02 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath02);
+    var _VictoryStartAnimationPath03 = _o.VictoryStartAnimationPath03 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath03);
+    var _VictoryEndAnimationPath03 = _o.VictoryEndAnimationPath03 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath03);
+    var _VictoryStartAnimationPath04 = _o.VictoryStartAnimationPath04 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath04);
+    var _VictoryEndAnimationPath04 = _o.VictoryEndAnimationPath04 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath04);
+    var _VictoryStartAnimationPath05 = _o.VictoryStartAnimationPath05 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath05);
+    var _VictoryEndAnimationPath05 = _o.VictoryEndAnimationPath05 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath05);
+    var _VictoryStartAnimationPath06 = _o.VictoryStartAnimationPath06 == null ? default(StringOffset) : builder.CreateString(_o.VictoryStartAnimationPath06);
+    var _VictoryEndAnimationPath06 = _o.VictoryEndAnimationPath06 == null ? default(StringOffset) : builder.CreateString(_o.VictoryEndAnimationPath06);
+    return CreateCharacterVictoryInteractionExcel(
+      builder,
+      _o.InteractionId,
+      _o.CostumeId01,
+      _o.PositionIndex01,
+      _VictoryStartAnimationPath01,
+      _VictoryEndAnimationPath01,
+      _o.CostumeId02,
+      _o.PositionIndex02,
+      _VictoryStartAnimationPath02,
+      _VictoryEndAnimationPath02,
+      _o.CostumeId03,
+      _o.PositionIndex03,
+      _VictoryStartAnimationPath03,
+      _VictoryEndAnimationPath03,
+      _o.CostumeId04,
+      _o.PositionIndex04,
+      _VictoryStartAnimationPath04,
+      _VictoryEndAnimationPath04,
+      _o.CostumeId05,
+      _o.PositionIndex05,
+      _VictoryStartAnimationPath05,
+      _VictoryEndAnimationPath05,
+      _o.CostumeId06,
+      _o.PositionIndex06,
+      _VictoryStartAnimationPath06,
+      _VictoryEndAnimationPath06);
+  }
+}
+
+public class CharacterVictoryInteractionExcelT
+{
+  public long InteractionId { get; set; }
+  public long CostumeId01 { get; set; }
+  public int PositionIndex01 { get; set; }
+  public string VictoryStartAnimationPath01 { get; set; }
+  public string VictoryEndAnimationPath01 { get; set; }
+  public long CostumeId02 { get; set; }
+  public int PositionIndex02 { get; set; }
+  public string VictoryStartAnimationPath02 { get; set; }
+  public string VictoryEndAnimationPath02 { get; set; }
+  public long CostumeId03 { get; set; }
+  public int PositionIndex03 { get; set; }
+  public string VictoryStartAnimationPath03 { get; set; }
+  public string VictoryEndAnimationPath03 { get; set; }
+  public long CostumeId04 { get; set; }
+  public int PositionIndex04 { get; set; }
+  public string VictoryStartAnimationPath04 { get; set; }
+  public string VictoryEndAnimationPath04 { get; set; }
+  public long CostumeId05 { get; set; }
+  public int PositionIndex05 { get; set; }
+  public string VictoryStartAnimationPath05 { get; set; }
+  public string VictoryEndAnimationPath05 { get; set; }
+  public long CostumeId06 { get; set; }
+  public int PositionIndex06 { get; set; }
+  public string VictoryStartAnimationPath06 { get; set; }
+  public string VictoryEndAnimationPath06 { get; set; }
+
+  public CharacterVictoryInteractionExcelT() {
+    this.InteractionId = 0;
+    this.CostumeId01 = 0;
+    this.PositionIndex01 = 0;
+    this.VictoryStartAnimationPath01 = null;
+    this.VictoryEndAnimationPath01 = null;
+    this.CostumeId02 = 0;
+    this.PositionIndex02 = 0;
+    this.VictoryStartAnimationPath02 = null;
+    this.VictoryEndAnimationPath02 = null;
+    this.CostumeId03 = 0;
+    this.PositionIndex03 = 0;
+    this.VictoryStartAnimationPath03 = null;
+    this.VictoryEndAnimationPath03 = null;
+    this.CostumeId04 = 0;
+    this.PositionIndex04 = 0;
+    this.VictoryStartAnimationPath04 = null;
+    this.VictoryEndAnimationPath04 = null;
+    this.CostumeId05 = 0;
+    this.PositionIndex05 = 0;
+    this.VictoryStartAnimationPath05 = null;
+    this.VictoryEndAnimationPath05 = null;
+    this.CostumeId06 = 0;
+    this.PositionIndex06 = 0;
+    this.VictoryStartAnimationPath06 = null;
+    this.VictoryEndAnimationPath06 = null;
   }
 }
 

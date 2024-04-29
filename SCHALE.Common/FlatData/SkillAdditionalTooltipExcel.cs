@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SkillAdditionalTooltipExcel : IFlatbufferObject
@@ -53,6 +54,40 @@ public struct SkillAdditionalTooltipExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SkillAdditionalTooltipExcel> EndSkillAdditionalTooltipExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SkillAdditionalTooltipExcel>(o);
+  }
+  public SkillAdditionalTooltipExcelT UnPack() {
+    var _o = new SkillAdditionalTooltipExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SkillAdditionalTooltipExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SkillAdditionalTooltip");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.AdditionalSkillGroupId = TableEncryptionService.Convert(this.AdditionalSkillGroupId, key);
+    _o.ShowSkillSlot = TableEncryptionService.Convert(this.ShowSkillSlot, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SkillAdditionalTooltipExcel> Pack(FlatBufferBuilder builder, SkillAdditionalTooltipExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SkillAdditionalTooltipExcel>);
+    var _AdditionalSkillGroupId = _o.AdditionalSkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.AdditionalSkillGroupId);
+    var _ShowSkillSlot = _o.ShowSkillSlot == null ? default(StringOffset) : builder.CreateString(_o.ShowSkillSlot);
+    return CreateSkillAdditionalTooltipExcel(
+      builder,
+      _o.GroupId,
+      _AdditionalSkillGroupId,
+      _ShowSkillSlot);
+  }
+}
+
+public class SkillAdditionalTooltipExcelT
+{
+  public long GroupId { get; set; }
+  public string AdditionalSkillGroupId { get; set; }
+  public string ShowSkillSlot { get; set; }
+
+  public SkillAdditionalTooltipExcelT() {
+    this.GroupId = 0;
+    this.AdditionalSkillGroupId = null;
+    this.ShowSkillSlot = null;
   }
 }
 

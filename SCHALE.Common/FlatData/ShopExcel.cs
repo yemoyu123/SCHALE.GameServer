@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopExcel : IFlatbufferObject
@@ -119,6 +120,95 @@ public struct ShopExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopExcel> EndShopExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopExcel>(o);
+  }
+  public ShopExcelT UnPack() {
+    var _o = new ShopExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Shop");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.GoodsId = new List<long>();
+    for (var _j = 0; _j < this.GoodsIdLength; ++_j) {_o.GoodsId.Add(TableEncryptionService.Convert(this.GoodsId(_j), key));}
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.SalePeriodFrom = TableEncryptionService.Convert(this.SalePeriodFrom, key);
+    _o.SalePeriodTo = TableEncryptionService.Convert(this.SalePeriodTo, key);
+    _o.PurchaseCooltimeMin = TableEncryptionService.Convert(this.PurchaseCooltimeMin, key);
+    _o.PurchaseCountLimit = TableEncryptionService.Convert(this.PurchaseCountLimit, key);
+    _o.PurchaseCountResetType = TableEncryptionService.Convert(this.PurchaseCountResetType, key);
+    _o.BuyReportEventName = TableEncryptionService.Convert(this.BuyReportEventName, key);
+    _o.RestrictBuyWhenInventoryFull = TableEncryptionService.Convert(this.RestrictBuyWhenInventoryFull, key);
+    _o.DisplayTag = TableEncryptionService.Convert(this.DisplayTag, key);
+    _o.ShopUpdateGroupId = TableEncryptionService.Convert(this.ShopUpdateGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopExcel> Pack(FlatBufferBuilder builder, ShopExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopExcel>);
+    var _GoodsId = default(VectorOffset);
+    if (_o.GoodsId != null) {
+      var __GoodsId = _o.GoodsId.ToArray();
+      _GoodsId = CreateGoodsIdVector(builder, __GoodsId);
+    }
+    var _SalePeriodFrom = _o.SalePeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodFrom);
+    var _SalePeriodTo = _o.SalePeriodTo == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodTo);
+    var _BuyReportEventName = _o.BuyReportEventName == null ? default(StringOffset) : builder.CreateString(_o.BuyReportEventName);
+    return CreateShopExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _o.CategoryType,
+      _o.IsLegacy,
+      _GoodsId,
+      _o.DisplayOrder,
+      _SalePeriodFrom,
+      _SalePeriodTo,
+      _o.PurchaseCooltimeMin,
+      _o.PurchaseCountLimit,
+      _o.PurchaseCountResetType,
+      _BuyReportEventName,
+      _o.RestrictBuyWhenInventoryFull,
+      _o.DisplayTag,
+      _o.ShopUpdateGroupId);
+  }
+}
+
+public class ShopExcelT
+{
+  public long Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public SCHALE.Common.FlatData.ShopCategoryType CategoryType { get; set; }
+  public bool IsLegacy { get; set; }
+  public List<long> GoodsId { get; set; }
+  public long DisplayOrder { get; set; }
+  public string SalePeriodFrom { get; set; }
+  public string SalePeriodTo { get; set; }
+  public long PurchaseCooltimeMin { get; set; }
+  public long PurchaseCountLimit { get; set; }
+  public SCHALE.Common.FlatData.PurchaseCountResetType PurchaseCountResetType { get; set; }
+  public string BuyReportEventName { get; set; }
+  public bool RestrictBuyWhenInventoryFull { get; set; }
+  public SCHALE.Common.FlatData.ProductDisplayTag DisplayTag { get; set; }
+  public int ShopUpdateGroupId { get; set; }
+
+  public ShopExcelT() {
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.CategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.IsLegacy = false;
+    this.GoodsId = null;
+    this.DisplayOrder = 0;
+    this.SalePeriodFrom = null;
+    this.SalePeriodTo = null;
+    this.PurchaseCooltimeMin = 0;
+    this.PurchaseCountLimit = 0;
+    this.PurchaseCountResetType = SCHALE.Common.FlatData.PurchaseCountResetType.None;
+    this.BuyReportEventName = null;
+    this.RestrictBuyWhenInventoryFull = false;
+    this.DisplayTag = SCHALE.Common.FlatData.ProductDisplayTag.None;
+    this.ShopUpdateGroupId = 0;
   }
 }
 

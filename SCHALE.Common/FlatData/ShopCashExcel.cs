@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopCashExcel : IFlatbufferObject
@@ -121,6 +122,98 @@ public struct ShopCashExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopCashExcel> EndShopCashExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopCashExcel>(o);
+  }
+  public ShopCashExcelT UnPack() {
+    var _o = new ShopCashExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopCashExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopCash");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CashProductId = TableEncryptionService.Convert(this.CashProductId, key);
+    _o.PackageType = TableEncryptionService.Convert(this.PackageType, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.RenewalDisplayOrder = TableEncryptionService.Convert(this.RenewalDisplayOrder, key);
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.DisplayTag = TableEncryptionService.Convert(this.DisplayTag, key);
+    _o.SalePeriodFrom = TableEncryptionService.Convert(this.SalePeriodFrom, key);
+    _o.SalePeriodTo = TableEncryptionService.Convert(this.SalePeriodTo, key);
+    _o.PeriodTag = TableEncryptionService.Convert(this.PeriodTag, key);
+    _o.AccountLevelLimit = TableEncryptionService.Convert(this.AccountLevelLimit, key);
+    _o.AccountLevelHide = TableEncryptionService.Convert(this.AccountLevelHide, key);
+    _o.ClearMissionLimit = TableEncryptionService.Convert(this.ClearMissionLimit, key);
+    _o.ClearMissionHide = TableEncryptionService.Convert(this.ClearMissionHide, key);
+    _o.PurchaseReportEventName = TableEncryptionService.Convert(this.PurchaseReportEventName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopCashExcel> Pack(FlatBufferBuilder builder, ShopCashExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopCashExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _SalePeriodFrom = _o.SalePeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodFrom);
+    var _SalePeriodTo = _o.SalePeriodTo == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodTo);
+    var _PurchaseReportEventName = _o.PurchaseReportEventName == null ? default(StringOffset) : builder.CreateString(_o.PurchaseReportEventName);
+    return CreateShopCashExcel(
+      builder,
+      _o.Id,
+      _o.CashProductId,
+      _o.PackageType,
+      _o.LocalizeEtcId,
+      _IconPath,
+      _o.DisplayOrder,
+      _o.RenewalDisplayOrder,
+      _o.CategoryType,
+      _o.DisplayTag,
+      _SalePeriodFrom,
+      _SalePeriodTo,
+      _o.PeriodTag,
+      _o.AccountLevelLimit,
+      _o.AccountLevelHide,
+      _o.ClearMissionLimit,
+      _o.ClearMissionHide,
+      _PurchaseReportEventName);
+  }
+}
+
+public class ShopCashExcelT
+{
+  public long Id { get; set; }
+  public long CashProductId { get; set; }
+  public SCHALE.Common.FlatData.PurchaseSourceType PackageType { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string IconPath { get; set; }
+  public long DisplayOrder { get; set; }
+  public long RenewalDisplayOrder { get; set; }
+  public SCHALE.Common.FlatData.ProductCategory CategoryType { get; set; }
+  public SCHALE.Common.FlatData.ProductDisplayTag DisplayTag { get; set; }
+  public string SalePeriodFrom { get; set; }
+  public string SalePeriodTo { get; set; }
+  public bool PeriodTag { get; set; }
+  public long AccountLevelLimit { get; set; }
+  public bool AccountLevelHide { get; set; }
+  public long ClearMissionLimit { get; set; }
+  public bool ClearMissionHide { get; set; }
+  public string PurchaseReportEventName { get; set; }
+
+  public ShopCashExcelT() {
+    this.Id = 0;
+    this.CashProductId = 0;
+    this.PackageType = SCHALE.Common.FlatData.PurchaseSourceType.None;
+    this.LocalizeEtcId = 0;
+    this.IconPath = null;
+    this.DisplayOrder = 0;
+    this.RenewalDisplayOrder = 0;
+    this.CategoryType = SCHALE.Common.FlatData.ProductCategory.None;
+    this.DisplayTag = SCHALE.Common.FlatData.ProductDisplayTag.None;
+    this.SalePeriodFrom = null;
+    this.SalePeriodTo = null;
+    this.PeriodTag = false;
+    this.AccountLevelLimit = 0;
+    this.AccountLevelHide = false;
+    this.ClearMissionLimit = 0;
+    this.ClearMissionHide = false;
+    this.PurchaseReportEventName = null;
   }
 }
 

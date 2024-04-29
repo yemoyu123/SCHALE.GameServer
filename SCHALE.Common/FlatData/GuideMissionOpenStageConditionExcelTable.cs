@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GuideMissionOpenStageConditionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct GuideMissionOpenStageConditionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelTable> EndGuideMissionOpenStageConditionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelTable>(o);
+  }
+  public GuideMissionOpenStageConditionExcelTableT UnPack() {
+    var _o = new GuideMissionOpenStageConditionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GuideMissionOpenStageConditionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GuideMissionOpenStageConditionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelTable> Pack(FlatBufferBuilder builder, GuideMissionOpenStageConditionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateGuideMissionOpenStageConditionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class GuideMissionOpenStageConditionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.GuideMissionOpenStageConditionExcelT> DataList { get; set; }
+
+  public GuideMissionOpenStageConditionExcelTableT() {
+    this.DataList = null;
   }
 }
 

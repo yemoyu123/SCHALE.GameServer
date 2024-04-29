@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestGroupBuffExcel : IFlatbufferObject
@@ -63,6 +64,49 @@ public struct ConquestGroupBuffExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestGroupBuffExcel> EndConquestGroupBuffExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestGroupBuffExcel>(o);
+  }
+  public ConquestGroupBuffExcelT UnPack() {
+    var _o = new ConquestGroupBuffExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestGroupBuffExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestGroupBuff");
+    _o.ConquestBuffId = TableEncryptionService.Convert(this.ConquestBuffId, key);
+    _o.School_ = new List<SCHALE.Common.FlatData.School>();
+    for (var _j = 0; _j < this.School_Length; ++_j) {_o.School_.Add(TableEncryptionService.Convert(this.School_(_j), key));}
+    _o.RecommandLocalizeEtcId = TableEncryptionService.Convert(this.RecommandLocalizeEtcId, key);
+    _o.SkillGroupId = TableEncryptionService.Convert(this.SkillGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestGroupBuffExcel> Pack(FlatBufferBuilder builder, ConquestGroupBuffExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestGroupBuffExcel>);
+    var _School_ = default(VectorOffset);
+    if (_o.School_ != null) {
+      var __School_ = _o.School_.ToArray();
+      _School_ = CreateSchool_Vector(builder, __School_);
+    }
+    var _SkillGroupId = _o.SkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.SkillGroupId);
+    return CreateConquestGroupBuffExcel(
+      builder,
+      _o.ConquestBuffId,
+      _School_,
+      _o.RecommandLocalizeEtcId,
+      _SkillGroupId);
+  }
+}
+
+public class ConquestGroupBuffExcelT
+{
+  public long ConquestBuffId { get; set; }
+  public List<SCHALE.Common.FlatData.School> School_ { get; set; }
+  public uint RecommandLocalizeEtcId { get; set; }
+  public string SkillGroupId { get; set; }
+
+  public ConquestGroupBuffExcelT() {
+    this.ConquestBuffId = 0;
+    this.School_ = null;
+    this.RecommandLocalizeEtcId = 0;
+    this.SkillGroupId = null;
   }
 }
 

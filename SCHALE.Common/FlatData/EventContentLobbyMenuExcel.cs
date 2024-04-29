@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentLobbyMenuExcel : IFlatbufferObject
@@ -79,6 +80,61 @@ public struct EventContentLobbyMenuExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentLobbyMenuExcel> EndEventContentLobbyMenuExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentLobbyMenuExcel>(o);
+  }
+  public EventContentLobbyMenuExcelT UnPack() {
+    var _o = new EventContentLobbyMenuExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentLobbyMenuExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentLobbyMenu");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentType = TableEncryptionService.Convert(this.EventContentType, key);
+    _o.IconSpriteName = TableEncryptionService.Convert(this.IconSpriteName, key);
+    _o.ButtonText = TableEncryptionService.Convert(this.ButtonText, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.IconOffsetX = TableEncryptionService.Convert(this.IconOffsetX, key);
+    _o.IconOffsetY = TableEncryptionService.Convert(this.IconOffsetY, key);
+    _o.ReddotSpriteName = TableEncryptionService.Convert(this.ReddotSpriteName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentLobbyMenuExcel> Pack(FlatBufferBuilder builder, EventContentLobbyMenuExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentLobbyMenuExcel>);
+    var _IconSpriteName = _o.IconSpriteName == null ? default(StringOffset) : builder.CreateString(_o.IconSpriteName);
+    var _ButtonText = _o.ButtonText == null ? default(StringOffset) : builder.CreateString(_o.ButtonText);
+    var _ReddotSpriteName = _o.ReddotSpriteName == null ? default(StringOffset) : builder.CreateString(_o.ReddotSpriteName);
+    return CreateEventContentLobbyMenuExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentType,
+      _IconSpriteName,
+      _ButtonText,
+      _o.DisplayOrder,
+      _o.IconOffsetX,
+      _o.IconOffsetY,
+      _ReddotSpriteName);
+  }
+}
+
+public class EventContentLobbyMenuExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentType EventContentType { get; set; }
+  public string IconSpriteName { get; set; }
+  public string ButtonText { get; set; }
+  public int DisplayOrder { get; set; }
+  public float IconOffsetX { get; set; }
+  public float IconOffsetY { get; set; }
+  public string ReddotSpriteName { get; set; }
+
+  public EventContentLobbyMenuExcelT() {
+    this.EventContentId = 0;
+    this.EventContentType = SCHALE.Common.FlatData.EventContentType.Stage;
+    this.IconSpriteName = null;
+    this.ButtonText = null;
+    this.DisplayOrder = 0;
+    this.IconOffsetX = 0.0f;
+    this.IconOffsetY = 0.0f;
+    this.ReddotSpriteName = null;
   }
 }
 

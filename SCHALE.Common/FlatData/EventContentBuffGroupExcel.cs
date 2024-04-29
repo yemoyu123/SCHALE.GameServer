@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBuffGroupExcel : IFlatbufferObject
@@ -127,6 +128,89 @@ public struct EventContentBuffGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBuffGroupExcel> EndEventContentBuffGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBuffGroupExcel>(o);
+  }
+  public EventContentBuffGroupExcelT UnPack() {
+    var _o = new EventContentBuffGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBuffGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBuffGroup");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.BuffContentId = TableEncryptionService.Convert(this.BuffContentId, key);
+    _o.BuffGroupId = TableEncryptionService.Convert(this.BuffGroupId, key);
+    _o.BuffGroupNameLocalizeCodeId = TableEncryptionService.Convert(this.BuffGroupNameLocalizeCodeId, key);
+    _o.EventContentBuffId1 = TableEncryptionService.Convert(this.EventContentBuffId1, key);
+    _o.BuffNameLocalizeCodeId1 = TableEncryptionService.Convert(this.BuffNameLocalizeCodeId1, key);
+    _o.BuffDescriptionIconPath1 = TableEncryptionService.Convert(this.BuffDescriptionIconPath1, key);
+    _o.EventContentBuffId2 = TableEncryptionService.Convert(this.EventContentBuffId2, key);
+    _o.BuffNameLocalizeCodeId2 = TableEncryptionService.Convert(this.BuffNameLocalizeCodeId2, key);
+    _o.BuffDescriptionIconPath2 = TableEncryptionService.Convert(this.BuffDescriptionIconPath2, key);
+    _o.EventContentDebuffId = TableEncryptionService.Convert(this.EventContentDebuffId, key);
+    _o.DebuffNameLocalizeCodeId = TableEncryptionService.Convert(this.DebuffNameLocalizeCodeId, key);
+    _o.DeBuffDescriptionIconPath = TableEncryptionService.Convert(this.DeBuffDescriptionIconPath, key);
+    _o.BuffGroupProb = TableEncryptionService.Convert(this.BuffGroupProb, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBuffGroupExcel> Pack(FlatBufferBuilder builder, EventContentBuffGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBuffGroupExcel>);
+    var _BuffGroupNameLocalizeCodeId = _o.BuffGroupNameLocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.BuffGroupNameLocalizeCodeId);
+    var _BuffNameLocalizeCodeId1 = _o.BuffNameLocalizeCodeId1 == null ? default(StringOffset) : builder.CreateString(_o.BuffNameLocalizeCodeId1);
+    var _BuffDescriptionIconPath1 = _o.BuffDescriptionIconPath1 == null ? default(StringOffset) : builder.CreateString(_o.BuffDescriptionIconPath1);
+    var _BuffNameLocalizeCodeId2 = _o.BuffNameLocalizeCodeId2 == null ? default(StringOffset) : builder.CreateString(_o.BuffNameLocalizeCodeId2);
+    var _BuffDescriptionIconPath2 = _o.BuffDescriptionIconPath2 == null ? default(StringOffset) : builder.CreateString(_o.BuffDescriptionIconPath2);
+    var _DebuffNameLocalizeCodeId = _o.DebuffNameLocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.DebuffNameLocalizeCodeId);
+    var _DeBuffDescriptionIconPath = _o.DeBuffDescriptionIconPath == null ? default(StringOffset) : builder.CreateString(_o.DeBuffDescriptionIconPath);
+    return CreateEventContentBuffGroupExcel(
+      builder,
+      _o.EventContentId,
+      _o.BuffContentId,
+      _o.BuffGroupId,
+      _BuffGroupNameLocalizeCodeId,
+      _o.EventContentBuffId1,
+      _BuffNameLocalizeCodeId1,
+      _BuffDescriptionIconPath1,
+      _o.EventContentBuffId2,
+      _BuffNameLocalizeCodeId2,
+      _BuffDescriptionIconPath2,
+      _o.EventContentDebuffId,
+      _DebuffNameLocalizeCodeId,
+      _DeBuffDescriptionIconPath,
+      _o.BuffGroupProb);
+  }
+}
+
+public class EventContentBuffGroupExcelT
+{
+  public long EventContentId { get; set; }
+  public long BuffContentId { get; set; }
+  public long BuffGroupId { get; set; }
+  public string BuffGroupNameLocalizeCodeId { get; set; }
+  public long EventContentBuffId1 { get; set; }
+  public string BuffNameLocalizeCodeId1 { get; set; }
+  public string BuffDescriptionIconPath1 { get; set; }
+  public long EventContentBuffId2 { get; set; }
+  public string BuffNameLocalizeCodeId2 { get; set; }
+  public string BuffDescriptionIconPath2 { get; set; }
+  public long EventContentDebuffId { get; set; }
+  public string DebuffNameLocalizeCodeId { get; set; }
+  public string DeBuffDescriptionIconPath { get; set; }
+  public long BuffGroupProb { get; set; }
+
+  public EventContentBuffGroupExcelT() {
+    this.EventContentId = 0;
+    this.BuffContentId = 0;
+    this.BuffGroupId = 0;
+    this.BuffGroupNameLocalizeCodeId = null;
+    this.EventContentBuffId1 = 0;
+    this.BuffNameLocalizeCodeId1 = null;
+    this.BuffDescriptionIconPath1 = null;
+    this.EventContentBuffId2 = 0;
+    this.BuffNameLocalizeCodeId2 = null;
+    this.BuffDescriptionIconPath2 = null;
+    this.EventContentDebuffId = 0;
+    this.DebuffNameLocalizeCodeId = null;
+    this.DeBuffDescriptionIconPath = null;
+    this.BuffGroupProb = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidStageRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct WorldRaidStageRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidStageRewardExcelTable> EndWorldRaidStageRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidStageRewardExcelTable>(o);
+  }
+  public WorldRaidStageRewardExcelTableT UnPack() {
+    var _o = new WorldRaidStageRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidStageRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidStageRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.WorldRaidStageRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidStageRewardExcelTable> Pack(FlatBufferBuilder builder, WorldRaidStageRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidStageRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.WorldRaidStageRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.WorldRaidStageRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateWorldRaidStageRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class WorldRaidStageRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.WorldRaidStageRewardExcelT> DataList { get; set; }
+
+  public WorldRaidStageRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

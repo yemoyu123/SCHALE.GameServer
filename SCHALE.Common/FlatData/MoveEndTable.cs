@@ -7,40 +7,76 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
-public struct MoveEnd : IFlatbufferObject
+public struct MoveEndTable : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
   public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_24_3_25(); }
-  public static MoveEnd GetRootAsMoveEndTable(ByteBuffer _bb) { return GetRootAsMoveEndTable(_bb, new MoveEnd()); }
-  public static MoveEnd GetRootAsMoveEndTable(ByteBuffer _bb, MoveEnd obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public static MoveEndTable GetRootAsMoveEndTable(ByteBuffer _bb) { return GetRootAsMoveEndTable(_bb, new MoveEndTable()); }
+  public static MoveEndTable GetRootAsMoveEndTable(ByteBuffer _bb, MoveEndTable obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
-  public MoveEnd __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public MoveEndTable __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public SCHALE.Common.FlatData.Motion? Normal { get { int o = __p.__offset(4); return o != 0 ? (SCHALE.Common.FlatData.Motion?)(new SCHALE.Common.FlatData.Motion()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
   public SCHALE.Common.FlatData.Motion? Stand { get { int o = __p.__offset(6); return o != 0 ? (SCHALE.Common.FlatData.Motion?)(new SCHALE.Common.FlatData.Motion()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
   public SCHALE.Common.FlatData.Motion? Kneel { get { int o = __p.__offset(8); return o != 0 ? (SCHALE.Common.FlatData.Motion?)(new SCHALE.Common.FlatData.Motion()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
 
-  public static Offset<SCHALE.Common.FlatData.MoveEnd> CreateMoveEndTable(FlatBufferBuilder builder,
+  public static Offset<SCHALE.Common.FlatData.MoveEndTable> CreateMoveEndTable(FlatBufferBuilder builder,
       Offset<SCHALE.Common.FlatData.Motion> NormalOffset = default(Offset<SCHALE.Common.FlatData.Motion>),
       Offset<SCHALE.Common.FlatData.Motion> StandOffset = default(Offset<SCHALE.Common.FlatData.Motion>),
       Offset<SCHALE.Common.FlatData.Motion> KneelOffset = default(Offset<SCHALE.Common.FlatData.Motion>)) {
     builder.StartTable(3);
-    MoveEnd.AddKneel(builder, KneelOffset);
-    MoveEnd.AddStand(builder, StandOffset);
-    MoveEnd.AddNormal(builder, NormalOffset);
-    return MoveEnd.EndMoveEndTable(builder);
+    MoveEndTable.AddKneel(builder, KneelOffset);
+    MoveEndTable.AddStand(builder, StandOffset);
+    MoveEndTable.AddNormal(builder, NormalOffset);
+    return MoveEndTable.EndMoveEndTable(builder);
   }
 
   public static void StartMoveEndTable(FlatBufferBuilder builder) { builder.StartTable(3); }
   public static void AddNormal(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.Motion> normalOffset) { builder.AddOffset(0, normalOffset.Value, 0); }
   public static void AddStand(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.Motion> standOffset) { builder.AddOffset(1, standOffset.Value, 0); }
   public static void AddKneel(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.Motion> kneelOffset) { builder.AddOffset(2, kneelOffset.Value, 0); }
-  public static Offset<SCHALE.Common.FlatData.MoveEnd> EndMoveEndTable(FlatBufferBuilder builder) {
+  public static Offset<SCHALE.Common.FlatData.MoveEndTable> EndMoveEndTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
-    return new Offset<SCHALE.Common.FlatData.MoveEnd>(o);
+    return new Offset<SCHALE.Common.FlatData.MoveEndTable>(o);
+  }
+  public MoveEndTableT UnPack() {
+    var _o = new MoveEndTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MoveEndTableT _o) {
+		byte[] key = { 0 };
+    _o.Normal = this.Normal.HasValue ? this.Normal.Value.UnPack() : null;
+    _o.Stand = this.Stand.HasValue ? this.Stand.Value.UnPack() : null;
+    _o.Kneel = this.Kneel.HasValue ? this.Kneel.Value.UnPack() : null;
+  }
+  public static Offset<SCHALE.Common.FlatData.MoveEndTable> Pack(FlatBufferBuilder builder, MoveEndTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MoveEndTable>);
+    var _Normal = _o.Normal == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.Normal);
+    var _Stand = _o.Stand == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.Stand);
+    var _Kneel = _o.Kneel == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.Kneel);
+    return CreateMoveEndTable(
+      builder,
+      _Normal,
+      _Stand,
+      _Kneel);
+  }
+}
+
+public class MoveEndTableT
+{
+  public SCHALE.Common.FlatData.MotionT Normal { get; set; }
+  public SCHALE.Common.FlatData.MotionT Stand { get; set; }
+  public SCHALE.Common.FlatData.MotionT Kneel { get; set; }
+
+  public MoveEndTableT() {
+    this.Normal = null;
+    this.Stand = null;
+    this.Kneel = null;
   }
 }
 

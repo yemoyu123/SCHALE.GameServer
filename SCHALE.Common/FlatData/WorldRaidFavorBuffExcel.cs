@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidFavorBuffExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct WorldRaidFavorBuffExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidFavorBuffExcel> EndWorldRaidFavorBuffExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidFavorBuffExcel>(o);
+  }
+  public WorldRaidFavorBuffExcelT UnPack() {
+    var _o = new WorldRaidFavorBuffExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidFavorBuffExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidFavorBuff");
+    _o.WorldRaidFavorRank = TableEncryptionService.Convert(this.WorldRaidFavorRank, key);
+    _o.WorldRaidFavorRankBonus = TableEncryptionService.Convert(this.WorldRaidFavorRankBonus, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidFavorBuffExcel> Pack(FlatBufferBuilder builder, WorldRaidFavorBuffExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidFavorBuffExcel>);
+    return CreateWorldRaidFavorBuffExcel(
+      builder,
+      _o.WorldRaidFavorRank,
+      _o.WorldRaidFavorRankBonus);
+  }
+}
+
+public class WorldRaidFavorBuffExcelT
+{
+  public long WorldRaidFavorRank { get; set; }
+  public long WorldRaidFavorRankBonus { get; set; }
+
+  public WorldRaidFavorBuffExcelT() {
+    this.WorldRaidFavorRank = 0;
+    this.WorldRaidFavorRankBonus = 0;
   }
 }
 

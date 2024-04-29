@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyLocationExcel : IFlatbufferObject
@@ -101,6 +102,76 @@ public struct AcademyLocationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyLocationExcel> EndAcademyLocationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyLocationExcel>(o);
+  }
+  public AcademyLocationExcelT UnPack() {
+    var _o = new AcademyLocationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyLocationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyLocation");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.PrefabPath = TableEncryptionService.Convert(this.PrefabPath, key);
+    _o.IconImagePath = TableEncryptionService.Convert(this.IconImagePath, key);
+    _o.OpenCondition = new List<SCHALE.Common.FlatData.School>();
+    for (var _j = 0; _j < this.OpenConditionLength; ++_j) {_o.OpenCondition.Add(TableEncryptionService.Convert(this.OpenCondition(_j), key));}
+    _o.OpenConditionCount = new List<long>();
+    for (var _j = 0; _j < this.OpenConditionCountLength; ++_j) {_o.OpenConditionCount.Add(TableEncryptionService.Convert(this.OpenConditionCount(_j), key));}
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.OpenTeacherRank = TableEncryptionService.Convert(this.OpenTeacherRank, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyLocationExcel> Pack(FlatBufferBuilder builder, AcademyLocationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyLocationExcel>);
+    var _PrefabPath = _o.PrefabPath == null ? default(StringOffset) : builder.CreateString(_o.PrefabPath);
+    var _IconImagePath = _o.IconImagePath == null ? default(StringOffset) : builder.CreateString(_o.IconImagePath);
+    var _OpenCondition = default(VectorOffset);
+    if (_o.OpenCondition != null) {
+      var __OpenCondition = _o.OpenCondition.ToArray();
+      _OpenCondition = CreateOpenConditionVector(builder, __OpenCondition);
+    }
+    var _OpenConditionCount = default(VectorOffset);
+    if (_o.OpenConditionCount != null) {
+      var __OpenConditionCount = _o.OpenConditionCount.ToArray();
+      _OpenConditionCount = CreateOpenConditionCountVector(builder, __OpenConditionCount);
+    }
+    return CreateAcademyLocationExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _PrefabPath,
+      _IconImagePath,
+      _OpenCondition,
+      _OpenConditionCount,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.OpenTeacherRank);
+  }
+}
+
+public class AcademyLocationExcelT
+{
+  public long Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string PrefabPath { get; set; }
+  public string IconImagePath { get; set; }
+  public List<SCHALE.Common.FlatData.School> OpenCondition { get; set; }
+  public List<long> OpenConditionCount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long OpenTeacherRank { get; set; }
+
+  public AcademyLocationExcelT() {
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.PrefabPath = null;
+    this.IconImagePath = null;
+    this.OpenCondition = null;
+    this.OpenConditionCount = null;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.OpenTeacherRank = 0;
   }
 }
 

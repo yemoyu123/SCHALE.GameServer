@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidSeasonManageExcel : IFlatbufferObject
@@ -185,6 +186,130 @@ public struct EliminateRaidSeasonManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel> EndEliminateRaidSeasonManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel>(o);
+  }
+  public EliminateRaidSeasonManageExcelT UnPack() {
+    var _o = new EliminateRaidSeasonManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidSeasonManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidSeasonManage");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.SeasonDisplay = TableEncryptionService.Convert(this.SeasonDisplay, key);
+    _o.SeasonStartData = TableEncryptionService.Convert(this.SeasonStartData, key);
+    _o.SeasonEndData = TableEncryptionService.Convert(this.SeasonEndData, key);
+    _o.SettlementEndDate = TableEncryptionService.Convert(this.SettlementEndDate, key);
+    _o.LobbyTableBGPath = TableEncryptionService.Convert(this.LobbyTableBGPath, key);
+    _o.LobbyScreenBGPath = TableEncryptionService.Convert(this.LobbyScreenBGPath, key);
+    _o.OpenRaidBossGroup01 = TableEncryptionService.Convert(this.OpenRaidBossGroup01, key);
+    _o.OpenRaidBossGroup02 = TableEncryptionService.Convert(this.OpenRaidBossGroup02, key);
+    _o.OpenRaidBossGroup03 = TableEncryptionService.Convert(this.OpenRaidBossGroup03, key);
+    _o.RankingRewardGroupId = TableEncryptionService.Convert(this.RankingRewardGroupId, key);
+    _o.MaxSeasonRewardGauage = TableEncryptionService.Convert(this.MaxSeasonRewardGauage, key);
+    _o.StackedSeasonRewardGauge = new List<long>();
+    for (var _j = 0; _j < this.StackedSeasonRewardGaugeLength; ++_j) {_o.StackedSeasonRewardGauge.Add(TableEncryptionService.Convert(this.StackedSeasonRewardGauge(_j), key));}
+    _o.SeasonRewardId = new List<long>();
+    for (var _j = 0; _j < this.SeasonRewardIdLength; ++_j) {_o.SeasonRewardId.Add(TableEncryptionService.Convert(this.SeasonRewardId(_j), key));}
+    _o.LimitedRewardIdNormal = TableEncryptionService.Convert(this.LimitedRewardIdNormal, key);
+    _o.LimitedRewardIdHard = TableEncryptionService.Convert(this.LimitedRewardIdHard, key);
+    _o.LimitedRewardIdVeryhard = TableEncryptionService.Convert(this.LimitedRewardIdVeryhard, key);
+    _o.LimitedRewardIdHardcore = TableEncryptionService.Convert(this.LimitedRewardIdHardcore, key);
+    _o.LimitedRewardIdExtreme = TableEncryptionService.Convert(this.LimitedRewardIdExtreme, key);
+    _o.LimitedRewardIdInsane = TableEncryptionService.Convert(this.LimitedRewardIdInsane, key);
+    _o.LimitedRewardIdTorment = TableEncryptionService.Convert(this.LimitedRewardIdTorment, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel> Pack(FlatBufferBuilder builder, EliminateRaidSeasonManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidSeasonManageExcel>);
+    var _SeasonStartData = _o.SeasonStartData == null ? default(StringOffset) : builder.CreateString(_o.SeasonStartData);
+    var _SeasonEndData = _o.SeasonEndData == null ? default(StringOffset) : builder.CreateString(_o.SeasonEndData);
+    var _SettlementEndDate = _o.SettlementEndDate == null ? default(StringOffset) : builder.CreateString(_o.SettlementEndDate);
+    var _LobbyTableBGPath = _o.LobbyTableBGPath == null ? default(StringOffset) : builder.CreateString(_o.LobbyTableBGPath);
+    var _LobbyScreenBGPath = _o.LobbyScreenBGPath == null ? default(StringOffset) : builder.CreateString(_o.LobbyScreenBGPath);
+    var _OpenRaidBossGroup01 = _o.OpenRaidBossGroup01 == null ? default(StringOffset) : builder.CreateString(_o.OpenRaidBossGroup01);
+    var _OpenRaidBossGroup02 = _o.OpenRaidBossGroup02 == null ? default(StringOffset) : builder.CreateString(_o.OpenRaidBossGroup02);
+    var _OpenRaidBossGroup03 = _o.OpenRaidBossGroup03 == null ? default(StringOffset) : builder.CreateString(_o.OpenRaidBossGroup03);
+    var _StackedSeasonRewardGauge = default(VectorOffset);
+    if (_o.StackedSeasonRewardGauge != null) {
+      var __StackedSeasonRewardGauge = _o.StackedSeasonRewardGauge.ToArray();
+      _StackedSeasonRewardGauge = CreateStackedSeasonRewardGaugeVector(builder, __StackedSeasonRewardGauge);
+    }
+    var _SeasonRewardId = default(VectorOffset);
+    if (_o.SeasonRewardId != null) {
+      var __SeasonRewardId = _o.SeasonRewardId.ToArray();
+      _SeasonRewardId = CreateSeasonRewardIdVector(builder, __SeasonRewardId);
+    }
+    return CreateEliminateRaidSeasonManageExcel(
+      builder,
+      _o.SeasonId,
+      _o.SeasonDisplay,
+      _SeasonStartData,
+      _SeasonEndData,
+      _SettlementEndDate,
+      _LobbyTableBGPath,
+      _LobbyScreenBGPath,
+      _OpenRaidBossGroup01,
+      _OpenRaidBossGroup02,
+      _OpenRaidBossGroup03,
+      _o.RankingRewardGroupId,
+      _o.MaxSeasonRewardGauage,
+      _StackedSeasonRewardGauge,
+      _SeasonRewardId,
+      _o.LimitedRewardIdNormal,
+      _o.LimitedRewardIdHard,
+      _o.LimitedRewardIdVeryhard,
+      _o.LimitedRewardIdHardcore,
+      _o.LimitedRewardIdExtreme,
+      _o.LimitedRewardIdInsane,
+      _o.LimitedRewardIdTorment);
+  }
+}
+
+public class EliminateRaidSeasonManageExcelT
+{
+  public long SeasonId { get; set; }
+  public long SeasonDisplay { get; set; }
+  public string SeasonStartData { get; set; }
+  public string SeasonEndData { get; set; }
+  public string SettlementEndDate { get; set; }
+  public string LobbyTableBGPath { get; set; }
+  public string LobbyScreenBGPath { get; set; }
+  public string OpenRaidBossGroup01 { get; set; }
+  public string OpenRaidBossGroup02 { get; set; }
+  public string OpenRaidBossGroup03 { get; set; }
+  public long RankingRewardGroupId { get; set; }
+  public int MaxSeasonRewardGauage { get; set; }
+  public List<long> StackedSeasonRewardGauge { get; set; }
+  public List<long> SeasonRewardId { get; set; }
+  public long LimitedRewardIdNormal { get; set; }
+  public long LimitedRewardIdHard { get; set; }
+  public long LimitedRewardIdVeryhard { get; set; }
+  public long LimitedRewardIdHardcore { get; set; }
+  public long LimitedRewardIdExtreme { get; set; }
+  public long LimitedRewardIdInsane { get; set; }
+  public long LimitedRewardIdTorment { get; set; }
+
+  public EliminateRaidSeasonManageExcelT() {
+    this.SeasonId = 0;
+    this.SeasonDisplay = 0;
+    this.SeasonStartData = null;
+    this.SeasonEndData = null;
+    this.SettlementEndDate = null;
+    this.LobbyTableBGPath = null;
+    this.LobbyScreenBGPath = null;
+    this.OpenRaidBossGroup01 = null;
+    this.OpenRaidBossGroup02 = null;
+    this.OpenRaidBossGroup03 = null;
+    this.RankingRewardGroupId = 0;
+    this.MaxSeasonRewardGauage = 0;
+    this.StackedSeasonRewardGauge = null;
+    this.SeasonRewardId = null;
+    this.LimitedRewardIdNormal = 0;
+    this.LimitedRewardIdHard = 0;
+    this.LimitedRewardIdVeryhard = 0;
+    this.LimitedRewardIdHardcore = 0;
+    this.LimitedRewardIdExtreme = 0;
+    this.LimitedRewardIdInsane = 0;
+    this.LimitedRewardIdTorment = 0;
   }
 }
 

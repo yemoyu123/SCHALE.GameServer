@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ObstacleStatExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ObstacleStatExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ObstacleStatExcelTable> EndObstacleStatExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ObstacleStatExcelTable>(o);
+  }
+  public ObstacleStatExcelTableT UnPack() {
+    var _o = new ObstacleStatExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ObstacleStatExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ObstacleStatExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ObstacleStatExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ObstacleStatExcelTable> Pack(FlatBufferBuilder builder, ObstacleStatExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ObstacleStatExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ObstacleStatExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ObstacleStatExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateObstacleStatExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ObstacleStatExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ObstacleStatExcelT> DataList { get; set; }
+
+  public ObstacleStatExcelTableT() {
+    this.DataList = null;
   }
 }
 

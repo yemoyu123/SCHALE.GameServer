@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameShootingStageRewardExcel : IFlatbufferObject
@@ -89,6 +90,68 @@ public struct MiniGameShootingStageRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameShootingStageRewardExcel> EndMiniGameShootingStageRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameShootingStageRewardExcel>(o);
+  }
+  public MiniGameShootingStageRewardExcelT UnPack() {
+    var _o = new MiniGameShootingStageRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameShootingStageRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameShootingStageReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.ClearSection = TableEncryptionService.Convert(this.ClearSection, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<int>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameShootingStageRewardExcel> Pack(FlatBufferBuilder builder, MiniGameShootingStageRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameShootingStageRewardExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateMiniGameShootingStageRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.RewardId,
+      _o.ClearSection,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class MiniGameShootingStageRewardExcelT
+{
+  public long GroupId { get; set; }
+  public long RewardId { get; set; }
+  public long ClearSection { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<int> RewardParcelAmount { get; set; }
+
+  public MiniGameShootingStageRewardExcelT() {
+    this.GroupId = 0;
+    this.RewardId = 0;
+    this.ClearSection = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

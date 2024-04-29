@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FurnitureTemplateElementExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct FurnitureTemplateElementExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FurnitureTemplateElementExcel> EndFurnitureTemplateElementExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FurnitureTemplateElementExcel>(o);
+  }
+  public FurnitureTemplateElementExcelT UnPack() {
+    var _o = new FurnitureTemplateElementExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FurnitureTemplateElementExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FurnitureTemplateElement");
+    _o.FurnitureTemplateId = TableEncryptionService.Convert(this.FurnitureTemplateId, key);
+    _o.FurnitureId = TableEncryptionService.Convert(this.FurnitureId, key);
+    _o.Location = TableEncryptionService.Convert(this.Location, key);
+    _o.PositionX = TableEncryptionService.Convert(this.PositionX, key);
+    _o.PositionY = TableEncryptionService.Convert(this.PositionY, key);
+    _o.Rotation = TableEncryptionService.Convert(this.Rotation, key);
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FurnitureTemplateElementExcel> Pack(FlatBufferBuilder builder, FurnitureTemplateElementExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FurnitureTemplateElementExcel>);
+    return CreateFurnitureTemplateElementExcel(
+      builder,
+      _o.FurnitureTemplateId,
+      _o.FurnitureId,
+      _o.Location,
+      _o.PositionX,
+      _o.PositionY,
+      _o.Rotation,
+      _o.Order);
+  }
+}
+
+public class FurnitureTemplateElementExcelT
+{
+  public long FurnitureTemplateId { get; set; }
+  public long FurnitureId { get; set; }
+  public SCHALE.Common.FlatData.FurnitureLocation Location { get; set; }
+  public float PositionX { get; set; }
+  public float PositionY { get; set; }
+  public float Rotation { get; set; }
+  public long Order { get; set; }
+
+  public FurnitureTemplateElementExcelT() {
+    this.FurnitureTemplateId = 0;
+    this.FurnitureId = 0;
+    this.Location = SCHALE.Common.FlatData.FurnitureLocation.None;
+    this.PositionX = 0.0f;
+    this.PositionY = 0.0f;
+    this.Rotation = 0.0f;
+    this.Order = 0;
   }
 }
 

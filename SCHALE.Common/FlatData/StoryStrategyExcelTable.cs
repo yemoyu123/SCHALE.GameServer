@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StoryStrategyExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct StoryStrategyExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StoryStrategyExcelTable> EndStoryStrategyExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StoryStrategyExcelTable>(o);
+  }
+  public StoryStrategyExcelTableT UnPack() {
+    var _o = new StoryStrategyExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StoryStrategyExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StoryStrategyExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.StoryStrategyExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.StoryStrategyExcelTable> Pack(FlatBufferBuilder builder, StoryStrategyExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StoryStrategyExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.StoryStrategyExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.StoryStrategyExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateStoryStrategyExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class StoryStrategyExcelTableT
+{
+  public List<SCHALE.Common.FlatData.StoryStrategyExcelT> DataList { get; set; }
+
+  public StoryStrategyExcelTableT() {
+    this.DataList = null;
   }
 }
 

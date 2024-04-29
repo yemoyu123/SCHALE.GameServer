@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CafeProductionExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct CafeProductionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CafeProductionExcel> EndCafeProductionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CafeProductionExcel>(o);
+  }
+  public CafeProductionExcelT UnPack() {
+    var _o = new CafeProductionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CafeProductionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CafeProduction");
+    _o.CafeId = TableEncryptionService.Convert(this.CafeId, key);
+    _o.Rank = TableEncryptionService.Convert(this.Rank, key);
+    _o.CafeProductionParcelType = TableEncryptionService.Convert(this.CafeProductionParcelType, key);
+    _o.CafeProductionParcelId = TableEncryptionService.Convert(this.CafeProductionParcelId, key);
+    _o.ParcelProductionCoefficient = TableEncryptionService.Convert(this.ParcelProductionCoefficient, key);
+    _o.ParcelProductionCorrectionValue = TableEncryptionService.Convert(this.ParcelProductionCorrectionValue, key);
+    _o.ParcelStorageMax = TableEncryptionService.Convert(this.ParcelStorageMax, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CafeProductionExcel> Pack(FlatBufferBuilder builder, CafeProductionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CafeProductionExcel>);
+    return CreateCafeProductionExcel(
+      builder,
+      _o.CafeId,
+      _o.Rank,
+      _o.CafeProductionParcelType,
+      _o.CafeProductionParcelId,
+      _o.ParcelProductionCoefficient,
+      _o.ParcelProductionCorrectionValue,
+      _o.ParcelStorageMax);
+  }
+}
+
+public class CafeProductionExcelT
+{
+  public long CafeId { get; set; }
+  public long Rank { get; set; }
+  public SCHALE.Common.FlatData.ParcelType CafeProductionParcelType { get; set; }
+  public long CafeProductionParcelId { get; set; }
+  public long ParcelProductionCoefficient { get; set; }
+  public long ParcelProductionCorrectionValue { get; set; }
+  public long ParcelStorageMax { get; set; }
+
+  public CafeProductionExcelT() {
+    this.CafeId = 0;
+    this.Rank = 0;
+    this.CafeProductionParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.CafeProductionParcelId = 0;
+    this.ParcelProductionCoefficient = 0;
+    this.ParcelProductionCorrectionValue = 0;
+    this.ParcelStorageMax = 0;
   }
 }
 

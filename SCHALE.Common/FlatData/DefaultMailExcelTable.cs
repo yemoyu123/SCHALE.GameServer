@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultMailExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct DefaultMailExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultMailExcelTable> EndDefaultMailExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultMailExcelTable>(o);
+  }
+  public DefaultMailExcelTableT UnPack() {
+    var _o = new DefaultMailExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultMailExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultMailExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.DefaultMailExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultMailExcelTable> Pack(FlatBufferBuilder builder, DefaultMailExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultMailExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.DefaultMailExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.DefaultMailExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateDefaultMailExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class DefaultMailExcelTableT
+{
+  public List<SCHALE.Common.FlatData.DefaultMailExcelT> DataList { get; set; }
+
+  public DefaultMailExcelTableT() {
+    this.DataList = null;
   }
 }
 

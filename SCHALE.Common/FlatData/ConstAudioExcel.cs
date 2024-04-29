@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstAudioExcel : IFlatbufferObject
@@ -69,6 +70,46 @@ public struct ConstAudioExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstAudioExcel> EndConstAudioExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstAudioExcel>(o);
+  }
+  public ConstAudioExcelT UnPack() {
+    var _o = new ConstAudioExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstAudioExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstAudio");
+    _o.DefaultSnapShotName = TableEncryptionService.Convert(this.DefaultSnapShotName, key);
+    _o.BattleSnapShotName = TableEncryptionService.Convert(this.BattleSnapShotName, key);
+    _o.RaidSnapShotName = TableEncryptionService.Convert(this.RaidSnapShotName, key);
+    _o.ExSkillCutInSnapShotName = TableEncryptionService.Convert(this.ExSkillCutInSnapShotName, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstAudioExcel> Pack(FlatBufferBuilder builder, ConstAudioExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstAudioExcel>);
+    var _DefaultSnapShotName = _o.DefaultSnapShotName == null ? default(StringOffset) : builder.CreateString(_o.DefaultSnapShotName);
+    var _BattleSnapShotName = _o.BattleSnapShotName == null ? default(StringOffset) : builder.CreateString(_o.BattleSnapShotName);
+    var _RaidSnapShotName = _o.RaidSnapShotName == null ? default(StringOffset) : builder.CreateString(_o.RaidSnapShotName);
+    var _ExSkillCutInSnapShotName = _o.ExSkillCutInSnapShotName == null ? default(StringOffset) : builder.CreateString(_o.ExSkillCutInSnapShotName);
+    return CreateConstAudioExcel(
+      builder,
+      _DefaultSnapShotName,
+      _BattleSnapShotName,
+      _RaidSnapShotName,
+      _ExSkillCutInSnapShotName);
+  }
+}
+
+public class ConstAudioExcelT
+{
+  public string DefaultSnapShotName { get; set; }
+  public string BattleSnapShotName { get; set; }
+  public string RaidSnapShotName { get; set; }
+  public string ExSkillCutInSnapShotName { get; set; }
+
+  public ConstAudioExcelT() {
+    this.DefaultSnapShotName = null;
+    this.BattleSnapShotName = null;
+    this.RaidSnapShotName = null;
+    this.ExSkillCutInSnapShotName = null;
   }
 }
 

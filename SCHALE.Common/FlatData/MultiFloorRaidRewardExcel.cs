@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MultiFloorRaidRewardExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct MultiFloorRaidRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MultiFloorRaidRewardExcel> EndMultiFloorRaidRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MultiFloorRaidRewardExcel>(o);
+  }
+  public MultiFloorRaidRewardExcelT UnPack() {
+    var _o = new MultiFloorRaidRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MultiFloorRaidRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MultiFloorRaidReward");
+    _o.RewardGroupId = TableEncryptionService.Convert(this.RewardGroupId, key);
+    _o.ClearStageRewardProb = TableEncryptionService.Convert(this.ClearStageRewardProb, key);
+    _o.ClearStageRewardParcelType = TableEncryptionService.Convert(this.ClearStageRewardParcelType, key);
+    _o.ClearStageRewardParcelUniqueID = TableEncryptionService.Convert(this.ClearStageRewardParcelUniqueID, key);
+    _o.ClearStageRewardAmount = TableEncryptionService.Convert(this.ClearStageRewardAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MultiFloorRaidRewardExcel> Pack(FlatBufferBuilder builder, MultiFloorRaidRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MultiFloorRaidRewardExcel>);
+    return CreateMultiFloorRaidRewardExcel(
+      builder,
+      _o.RewardGroupId,
+      _o.ClearStageRewardProb,
+      _o.ClearStageRewardParcelType,
+      _o.ClearStageRewardParcelUniqueID,
+      _o.ClearStageRewardAmount);
+  }
+}
+
+public class MultiFloorRaidRewardExcelT
+{
+  public long RewardGroupId { get; set; }
+  public long ClearStageRewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ClearStageRewardParcelType { get; set; }
+  public long ClearStageRewardParcelUniqueID { get; set; }
+  public long ClearStageRewardAmount { get; set; }
+
+  public MultiFloorRaidRewardExcelT() {
+    this.RewardGroupId = 0;
+    this.ClearStageRewardProb = 0;
+    this.ClearStageRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ClearStageRewardParcelUniqueID = 0;
+    this.ClearStageRewardAmount = 0;
   }
 }
 

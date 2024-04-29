@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticDamageSimulatorSettingExcel : IFlatbufferObject
@@ -101,6 +102,92 @@ public struct TacticDamageSimulatorSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel> EndTacticDamageSimulatorSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel>(o);
+  }
+  public TacticDamageSimulatorSettingExcelT UnPack() {
+    var _o = new TacticDamageSimulatorSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticDamageSimulatorSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticDamageSimulatorSetting");
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.Repeat = TableEncryptionService.Convert(this.Repeat, key);
+    _o.TestPreset = TableEncryptionService.Convert(this.TestPreset, key);
+    _o.TestBattleTime = TableEncryptionService.Convert(this.TestBattleTime, key);
+    _o.StrikerSquard = TableEncryptionService.Convert(this.StrikerSquard, key);
+    _o.SpecialSquard = TableEncryptionService.Convert(this.SpecialSquard, key);
+    _o.ReplaceCharacterCostRegen = TableEncryptionService.Convert(this.ReplaceCharacterCostRegen, key);
+    _o.ReplaceCostRegenValue = TableEncryptionService.Convert(this.ReplaceCostRegenValue, key);
+    _o.UseAutoSkill = TableEncryptionService.Convert(this.UseAutoSkill, key);
+    _o.OverrideStreetAdaptation = TableEncryptionService.Convert(this.OverrideStreetAdaptation, key);
+    _o.OverrideOutdoorAdaptation = TableEncryptionService.Convert(this.OverrideOutdoorAdaptation, key);
+    _o.OverrideIndoorAdaptation = TableEncryptionService.Convert(this.OverrideIndoorAdaptation, key);
+    _o.ApplyOverrideAdaptation = TableEncryptionService.Convert(this.ApplyOverrideAdaptation, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.FixedCharacter = new List<long>();
+    for (var _j = 0; _j < this.FixedCharacterLength; ++_j) {_o.FixedCharacter.Add(TableEncryptionService.Convert(this.FixedCharacter(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel> Pack(FlatBufferBuilder builder, TacticDamageSimulatorSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel>);
+    var _FixedCharacter = default(VectorOffset);
+    if (_o.FixedCharacter != null) {
+      var __FixedCharacter = _o.FixedCharacter.ToArray();
+      _FixedCharacter = CreateFixedCharacterVector(builder, __FixedCharacter);
+    }
+    return CreateTacticDamageSimulatorSettingExcel(
+      builder,
+      _o.Order,
+      _o.Repeat,
+      _o.TestPreset,
+      _o.TestBattleTime,
+      _o.StrikerSquard,
+      _o.SpecialSquard,
+      _o.ReplaceCharacterCostRegen,
+      _o.ReplaceCostRegenValue,
+      _o.UseAutoSkill,
+      _o.OverrideStreetAdaptation,
+      _o.OverrideOutdoorAdaptation,
+      _o.OverrideIndoorAdaptation,
+      _o.ApplyOverrideAdaptation,
+      _o.GroundId,
+      _FixedCharacter);
+  }
+}
+
+public class TacticDamageSimulatorSettingExcelT
+{
+  public int Order { get; set; }
+  public int Repeat { get; set; }
+  public long TestPreset { get; set; }
+  public long TestBattleTime { get; set; }
+  public long StrikerSquard { get; set; }
+  public long SpecialSquard { get; set; }
+  public bool ReplaceCharacterCostRegen { get; set; }
+  public int ReplaceCostRegenValue { get; set; }
+  public bool UseAutoSkill { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat OverrideStreetAdaptation { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat OverrideOutdoorAdaptation { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat OverrideIndoorAdaptation { get; set; }
+  public bool ApplyOverrideAdaptation { get; set; }
+  public long GroundId { get; set; }
+  public List<long> FixedCharacter { get; set; }
+
+  public TacticDamageSimulatorSettingExcelT() {
+    this.Order = 0;
+    this.Repeat = 0;
+    this.TestPreset = 0;
+    this.TestBattleTime = 0;
+    this.StrikerSquard = 0;
+    this.SpecialSquard = 0;
+    this.ReplaceCharacterCostRegen = false;
+    this.ReplaceCostRegenValue = 0;
+    this.UseAutoSkill = false;
+    this.OverrideStreetAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.OverrideOutdoorAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.OverrideIndoorAdaptation = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.ApplyOverrideAdaptation = false;
+    this.GroundId = 0;
+    this.FixedCharacter = null;
   }
 }
 

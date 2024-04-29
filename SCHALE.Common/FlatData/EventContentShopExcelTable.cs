@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentShopExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentShopExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentShopExcelTable> EndEventContentShopExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentShopExcelTable>(o);
+  }
+  public EventContentShopExcelTableT UnPack() {
+    var _o = new EventContentShopExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentShopExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentShopExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentShopExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentShopExcelTable> Pack(FlatBufferBuilder builder, EventContentShopExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentShopExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentShopExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentShopExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentShopExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentShopExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentShopExcelT> DataList { get; set; }
+
+  public EventContentShopExcelTableT() {
+    this.DataList = null;
   }
 }
 

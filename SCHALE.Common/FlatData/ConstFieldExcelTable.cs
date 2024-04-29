@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstFieldExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ConstFieldExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstFieldExcelTable> EndConstFieldExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstFieldExcelTable>(o);
+  }
+  public ConstFieldExcelTableT UnPack() {
+    var _o = new ConstFieldExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstFieldExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstFieldExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ConstFieldExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstFieldExcelTable> Pack(FlatBufferBuilder builder, ConstFieldExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstFieldExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ConstFieldExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ConstFieldExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateConstFieldExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ConstFieldExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ConstFieldExcelT> DataList { get; set; }
+
+  public ConstFieldExcelTableT() {
+    this.DataList = null;
   }
 }
 

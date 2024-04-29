@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMeetupExcel : IFlatbufferObject
@@ -69,6 +70,60 @@ public struct EventContentMeetupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentMeetupExcel> EndEventContentMeetupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMeetupExcel>(o);
+  }
+  public EventContentMeetupExcelT UnPack() {
+    var _o = new EventContentMeetupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMeetupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMeetup");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.ConditionScenarioGroupId = TableEncryptionService.Convert(this.ConditionScenarioGroupId, key);
+    _o.ConditionType = TableEncryptionService.Convert(this.ConditionType, key);
+    _o.ConditionParameter = new List<long>();
+    for (var _j = 0; _j < this.ConditionParameterLength; ++_j) {_o.ConditionParameter.Add(TableEncryptionService.Convert(this.ConditionParameter(_j), key));}
+    _o.ConditionPrintType = TableEncryptionService.Convert(this.ConditionPrintType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMeetupExcel> Pack(FlatBufferBuilder builder, EventContentMeetupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMeetupExcel>);
+    var _ConditionParameter = default(VectorOffset);
+    if (_o.ConditionParameter != null) {
+      var __ConditionParameter = _o.ConditionParameter.ToArray();
+      _ConditionParameter = CreateConditionParameterVector(builder, __ConditionParameter);
+    }
+    return CreateEventContentMeetupExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.CharacterId,
+      _o.ConditionScenarioGroupId,
+      _o.ConditionType,
+      _ConditionParameter,
+      _o.ConditionPrintType);
+  }
+}
+
+public class EventContentMeetupExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public long CharacterId { get; set; }
+  public long ConditionScenarioGroupId { get; set; }
+  public SCHALE.Common.FlatData.MeetupConditionType ConditionType { get; set; }
+  public List<long> ConditionParameter { get; set; }
+  public SCHALE.Common.FlatData.MeetupConditionPrintType ConditionPrintType { get; set; }
+
+  public EventContentMeetupExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.CharacterId = 0;
+    this.ConditionScenarioGroupId = 0;
+    this.ConditionType = SCHALE.Common.FlatData.MeetupConditionType.None;
+    this.ConditionParameter = null;
+    this.ConditionPrintType = SCHALE.Common.FlatData.MeetupConditionPrintType.None;
   }
 }
 

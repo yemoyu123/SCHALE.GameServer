@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FurnitureTemplateExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct FurnitureTemplateExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FurnitureTemplateExcelTable> EndFurnitureTemplateExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FurnitureTemplateExcelTable>(o);
+  }
+  public FurnitureTemplateExcelTableT UnPack() {
+    var _o = new FurnitureTemplateExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FurnitureTemplateExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FurnitureTemplateExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.FurnitureTemplateExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.FurnitureTemplateExcelTable> Pack(FlatBufferBuilder builder, FurnitureTemplateExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FurnitureTemplateExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.FurnitureTemplateExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.FurnitureTemplateExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateFurnitureTemplateExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class FurnitureTemplateExcelTableT
+{
+  public List<SCHALE.Common.FlatData.FurnitureTemplateExcelT> DataList { get; set; }
+
+  public FurnitureTemplateExcelTableT() {
+    this.DataList = null;
   }
 }
 

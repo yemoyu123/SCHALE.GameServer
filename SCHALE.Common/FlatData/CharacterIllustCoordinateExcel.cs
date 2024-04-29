@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterIllustCoordinateExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct CharacterIllustCoordinateExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterIllustCoordinateExcel> EndCharacterIllustCoordinateExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterIllustCoordinateExcel>(o);
+  }
+  public CharacterIllustCoordinateExcelT UnPack() {
+    var _o = new CharacterIllustCoordinateExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterIllustCoordinateExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterIllustCoordinate");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CharacterBodyCenterX = TableEncryptionService.Convert(this.CharacterBodyCenterX, key);
+    _o.CharacterBodyCenterY = TableEncryptionService.Convert(this.CharacterBodyCenterY, key);
+    _o.DefaultScale = TableEncryptionService.Convert(this.DefaultScale, key);
+    _o.MinScale = TableEncryptionService.Convert(this.MinScale, key);
+    _o.MaxScale = TableEncryptionService.Convert(this.MaxScale, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterIllustCoordinateExcel> Pack(FlatBufferBuilder builder, CharacterIllustCoordinateExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterIllustCoordinateExcel>);
+    return CreateCharacterIllustCoordinateExcel(
+      builder,
+      _o.Id,
+      _o.CharacterBodyCenterX,
+      _o.CharacterBodyCenterY,
+      _o.DefaultScale,
+      _o.MinScale,
+      _o.MaxScale);
+  }
+}
+
+public class CharacterIllustCoordinateExcelT
+{
+  public long Id { get; set; }
+  public float CharacterBodyCenterX { get; set; }
+  public float CharacterBodyCenterY { get; set; }
+  public float DefaultScale { get; set; }
+  public float MinScale { get; set; }
+  public float MaxScale { get; set; }
+
+  public CharacterIllustCoordinateExcelT() {
+    this.Id = 0;
+    this.CharacterBodyCenterX = 0.0f;
+    this.CharacterBodyCenterY = 0.0f;
+    this.DefaultScale = 0.0f;
+    this.MinScale = 0.0f;
+    this.MaxScale = 0.0f;
   }
 }
 

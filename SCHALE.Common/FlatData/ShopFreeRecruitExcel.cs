@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopFreeRecruitExcel : IFlatbufferObject
@@ -83,6 +84,59 @@ public struct ShopFreeRecruitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopFreeRecruitExcel> EndShopFreeRecruitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopFreeRecruitExcel>(o);
+  }
+  public ShopFreeRecruitExcelT UnPack() {
+    var _o = new ShopFreeRecruitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopFreeRecruitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopFreeRecruit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.FreeRecruitPeriodFrom = TableEncryptionService.Convert(this.FreeRecruitPeriodFrom, key);
+    _o.FreeRecruitPeriodTo = TableEncryptionService.Convert(this.FreeRecruitPeriodTo, key);
+    _o.FreeRecruitType = TableEncryptionService.Convert(this.FreeRecruitType, key);
+    _o.FreeRecruitDecorationImagePath = TableEncryptionService.Convert(this.FreeRecruitDecorationImagePath, key);
+    _o.ShopRecruitId = new List<long>();
+    for (var _j = 0; _j < this.ShopRecruitIdLength; ++_j) {_o.ShopRecruitId.Add(TableEncryptionService.Convert(this.ShopRecruitId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopFreeRecruitExcel> Pack(FlatBufferBuilder builder, ShopFreeRecruitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopFreeRecruitExcel>);
+    var _FreeRecruitPeriodFrom = _o.FreeRecruitPeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.FreeRecruitPeriodFrom);
+    var _FreeRecruitPeriodTo = _o.FreeRecruitPeriodTo == null ? default(StringOffset) : builder.CreateString(_o.FreeRecruitPeriodTo);
+    var _FreeRecruitDecorationImagePath = _o.FreeRecruitDecorationImagePath == null ? default(StringOffset) : builder.CreateString(_o.FreeRecruitDecorationImagePath);
+    var _ShopRecruitId = default(VectorOffset);
+    if (_o.ShopRecruitId != null) {
+      var __ShopRecruitId = _o.ShopRecruitId.ToArray();
+      _ShopRecruitId = CreateShopRecruitIdVector(builder, __ShopRecruitId);
+    }
+    return CreateShopFreeRecruitExcel(
+      builder,
+      _o.Id,
+      _FreeRecruitPeriodFrom,
+      _FreeRecruitPeriodTo,
+      _o.FreeRecruitType,
+      _FreeRecruitDecorationImagePath,
+      _ShopRecruitId);
+  }
+}
+
+public class ShopFreeRecruitExcelT
+{
+  public long Id { get; set; }
+  public string FreeRecruitPeriodFrom { get; set; }
+  public string FreeRecruitPeriodTo { get; set; }
+  public SCHALE.Common.FlatData.ShopFreeRecruitType FreeRecruitType { get; set; }
+  public string FreeRecruitDecorationImagePath { get; set; }
+  public List<long> ShopRecruitId { get; set; }
+
+  public ShopFreeRecruitExcelT() {
+    this.Id = 0;
+    this.FreeRecruitPeriodFrom = null;
+    this.FreeRecruitPeriodTo = null;
+    this.FreeRecruitType = SCHALE.Common.FlatData.ShopFreeRecruitType.None;
+    this.FreeRecruitDecorationImagePath = null;
+    this.ShopRecruitId = null;
   }
 }
 

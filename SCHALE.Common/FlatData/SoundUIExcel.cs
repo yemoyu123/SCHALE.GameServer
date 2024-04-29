@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SoundUIExcel : IFlatbufferObject
@@ -53,6 +54,40 @@ public struct SoundUIExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SoundUIExcel> EndSoundUIExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SoundUIExcel>(o);
+  }
+  public SoundUIExcelT UnPack() {
+    var _o = new SoundUIExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SoundUIExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SoundUI");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.SoundUniqueId = TableEncryptionService.Convert(this.SoundUniqueId, key);
+    _o.Path = TableEncryptionService.Convert(this.Path, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SoundUIExcel> Pack(FlatBufferBuilder builder, SoundUIExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SoundUIExcel>);
+    var _SoundUniqueId = _o.SoundUniqueId == null ? default(StringOffset) : builder.CreateString(_o.SoundUniqueId);
+    var _Path = _o.Path == null ? default(StringOffset) : builder.CreateString(_o.Path);
+    return CreateSoundUIExcel(
+      builder,
+      _o.ID,
+      _SoundUniqueId,
+      _Path);
+  }
+}
+
+public class SoundUIExcelT
+{
+  public long ID { get; set; }
+  public string SoundUniqueId { get; set; }
+  public string Path { get; set; }
+
+  public SoundUIExcelT() {
+    this.ID = 0;
+    this.SoundUniqueId = null;
+    this.Path = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FavorLevelExcel : IFlatbufferObject
@@ -49,6 +50,40 @@ public struct FavorLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FavorLevelExcel> EndFavorLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FavorLevelExcel>(o);
+  }
+  public FavorLevelExcelT UnPack() {
+    var _o = new FavorLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FavorLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FavorLevel");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.ExpType = new List<long>();
+    for (var _j = 0; _j < this.ExpTypeLength; ++_j) {_o.ExpType.Add(TableEncryptionService.Convert(this.ExpType(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FavorLevelExcel> Pack(FlatBufferBuilder builder, FavorLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FavorLevelExcel>);
+    var _ExpType = default(VectorOffset);
+    if (_o.ExpType != null) {
+      var __ExpType = _o.ExpType.ToArray();
+      _ExpType = CreateExpTypeVector(builder, __ExpType);
+    }
+    return CreateFavorLevelExcel(
+      builder,
+      _o.Level,
+      _ExpType);
+  }
+}
+
+public class FavorLevelExcelT
+{
+  public long Level { get; set; }
+  public List<long> ExpType { get; set; }
+
+  public FavorLevelExcelT() {
+    this.Level = 0;
+    this.ExpType = null;
   }
 }
 

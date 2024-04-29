@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ClanRewardExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct ClanRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ClanRewardExcel> EndClanRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ClanRewardExcel>(o);
+  }
+  public ClanRewardExcelT UnPack() {
+    var _o = new ClanRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ClanRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ClanReward");
+    _o.ClanRewardType = TableEncryptionService.Convert(this.ClanRewardType, key);
+    _o.EchelonType = TableEncryptionService.Convert(this.EchelonType, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ClanRewardExcel> Pack(FlatBufferBuilder builder, ClanRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ClanRewardExcel>);
+    return CreateClanRewardExcel(
+      builder,
+      _o.ClanRewardType,
+      _o.EchelonType,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount);
+  }
+}
+
+public class ClanRewardExcelT
+{
+  public SCHALE.Common.FlatData.ClanRewardType ClanRewardType { get; set; }
+  public SCHALE.Common.FlatData.EchelonType EchelonType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+
+  public ClanRewardExcelT() {
+    this.ClanRewardType = SCHALE.Common.FlatData.ClanRewardType.None;
+    this.EchelonType = SCHALE.Common.FlatData.EchelonType.None;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
   }
 }
 

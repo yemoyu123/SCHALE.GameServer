@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonFindGiftRewardExcel : IFlatbufferObject
@@ -117,6 +118,86 @@ public struct WeekDungeonFindGiftRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonFindGiftRewardExcel> EndWeekDungeonFindGiftRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonFindGiftRewardExcel>(o);
+  }
+  public WeekDungeonFindGiftRewardExcelT UnPack() {
+    var _o = new WeekDungeonFindGiftRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonFindGiftRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeonFindGiftReward");
+    _o.StageRewardId = TableEncryptionService.Convert(this.StageRewardId, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+    _o.RewardParcelProbability = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelProbabilityLength; ++_j) {_o.RewardParcelProbability.Add(TableEncryptionService.Convert(this.RewardParcelProbability(_j), key));}
+    _o.DropItemModelPrefabPath = new List<string>();
+    for (var _j = 0; _j < this.DropItemModelPrefabPathLength; ++_j) {_o.DropItemModelPrefabPath.Add(TableEncryptionService.Convert(this.DropItemModelPrefabPath(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonFindGiftRewardExcel> Pack(FlatBufferBuilder builder, WeekDungeonFindGiftRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonFindGiftRewardExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    var _RewardParcelProbability = default(VectorOffset);
+    if (_o.RewardParcelProbability != null) {
+      var __RewardParcelProbability = _o.RewardParcelProbability.ToArray();
+      _RewardParcelProbability = CreateRewardParcelProbabilityVector(builder, __RewardParcelProbability);
+    }
+    var _DropItemModelPrefabPath = default(VectorOffset);
+    if (_o.DropItemModelPrefabPath != null) {
+      var __DropItemModelPrefabPath = new StringOffset[_o.DropItemModelPrefabPath.Count];
+      for (var _j = 0; _j < __DropItemModelPrefabPath.Length; ++_j) { __DropItemModelPrefabPath[_j] = builder.CreateString(_o.DropItemModelPrefabPath[_j]); }
+      _DropItemModelPrefabPath = CreateDropItemModelPrefabPathVector(builder, __DropItemModelPrefabPath);
+    }
+    return CreateWeekDungeonFindGiftRewardExcel(
+      builder,
+      _o.StageRewardId,
+      _DevName,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount,
+      _RewardParcelProbability,
+      _DropItemModelPrefabPath);
+  }
+}
+
+public class WeekDungeonFindGiftRewardExcelT
+{
+  public long StageRewardId { get; set; }
+  public string DevName { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+  public List<long> RewardParcelProbability { get; set; }
+  public List<string> DropItemModelPrefabPath { get; set; }
+
+  public WeekDungeonFindGiftRewardExcelT() {
+    this.StageRewardId = 0;
+    this.DevName = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
+    this.RewardParcelProbability = null;
+    this.DropItemModelPrefabPath = null;
   }
 }
 

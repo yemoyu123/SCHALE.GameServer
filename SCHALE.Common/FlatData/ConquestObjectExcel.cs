@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestObjectExcel : IFlatbufferObject
@@ -89,6 +90,76 @@ public struct ConquestObjectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestObjectExcel> EndConquestObjectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestObjectExcel>(o);
+  }
+  public ConquestObjectExcelT UnPack() {
+    var _o = new ConquestObjectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestObjectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestObject");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ConquestObjectType = TableEncryptionService.Convert(this.ConquestObjectType, key);
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.ConquestRewardParcelType = TableEncryptionService.Convert(this.ConquestRewardParcelType, key);
+    _o.ConquestRewardID = TableEncryptionService.Convert(this.ConquestRewardID, key);
+    _o.ConquestRewardAmount = TableEncryptionService.Convert(this.ConquestRewardAmount, key);
+    _o.Disposable = TableEncryptionService.Convert(this.Disposable, key);
+    _o.StepIndex = TableEncryptionService.Convert(this.StepIndex, key);
+    _o.StepObjectCount = TableEncryptionService.Convert(this.StepObjectCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestObjectExcel> Pack(FlatBufferBuilder builder, ConquestObjectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestObjectExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    return CreateConquestObjectExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.ConquestObjectType,
+      _o.Key,
+      _Name,
+      _PrefabName,
+      _o.ConquestRewardParcelType,
+      _o.ConquestRewardID,
+      _o.ConquestRewardAmount,
+      _o.Disposable,
+      _o.StepIndex,
+      _o.StepObjectCount);
+  }
+}
+
+public class ConquestObjectExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.ConquestObjectType ConquestObjectType { get; set; }
+  public uint Key { get; set; }
+  public string Name { get; set; }
+  public string PrefabName { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ConquestRewardParcelType { get; set; }
+  public long ConquestRewardID { get; set; }
+  public int ConquestRewardAmount { get; set; }
+  public bool Disposable { get; set; }
+  public int StepIndex { get; set; }
+  public int StepObjectCount { get; set; }
+
+  public ConquestObjectExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.ConquestObjectType = SCHALE.Common.FlatData.ConquestObjectType.None;
+    this.Key = 0;
+    this.Name = null;
+    this.PrefabName = null;
+    this.ConquestRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ConquestRewardID = 0;
+    this.ConquestRewardAmount = 0;
+    this.Disposable = false;
+    this.StepIndex = 0;
+    this.StepObjectCount = 0;
   }
 }
 

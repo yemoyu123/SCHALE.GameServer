@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopInfoExcel : IFlatbufferObject
@@ -195,6 +196,159 @@ public struct ShopInfoExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopInfoExcel> EndShopInfoExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopInfoExcel>(o);
+  }
+  public ShopInfoExcelT UnPack() {
+    var _o = new ShopInfoExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopInfoExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopInfo");
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.IsRefresh = TableEncryptionService.Convert(this.IsRefresh, key);
+    _o.IsSoldOutDimmed = TableEncryptionService.Convert(this.IsSoldOutDimmed, key);
+    _o.CostParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.CostParcelTypeLength; ++_j) {_o.CostParcelType.Add(TableEncryptionService.Convert(this.CostParcelType(_j), key));}
+    _o.CostParcelId = new List<long>();
+    for (var _j = 0; _j < this.CostParcelIdLength; ++_j) {_o.CostParcelId.Add(TableEncryptionService.Convert(this.CostParcelId(_j), key));}
+    _o.AutoRefreshCoolTime = TableEncryptionService.Convert(this.AutoRefreshCoolTime, key);
+    _o.RefreshAbleCount = TableEncryptionService.Convert(this.RefreshAbleCount, key);
+    _o.GoodsId = new List<long>();
+    for (var _j = 0; _j < this.GoodsIdLength; ++_j) {_o.GoodsId.Add(TableEncryptionService.Convert(this.GoodsId(_j), key));}
+    _o.OpenPeriodFrom = TableEncryptionService.Convert(this.OpenPeriodFrom, key);
+    _o.OpenPeriodTo = TableEncryptionService.Convert(this.OpenPeriodTo, key);
+    _o.ShopProductUpdateTime = TableEncryptionService.Convert(this.ShopProductUpdateTime, key);
+    _o.DisplayParcelType = TableEncryptionService.Convert(this.DisplayParcelType, key);
+    _o.DisplayParcelId = TableEncryptionService.Convert(this.DisplayParcelId, key);
+    _o.IsShopVisible = TableEncryptionService.Convert(this.IsShopVisible, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.ShopUpdateDate = TableEncryptionService.Convert(this.ShopUpdateDate, key);
+    _o.ShopUpdateGroupId1 = TableEncryptionService.Convert(this.ShopUpdateGroupId1, key);
+    _o.ShopUpdateGroupId2 = TableEncryptionService.Convert(this.ShopUpdateGroupId2, key);
+    _o.ShopUpdateGroupId3 = TableEncryptionService.Convert(this.ShopUpdateGroupId3, key);
+    _o.ShopUpdateGroupId4 = TableEncryptionService.Convert(this.ShopUpdateGroupId4, key);
+    _o.ShopUpdateGroupId5 = TableEncryptionService.Convert(this.ShopUpdateGroupId5, key);
+    _o.ShopUpdateGroupId6 = TableEncryptionService.Convert(this.ShopUpdateGroupId6, key);
+    _o.ShopUpdateGroupId7 = TableEncryptionService.Convert(this.ShopUpdateGroupId7, key);
+    _o.ShopUpdateGroupId8 = TableEncryptionService.Convert(this.ShopUpdateGroupId8, key);
+    _o.ShopUpdateGroupId9 = TableEncryptionService.Convert(this.ShopUpdateGroupId9, key);
+    _o.ShopUpdateGroupId10 = TableEncryptionService.Convert(this.ShopUpdateGroupId10, key);
+    _o.ShopUpdateGroupId11 = TableEncryptionService.Convert(this.ShopUpdateGroupId11, key);
+    _o.ShopUpdateGroupId12 = TableEncryptionService.Convert(this.ShopUpdateGroupId12, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopInfoExcel> Pack(FlatBufferBuilder builder, ShopInfoExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopInfoExcel>);
+    var _CostParcelType = default(VectorOffset);
+    if (_o.CostParcelType != null) {
+      var __CostParcelType = _o.CostParcelType.ToArray();
+      _CostParcelType = CreateCostParcelTypeVector(builder, __CostParcelType);
+    }
+    var _CostParcelId = default(VectorOffset);
+    if (_o.CostParcelId != null) {
+      var __CostParcelId = _o.CostParcelId.ToArray();
+      _CostParcelId = CreateCostParcelIdVector(builder, __CostParcelId);
+    }
+    var _GoodsId = default(VectorOffset);
+    if (_o.GoodsId != null) {
+      var __GoodsId = _o.GoodsId.ToArray();
+      _GoodsId = CreateGoodsIdVector(builder, __GoodsId);
+    }
+    var _OpenPeriodFrom = _o.OpenPeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.OpenPeriodFrom);
+    var _OpenPeriodTo = _o.OpenPeriodTo == null ? default(StringOffset) : builder.CreateString(_o.OpenPeriodTo);
+    var _ShopProductUpdateTime = _o.ShopProductUpdateTime == null ? default(StringOffset) : builder.CreateString(_o.ShopProductUpdateTime);
+    return CreateShopInfoExcel(
+      builder,
+      _o.CategoryType,
+      _o.IsRefresh,
+      _o.IsSoldOutDimmed,
+      _CostParcelType,
+      _CostParcelId,
+      _o.AutoRefreshCoolTime,
+      _o.RefreshAbleCount,
+      _GoodsId,
+      _OpenPeriodFrom,
+      _OpenPeriodTo,
+      _ShopProductUpdateTime,
+      _o.DisplayParcelType,
+      _o.DisplayParcelId,
+      _o.IsShopVisible,
+      _o.DisplayOrder,
+      _o.ShopUpdateDate,
+      _o.ShopUpdateGroupId1,
+      _o.ShopUpdateGroupId2,
+      _o.ShopUpdateGroupId3,
+      _o.ShopUpdateGroupId4,
+      _o.ShopUpdateGroupId5,
+      _o.ShopUpdateGroupId6,
+      _o.ShopUpdateGroupId7,
+      _o.ShopUpdateGroupId8,
+      _o.ShopUpdateGroupId9,
+      _o.ShopUpdateGroupId10,
+      _o.ShopUpdateGroupId11,
+      _o.ShopUpdateGroupId12);
+  }
+}
+
+public class ShopInfoExcelT
+{
+  public SCHALE.Common.FlatData.ShopCategoryType CategoryType { get; set; }
+  public bool IsRefresh { get; set; }
+  public bool IsSoldOutDimmed { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> CostParcelType { get; set; }
+  public List<long> CostParcelId { get; set; }
+  public long AutoRefreshCoolTime { get; set; }
+  public long RefreshAbleCount { get; set; }
+  public List<long> GoodsId { get; set; }
+  public string OpenPeriodFrom { get; set; }
+  public string OpenPeriodTo { get; set; }
+  public string ShopProductUpdateTime { get; set; }
+  public SCHALE.Common.FlatData.ParcelType DisplayParcelType { get; set; }
+  public long DisplayParcelId { get; set; }
+  public bool IsShopVisible { get; set; }
+  public int DisplayOrder { get; set; }
+  public int ShopUpdateDate { get; set; }
+  public int ShopUpdateGroupId1 { get; set; }
+  public int ShopUpdateGroupId2 { get; set; }
+  public int ShopUpdateGroupId3 { get; set; }
+  public int ShopUpdateGroupId4 { get; set; }
+  public int ShopUpdateGroupId5 { get; set; }
+  public int ShopUpdateGroupId6 { get; set; }
+  public int ShopUpdateGroupId7 { get; set; }
+  public int ShopUpdateGroupId8 { get; set; }
+  public int ShopUpdateGroupId9 { get; set; }
+  public int ShopUpdateGroupId10 { get; set; }
+  public int ShopUpdateGroupId11 { get; set; }
+  public int ShopUpdateGroupId12 { get; set; }
+
+  public ShopInfoExcelT() {
+    this.CategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.IsRefresh = false;
+    this.IsSoldOutDimmed = false;
+    this.CostParcelType = null;
+    this.CostParcelId = null;
+    this.AutoRefreshCoolTime = 0;
+    this.RefreshAbleCount = 0;
+    this.GoodsId = null;
+    this.OpenPeriodFrom = null;
+    this.OpenPeriodTo = null;
+    this.ShopProductUpdateTime = null;
+    this.DisplayParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.DisplayParcelId = 0;
+    this.IsShopVisible = false;
+    this.DisplayOrder = 0;
+    this.ShopUpdateDate = 0;
+    this.ShopUpdateGroupId1 = 0;
+    this.ShopUpdateGroupId2 = 0;
+    this.ShopUpdateGroupId3 = 0;
+    this.ShopUpdateGroupId4 = 0;
+    this.ShopUpdateGroupId5 = 0;
+    this.ShopUpdateGroupId6 = 0;
+    this.ShopUpdateGroupId7 = 0;
+    this.ShopUpdateGroupId8 = 0;
+    this.ShopUpdateGroupId9 = 0;
+    this.ShopUpdateGroupId10 = 0;
+    this.ShopUpdateGroupId11 = 0;
+    this.ShopUpdateGroupId12 = 0;
   }
 }
 

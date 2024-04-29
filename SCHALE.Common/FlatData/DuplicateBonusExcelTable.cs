@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DuplicateBonusExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct DuplicateBonusExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DuplicateBonusExcelTable> EndDuplicateBonusExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DuplicateBonusExcelTable>(o);
+  }
+  public DuplicateBonusExcelTableT UnPack() {
+    var _o = new DuplicateBonusExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DuplicateBonusExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DuplicateBonusExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.DuplicateBonusExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.DuplicateBonusExcelTable> Pack(FlatBufferBuilder builder, DuplicateBonusExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DuplicateBonusExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.DuplicateBonusExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.DuplicateBonusExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateDuplicateBonusExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class DuplicateBonusExcelTableT
+{
+  public List<SCHALE.Common.FlatData.DuplicateBonusExcelT> DataList { get; set; }
+
+  public DuplicateBonusExcelTableT() {
+    this.DataList = null;
   }
 }
 

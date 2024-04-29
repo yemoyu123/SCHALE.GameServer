@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DuplicateBonusExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct DuplicateBonusExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DuplicateBonusExcel> EndDuplicateBonusExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DuplicateBonusExcel>(o);
+  }
+  public DuplicateBonusExcelT UnPack() {
+    var _o = new DuplicateBonusExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DuplicateBonusExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DuplicateBonus");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ItemCategory = TableEncryptionService.Convert(this.ItemCategory, key);
+    _o.ItemId = TableEncryptionService.Convert(this.ItemId, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.DuplicateBonusExcel> Pack(FlatBufferBuilder builder, DuplicateBonusExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DuplicateBonusExcel>);
+    return CreateDuplicateBonusExcel(
+      builder,
+      _o.Id,
+      _o.ItemCategory,
+      _o.ItemId,
+      _o.CharacterId,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount);
+  }
+}
+
+public class DuplicateBonusExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ItemCategory ItemCategory { get; set; }
+  public long ItemId { get; set; }
+  public long CharacterId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+
+  public DuplicateBonusExcelT() {
+    this.Id = 0;
+    this.ItemCategory = SCHALE.Common.FlatData.ItemCategory.Coin;
+    this.ItemId = 0;
+    this.CharacterId = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
   }
 }
 

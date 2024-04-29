@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGEncounterExcel : IFlatbufferObject
@@ -211,6 +212,133 @@ public struct MinigameTBGEncounterExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterExcel> EndMinigameTBGEncounterExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGEncounterExcel>(o);
+  }
+  public MinigameTBGEncounterExcelT UnPack() {
+    var _o = new MinigameTBGEncounterExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGEncounterExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGEncounter");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.AllThema = TableEncryptionService.Convert(this.AllThema, key);
+    _o.ThemaIndex = TableEncryptionService.Convert(this.ThemaIndex, key);
+    _o.ThemaType = TableEncryptionService.Convert(this.ThemaType, key);
+    _o.ObjectType = TableEncryptionService.Convert(this.ObjectType, key);
+    _o.EnemyImagePath = TableEncryptionService.Convert(this.EnemyImagePath, key);
+    _o.EnemyPrefabName = TableEncryptionService.Convert(this.EnemyPrefabName, key);
+    _o.EnemyNameLocalize = TableEncryptionService.Convert(this.EnemyNameLocalize, key);
+    _o.OptionGroupId = TableEncryptionService.Convert(this.OptionGroupId, key);
+    _o.RewardHide = TableEncryptionService.Convert(this.RewardHide, key);
+    _o.EncounterTitleLocalize = TableEncryptionService.Convert(this.EncounterTitleLocalize, key);
+    _o.StoryImagePath = TableEncryptionService.Convert(this.StoryImagePath, key);
+    _o.BeforeStoryLocalize = TableEncryptionService.Convert(this.BeforeStoryLocalize, key);
+    _o.BeforeStoryOption1Localize = TableEncryptionService.Convert(this.BeforeStoryOption1Localize, key);
+    _o.BeforeStoryOption2Localize = TableEncryptionService.Convert(this.BeforeStoryOption2Localize, key);
+    _o.BeforeStoryOption3Localize = TableEncryptionService.Convert(this.BeforeStoryOption3Localize, key);
+    _o.AllyAttackLocalize = TableEncryptionService.Convert(this.AllyAttackLocalize, key);
+    _o.EnemyAttackLocalize = TableEncryptionService.Convert(this.EnemyAttackLocalize, key);
+    _o.AttackDefenceLocalize = TableEncryptionService.Convert(this.AttackDefenceLocalize, key);
+    _o.ClearStoryLocalize = TableEncryptionService.Convert(this.ClearStoryLocalize, key);
+    _o.DefeatStoryLocalize = TableEncryptionService.Convert(this.DefeatStoryLocalize, key);
+    _o.RunawayStoryLocalize = TableEncryptionService.Convert(this.RunawayStoryLocalize, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterExcel> Pack(FlatBufferBuilder builder, MinigameTBGEncounterExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGEncounterExcel>);
+    var _EnemyImagePath = _o.EnemyImagePath == null ? default(StringOffset) : builder.CreateString(_o.EnemyImagePath);
+    var _EnemyPrefabName = _o.EnemyPrefabName == null ? default(StringOffset) : builder.CreateString(_o.EnemyPrefabName);
+    var _EnemyNameLocalize = _o.EnemyNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.EnemyNameLocalize);
+    var _EncounterTitleLocalize = _o.EncounterTitleLocalize == null ? default(StringOffset) : builder.CreateString(_o.EncounterTitleLocalize);
+    var _StoryImagePath = _o.StoryImagePath == null ? default(StringOffset) : builder.CreateString(_o.StoryImagePath);
+    var _BeforeStoryLocalize = _o.BeforeStoryLocalize == null ? default(StringOffset) : builder.CreateString(_o.BeforeStoryLocalize);
+    var _BeforeStoryOption1Localize = _o.BeforeStoryOption1Localize == null ? default(StringOffset) : builder.CreateString(_o.BeforeStoryOption1Localize);
+    var _BeforeStoryOption2Localize = _o.BeforeStoryOption2Localize == null ? default(StringOffset) : builder.CreateString(_o.BeforeStoryOption2Localize);
+    var _BeforeStoryOption3Localize = _o.BeforeStoryOption3Localize == null ? default(StringOffset) : builder.CreateString(_o.BeforeStoryOption3Localize);
+    var _AllyAttackLocalize = _o.AllyAttackLocalize == null ? default(StringOffset) : builder.CreateString(_o.AllyAttackLocalize);
+    var _EnemyAttackLocalize = _o.EnemyAttackLocalize == null ? default(StringOffset) : builder.CreateString(_o.EnemyAttackLocalize);
+    var _AttackDefenceLocalize = _o.AttackDefenceLocalize == null ? default(StringOffset) : builder.CreateString(_o.AttackDefenceLocalize);
+    var _ClearStoryLocalize = _o.ClearStoryLocalize == null ? default(StringOffset) : builder.CreateString(_o.ClearStoryLocalize);
+    var _DefeatStoryLocalize = _o.DefeatStoryLocalize == null ? default(StringOffset) : builder.CreateString(_o.DefeatStoryLocalize);
+    var _RunawayStoryLocalize = _o.RunawayStoryLocalize == null ? default(StringOffset) : builder.CreateString(_o.RunawayStoryLocalize);
+    return CreateMinigameTBGEncounterExcel(
+      builder,
+      _o.EventContentId,
+      _o.UniqueId,
+      _o.AllThema,
+      _o.ThemaIndex,
+      _o.ThemaType,
+      _o.ObjectType,
+      _EnemyImagePath,
+      _EnemyPrefabName,
+      _EnemyNameLocalize,
+      _o.OptionGroupId,
+      _o.RewardHide,
+      _EncounterTitleLocalize,
+      _StoryImagePath,
+      _BeforeStoryLocalize,
+      _BeforeStoryOption1Localize,
+      _BeforeStoryOption2Localize,
+      _BeforeStoryOption3Localize,
+      _AllyAttackLocalize,
+      _EnemyAttackLocalize,
+      _AttackDefenceLocalize,
+      _ClearStoryLocalize,
+      _DefeatStoryLocalize,
+      _RunawayStoryLocalize);
+  }
+}
+
+public class MinigameTBGEncounterExcelT
+{
+  public long EventContentId { get; set; }
+  public long UniqueId { get; set; }
+  public bool AllThema { get; set; }
+  public int ThemaIndex { get; set; }
+  public SCHALE.Common.FlatData.TBGThemaType ThemaType { get; set; }
+  public SCHALE.Common.FlatData.TBGObjectType ObjectType { get; set; }
+  public string EnemyImagePath { get; set; }
+  public string EnemyPrefabName { get; set; }
+  public string EnemyNameLocalize { get; set; }
+  public long OptionGroupId { get; set; }
+  public bool RewardHide { get; set; }
+  public string EncounterTitleLocalize { get; set; }
+  public string StoryImagePath { get; set; }
+  public string BeforeStoryLocalize { get; set; }
+  public string BeforeStoryOption1Localize { get; set; }
+  public string BeforeStoryOption2Localize { get; set; }
+  public string BeforeStoryOption3Localize { get; set; }
+  public string AllyAttackLocalize { get; set; }
+  public string EnemyAttackLocalize { get; set; }
+  public string AttackDefenceLocalize { get; set; }
+  public string ClearStoryLocalize { get; set; }
+  public string DefeatStoryLocalize { get; set; }
+  public string RunawayStoryLocalize { get; set; }
+
+  public MinigameTBGEncounterExcelT() {
+    this.EventContentId = 0;
+    this.UniqueId = 0;
+    this.AllThema = false;
+    this.ThemaIndex = 0;
+    this.ThemaType = SCHALE.Common.FlatData.TBGThemaType.None;
+    this.ObjectType = SCHALE.Common.FlatData.TBGObjectType.None;
+    this.EnemyImagePath = null;
+    this.EnemyPrefabName = null;
+    this.EnemyNameLocalize = null;
+    this.OptionGroupId = 0;
+    this.RewardHide = false;
+    this.EncounterTitleLocalize = null;
+    this.StoryImagePath = null;
+    this.BeforeStoryLocalize = null;
+    this.BeforeStoryOption1Localize = null;
+    this.BeforeStoryOption2Localize = null;
+    this.BeforeStoryOption3Localize = null;
+    this.AllyAttackLocalize = null;
+    this.EnemyAttackLocalize = null;
+    this.AttackDefenceLocalize = null;
+    this.ClearStoryLocalize = null;
+    this.DefeatStoryLocalize = null;
+    this.RunawayStoryLocalize = null;
   }
 }
 

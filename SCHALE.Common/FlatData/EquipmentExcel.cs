@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EquipmentExcel : IFlatbufferObject
@@ -141,6 +142,116 @@ public struct EquipmentExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EquipmentExcel> EndEquipmentExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EquipmentExcel>(o);
+  }
+  public EquipmentExcelT UnPack() {
+    var _o = new EquipmentExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EquipmentExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Equipment");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EquipmentCategory = TableEncryptionService.Convert(this.EquipmentCategory, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.Wear = TableEncryptionService.Convert(this.Wear, key);
+    _o.MaxLevel = TableEncryptionService.Convert(this.MaxLevel, key);
+    _o.RecipeId = TableEncryptionService.Convert(this.RecipeId, key);
+    _o.TierInit = TableEncryptionService.Convert(this.TierInit, key);
+    _o.NextTierEquipment = TableEncryptionService.Convert(this.NextTierEquipment, key);
+    _o.StackableMax = TableEncryptionService.Convert(this.StackableMax, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.ImageName = TableEncryptionService.Convert(this.ImageName, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+    _o.CraftQualityTier0 = TableEncryptionService.Convert(this.CraftQualityTier0, key);
+    _o.CraftQualityTier1 = TableEncryptionService.Convert(this.CraftQualityTier1, key);
+    _o.CraftQualityTier2 = TableEncryptionService.Convert(this.CraftQualityTier2, key);
+    _o.ShiftingCraftQuality = TableEncryptionService.Convert(this.ShiftingCraftQuality, key);
+    _o.ShopCategory = new List<SCHALE.Common.FlatData.ShopCategoryType>();
+    for (var _j = 0; _j < this.ShopCategoryLength; ++_j) {_o.ShopCategory.Add(TableEncryptionService.Convert(this.ShopCategory(_j), key));}
+    _o.ShortcutTypeId = TableEncryptionService.Convert(this.ShortcutTypeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EquipmentExcel> Pack(FlatBufferBuilder builder, EquipmentExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EquipmentExcel>);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _ImageName = _o.ImageName == null ? default(StringOffset) : builder.CreateString(_o.ImageName);
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    var _ShopCategory = default(VectorOffset);
+    if (_o.ShopCategory != null) {
+      var __ShopCategory = _o.ShopCategory.ToArray();
+      _ShopCategory = CreateShopCategoryVector(builder, __ShopCategory);
+    }
+    return CreateEquipmentExcel(
+      builder,
+      _o.Id,
+      _o.EquipmentCategory,
+      _o.Rarity,
+      _o.LocalizeEtcId,
+      _o.Wear,
+      _o.MaxLevel,
+      _o.RecipeId,
+      _o.TierInit,
+      _o.NextTierEquipment,
+      _o.StackableMax,
+      _Icon,
+      _ImageName,
+      _Tags,
+      _o.CraftQualityTier0,
+      _o.CraftQualityTier1,
+      _o.CraftQualityTier2,
+      _o.ShiftingCraftQuality,
+      _ShopCategory,
+      _o.ShortcutTypeId);
+  }
+}
+
+public class EquipmentExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.EquipmentCategory EquipmentCategory { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public bool Wear { get; set; }
+  public int MaxLevel { get; set; }
+  public int RecipeId { get; set; }
+  public long TierInit { get; set; }
+  public long NextTierEquipment { get; set; }
+  public int StackableMax { get; set; }
+  public string Icon { get; set; }
+  public string ImageName { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+  public long CraftQualityTier0 { get; set; }
+  public long CraftQualityTier1 { get; set; }
+  public long CraftQualityTier2 { get; set; }
+  public long ShiftingCraftQuality { get; set; }
+  public List<SCHALE.Common.FlatData.ShopCategoryType> ShopCategory { get; set; }
+  public long ShortcutTypeId { get; set; }
+
+  public EquipmentExcelT() {
+    this.Id = 0;
+    this.EquipmentCategory = SCHALE.Common.FlatData.EquipmentCategory.Unable;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.LocalizeEtcId = 0;
+    this.Wear = false;
+    this.MaxLevel = 0;
+    this.RecipeId = 0;
+    this.TierInit = 0;
+    this.NextTierEquipment = 0;
+    this.StackableMax = 0;
+    this.Icon = null;
+    this.ImageName = null;
+    this.Tags = null;
+    this.CraftQualityTier0 = 0;
+    this.CraftQualityTier1 = 0;
+    this.CraftQualityTier2 = 0;
+    this.ShiftingCraftQuality = 0;
+    this.ShopCategory = null;
+    this.ShortcutTypeId = 0;
   }
 }
 

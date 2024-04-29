@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidBossGroupExcel : IFlatbufferObject
@@ -167,6 +168,113 @@ public struct WorldRaidBossGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidBossGroupExcel> EndWorldRaidBossGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidBossGroupExcel>(o);
+  }
+  public WorldRaidBossGroupExcelT UnPack() {
+    var _o = new WorldRaidBossGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidBossGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidBossGroup");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.WorldRaidBossGroupId = TableEncryptionService.Convert(this.WorldRaidBossGroupId, key);
+    _o.WorldBossName = TableEncryptionService.Convert(this.WorldBossName, key);
+    _o.WorldBossPopupPortrait = TableEncryptionService.Convert(this.WorldBossPopupPortrait, key);
+    _o.WorldBossPopupBG = TableEncryptionService.Convert(this.WorldBossPopupBG, key);
+    _o.WorldBossParcelPortrait = TableEncryptionService.Convert(this.WorldBossParcelPortrait, key);
+    _o.WorldBossListParcel = TableEncryptionService.Convert(this.WorldBossListParcel, key);
+    _o.WorldBossHP = TableEncryptionService.Convert(this.WorldBossHP, key);
+    _o.UIHideBeforeSpawn = TableEncryptionService.Convert(this.UIHideBeforeSpawn, key);
+    _o.HideAnotherBossKilled = TableEncryptionService.Convert(this.HideAnotherBossKilled, key);
+    _o.WorldBossClearRewardGroupId = TableEncryptionService.Convert(this.WorldBossClearRewardGroupId, key);
+    _o.AnotherBossKilled = new List<long>();
+    for (var _j = 0; _j < this.AnotherBossKilledLength; ++_j) {_o.AnotherBossKilled.Add(TableEncryptionService.Convert(this.AnotherBossKilled(_j), key));}
+    _o.EchelonConstraintGroupId = TableEncryptionService.Convert(this.EchelonConstraintGroupId, key);
+    _o.ExclusiveOperatorBossSpawn = TableEncryptionService.Convert(this.ExclusiveOperatorBossSpawn, key);
+    _o.ExclusiveOperatorBossKill = TableEncryptionService.Convert(this.ExclusiveOperatorBossKill, key);
+    _o.ExclusiveOperatorScenarioBattle = TableEncryptionService.Convert(this.ExclusiveOperatorScenarioBattle, key);
+    _o.ExclusiveOperatorBossDamaged = TableEncryptionService.Convert(this.ExclusiveOperatorBossDamaged, key);
+    _o.BossGroupOpenCondition = TableEncryptionService.Convert(this.BossGroupOpenCondition, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidBossGroupExcel> Pack(FlatBufferBuilder builder, WorldRaidBossGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidBossGroupExcel>);
+    var _WorldBossName = _o.WorldBossName == null ? default(StringOffset) : builder.CreateString(_o.WorldBossName);
+    var _WorldBossPopupPortrait = _o.WorldBossPopupPortrait == null ? default(StringOffset) : builder.CreateString(_o.WorldBossPopupPortrait);
+    var _WorldBossPopupBG = _o.WorldBossPopupBG == null ? default(StringOffset) : builder.CreateString(_o.WorldBossPopupBG);
+    var _WorldBossParcelPortrait = _o.WorldBossParcelPortrait == null ? default(StringOffset) : builder.CreateString(_o.WorldBossParcelPortrait);
+    var _WorldBossListParcel = _o.WorldBossListParcel == null ? default(StringOffset) : builder.CreateString(_o.WorldBossListParcel);
+    var _AnotherBossKilled = default(VectorOffset);
+    if (_o.AnotherBossKilled != null) {
+      var __AnotherBossKilled = _o.AnotherBossKilled.ToArray();
+      _AnotherBossKilled = CreateAnotherBossKilledVector(builder, __AnotherBossKilled);
+    }
+    var _ExclusiveOperatorBossSpawn = _o.ExclusiveOperatorBossSpawn == null ? default(StringOffset) : builder.CreateString(_o.ExclusiveOperatorBossSpawn);
+    var _ExclusiveOperatorBossKill = _o.ExclusiveOperatorBossKill == null ? default(StringOffset) : builder.CreateString(_o.ExclusiveOperatorBossKill);
+    var _ExclusiveOperatorScenarioBattle = _o.ExclusiveOperatorScenarioBattle == null ? default(StringOffset) : builder.CreateString(_o.ExclusiveOperatorScenarioBattle);
+    var _ExclusiveOperatorBossDamaged = _o.ExclusiveOperatorBossDamaged == null ? default(StringOffset) : builder.CreateString(_o.ExclusiveOperatorBossDamaged);
+    return CreateWorldRaidBossGroupExcel(
+      builder,
+      _o.Id,
+      _o.WorldRaidBossGroupId,
+      _WorldBossName,
+      _WorldBossPopupPortrait,
+      _WorldBossPopupBG,
+      _WorldBossParcelPortrait,
+      _WorldBossListParcel,
+      _o.WorldBossHP,
+      _o.UIHideBeforeSpawn,
+      _o.HideAnotherBossKilled,
+      _o.WorldBossClearRewardGroupId,
+      _AnotherBossKilled,
+      _o.EchelonConstraintGroupId,
+      _ExclusiveOperatorBossSpawn,
+      _ExclusiveOperatorBossKill,
+      _ExclusiveOperatorScenarioBattle,
+      _ExclusiveOperatorBossDamaged,
+      _o.BossGroupOpenCondition);
+  }
+}
+
+public class WorldRaidBossGroupExcelT
+{
+  public long Id { get; set; }
+  public long WorldRaidBossGroupId { get; set; }
+  public string WorldBossName { get; set; }
+  public string WorldBossPopupPortrait { get; set; }
+  public string WorldBossPopupBG { get; set; }
+  public string WorldBossParcelPortrait { get; set; }
+  public string WorldBossListParcel { get; set; }
+  public long WorldBossHP { get; set; }
+  public bool UIHideBeforeSpawn { get; set; }
+  public bool HideAnotherBossKilled { get; set; }
+  public long WorldBossClearRewardGroupId { get; set; }
+  public List<long> AnotherBossKilled { get; set; }
+  public long EchelonConstraintGroupId { get; set; }
+  public string ExclusiveOperatorBossSpawn { get; set; }
+  public string ExclusiveOperatorBossKill { get; set; }
+  public string ExclusiveOperatorScenarioBattle { get; set; }
+  public string ExclusiveOperatorBossDamaged { get; set; }
+  public long BossGroupOpenCondition { get; set; }
+
+  public WorldRaidBossGroupExcelT() {
+    this.Id = 0;
+    this.WorldRaidBossGroupId = 0;
+    this.WorldBossName = null;
+    this.WorldBossPopupPortrait = null;
+    this.WorldBossPopupBG = null;
+    this.WorldBossParcelPortrait = null;
+    this.WorldBossListParcel = null;
+    this.WorldBossHP = 0;
+    this.UIHideBeforeSpawn = false;
+    this.HideAnotherBossKilled = false;
+    this.WorldBossClearRewardGroupId = 0;
+    this.AnotherBossKilled = null;
+    this.EchelonConstraintGroupId = 0;
+    this.ExclusiveOperatorBossSpawn = null;
+    this.ExclusiveOperatorBossKill = null;
+    this.ExclusiveOperatorScenarioBattle = null;
+    this.ExclusiveOperatorBossDamaged = null;
+    this.BossGroupOpenCondition = 0;
   }
 }
 

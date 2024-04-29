@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioResourceInfoExcel : IFlatbufferObject
@@ -93,6 +94,70 @@ public struct ScenarioResourceInfoExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioResourceInfoExcel> EndScenarioResourceInfoExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioResourceInfoExcel>(o);
+  }
+  public ScenarioResourceInfoExcelT UnPack() {
+    var _o = new ScenarioResourceInfoExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioResourceInfoExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioResourceInfo");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ScenarioModeId = TableEncryptionService.Convert(this.ScenarioModeId, key);
+    _o.VideoId = TableEncryptionService.Convert(this.VideoId, key);
+    _o.BgmId = TableEncryptionService.Convert(this.BgmId, key);
+    _o.AudioName = TableEncryptionService.Convert(this.AudioName, key);
+    _o.SpinePath = TableEncryptionService.Convert(this.SpinePath, key);
+    _o.Ratio = TableEncryptionService.Convert(this.Ratio, key);
+    _o.LobbyAniPath = TableEncryptionService.Convert(this.LobbyAniPath, key);
+    _o.MovieCGPath = TableEncryptionService.Convert(this.MovieCGPath, key);
+    _o.LocalizeId = TableEncryptionService.Convert(this.LocalizeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioResourceInfoExcel> Pack(FlatBufferBuilder builder, ScenarioResourceInfoExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioResourceInfoExcel>);
+    var _AudioName = _o.AudioName == null ? default(StringOffset) : builder.CreateString(_o.AudioName);
+    var _SpinePath = _o.SpinePath == null ? default(StringOffset) : builder.CreateString(_o.SpinePath);
+    var _LobbyAniPath = _o.LobbyAniPath == null ? default(StringOffset) : builder.CreateString(_o.LobbyAniPath);
+    var _MovieCGPath = _o.MovieCGPath == null ? default(StringOffset) : builder.CreateString(_o.MovieCGPath);
+    return CreateScenarioResourceInfoExcel(
+      builder,
+      _o.Id,
+      _o.ScenarioModeId,
+      _o.VideoId,
+      _o.BgmId,
+      _AudioName,
+      _SpinePath,
+      _o.Ratio,
+      _LobbyAniPath,
+      _MovieCGPath,
+      _o.LocalizeId);
+  }
+}
+
+public class ScenarioResourceInfoExcelT
+{
+  public long Id { get; set; }
+  public long ScenarioModeId { get; set; }
+  public long VideoId { get; set; }
+  public long BgmId { get; set; }
+  public string AudioName { get; set; }
+  public string SpinePath { get; set; }
+  public int Ratio { get; set; }
+  public string LobbyAniPath { get; set; }
+  public string MovieCGPath { get; set; }
+  public uint LocalizeId { get; set; }
+
+  public ScenarioResourceInfoExcelT() {
+    this.Id = 0;
+    this.ScenarioModeId = 0;
+    this.VideoId = 0;
+    this.BgmId = 0;
+    this.AudioName = null;
+    this.SpinePath = null;
+    this.Ratio = 0;
+    this.LobbyAniPath = null;
+    this.MovieCGPath = null;
+    this.LocalizeId = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ToastExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct ToastExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ToastExcel> EndToastExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ToastExcel>(o);
+  }
+  public ToastExcelT UnPack() {
+    var _o = new ToastExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ToastExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Toast");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ToastType = TableEncryptionService.Convert(this.ToastType, key);
+    _o.MissionId = TableEncryptionService.Convert(this.MissionId, key);
+    _o.TextId = TableEncryptionService.Convert(this.TextId, key);
+    _o.LifeTime = TableEncryptionService.Convert(this.LifeTime, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ToastExcel> Pack(FlatBufferBuilder builder, ToastExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ToastExcel>);
+    return CreateToastExcel(
+      builder,
+      _o.Id,
+      _o.ToastType,
+      _o.MissionId,
+      _o.TextId,
+      _o.LifeTime);
+  }
+}
+
+public class ToastExcelT
+{
+  public uint Id { get; set; }
+  public SCHALE.Common.FlatData.ToastType ToastType { get; set; }
+  public uint MissionId { get; set; }
+  public uint TextId { get; set; }
+  public long LifeTime { get; set; }
+
+  public ToastExcelT() {
+    this.Id = 0;
+    this.ToastType = SCHALE.Common.FlatData.ToastType.None;
+    this.MissionId = 0;
+    this.TextId = 0;
+    this.LifeTime = 0;
   }
 }
 

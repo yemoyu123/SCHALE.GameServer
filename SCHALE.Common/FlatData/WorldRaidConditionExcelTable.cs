@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WorldRaidConditionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct WorldRaidConditionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WorldRaidConditionExcelTable> EndWorldRaidConditionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WorldRaidConditionExcelTable>(o);
+  }
+  public WorldRaidConditionExcelTableT UnPack() {
+    var _o = new WorldRaidConditionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WorldRaidConditionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WorldRaidConditionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.WorldRaidConditionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.WorldRaidConditionExcelTable> Pack(FlatBufferBuilder builder, WorldRaidConditionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WorldRaidConditionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.WorldRaidConditionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.WorldRaidConditionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateWorldRaidConditionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class WorldRaidConditionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.WorldRaidConditionExcelT> DataList { get; set; }
+
+  public WorldRaidConditionExcelTableT() {
+    this.DataList = null;
   }
 }
 

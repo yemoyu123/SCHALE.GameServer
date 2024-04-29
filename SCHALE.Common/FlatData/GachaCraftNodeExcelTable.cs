@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaCraftNodeExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct GachaCraftNodeExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaCraftNodeExcelTable> EndGachaCraftNodeExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaCraftNodeExcelTable>(o);
+  }
+  public GachaCraftNodeExcelTableT UnPack() {
+    var _o = new GachaCraftNodeExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaCraftNodeExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaCraftNodeExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.GachaCraftNodeExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaCraftNodeExcelTable> Pack(FlatBufferBuilder builder, GachaCraftNodeExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaCraftNodeExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.GachaCraftNodeExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.GachaCraftNodeExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateGachaCraftNodeExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class GachaCraftNodeExcelTableT
+{
+  public List<SCHALE.Common.FlatData.GachaCraftNodeExcelT> DataList { get; set; }
+
+  public GachaCraftNodeExcelTableT() {
+    this.DataList = null;
   }
 }
 

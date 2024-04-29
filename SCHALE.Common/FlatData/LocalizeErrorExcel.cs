@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeErrorExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct LocalizeErrorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeErrorExcel> EndLocalizeErrorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeErrorExcel>(o);
+  }
+  public LocalizeErrorExcelT UnPack() {
+    var _o = new LocalizeErrorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeErrorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeError");
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.ErrorLevel = TableEncryptionService.Convert(this.ErrorLevel, key);
+    _o.Kr = TableEncryptionService.Convert(this.Kr, key);
+    _o.Jp = TableEncryptionService.Convert(this.Jp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeErrorExcel> Pack(FlatBufferBuilder builder, LocalizeErrorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeErrorExcel>);
+    var _Kr = _o.Kr == null ? default(StringOffset) : builder.CreateString(_o.Kr);
+    var _Jp = _o.Jp == null ? default(StringOffset) : builder.CreateString(_o.Jp);
+    return CreateLocalizeErrorExcel(
+      builder,
+      _o.Key,
+      _o.ErrorLevel,
+      _Kr,
+      _Jp);
+  }
+}
+
+public class LocalizeErrorExcelT
+{
+  public uint Key { get; set; }
+  public SCHALE.Common.FlatData.WebAPIErrorLevel ErrorLevel { get; set; }
+  public string Kr { get; set; }
+  public string Jp { get; set; }
+
+  public LocalizeErrorExcelT() {
+    this.Key = 0;
+    this.ErrorLevel = SCHALE.Common.FlatData.WebAPIErrorLevel.None;
+    this.Kr = null;
+    this.Jp = null;
   }
 }
 

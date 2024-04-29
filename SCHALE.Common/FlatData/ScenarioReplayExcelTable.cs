@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioReplayExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ScenarioReplayExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioReplayExcelTable> EndScenarioReplayExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioReplayExcelTable>(o);
+  }
+  public ScenarioReplayExcelTableT UnPack() {
+    var _o = new ScenarioReplayExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioReplayExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioReplayExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ScenarioReplayExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioReplayExcelTable> Pack(FlatBufferBuilder builder, ScenarioReplayExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioReplayExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ScenarioReplayExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ScenarioReplayExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateScenarioReplayExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ScenarioReplayExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ScenarioReplayExcelT> DataList { get; set; }
+
+  public ScenarioReplayExcelTableT() {
+    this.DataList = null;
   }
 }
 

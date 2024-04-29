@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidStageLimitedRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EliminateRaidStageLimitedRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelTable> EndEliminateRaidStageLimitedRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelTable>(o);
+  }
+  public EliminateRaidStageLimitedRewardExcelTableT UnPack() {
+    var _o = new EliminateRaidStageLimitedRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidStageLimitedRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidStageLimitedRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelTable> Pack(FlatBufferBuilder builder, EliminateRaidStageLimitedRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEliminateRaidStageLimitedRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EliminateRaidStageLimitedRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EliminateRaidStageLimitedRewardExcelT> DataList { get; set; }
+
+  public EliminateRaidStageLimitedRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

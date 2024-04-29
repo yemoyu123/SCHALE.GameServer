@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterStatsTransExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct CharacterStatsTransExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterStatsTransExcel> EndCharacterStatsTransExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterStatsTransExcel>(o);
+  }
+  public CharacterStatsTransExcelT UnPack() {
+    var _o = new CharacterStatsTransExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterStatsTransExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterStatsTrans");
+    _o.TransSupportStats = TableEncryptionService.Convert(this.TransSupportStats, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+    _o.TransSupportStatsFactor = TableEncryptionService.Convert(this.TransSupportStatsFactor, key);
+    _o.StatTransType = TableEncryptionService.Convert(this.StatTransType, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterStatsTransExcel> Pack(FlatBufferBuilder builder, CharacterStatsTransExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterStatsTransExcel>);
+    return CreateCharacterStatsTransExcel(
+      builder,
+      _o.TransSupportStats,
+      _o.EchelonExtensionType,
+      _o.TransSupportStatsFactor,
+      _o.StatTransType);
+  }
+}
+
+public class CharacterStatsTransExcelT
+{
+  public SCHALE.Common.FlatData.StatType TransSupportStats { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+  public int TransSupportStatsFactor { get; set; }
+  public SCHALE.Common.FlatData.StatTransType StatTransType { get; set; }
+
+  public CharacterStatsTransExcelT() {
+    this.TransSupportStats = SCHALE.Common.FlatData.StatType.None;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
+    this.TransSupportStatsFactor = 0;
+    this.StatTransType = SCHALE.Common.FlatData.StatTransType.SpecialTransStat;
   }
 }
 

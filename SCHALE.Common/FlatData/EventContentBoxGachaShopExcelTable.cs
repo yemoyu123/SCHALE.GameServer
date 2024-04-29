@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentBoxGachaShopExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentBoxGachaShopExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelTable> EndEventContentBoxGachaShopExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelTable>(o);
+  }
+  public EventContentBoxGachaShopExcelTableT UnPack() {
+    var _o = new EventContentBoxGachaShopExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentBoxGachaShopExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentBoxGachaShopExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelTable> Pack(FlatBufferBuilder builder, EventContentBoxGachaShopExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentBoxGachaShopExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentBoxGachaShopExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentBoxGachaShopExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentBoxGachaShopExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentBoxGachaShopExcelT> DataList { get; set; }
+
+  public EventContentBoxGachaShopExcelTableT() {
+    this.DataList = null;
   }
 }
 

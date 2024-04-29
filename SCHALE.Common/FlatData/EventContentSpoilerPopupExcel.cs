@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentSpoilerPopupExcel : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct EventContentSpoilerPopupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentSpoilerPopupExcel> EndEventContentSpoilerPopupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentSpoilerPopupExcel>(o);
+  }
+  public EventContentSpoilerPopupExcelT UnPack() {
+    var _o = new EventContentSpoilerPopupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentSpoilerPopupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentSpoilerPopup");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.SpoilerPopupTitle = TableEncryptionService.Convert(this.SpoilerPopupTitle, key);
+    _o.SpoilerPopupDescription = TableEncryptionService.Convert(this.SpoilerPopupDescription, key);
+    _o.IsWarningPopUp = TableEncryptionService.Convert(this.IsWarningPopUp, key);
+    _o.ConditionScenarioModeId = TableEncryptionService.Convert(this.ConditionScenarioModeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentSpoilerPopupExcel> Pack(FlatBufferBuilder builder, EventContentSpoilerPopupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentSpoilerPopupExcel>);
+    var _SpoilerPopupTitle = _o.SpoilerPopupTitle == null ? default(StringOffset) : builder.CreateString(_o.SpoilerPopupTitle);
+    var _SpoilerPopupDescription = _o.SpoilerPopupDescription == null ? default(StringOffset) : builder.CreateString(_o.SpoilerPopupDescription);
+    return CreateEventContentSpoilerPopupExcel(
+      builder,
+      _o.EventContentId,
+      _SpoilerPopupTitle,
+      _SpoilerPopupDescription,
+      _o.IsWarningPopUp,
+      _o.ConditionScenarioModeId);
+  }
+}
+
+public class EventContentSpoilerPopupExcelT
+{
+  public long EventContentId { get; set; }
+  public string SpoilerPopupTitle { get; set; }
+  public string SpoilerPopupDescription { get; set; }
+  public bool IsWarningPopUp { get; set; }
+  public long ConditionScenarioModeId { get; set; }
+
+  public EventContentSpoilerPopupExcelT() {
+    this.EventContentId = 0;
+    this.SpoilerPopupTitle = null;
+    this.SpoilerPopupDescription = null;
+    this.IsWarningPopUp = false;
+    this.ConditionScenarioModeId = 0;
   }
 }
 

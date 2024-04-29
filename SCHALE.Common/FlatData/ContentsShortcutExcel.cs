@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentsShortcutExcel : IFlatbufferObject
@@ -105,6 +106,88 @@ public struct ContentsShortcutExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentsShortcutExcel> EndContentsShortcutExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentsShortcutExcel>(o);
+  }
+  public ContentsShortcutExcelT UnPack() {
+    var _o = new ContentsShortcutExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentsShortcutExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentsShortcut");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ScenarioModeVolume = TableEncryptionService.Convert(this.ScenarioModeVolume, key);
+    _o.ScenarioModeChapter = TableEncryptionService.Convert(this.ScenarioModeChapter, key);
+    _o.ShortcutOpenTime = TableEncryptionService.Convert(this.ShortcutOpenTime, key);
+    _o.ShortcutCloseTime = TableEncryptionService.Convert(this.ShortcutCloseTime, key);
+    _o.ConditionContentId = TableEncryptionService.Convert(this.ConditionContentId, key);
+    _o.ConquestMapDifficulty = TableEncryptionService.Convert(this.ConquestMapDifficulty, key);
+    _o.ConquestStepIndex = TableEncryptionService.Convert(this.ConquestStepIndex, key);
+    _o.ShortcutContentId = TableEncryptionService.Convert(this.ShortcutContentId, key);
+    _o.ShortcutUIName = new List<string>();
+    for (var _j = 0; _j < this.ShortcutUINameLength; ++_j) {_o.ShortcutUIName.Add(TableEncryptionService.Convert(this.ShortcutUIName(_j), key));}
+    _o.Localize = TableEncryptionService.Convert(this.Localize, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentsShortcutExcel> Pack(FlatBufferBuilder builder, ContentsShortcutExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentsShortcutExcel>);
+    var _ShortcutOpenTime = _o.ShortcutOpenTime == null ? default(StringOffset) : builder.CreateString(_o.ShortcutOpenTime);
+    var _ShortcutCloseTime = _o.ShortcutCloseTime == null ? default(StringOffset) : builder.CreateString(_o.ShortcutCloseTime);
+    var _ShortcutUIName = default(VectorOffset);
+    if (_o.ShortcutUIName != null) {
+      var __ShortcutUIName = new StringOffset[_o.ShortcutUIName.Count];
+      for (var _j = 0; _j < __ShortcutUIName.Length; ++_j) { __ShortcutUIName[_j] = builder.CreateString(_o.ShortcutUIName[_j]); }
+      _ShortcutUIName = CreateShortcutUINameVector(builder, __ShortcutUIName);
+    }
+    var _Localize = _o.Localize == null ? default(StringOffset) : builder.CreateString(_o.Localize);
+    return CreateContentsShortcutExcel(
+      builder,
+      _o.UniqueId,
+      _o.ContentType,
+      _o.EventContentId,
+      _o.ScenarioModeVolume,
+      _o.ScenarioModeChapter,
+      _ShortcutOpenTime,
+      _ShortcutCloseTime,
+      _o.ConditionContentId,
+      _o.ConquestMapDifficulty,
+      _o.ConquestStepIndex,
+      _o.ShortcutContentId,
+      _ShortcutUIName,
+      _Localize);
+  }
+}
+
+public class ContentsShortcutExcelT
+{
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long EventContentId { get; set; }
+  public long ScenarioModeVolume { get; set; }
+  public long ScenarioModeChapter { get; set; }
+  public string ShortcutOpenTime { get; set; }
+  public string ShortcutCloseTime { get; set; }
+  public long ConditionContentId { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty ConquestMapDifficulty { get; set; }
+  public int ConquestStepIndex { get; set; }
+  public long ShortcutContentId { get; set; }
+  public List<string> ShortcutUIName { get; set; }
+  public string Localize { get; set; }
+
+  public ContentsShortcutExcelT() {
+    this.UniqueId = 0;
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.EventContentId = 0;
+    this.ScenarioModeVolume = 0;
+    this.ScenarioModeChapter = 0;
+    this.ShortcutOpenTime = null;
+    this.ShortcutCloseTime = null;
+    this.ConditionContentId = 0;
+    this.ConquestMapDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.ConquestStepIndex = 0;
+    this.ShortcutContentId = 0;
+    this.ShortcutUIName = null;
+    this.Localize = null;
   }
 }
 

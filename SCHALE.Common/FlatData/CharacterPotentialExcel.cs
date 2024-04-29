@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterPotentialExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct CharacterPotentialExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterPotentialExcel> EndCharacterPotentialExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterPotentialExcel>(o);
+  }
+  public CharacterPotentialExcelT UnPack() {
+    var _o = new CharacterPotentialExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterPotentialExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterPotential");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.PotentialStatGroupId = TableEncryptionService.Convert(this.PotentialStatGroupId, key);
+    _o.PotentialStatBonusRateType = TableEncryptionService.Convert(this.PotentialStatBonusRateType, key);
+    _o.IsUnnecessaryStat = TableEncryptionService.Convert(this.IsUnnecessaryStat, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterPotentialExcel> Pack(FlatBufferBuilder builder, CharacterPotentialExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterPotentialExcel>);
+    return CreateCharacterPotentialExcel(
+      builder,
+      _o.Id,
+      _o.PotentialStatGroupId,
+      _o.PotentialStatBonusRateType,
+      _o.IsUnnecessaryStat);
+  }
+}
+
+public class CharacterPotentialExcelT
+{
+  public long Id { get; set; }
+  public long PotentialStatGroupId { get; set; }
+  public SCHALE.Common.FlatData.PotentialStatBonusRateType PotentialStatBonusRateType { get; set; }
+  public bool IsUnnecessaryStat { get; set; }
+
+  public CharacterPotentialExcelT() {
+    this.Id = 0;
+    this.PotentialStatGroupId = 0;
+    this.PotentialStatBonusRateType = SCHALE.Common.FlatData.PotentialStatBonusRateType.None;
+    this.IsUnnecessaryStat = false;
   }
 }
 

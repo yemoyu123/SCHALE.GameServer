@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterLevelStatFactorExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CharacterLevelStatFactorExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelTable> EndCharacterLevelStatFactorExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelTable>(o);
+  }
+  public CharacterLevelStatFactorExcelTableT UnPack() {
+    var _o = new CharacterLevelStatFactorExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterLevelStatFactorExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterLevelStatFactorExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelTable> Pack(FlatBufferBuilder builder, CharacterLevelStatFactorExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CharacterLevelStatFactorExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCharacterLevelStatFactorExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CharacterLevelStatFactorExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CharacterLevelStatFactorExcelT> DataList { get; set; }
+
+  public CharacterLevelStatFactorExcelTableT() {
+    this.DataList = null;
   }
 }
 

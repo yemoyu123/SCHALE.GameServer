@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PropMotion : IFlatbufferObject
@@ -59,6 +60,53 @@ public struct PropMotion : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PropMotion> EndPropMotion(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PropMotion>(o);
+  }
+  public PropMotionT UnPack() {
+    var _o = new PropMotionT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PropMotionT _o) {
+		byte[] key = { 0 };
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.Positions = new List<SCHALE.Common.FlatData.PropVector3T>();
+    for (var _j = 0; _j < this.PositionsLength; ++_j) {_o.Positions.Add(this.Positions(_j).HasValue ? this.Positions(_j).Value.UnPack() : null);}
+    _o.Rotations = new List<SCHALE.Common.FlatData.PropVector3T>();
+    for (var _j = 0; _j < this.RotationsLength; ++_j) {_o.Rotations.Add(this.Rotations(_j).HasValue ? this.Rotations(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.PropMotion> Pack(FlatBufferBuilder builder, PropMotionT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PropMotion>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _Positions = default(VectorOffset);
+    if (_o.Positions != null) {
+      var __Positions = new Offset<SCHALE.Common.FlatData.PropVector3>[_o.Positions.Count];
+      for (var _j = 0; _j < __Positions.Length; ++_j) { __Positions[_j] = SCHALE.Common.FlatData.PropVector3.Pack(builder, _o.Positions[_j]); }
+      _Positions = CreatePositionsVector(builder, __Positions);
+    }
+    var _Rotations = default(VectorOffset);
+    if (_o.Rotations != null) {
+      var __Rotations = new Offset<SCHALE.Common.FlatData.PropVector3>[_o.Rotations.Count];
+      for (var _j = 0; _j < __Rotations.Length; ++_j) { __Rotations[_j] = SCHALE.Common.FlatData.PropVector3.Pack(builder, _o.Rotations[_j]); }
+      _Rotations = CreateRotationsVector(builder, __Rotations);
+    }
+    return CreatePropMotion(
+      builder,
+      _Name,
+      _Positions,
+      _Rotations);
+  }
+}
+
+public class PropMotionT
+{
+  public string Name { get; set; }
+  public List<SCHALE.Common.FlatData.PropVector3T> Positions { get; set; }
+  public List<SCHALE.Common.FlatData.PropVector3T> Rotations { get; set; }
+
+  public PropMotionT() {
+    this.Name = null;
+    this.Positions = null;
+    this.Rotations = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaCraftNodeGroupExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct GachaCraftNodeGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaCraftNodeGroupExcel> EndGachaCraftNodeGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaCraftNodeGroupExcel>(o);
+  }
+  public GachaCraftNodeGroupExcelT UnPack() {
+    var _o = new GachaCraftNodeGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaCraftNodeGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaCraftNodeGroup");
+    _o.NodeId = TableEncryptionService.Convert(this.NodeId, key);
+    _o.GachaGroupId = TableEncryptionService.Convert(this.GachaGroupId, key);
+    _o.ProbWeight = TableEncryptionService.Convert(this.ProbWeight, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaCraftNodeGroupExcel> Pack(FlatBufferBuilder builder, GachaCraftNodeGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaCraftNodeGroupExcel>);
+    return CreateGachaCraftNodeGroupExcel(
+      builder,
+      _o.NodeId,
+      _o.GachaGroupId,
+      _o.ProbWeight);
+  }
+}
+
+public class GachaCraftNodeGroupExcelT
+{
+  public long NodeId { get; set; }
+  public long GachaGroupId { get; set; }
+  public long ProbWeight { get; set; }
+
+  public GachaCraftNodeGroupExcelT() {
+    this.NodeId = 0;
+    this.GachaGroupId = 0;
+    this.ProbWeight = 0;
   }
 }
 

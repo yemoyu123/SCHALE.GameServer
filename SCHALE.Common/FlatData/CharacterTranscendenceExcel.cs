@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterTranscendenceExcel : IFlatbufferObject
@@ -149,6 +150,112 @@ public struct CharacterTranscendenceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterTranscendenceExcel> EndCharacterTranscendenceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterTranscendenceExcel>(o);
+  }
+  public CharacterTranscendenceExcelT UnPack() {
+    var _o = new CharacterTranscendenceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterTranscendenceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterTranscendence");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.MaxFavorLevel = new List<int>();
+    for (var _j = 0; _j < this.MaxFavorLevelLength; ++_j) {_o.MaxFavorLevel.Add(TableEncryptionService.Convert(this.MaxFavorLevel(_j), key));}
+    _o.StatBonusRateAttack = new List<long>();
+    for (var _j = 0; _j < this.StatBonusRateAttackLength; ++_j) {_o.StatBonusRateAttack.Add(TableEncryptionService.Convert(this.StatBonusRateAttack(_j), key));}
+    _o.StatBonusRateHP = new List<long>();
+    for (var _j = 0; _j < this.StatBonusRateHPLength; ++_j) {_o.StatBonusRateHP.Add(TableEncryptionService.Convert(this.StatBonusRateHP(_j), key));}
+    _o.StatBonusRateHeal = new List<long>();
+    for (var _j = 0; _j < this.StatBonusRateHealLength; ++_j) {_o.StatBonusRateHeal.Add(TableEncryptionService.Convert(this.StatBonusRateHeal(_j), key));}
+    _o.RecipeId = new List<long>();
+    for (var _j = 0; _j < this.RecipeIdLength; ++_j) {_o.RecipeId.Add(TableEncryptionService.Convert(this.RecipeId(_j), key));}
+    _o.SkillSlotA = new List<string>();
+    for (var _j = 0; _j < this.SkillSlotALength; ++_j) {_o.SkillSlotA.Add(TableEncryptionService.Convert(this.SkillSlotA(_j), key));}
+    _o.SkillSlotB = new List<string>();
+    for (var _j = 0; _j < this.SkillSlotBLength; ++_j) {_o.SkillSlotB.Add(TableEncryptionService.Convert(this.SkillSlotB(_j), key));}
+    _o.MaxlevelStar = new List<int>();
+    for (var _j = 0; _j < this.MaxlevelStarLength; ++_j) {_o.MaxlevelStar.Add(TableEncryptionService.Convert(this.MaxlevelStar(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterTranscendenceExcel> Pack(FlatBufferBuilder builder, CharacterTranscendenceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterTranscendenceExcel>);
+    var _MaxFavorLevel = default(VectorOffset);
+    if (_o.MaxFavorLevel != null) {
+      var __MaxFavorLevel = _o.MaxFavorLevel.ToArray();
+      _MaxFavorLevel = CreateMaxFavorLevelVector(builder, __MaxFavorLevel);
+    }
+    var _StatBonusRateAttack = default(VectorOffset);
+    if (_o.StatBonusRateAttack != null) {
+      var __StatBonusRateAttack = _o.StatBonusRateAttack.ToArray();
+      _StatBonusRateAttack = CreateStatBonusRateAttackVector(builder, __StatBonusRateAttack);
+    }
+    var _StatBonusRateHP = default(VectorOffset);
+    if (_o.StatBonusRateHP != null) {
+      var __StatBonusRateHP = _o.StatBonusRateHP.ToArray();
+      _StatBonusRateHP = CreateStatBonusRateHPVector(builder, __StatBonusRateHP);
+    }
+    var _StatBonusRateHeal = default(VectorOffset);
+    if (_o.StatBonusRateHeal != null) {
+      var __StatBonusRateHeal = _o.StatBonusRateHeal.ToArray();
+      _StatBonusRateHeal = CreateStatBonusRateHealVector(builder, __StatBonusRateHeal);
+    }
+    var _RecipeId = default(VectorOffset);
+    if (_o.RecipeId != null) {
+      var __RecipeId = _o.RecipeId.ToArray();
+      _RecipeId = CreateRecipeIdVector(builder, __RecipeId);
+    }
+    var _SkillSlotA = default(VectorOffset);
+    if (_o.SkillSlotA != null) {
+      var __SkillSlotA = new StringOffset[_o.SkillSlotA.Count];
+      for (var _j = 0; _j < __SkillSlotA.Length; ++_j) { __SkillSlotA[_j] = builder.CreateString(_o.SkillSlotA[_j]); }
+      _SkillSlotA = CreateSkillSlotAVector(builder, __SkillSlotA);
+    }
+    var _SkillSlotB = default(VectorOffset);
+    if (_o.SkillSlotB != null) {
+      var __SkillSlotB = new StringOffset[_o.SkillSlotB.Count];
+      for (var _j = 0; _j < __SkillSlotB.Length; ++_j) { __SkillSlotB[_j] = builder.CreateString(_o.SkillSlotB[_j]); }
+      _SkillSlotB = CreateSkillSlotBVector(builder, __SkillSlotB);
+    }
+    var _MaxlevelStar = default(VectorOffset);
+    if (_o.MaxlevelStar != null) {
+      var __MaxlevelStar = _o.MaxlevelStar.ToArray();
+      _MaxlevelStar = CreateMaxlevelStarVector(builder, __MaxlevelStar);
+    }
+    return CreateCharacterTranscendenceExcel(
+      builder,
+      _o.CharacterId,
+      _MaxFavorLevel,
+      _StatBonusRateAttack,
+      _StatBonusRateHP,
+      _StatBonusRateHeal,
+      _RecipeId,
+      _SkillSlotA,
+      _SkillSlotB,
+      _MaxlevelStar);
+  }
+}
+
+public class CharacterTranscendenceExcelT
+{
+  public long CharacterId { get; set; }
+  public List<int> MaxFavorLevel { get; set; }
+  public List<long> StatBonusRateAttack { get; set; }
+  public List<long> StatBonusRateHP { get; set; }
+  public List<long> StatBonusRateHeal { get; set; }
+  public List<long> RecipeId { get; set; }
+  public List<string> SkillSlotA { get; set; }
+  public List<string> SkillSlotB { get; set; }
+  public List<int> MaxlevelStar { get; set; }
+
+  public CharacterTranscendenceExcelT() {
+    this.CharacterId = 0;
+    this.MaxFavorLevel = null;
+    this.StatBonusRateAttack = null;
+    this.StatBonusRateHP = null;
+    this.StatBonusRateHeal = null;
+    this.RecipeId = null;
+    this.SkillSlotA = null;
+    this.SkillSlotB = null;
+    this.MaxlevelStar = null;
   }
 }
 

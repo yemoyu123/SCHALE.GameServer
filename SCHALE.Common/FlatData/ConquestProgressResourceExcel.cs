@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestProgressResourceExcel : IFlatbufferObject
@@ -77,6 +78,58 @@ public struct ConquestProgressResourceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestProgressResourceExcel> EndConquestProgressResourceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestProgressResourceExcel>(o);
+  }
+  public ConquestProgressResourceExcelT UnPack() {
+    var _o = new ConquestProgressResourceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestProgressResourceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestProgressResource");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Group = TableEncryptionService.Convert(this.Group, key);
+    _o.ProgressResource = TableEncryptionService.Convert(this.ProgressResource, key);
+    _o.VoiceId = new List<uint>();
+    for (var _j = 0; _j < this.VoiceIdLength; ++_j) {_o.VoiceId.Add(TableEncryptionService.Convert(this.VoiceId(_j), key));}
+    _o.ProgressLocalizeCode = TableEncryptionService.Convert(this.ProgressLocalizeCode, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestProgressResourceExcel> Pack(FlatBufferBuilder builder, ConquestProgressResourceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestProgressResourceExcel>);
+    var _ProgressResource = _o.ProgressResource == null ? default(StringOffset) : builder.CreateString(_o.ProgressResource);
+    var _VoiceId = default(VectorOffset);
+    if (_o.VoiceId != null) {
+      var __VoiceId = _o.VoiceId.ToArray();
+      _VoiceId = CreateVoiceIdVector(builder, __VoiceId);
+    }
+    var _ProgressLocalizeCode = _o.ProgressLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.ProgressLocalizeCode);
+    return CreateConquestProgressResourceExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.Group,
+      _ProgressResource,
+      _VoiceId,
+      _ProgressLocalizeCode);
+  }
+}
+
+public class ConquestProgressResourceExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.ConquestProgressType Group { get; set; }
+  public string ProgressResource { get; set; }
+  public List<uint> VoiceId { get; set; }
+  public string ProgressLocalizeCode { get; set; }
+
+  public ConquestProgressResourceExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.Group = SCHALE.Common.FlatData.ConquestProgressType.None;
+    this.ProgressResource = null;
+    this.VoiceId = null;
+    this.ProgressLocalizeCode = null;
   }
 }
 

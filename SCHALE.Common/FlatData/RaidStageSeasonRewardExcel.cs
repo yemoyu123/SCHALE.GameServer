@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RaidStageSeasonRewardExcel : IFlatbufferObject
@@ -91,6 +92,71 @@ public struct RaidStageSeasonRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcel> EndRaidStageSeasonRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcel>(o);
+  }
+  public RaidStageSeasonRewardExcelT UnPack() {
+    var _o = new RaidStageSeasonRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RaidStageSeasonRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RaidStageSeasonReward");
+    _o.SeasonRewardId = TableEncryptionService.Convert(this.SeasonRewardId, key);
+    _o.SeasonRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.SeasonRewardParcelTypeLength; ++_j) {_o.SeasonRewardParcelType.Add(TableEncryptionService.Convert(this.SeasonRewardParcelType(_j), key));}
+    _o.SeasonRewardParcelUniqueId = new List<long>();
+    for (var _j = 0; _j < this.SeasonRewardParcelUniqueIdLength; ++_j) {_o.SeasonRewardParcelUniqueId.Add(TableEncryptionService.Convert(this.SeasonRewardParcelUniqueId(_j), key));}
+    _o.SeasonRewardParcelUniqueName = new List<string>();
+    for (var _j = 0; _j < this.SeasonRewardParcelUniqueNameLength; ++_j) {_o.SeasonRewardParcelUniqueName.Add(TableEncryptionService.Convert(this.SeasonRewardParcelUniqueName(_j), key));}
+    _o.SeasonRewardAmount = new List<long>();
+    for (var _j = 0; _j < this.SeasonRewardAmountLength; ++_j) {_o.SeasonRewardAmount.Add(TableEncryptionService.Convert(this.SeasonRewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcel> Pack(FlatBufferBuilder builder, RaidStageSeasonRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcel>);
+    var _SeasonRewardParcelType = default(VectorOffset);
+    if (_o.SeasonRewardParcelType != null) {
+      var __SeasonRewardParcelType = _o.SeasonRewardParcelType.ToArray();
+      _SeasonRewardParcelType = CreateSeasonRewardParcelTypeVector(builder, __SeasonRewardParcelType);
+    }
+    var _SeasonRewardParcelUniqueId = default(VectorOffset);
+    if (_o.SeasonRewardParcelUniqueId != null) {
+      var __SeasonRewardParcelUniqueId = _o.SeasonRewardParcelUniqueId.ToArray();
+      _SeasonRewardParcelUniqueId = CreateSeasonRewardParcelUniqueIdVector(builder, __SeasonRewardParcelUniqueId);
+    }
+    var _SeasonRewardParcelUniqueName = default(VectorOffset);
+    if (_o.SeasonRewardParcelUniqueName != null) {
+      var __SeasonRewardParcelUniqueName = new StringOffset[_o.SeasonRewardParcelUniqueName.Count];
+      for (var _j = 0; _j < __SeasonRewardParcelUniqueName.Length; ++_j) { __SeasonRewardParcelUniqueName[_j] = builder.CreateString(_o.SeasonRewardParcelUniqueName[_j]); }
+      _SeasonRewardParcelUniqueName = CreateSeasonRewardParcelUniqueNameVector(builder, __SeasonRewardParcelUniqueName);
+    }
+    var _SeasonRewardAmount = default(VectorOffset);
+    if (_o.SeasonRewardAmount != null) {
+      var __SeasonRewardAmount = _o.SeasonRewardAmount.ToArray();
+      _SeasonRewardAmount = CreateSeasonRewardAmountVector(builder, __SeasonRewardAmount);
+    }
+    return CreateRaidStageSeasonRewardExcel(
+      builder,
+      _o.SeasonRewardId,
+      _SeasonRewardParcelType,
+      _SeasonRewardParcelUniqueId,
+      _SeasonRewardParcelUniqueName,
+      _SeasonRewardAmount);
+  }
+}
+
+public class RaidStageSeasonRewardExcelT
+{
+  public long SeasonRewardId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> SeasonRewardParcelType { get; set; }
+  public List<long> SeasonRewardParcelUniqueId { get; set; }
+  public List<string> SeasonRewardParcelUniqueName { get; set; }
+  public List<long> SeasonRewardAmount { get; set; }
+
+  public RaidStageSeasonRewardExcelT() {
+    this.SeasonRewardId = 0;
+    this.SeasonRewardParcelType = null;
+    this.SeasonRewardParcelUniqueId = null;
+    this.SeasonRewardParcelUniqueName = null;
+    this.SeasonRewardAmount = null;
   }
 }
 

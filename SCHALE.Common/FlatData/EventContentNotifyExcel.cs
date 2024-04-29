@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentNotifyExcel : IFlatbufferObject
@@ -63,6 +64,55 @@ public struct EventContentNotifyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentNotifyExcel> EndEventContentNotifyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentNotifyExcel>(o);
+  }
+  public EventContentNotifyExcelT UnPack() {
+    var _o = new EventContentNotifyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentNotifyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentNotify");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.EventNotifyType = TableEncryptionService.Convert(this.EventNotifyType, key);
+    _o.EventTargetType = TableEncryptionService.Convert(this.EventTargetType, key);
+    _o.ShortcutEventTargetType = TableEncryptionService.Convert(this.ShortcutEventTargetType, key);
+    _o.IsShortcutEnable = TableEncryptionService.Convert(this.IsShortcutEnable, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentNotifyExcel> Pack(FlatBufferBuilder builder, EventContentNotifyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentNotifyExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    return CreateEventContentNotifyExcel(
+      builder,
+      _o.Id,
+      _o.LocalizeEtcId,
+      _IconPath,
+      _o.EventNotifyType,
+      _o.EventTargetType,
+      _o.ShortcutEventTargetType,
+      _o.IsShortcutEnable);
+  }
+}
+
+public class EventContentNotifyExcelT
+{
+  public int Id { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string IconPath { get; set; }
+  public SCHALE.Common.FlatData.EventNotifyType EventNotifyType { get; set; }
+  public SCHALE.Common.FlatData.EventTargetType EventTargetType { get; set; }
+  public SCHALE.Common.FlatData.EventTargetType ShortcutEventTargetType { get; set; }
+  public bool IsShortcutEnable { get; set; }
+
+  public EventContentNotifyExcelT() {
+    this.Id = 0;
+    this.LocalizeEtcId = 0;
+    this.IconPath = null;
+    this.EventNotifyType = SCHALE.Common.FlatData.EventNotifyType.RewardIncreaseEvent;
+    this.EventTargetType = SCHALE.Common.FlatData.EventTargetType.WeekDungeon;
+    this.ShortcutEventTargetType = SCHALE.Common.FlatData.EventTargetType.WeekDungeon;
+    this.IsShortcutEnable = false;
   }
 }
 

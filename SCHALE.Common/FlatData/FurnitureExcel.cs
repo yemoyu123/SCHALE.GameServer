@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FurnitureExcel : IFlatbufferObject
@@ -265,6 +266,230 @@ public struct FurnitureExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FurnitureExcel> EndFurnitureExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FurnitureExcel>(o);
+  }
+  public FurnitureExcelT UnPack() {
+    var _o = new FurnitureExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FurnitureExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Furniture");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.Category = TableEncryptionService.Convert(this.Category, key);
+    _o.SubCategory = TableEncryptionService.Convert(this.SubCategory, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.StarGradeInit = TableEncryptionService.Convert(this.StarGradeInit, key);
+    _o.Tier = TableEncryptionService.Convert(this.Tier, key);
+    _o.Icon = TableEncryptionService.Convert(this.Icon, key);
+    _o.SizeWidth = TableEncryptionService.Convert(this.SizeWidth, key);
+    _o.SizeHeight = TableEncryptionService.Convert(this.SizeHeight, key);
+    _o.OtherSize = TableEncryptionService.Convert(this.OtherSize, key);
+    _o.ExpandWidth = TableEncryptionService.Convert(this.ExpandWidth, key);
+    _o.Enable = TableEncryptionService.Convert(this.Enable, key);
+    _o.ReverseRotation = TableEncryptionService.Convert(this.ReverseRotation, key);
+    _o.Prefab = TableEncryptionService.Convert(this.Prefab, key);
+    _o.PrefabExpand = TableEncryptionService.Convert(this.PrefabExpand, key);
+    _o.SubPrefab = TableEncryptionService.Convert(this.SubPrefab, key);
+    _o.SubExpandPrefab = TableEncryptionService.Convert(this.SubExpandPrefab, key);
+    _o.CornerPrefab = TableEncryptionService.Convert(this.CornerPrefab, key);
+    _o.StackableMax = TableEncryptionService.Convert(this.StackableMax, key);
+    _o.RecipeCraftId = TableEncryptionService.Convert(this.RecipeCraftId, key);
+    _o.SetGroudpId = TableEncryptionService.Convert(this.SetGroudpId, key);
+    _o.ComfortBonus = TableEncryptionService.Convert(this.ComfortBonus, key);
+    _o.VisitOperationType = TableEncryptionService.Convert(this.VisitOperationType, key);
+    _o.VisitBonusOperationType = TableEncryptionService.Convert(this.VisitBonusOperationType, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+    _o.CraftQualityTier0 = TableEncryptionService.Convert(this.CraftQualityTier0, key);
+    _o.CraftQualityTier1 = TableEncryptionService.Convert(this.CraftQualityTier1, key);
+    _o.CraftQualityTier2 = TableEncryptionService.Convert(this.CraftQualityTier2, key);
+    _o.ShiftingCraftQuality = TableEncryptionService.Convert(this.ShiftingCraftQuality, key);
+    _o.FurnitureFunctionType = TableEncryptionService.Convert(this.FurnitureFunctionType, key);
+    _o.FurnitureFunctionParameter = TableEncryptionService.Convert(this.FurnitureFunctionParameter, key);
+    _o.VideoId = TableEncryptionService.Convert(this.VideoId, key);
+    _o.EventCollectionId = TableEncryptionService.Convert(this.EventCollectionId, key);
+    _o.FurnitureBubbleOffsetX = TableEncryptionService.Convert(this.FurnitureBubbleOffsetX, key);
+    _o.FurnitureBubbleOffsetY = TableEncryptionService.Convert(this.FurnitureBubbleOffsetY, key);
+    _o.CafeCharacterStateReq = new List<string>();
+    for (var _j = 0; _j < this.CafeCharacterStateReqLength; ++_j) {_o.CafeCharacterStateReq.Add(TableEncryptionService.Convert(this.CafeCharacterStateReq(_j), key));}
+    _o.CafeCharacterStateAdd = new List<string>();
+    for (var _j = 0; _j < this.CafeCharacterStateAddLength; ++_j) {_o.CafeCharacterStateAdd.Add(TableEncryptionService.Convert(this.CafeCharacterStateAdd(_j), key));}
+    _o.CafeCharacterStateMake = new List<string>();
+    for (var _j = 0; _j < this.CafeCharacterStateMakeLength; ++_j) {_o.CafeCharacterStateMake.Add(TableEncryptionService.Convert(this.CafeCharacterStateMake(_j), key));}
+    _o.CafeCharacterStateOnly = new List<string>();
+    for (var _j = 0; _j < this.CafeCharacterStateOnlyLength; ++_j) {_o.CafeCharacterStateOnly.Add(TableEncryptionService.Convert(this.CafeCharacterStateOnly(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.FurnitureExcel> Pack(FlatBufferBuilder builder, FurnitureExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FurnitureExcel>);
+    var _Icon = _o.Icon == null ? default(StringOffset) : builder.CreateString(_o.Icon);
+    var _Prefab = _o.Prefab == null ? default(StringOffset) : builder.CreateString(_o.Prefab);
+    var _PrefabExpand = _o.PrefabExpand == null ? default(StringOffset) : builder.CreateString(_o.PrefabExpand);
+    var _SubPrefab = _o.SubPrefab == null ? default(StringOffset) : builder.CreateString(_o.SubPrefab);
+    var _SubExpandPrefab = _o.SubExpandPrefab == null ? default(StringOffset) : builder.CreateString(_o.SubExpandPrefab);
+    var _CornerPrefab = _o.CornerPrefab == null ? default(StringOffset) : builder.CreateString(_o.CornerPrefab);
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    var _CafeCharacterStateReq = default(VectorOffset);
+    if (_o.CafeCharacterStateReq != null) {
+      var __CafeCharacterStateReq = new StringOffset[_o.CafeCharacterStateReq.Count];
+      for (var _j = 0; _j < __CafeCharacterStateReq.Length; ++_j) { __CafeCharacterStateReq[_j] = builder.CreateString(_o.CafeCharacterStateReq[_j]); }
+      _CafeCharacterStateReq = CreateCafeCharacterStateReqVector(builder, __CafeCharacterStateReq);
+    }
+    var _CafeCharacterStateAdd = default(VectorOffset);
+    if (_o.CafeCharacterStateAdd != null) {
+      var __CafeCharacterStateAdd = new StringOffset[_o.CafeCharacterStateAdd.Count];
+      for (var _j = 0; _j < __CafeCharacterStateAdd.Length; ++_j) { __CafeCharacterStateAdd[_j] = builder.CreateString(_o.CafeCharacterStateAdd[_j]); }
+      _CafeCharacterStateAdd = CreateCafeCharacterStateAddVector(builder, __CafeCharacterStateAdd);
+    }
+    var _CafeCharacterStateMake = default(VectorOffset);
+    if (_o.CafeCharacterStateMake != null) {
+      var __CafeCharacterStateMake = new StringOffset[_o.CafeCharacterStateMake.Count];
+      for (var _j = 0; _j < __CafeCharacterStateMake.Length; ++_j) { __CafeCharacterStateMake[_j] = builder.CreateString(_o.CafeCharacterStateMake[_j]); }
+      _CafeCharacterStateMake = CreateCafeCharacterStateMakeVector(builder, __CafeCharacterStateMake);
+    }
+    var _CafeCharacterStateOnly = default(VectorOffset);
+    if (_o.CafeCharacterStateOnly != null) {
+      var __CafeCharacterStateOnly = new StringOffset[_o.CafeCharacterStateOnly.Count];
+      for (var _j = 0; _j < __CafeCharacterStateOnly.Length; ++_j) { __CafeCharacterStateOnly[_j] = builder.CreateString(_o.CafeCharacterStateOnly[_j]); }
+      _CafeCharacterStateOnly = CreateCafeCharacterStateOnlyVector(builder, __CafeCharacterStateOnly);
+    }
+    return CreateFurnitureExcel(
+      builder,
+      _o.Id,
+      _o.ProductionStep,
+      _o.Rarity,
+      _o.Category,
+      _o.SubCategory,
+      _o.LocalizeEtcId,
+      _o.StarGradeInit,
+      _o.Tier,
+      _Icon,
+      _o.SizeWidth,
+      _o.SizeHeight,
+      _o.OtherSize,
+      _o.ExpandWidth,
+      _o.Enable,
+      _o.ReverseRotation,
+      _Prefab,
+      _PrefabExpand,
+      _SubPrefab,
+      _SubExpandPrefab,
+      _CornerPrefab,
+      _o.StackableMax,
+      _o.RecipeCraftId,
+      _o.SetGroudpId,
+      _o.ComfortBonus,
+      _o.VisitOperationType,
+      _o.VisitBonusOperationType,
+      _Tags,
+      _o.CraftQualityTier0,
+      _o.CraftQualityTier1,
+      _o.CraftQualityTier2,
+      _o.ShiftingCraftQuality,
+      _o.FurnitureFunctionType,
+      _o.FurnitureFunctionParameter,
+      _o.VideoId,
+      _o.EventCollectionId,
+      _o.FurnitureBubbleOffsetX,
+      _o.FurnitureBubbleOffsetY,
+      _CafeCharacterStateReq,
+      _CafeCharacterStateAdd,
+      _CafeCharacterStateMake,
+      _CafeCharacterStateOnly);
+  }
+}
+
+public class FurnitureExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public SCHALE.Common.FlatData.FurnitureCategory Category { get; set; }
+  public SCHALE.Common.FlatData.FurnitureSubCategory SubCategory { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public int StarGradeInit { get; set; }
+  public long Tier { get; set; }
+  public string Icon { get; set; }
+  public int SizeWidth { get; set; }
+  public int SizeHeight { get; set; }
+  public int OtherSize { get; set; }
+  public int ExpandWidth { get; set; }
+  public bool Enable { get; set; }
+  public bool ReverseRotation { get; set; }
+  public string Prefab { get; set; }
+  public string PrefabExpand { get; set; }
+  public string SubPrefab { get; set; }
+  public string SubExpandPrefab { get; set; }
+  public string CornerPrefab { get; set; }
+  public long StackableMax { get; set; }
+  public long RecipeCraftId { get; set; }
+  public long SetGroudpId { get; set; }
+  public long ComfortBonus { get; set; }
+  public long VisitOperationType { get; set; }
+  public long VisitBonusOperationType { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+  public long CraftQualityTier0 { get; set; }
+  public long CraftQualityTier1 { get; set; }
+  public long CraftQualityTier2 { get; set; }
+  public long ShiftingCraftQuality { get; set; }
+  public SCHALE.Common.FlatData.FurnitureFunctionType FurnitureFunctionType { get; set; }
+  public long FurnitureFunctionParameter { get; set; }
+  public long VideoId { get; set; }
+  public long EventCollectionId { get; set; }
+  public long FurnitureBubbleOffsetX { get; set; }
+  public long FurnitureBubbleOffsetY { get; set; }
+  public List<string> CafeCharacterStateReq { get; set; }
+  public List<string> CafeCharacterStateAdd { get; set; }
+  public List<string> CafeCharacterStateMake { get; set; }
+  public List<string> CafeCharacterStateOnly { get; set; }
+
+  public FurnitureExcelT() {
+    this.Id = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.Category = SCHALE.Common.FlatData.FurnitureCategory.Furnitures;
+    this.SubCategory = SCHALE.Common.FlatData.FurnitureSubCategory.Table;
+    this.LocalizeEtcId = 0;
+    this.StarGradeInit = 0;
+    this.Tier = 0;
+    this.Icon = null;
+    this.SizeWidth = 0;
+    this.SizeHeight = 0;
+    this.OtherSize = 0;
+    this.ExpandWidth = 0;
+    this.Enable = false;
+    this.ReverseRotation = false;
+    this.Prefab = null;
+    this.PrefabExpand = null;
+    this.SubPrefab = null;
+    this.SubExpandPrefab = null;
+    this.CornerPrefab = null;
+    this.StackableMax = 0;
+    this.RecipeCraftId = 0;
+    this.SetGroudpId = 0;
+    this.ComfortBonus = 0;
+    this.VisitOperationType = 0;
+    this.VisitBonusOperationType = 0;
+    this.Tags = null;
+    this.CraftQualityTier0 = 0;
+    this.CraftQualityTier1 = 0;
+    this.CraftQualityTier2 = 0;
+    this.ShiftingCraftQuality = 0;
+    this.FurnitureFunctionType = SCHALE.Common.FlatData.FurnitureFunctionType.None;
+    this.FurnitureFunctionParameter = 0;
+    this.VideoId = 0;
+    this.EventCollectionId = 0;
+    this.FurnitureBubbleOffsetX = 0;
+    this.FurnitureBubbleOffsetY = 0;
+    this.CafeCharacterStateReq = null;
+    this.CafeCharacterStateAdd = null;
+    this.CafeCharacterStateMake = null;
+    this.CafeCharacterStateOnly = null;
   }
 }
 

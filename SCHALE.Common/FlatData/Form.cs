@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct Form : IFlatbufferObject
@@ -19,11 +20,11 @@ public struct Form : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public Form __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public SCHALE.Common.FlatData.MoveEnd? MoveEnd { get { int o = __p.__offset(4); return o != 0 ? (SCHALE.Common.FlatData.MoveEnd?)(new SCHALE.Common.FlatData.MoveEnd()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
+  public SCHALE.Common.FlatData.MoveEndTable? MoveEnd { get { int o = __p.__offset(4); return o != 0 ? (SCHALE.Common.FlatData.MoveEndTable?)(new SCHALE.Common.FlatData.MoveEndTable()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
   public SCHALE.Common.FlatData.Motion? PublicSkill { get { int o = __p.__offset(6); return o != 0 ? (SCHALE.Common.FlatData.Motion?)(new SCHALE.Common.FlatData.Motion()).__assign(__p.__indirect(o + __p.bb_pos), __p.bb) : null; } }
 
   public static Offset<SCHALE.Common.FlatData.Form> CreateForm(FlatBufferBuilder builder,
-      Offset<SCHALE.Common.FlatData.MoveEnd> MoveEndOffset = default(Offset<SCHALE.Common.FlatData.MoveEnd>),
+      Offset<SCHALE.Common.FlatData.MoveEndTable> MoveEndOffset = default(Offset<SCHALE.Common.FlatData.MoveEndTable>),
       Offset<SCHALE.Common.FlatData.Motion> PublicSkillOffset = default(Offset<SCHALE.Common.FlatData.Motion>)) {
     builder.StartTable(2);
     Form.AddPublicSkill(builder, PublicSkillOffset);
@@ -32,11 +33,41 @@ public struct Form : IFlatbufferObject
   }
 
   public static void StartForm(FlatBufferBuilder builder) { builder.StartTable(2); }
-  public static void AddMoveEnd(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.MoveEnd> moveEndOffset) { builder.AddOffset(0, moveEndOffset.Value, 0); }
+  public static void AddMoveEnd(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.MoveEndTable> moveEndOffset) { builder.AddOffset(0, moveEndOffset.Value, 0); }
   public static void AddPublicSkill(FlatBufferBuilder builder, Offset<SCHALE.Common.FlatData.Motion> publicSkillOffset) { builder.AddOffset(1, publicSkillOffset.Value, 0); }
   public static Offset<SCHALE.Common.FlatData.Form> EndForm(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.Form>(o);
+  }
+  public FormT UnPack() {
+    var _o = new FormT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FormT _o) {
+		byte[] key = { 0 };
+    _o.MoveEnd = this.MoveEnd.HasValue ? this.MoveEnd.Value.UnPack() : null;
+    _o.PublicSkill = this.PublicSkill.HasValue ? this.PublicSkill.Value.UnPack() : null;
+  }
+  public static Offset<SCHALE.Common.FlatData.Form> Pack(FlatBufferBuilder builder, FormT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.Form>);
+    var _MoveEnd = _o.MoveEnd == null ? default(Offset<SCHALE.Common.FlatData.MoveEndTable>) : SCHALE.Common.FlatData.MoveEndTable.Pack(builder, _o.MoveEnd);
+    var _PublicSkill = _o.PublicSkill == null ? default(Offset<SCHALE.Common.FlatData.Motion>) : SCHALE.Common.FlatData.Motion.Pack(builder, _o.PublicSkill);
+    return CreateForm(
+      builder,
+      _MoveEnd,
+      _PublicSkill);
+  }
+}
+
+public class FormT
+{
+  public SCHALE.Common.FlatData.MoveEndTableT MoveEnd { get; set; }
+  public SCHALE.Common.FlatData.MotionT PublicSkill { get; set; }
+
+  public FormT() {
+    this.MoveEnd = null;
+    this.PublicSkill = null;
   }
 }
 

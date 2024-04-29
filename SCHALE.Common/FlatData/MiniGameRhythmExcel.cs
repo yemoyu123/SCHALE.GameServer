@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameRhythmExcel : IFlatbufferObject
@@ -133,6 +134,110 @@ public struct MiniGameRhythmExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameRhythmExcel> EndMiniGameRhythmExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameRhythmExcel>(o);
+  }
+  public MiniGameRhythmExcelT UnPack() {
+    var _o = new MiniGameRhythmExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameRhythmExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameRhythm");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.RhythmBgmId = TableEncryptionService.Convert(this.RhythmBgmId, key);
+    _o.PresetName = TableEncryptionService.Convert(this.PresetName, key);
+    _o.StageDifficulty = TableEncryptionService.Convert(this.StageDifficulty, key);
+    _o.IsSpecial = TableEncryptionService.Convert(this.IsSpecial, key);
+    _o.OpenStageScoreAmount = TableEncryptionService.Convert(this.OpenStageScoreAmount, key);
+    _o.MaxHp = TableEncryptionService.Convert(this.MaxHp, key);
+    _o.MissDamage = TableEncryptionService.Convert(this.MissDamage, key);
+    _o.CriticalHPRestoreValue = TableEncryptionService.Convert(this.CriticalHPRestoreValue, key);
+    _o.MaxScore = TableEncryptionService.Convert(this.MaxScore, key);
+    _o.FeverScoreRate = TableEncryptionService.Convert(this.FeverScoreRate, key);
+    _o.NoteScoreRate = TableEncryptionService.Convert(this.NoteScoreRate, key);
+    _o.ComboScoreRate = TableEncryptionService.Convert(this.ComboScoreRate, key);
+    _o.AttackScoreRate = TableEncryptionService.Convert(this.AttackScoreRate, key);
+    _o.FeverCriticalRate = TableEncryptionService.Convert(this.FeverCriticalRate, key);
+    _o.FeverAttackRate = TableEncryptionService.Convert(this.FeverAttackRate, key);
+    _o.MaxHpScore = TableEncryptionService.Convert(this.MaxHpScore, key);
+    _o.RhythmFileName = TableEncryptionService.Convert(this.RhythmFileName, key);
+    _o.ArtLevelSceneName = TableEncryptionService.Convert(this.ArtLevelSceneName, key);
+    _o.ComboImagePath = TableEncryptionService.Convert(this.ComboImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameRhythmExcel> Pack(FlatBufferBuilder builder, MiniGameRhythmExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameRhythmExcel>);
+    var _PresetName = _o.PresetName == null ? default(StringOffset) : builder.CreateString(_o.PresetName);
+    var _RhythmFileName = _o.RhythmFileName == null ? default(StringOffset) : builder.CreateString(_o.RhythmFileName);
+    var _ArtLevelSceneName = _o.ArtLevelSceneName == null ? default(StringOffset) : builder.CreateString(_o.ArtLevelSceneName);
+    var _ComboImagePath = _o.ComboImagePath == null ? default(StringOffset) : builder.CreateString(_o.ComboImagePath);
+    return CreateMiniGameRhythmExcel(
+      builder,
+      _o.UniqueId,
+      _o.RhythmBgmId,
+      _PresetName,
+      _o.StageDifficulty,
+      _o.IsSpecial,
+      _o.OpenStageScoreAmount,
+      _o.MaxHp,
+      _o.MissDamage,
+      _o.CriticalHPRestoreValue,
+      _o.MaxScore,
+      _o.FeverScoreRate,
+      _o.NoteScoreRate,
+      _o.ComboScoreRate,
+      _o.AttackScoreRate,
+      _o.FeverCriticalRate,
+      _o.FeverAttackRate,
+      _o.MaxHpScore,
+      _RhythmFileName,
+      _ArtLevelSceneName,
+      _ComboImagePath);
+  }
+}
+
+public class MiniGameRhythmExcelT
+{
+  public long UniqueId { get; set; }
+  public long RhythmBgmId { get; set; }
+  public string PresetName { get; set; }
+  public SCHALE.Common.FlatData.Difficulty StageDifficulty { get; set; }
+  public bool IsSpecial { get; set; }
+  public long OpenStageScoreAmount { get; set; }
+  public long MaxHp { get; set; }
+  public long MissDamage { get; set; }
+  public long CriticalHPRestoreValue { get; set; }
+  public long MaxScore { get; set; }
+  public long FeverScoreRate { get; set; }
+  public long NoteScoreRate { get; set; }
+  public long ComboScoreRate { get; set; }
+  public long AttackScoreRate { get; set; }
+  public float FeverCriticalRate { get; set; }
+  public float FeverAttackRate { get; set; }
+  public long MaxHpScore { get; set; }
+  public string RhythmFileName { get; set; }
+  public string ArtLevelSceneName { get; set; }
+  public string ComboImagePath { get; set; }
+
+  public MiniGameRhythmExcelT() {
+    this.UniqueId = 0;
+    this.RhythmBgmId = 0;
+    this.PresetName = null;
+    this.StageDifficulty = SCHALE.Common.FlatData.Difficulty.Normal;
+    this.IsSpecial = false;
+    this.OpenStageScoreAmount = 0;
+    this.MaxHp = 0;
+    this.MissDamage = 0;
+    this.CriticalHPRestoreValue = 0;
+    this.MaxScore = 0;
+    this.FeverScoreRate = 0;
+    this.NoteScoreRate = 0;
+    this.ComboScoreRate = 0;
+    this.AttackScoreRate = 0;
+    this.FeverCriticalRate = 0.0f;
+    this.FeverAttackRate = 0.0f;
+    this.MaxHpScore = 0;
+    this.RhythmFileName = null;
+    this.ArtLevelSceneName = null;
+    this.ComboImagePath = null;
   }
 }
 

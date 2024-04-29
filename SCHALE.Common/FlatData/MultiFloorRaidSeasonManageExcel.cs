@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MultiFloorRaidSeasonManageExcel : IFlatbufferObject
@@ -105,6 +106,72 @@ public struct MultiFloorRaidSeasonManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MultiFloorRaidSeasonManageExcel> EndMultiFloorRaidSeasonManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MultiFloorRaidSeasonManageExcel>(o);
+  }
+  public MultiFloorRaidSeasonManageExcelT UnPack() {
+    var _o = new MultiFloorRaidSeasonManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MultiFloorRaidSeasonManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MultiFloorRaidSeasonManage");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.LobbyEnterScenario = TableEncryptionService.Convert(this.LobbyEnterScenario, key);
+    _o.ShowLobbyBanner = TableEncryptionService.Convert(this.ShowLobbyBanner, key);
+    _o.SeasonStartDate = TableEncryptionService.Convert(this.SeasonStartDate, key);
+    _o.SeasonEndDate = TableEncryptionService.Convert(this.SeasonEndDate, key);
+    _o.SettlementEndDate = TableEncryptionService.Convert(this.SettlementEndDate, key);
+    _o.OpenRaidBossGroupId = TableEncryptionService.Convert(this.OpenRaidBossGroupId, key);
+    _o.EnterScenarioKey = TableEncryptionService.Convert(this.EnterScenarioKey, key);
+    _o.LobbyImgPath = TableEncryptionService.Convert(this.LobbyImgPath, key);
+    _o.LevelImgPath = TableEncryptionService.Convert(this.LevelImgPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MultiFloorRaidSeasonManageExcel> Pack(FlatBufferBuilder builder, MultiFloorRaidSeasonManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MultiFloorRaidSeasonManageExcel>);
+    var _SeasonStartDate = _o.SeasonStartDate == null ? default(StringOffset) : builder.CreateString(_o.SeasonStartDate);
+    var _SeasonEndDate = _o.SeasonEndDate == null ? default(StringOffset) : builder.CreateString(_o.SeasonEndDate);
+    var _SettlementEndDate = _o.SettlementEndDate == null ? default(StringOffset) : builder.CreateString(_o.SettlementEndDate);
+    var _OpenRaidBossGroupId = _o.OpenRaidBossGroupId == null ? default(StringOffset) : builder.CreateString(_o.OpenRaidBossGroupId);
+    var _LobbyImgPath = _o.LobbyImgPath == null ? default(StringOffset) : builder.CreateString(_o.LobbyImgPath);
+    var _LevelImgPath = _o.LevelImgPath == null ? default(StringOffset) : builder.CreateString(_o.LevelImgPath);
+    return CreateMultiFloorRaidSeasonManageExcel(
+      builder,
+      _o.SeasonId,
+      _o.LobbyEnterScenario,
+      _o.ShowLobbyBanner,
+      _SeasonStartDate,
+      _SeasonEndDate,
+      _SettlementEndDate,
+      _OpenRaidBossGroupId,
+      _o.EnterScenarioKey,
+      _LobbyImgPath,
+      _LevelImgPath);
+  }
+}
+
+public class MultiFloorRaidSeasonManageExcelT
+{
+  public long SeasonId { get; set; }
+  public uint LobbyEnterScenario { get; set; }
+  public bool ShowLobbyBanner { get; set; }
+  public string SeasonStartDate { get; set; }
+  public string SeasonEndDate { get; set; }
+  public string SettlementEndDate { get; set; }
+  public string OpenRaidBossGroupId { get; set; }
+  public uint EnterScenarioKey { get; set; }
+  public string LobbyImgPath { get; set; }
+  public string LevelImgPath { get; set; }
+
+  public MultiFloorRaidSeasonManageExcelT() {
+    this.SeasonId = 0;
+    this.LobbyEnterScenario = 0;
+    this.ShowLobbyBanner = false;
+    this.SeasonStartDate = null;
+    this.SeasonEndDate = null;
+    this.SettlementEndDate = null;
+    this.OpenRaidBossGroupId = null;
+    this.EnterScenarioKey = 0;
+    this.LobbyImgPath = null;
+    this.LevelImgPath = null;
   }
 }
 

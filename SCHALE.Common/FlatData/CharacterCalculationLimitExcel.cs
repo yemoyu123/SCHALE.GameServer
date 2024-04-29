@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterCalculationLimitExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct CharacterCalculationLimitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterCalculationLimitExcel> EndCharacterCalculationLimitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterCalculationLimitExcel>(o);
+  }
+  public CharacterCalculationLimitExcelT UnPack() {
+    var _o = new CharacterCalculationLimitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterCalculationLimitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterCalculationLimit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TacticEntityType = TableEncryptionService.Convert(this.TacticEntityType, key);
+    _o.CalculationValue = TableEncryptionService.Convert(this.CalculationValue, key);
+    _o.MinValue = TableEncryptionService.Convert(this.MinValue, key);
+    _o.MaxValue = TableEncryptionService.Convert(this.MaxValue, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterCalculationLimitExcel> Pack(FlatBufferBuilder builder, CharacterCalculationLimitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterCalculationLimitExcel>);
+    return CreateCharacterCalculationLimitExcel(
+      builder,
+      _o.Id,
+      _o.TacticEntityType,
+      _o.CalculationValue,
+      _o.MinValue,
+      _o.MaxValue);
+  }
+}
+
+public class CharacterCalculationLimitExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TacticEntityType TacticEntityType { get; set; }
+  public SCHALE.Common.FlatData.BattleCalculationStat CalculationValue { get; set; }
+  public long MinValue { get; set; }
+  public long MaxValue { get; set; }
+
+  public CharacterCalculationLimitExcelT() {
+    this.Id = 0;
+    this.TacticEntityType = SCHALE.Common.FlatData.TacticEntityType.None;
+    this.CalculationValue = SCHALE.Common.FlatData.BattleCalculationStat.FinalDamage;
+    this.MinValue = 0;
+    this.MaxValue = 0;
   }
 }
 

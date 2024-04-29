@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticTimeAttackSimulatorConfigExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct TacticTimeAttackSimulatorConfigExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticTimeAttackSimulatorConfigExcel> EndTacticTimeAttackSimulatorConfigExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticTimeAttackSimulatorConfigExcel>(o);
+  }
+  public TacticTimeAttackSimulatorConfigExcelT UnPack() {
+    var _o = new TacticTimeAttackSimulatorConfigExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticTimeAttackSimulatorConfigExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticTimeAttackSimulatorConfig");
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.Repeat = TableEncryptionService.Convert(this.Repeat, key);
+    _o.PresetGroupId = TableEncryptionService.Convert(this.PresetGroupId, key);
+    _o.AttackStrikerNum = TableEncryptionService.Convert(this.AttackStrikerNum, key);
+    _o.AttackSpecialNum = TableEncryptionService.Convert(this.AttackSpecialNum, key);
+    _o.GeasId = TableEncryptionService.Convert(this.GeasId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticTimeAttackSimulatorConfigExcel> Pack(FlatBufferBuilder builder, TacticTimeAttackSimulatorConfigExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticTimeAttackSimulatorConfigExcel>);
+    return CreateTacticTimeAttackSimulatorConfigExcel(
+      builder,
+      _o.Order,
+      _o.Repeat,
+      _o.PresetGroupId,
+      _o.AttackStrikerNum,
+      _o.AttackSpecialNum,
+      _o.GeasId);
+  }
+}
+
+public class TacticTimeAttackSimulatorConfigExcelT
+{
+  public long Order { get; set; }
+  public long Repeat { get; set; }
+  public long PresetGroupId { get; set; }
+  public long AttackStrikerNum { get; set; }
+  public long AttackSpecialNum { get; set; }
+  public long GeasId { get; set; }
+
+  public TacticTimeAttackSimulatorConfigExcelT() {
+    this.Order = 0;
+    this.Repeat = 0;
+    this.PresetGroupId = 0;
+    this.AttackStrikerNum = 0;
+    this.AttackSpecialNum = 0;
+    this.GeasId = 0;
   }
 }
 

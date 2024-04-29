@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ServiceActionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ServiceActionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ServiceActionExcelTable> EndServiceActionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ServiceActionExcelTable>(o);
+  }
+  public ServiceActionExcelTableT UnPack() {
+    var _o = new ServiceActionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ServiceActionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ServiceActionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ServiceActionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ServiceActionExcelTable> Pack(FlatBufferBuilder builder, ServiceActionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ServiceActionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ServiceActionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ServiceActionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateServiceActionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ServiceActionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ServiceActionExcelT> DataList { get; set; }
+
+  public ServiceActionExcelTableT() {
+    this.DataList = null;
   }
 }
 

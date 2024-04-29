@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopFreeRecruitPeriodExcel : IFlatbufferObject
@@ -51,6 +52,43 @@ public struct ShopFreeRecruitPeriodExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopFreeRecruitPeriodExcel> EndShopFreeRecruitPeriodExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopFreeRecruitPeriodExcel>(o);
+  }
+  public ShopFreeRecruitPeriodExcelT UnPack() {
+    var _o = new ShopFreeRecruitPeriodExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopFreeRecruitPeriodExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopFreeRecruitPeriod");
+    _o.ShopFreeRecruitId = TableEncryptionService.Convert(this.ShopFreeRecruitId, key);
+    _o.ShopFreeRecruitIntervalId = TableEncryptionService.Convert(this.ShopFreeRecruitIntervalId, key);
+    _o.IntervalDate = TableEncryptionService.Convert(this.IntervalDate, key);
+    _o.FreeRecruitCount = TableEncryptionService.Convert(this.FreeRecruitCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopFreeRecruitPeriodExcel> Pack(FlatBufferBuilder builder, ShopFreeRecruitPeriodExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopFreeRecruitPeriodExcel>);
+    var _IntervalDate = _o.IntervalDate == null ? default(StringOffset) : builder.CreateString(_o.IntervalDate);
+    return CreateShopFreeRecruitPeriodExcel(
+      builder,
+      _o.ShopFreeRecruitId,
+      _o.ShopFreeRecruitIntervalId,
+      _IntervalDate,
+      _o.FreeRecruitCount);
+  }
+}
+
+public class ShopFreeRecruitPeriodExcelT
+{
+  public long ShopFreeRecruitId { get; set; }
+  public long ShopFreeRecruitIntervalId { get; set; }
+  public string IntervalDate { get; set; }
+  public int FreeRecruitCount { get; set; }
+
+  public ShopFreeRecruitPeriodExcelT() {
+    this.ShopFreeRecruitId = 0;
+    this.ShopFreeRecruitIntervalId = 0;
+    this.IntervalDate = null;
+    this.FreeRecruitCount = 0;
   }
 }
 

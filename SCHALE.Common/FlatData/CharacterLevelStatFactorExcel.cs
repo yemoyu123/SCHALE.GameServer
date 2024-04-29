@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterLevelStatFactorExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct CharacterLevelStatFactorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcel> EndCharacterLevelStatFactorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcel>(o);
+  }
+  public CharacterLevelStatFactorExcelT UnPack() {
+    var _o = new CharacterLevelStatFactorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterLevelStatFactorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterLevelStatFactor");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.CriticalFactor = TableEncryptionService.Convert(this.CriticalFactor, key);
+    _o.StabilityFactor = TableEncryptionService.Convert(this.StabilityFactor, key);
+    _o.DefenceFactor = TableEncryptionService.Convert(this.DefenceFactor, key);
+    _o.AccuracyFactor = TableEncryptionService.Convert(this.AccuracyFactor, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcel> Pack(FlatBufferBuilder builder, CharacterLevelStatFactorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterLevelStatFactorExcel>);
+    return CreateCharacterLevelStatFactorExcel(
+      builder,
+      _o.Level,
+      _o.CriticalFactor,
+      _o.StabilityFactor,
+      _o.DefenceFactor,
+      _o.AccuracyFactor);
+  }
+}
+
+public class CharacterLevelStatFactorExcelT
+{
+  public long Level { get; set; }
+  public long CriticalFactor { get; set; }
+  public long StabilityFactor { get; set; }
+  public long DefenceFactor { get; set; }
+  public long AccuracyFactor { get; set; }
+
+  public CharacterLevelStatFactorExcelT() {
+    this.Level = 0;
+    this.CriticalFactor = 0;
+    this.StabilityFactor = 0;
+    this.DefenceFactor = 0;
+    this.AccuracyFactor = 0;
   }
 }
 

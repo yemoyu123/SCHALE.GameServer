@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignChapterRewardExcel : IFlatbufferObject
@@ -85,6 +86,64 @@ public struct CampaignChapterRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignChapterRewardExcel> EndCampaignChapterRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignChapterRewardExcel>(o);
+  }
+  public CampaignChapterRewardExcelT UnPack() {
+    var _o = new CampaignChapterRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignChapterRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignChapterReward");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CampaignChapterStar = TableEncryptionService.Convert(this.CampaignChapterStar, key);
+    _o.ChapterRewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ChapterRewardParcelTypeLength; ++_j) {_o.ChapterRewardParcelType.Add(TableEncryptionService.Convert(this.ChapterRewardParcelType(_j), key));}
+    _o.ChapterRewardId = new List<long>();
+    for (var _j = 0; _j < this.ChapterRewardIdLength; ++_j) {_o.ChapterRewardId.Add(TableEncryptionService.Convert(this.ChapterRewardId(_j), key));}
+    _o.ChapterRewardAmount = new List<int>();
+    for (var _j = 0; _j < this.ChapterRewardAmountLength; ++_j) {_o.ChapterRewardAmount.Add(TableEncryptionService.Convert(this.ChapterRewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignChapterRewardExcel> Pack(FlatBufferBuilder builder, CampaignChapterRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignChapterRewardExcel>);
+    var _ChapterRewardParcelType = default(VectorOffset);
+    if (_o.ChapterRewardParcelType != null) {
+      var __ChapterRewardParcelType = _o.ChapterRewardParcelType.ToArray();
+      _ChapterRewardParcelType = CreateChapterRewardParcelTypeVector(builder, __ChapterRewardParcelType);
+    }
+    var _ChapterRewardId = default(VectorOffset);
+    if (_o.ChapterRewardId != null) {
+      var __ChapterRewardId = _o.ChapterRewardId.ToArray();
+      _ChapterRewardId = CreateChapterRewardIdVector(builder, __ChapterRewardId);
+    }
+    var _ChapterRewardAmount = default(VectorOffset);
+    if (_o.ChapterRewardAmount != null) {
+      var __ChapterRewardAmount = _o.ChapterRewardAmount.ToArray();
+      _ChapterRewardAmount = CreateChapterRewardAmountVector(builder, __ChapterRewardAmount);
+    }
+    return CreateCampaignChapterRewardExcel(
+      builder,
+      _o.Id,
+      _o.CampaignChapterStar,
+      _ChapterRewardParcelType,
+      _ChapterRewardId,
+      _ChapterRewardAmount);
+  }
+}
+
+public class CampaignChapterRewardExcelT
+{
+  public long Id { get; set; }
+  public long CampaignChapterStar { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ChapterRewardParcelType { get; set; }
+  public List<long> ChapterRewardId { get; set; }
+  public List<int> ChapterRewardAmount { get; set; }
+
+  public CampaignChapterRewardExcelT() {
+    this.Id = 0;
+    this.CampaignChapterStar = 0;
+    this.ChapterRewardParcelType = null;
+    this.ChapterRewardId = null;
+    this.ChapterRewardAmount = null;
   }
 }
 

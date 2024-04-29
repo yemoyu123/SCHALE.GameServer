@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PersonalityExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct PersonalityExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PersonalityExcelTable> EndPersonalityExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PersonalityExcelTable>(o);
+  }
+  public PersonalityExcelTableT UnPack() {
+    var _o = new PersonalityExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PersonalityExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PersonalityExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.PersonalityExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.PersonalityExcelTable> Pack(FlatBufferBuilder builder, PersonalityExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PersonalityExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.PersonalityExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.PersonalityExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreatePersonalityExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class PersonalityExcelTableT
+{
+  public List<SCHALE.Common.FlatData.PersonalityExcelT> DataList { get; set; }
+
+  public PersonalityExcelTableT() {
+    this.DataList = null;
   }
 }
 

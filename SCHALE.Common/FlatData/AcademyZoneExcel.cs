@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyZoneExcel : IFlatbufferObject
@@ -81,6 +82,66 @@ public struct AcademyZoneExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyZoneExcel> EndAcademyZoneExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyZoneExcel>(o);
+  }
+  public AcademyZoneExcelT UnPack() {
+    var _o = new AcademyZoneExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyZoneExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyZone");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocationId = TableEncryptionService.Convert(this.LocationId, key);
+    _o.LocationRankForUnlock = TableEncryptionService.Convert(this.LocationRankForUnlock, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.StudentVisitProb = new List<long>();
+    for (var _j = 0; _j < this.StudentVisitProbLength; ++_j) {_o.StudentVisitProb.Add(TableEncryptionService.Convert(this.StudentVisitProb(_j), key));}
+    _o.RewardGroupId = TableEncryptionService.Convert(this.RewardGroupId, key);
+    _o.Tags = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.TagsLength; ++_j) {_o.Tags.Add(TableEncryptionService.Convert(this.Tags(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyZoneExcel> Pack(FlatBufferBuilder builder, AcademyZoneExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyZoneExcel>);
+    var _StudentVisitProb = default(VectorOffset);
+    if (_o.StudentVisitProb != null) {
+      var __StudentVisitProb = _o.StudentVisitProb.ToArray();
+      _StudentVisitProb = CreateStudentVisitProbVector(builder, __StudentVisitProb);
+    }
+    var _Tags = default(VectorOffset);
+    if (_o.Tags != null) {
+      var __Tags = _o.Tags.ToArray();
+      _Tags = CreateTagsVector(builder, __Tags);
+    }
+    return CreateAcademyZoneExcel(
+      builder,
+      _o.Id,
+      _o.LocationId,
+      _o.LocationRankForUnlock,
+      _o.LocalizeEtcId,
+      _StudentVisitProb,
+      _o.RewardGroupId,
+      _Tags);
+  }
+}
+
+public class AcademyZoneExcelT
+{
+  public long Id { get; set; }
+  public long LocationId { get; set; }
+  public long LocationRankForUnlock { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public List<long> StudentVisitProb { get; set; }
+  public long RewardGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tags { get; set; }
+
+  public AcademyZoneExcelT() {
+    this.Id = 0;
+    this.LocationId = 0;
+    this.LocationRankForUnlock = 0;
+    this.LocalizeEtcId = 0;
+    this.StudentVisitProb = null;
+    this.RewardGroupId = 0;
+    this.Tags = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentFortuneGachaModifyExcel : IFlatbufferObject
@@ -81,6 +82,58 @@ public struct EventContentFortuneGachaModifyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel> EndEventContentFortuneGachaModifyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel>(o);
+  }
+  public EventContentFortuneGachaModifyExcelT UnPack() {
+    var _o = new EventContentFortuneGachaModifyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentFortuneGachaModifyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentFortuneGachaModify");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.TargetGrade = TableEncryptionService.Convert(this.TargetGrade, key);
+    _o.ProbModifyStartCount = TableEncryptionService.Convert(this.ProbModifyStartCount, key);
+    _o.UsePrefabName = TableEncryptionService.Convert(this.UsePrefabName, key);
+    _o.BucketImagePath = TableEncryptionService.Convert(this.BucketImagePath, key);
+    _o.ShopBgImagePath = TableEncryptionService.Convert(this.ShopBgImagePath, key);
+    _o.TitleLocalizeKey = TableEncryptionService.Convert(this.TitleLocalizeKey, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel> Pack(FlatBufferBuilder builder, EventContentFortuneGachaModifyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentFortuneGachaModifyExcel>);
+    var _UsePrefabName = _o.UsePrefabName == null ? default(StringOffset) : builder.CreateString(_o.UsePrefabName);
+    var _BucketImagePath = _o.BucketImagePath == null ? default(StringOffset) : builder.CreateString(_o.BucketImagePath);
+    var _ShopBgImagePath = _o.ShopBgImagePath == null ? default(StringOffset) : builder.CreateString(_o.ShopBgImagePath);
+    var _TitleLocalizeKey = _o.TitleLocalizeKey == null ? default(StringOffset) : builder.CreateString(_o.TitleLocalizeKey);
+    return CreateEventContentFortuneGachaModifyExcel(
+      builder,
+      _o.EventContentId,
+      _o.TargetGrade,
+      _o.ProbModifyStartCount,
+      _UsePrefabName,
+      _BucketImagePath,
+      _ShopBgImagePath,
+      _TitleLocalizeKey);
+  }
+}
+
+public class EventContentFortuneGachaModifyExcelT
+{
+  public int EventContentId { get; set; }
+  public int TargetGrade { get; set; }
+  public int ProbModifyStartCount { get; set; }
+  public string UsePrefabName { get; set; }
+  public string BucketImagePath { get; set; }
+  public string ShopBgImagePath { get; set; }
+  public string TitleLocalizeKey { get; set; }
+
+  public EventContentFortuneGachaModifyExcelT() {
+    this.EventContentId = 0;
+    this.TargetGrade = 0;
+    this.ProbModifyStartCount = 0;
+    this.UsePrefabName = null;
+    this.BucketImagePath = null;
+    this.ShopBgImagePath = null;
+    this.TitleLocalizeKey = null;
   }
 }
 

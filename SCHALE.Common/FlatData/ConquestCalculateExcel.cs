@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestCalculateExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct ConquestCalculateExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestCalculateExcel> EndConquestCalculateExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestCalculateExcel>(o);
+  }
+  public ConquestCalculateExcelT UnPack() {
+    var _o = new ConquestCalculateExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestCalculateExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestCalculate");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.CalculateConditionParcelType = TableEncryptionService.Convert(this.CalculateConditionParcelType, key);
+    _o.CalculateConditionParcelUniqueId = TableEncryptionService.Convert(this.CalculateConditionParcelUniqueId, key);
+    _o.CalculateConditionParcelAmount = TableEncryptionService.Convert(this.CalculateConditionParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestCalculateExcel> Pack(FlatBufferBuilder builder, ConquestCalculateExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestCalculateExcel>);
+    return CreateConquestCalculateExcel(
+      builder,
+      _o.EventContentId,
+      _o.CalculateConditionParcelType,
+      _o.CalculateConditionParcelUniqueId,
+      _o.CalculateConditionParcelAmount);
+  }
+}
+
+public class ConquestCalculateExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType CalculateConditionParcelType { get; set; }
+  public long CalculateConditionParcelUniqueId { get; set; }
+  public long CalculateConditionParcelAmount { get; set; }
+
+  public ConquestCalculateExcelT() {
+    this.EventContentId = 0;
+    this.CalculateConditionParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.CalculateConditionParcelUniqueId = 0;
+    this.CalculateConditionParcelAmount = 0;
   }
 }
 

@@ -180,6 +180,9 @@ public enum ParcelChangeReason : int
   Character_PotentialGrowth = 170,
   MultiFloorRaid_EndBattle = 171,
   MultiFloorRaid_Reward = 172,
+  MiniGame_DreamSchedule = 173,
+  MiniGame_DreamDailyClosing = 174,
+  MiniGame_DreamEnding = 175,
 };
 
 

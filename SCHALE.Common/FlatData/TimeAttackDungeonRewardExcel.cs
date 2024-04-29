@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TimeAttackDungeonRewardExcel : IFlatbufferObject
@@ -133,6 +134,94 @@ public struct TimeAttackDungeonRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonRewardExcel> EndTimeAttackDungeonRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TimeAttackDungeonRewardExcel>(o);
+  }
+  public TimeAttackDungeonRewardExcelT UnPack() {
+    var _o = new TimeAttackDungeonRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TimeAttackDungeonRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TimeAttackDungeonReward");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.RewardMaxPoint = TableEncryptionService.Convert(this.RewardMaxPoint, key);
+    _o.RewardType = new List<SCHALE.Common.FlatData.TimeAttackDungeonRewardType>();
+    for (var _j = 0; _j < this.RewardTypeLength; ++_j) {_o.RewardType.Add(TableEncryptionService.Convert(this.RewardType(_j), key));}
+    _o.RewardMinPoint = new List<long>();
+    for (var _j = 0; _j < this.RewardMinPointLength; ++_j) {_o.RewardMinPoint.Add(TableEncryptionService.Convert(this.RewardMinPoint(_j), key));}
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelDefaultAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelDefaultAmountLength; ++_j) {_o.RewardParcelDefaultAmount.Add(TableEncryptionService.Convert(this.RewardParcelDefaultAmount(_j), key));}
+    _o.RewardParcelMaxAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelMaxAmountLength; ++_j) {_o.RewardParcelMaxAmount.Add(TableEncryptionService.Convert(this.RewardParcelMaxAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonRewardExcel> Pack(FlatBufferBuilder builder, TimeAttackDungeonRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TimeAttackDungeonRewardExcel>);
+    var _RewardType = default(VectorOffset);
+    if (_o.RewardType != null) {
+      var __RewardType = _o.RewardType.ToArray();
+      _RewardType = CreateRewardTypeVector(builder, __RewardType);
+    }
+    var _RewardMinPoint = default(VectorOffset);
+    if (_o.RewardMinPoint != null) {
+      var __RewardMinPoint = _o.RewardMinPoint.ToArray();
+      _RewardMinPoint = CreateRewardMinPointVector(builder, __RewardMinPoint);
+    }
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelDefaultAmount = default(VectorOffset);
+    if (_o.RewardParcelDefaultAmount != null) {
+      var __RewardParcelDefaultAmount = _o.RewardParcelDefaultAmount.ToArray();
+      _RewardParcelDefaultAmount = CreateRewardParcelDefaultAmountVector(builder, __RewardParcelDefaultAmount);
+    }
+    var _RewardParcelMaxAmount = default(VectorOffset);
+    if (_o.RewardParcelMaxAmount != null) {
+      var __RewardParcelMaxAmount = _o.RewardParcelMaxAmount.ToArray();
+      _RewardParcelMaxAmount = CreateRewardParcelMaxAmountVector(builder, __RewardParcelMaxAmount);
+    }
+    return CreateTimeAttackDungeonRewardExcel(
+      builder,
+      _o.Id,
+      _o.RewardMaxPoint,
+      _RewardType,
+      _RewardMinPoint,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelDefaultAmount,
+      _RewardParcelMaxAmount);
+  }
+}
+
+public class TimeAttackDungeonRewardExcelT
+{
+  public long Id { get; set; }
+  public long RewardMaxPoint { get; set; }
+  public List<SCHALE.Common.FlatData.TimeAttackDungeonRewardType> RewardType { get; set; }
+  public List<long> RewardMinPoint { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelDefaultAmount { get; set; }
+  public List<long> RewardParcelMaxAmount { get; set; }
+
+  public TimeAttackDungeonRewardExcelT() {
+    this.Id = 0;
+    this.RewardMaxPoint = 0;
+    this.RewardType = null;
+    this.RewardMinPoint = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelDefaultAmount = null;
+    this.RewardParcelMaxAmount = null;
   }
 }
 

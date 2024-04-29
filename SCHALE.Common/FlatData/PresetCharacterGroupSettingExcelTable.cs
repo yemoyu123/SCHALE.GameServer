@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PresetCharacterGroupSettingExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct PresetCharacterGroupSettingExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelTable> EndPresetCharacterGroupSettingExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelTable>(o);
+  }
+  public PresetCharacterGroupSettingExcelTableT UnPack() {
+    var _o = new PresetCharacterGroupSettingExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PresetCharacterGroupSettingExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PresetCharacterGroupSettingExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelTable> Pack(FlatBufferBuilder builder, PresetCharacterGroupSettingExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreatePresetCharacterGroupSettingExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class PresetCharacterGroupSettingExcelTableT
+{
+  public List<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcelT> DataList { get; set; }
+
+  public PresetCharacterGroupSettingExcelTableT() {
+    this.DataList = null;
   }
 }
 

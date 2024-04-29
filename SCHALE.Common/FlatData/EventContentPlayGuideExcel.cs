@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentPlayGuideExcel : IFlatbufferObject
@@ -71,6 +72,53 @@ public struct EventContentPlayGuideExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcel> EndEventContentPlayGuideExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcel>(o);
+  }
+  public EventContentPlayGuideExcelT UnPack() {
+    var _o = new EventContentPlayGuideExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentPlayGuideExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentPlayGuide");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.GuideTitle = TableEncryptionService.Convert(this.GuideTitle, key);
+    _o.GuideImagePath = TableEncryptionService.Convert(this.GuideImagePath, key);
+    _o.GuideText = TableEncryptionService.Convert(this.GuideText, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcel> Pack(FlatBufferBuilder builder, EventContentPlayGuideExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcel>);
+    var _GuideTitle = _o.GuideTitle == null ? default(StringOffset) : builder.CreateString(_o.GuideTitle);
+    var _GuideImagePath = _o.GuideImagePath == null ? default(StringOffset) : builder.CreateString(_o.GuideImagePath);
+    var _GuideText = _o.GuideText == null ? default(StringOffset) : builder.CreateString(_o.GuideText);
+    return CreateEventContentPlayGuideExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.DisplayOrder,
+      _GuideTitle,
+      _GuideImagePath,
+      _GuideText);
+  }
+}
+
+public class EventContentPlayGuideExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public int DisplayOrder { get; set; }
+  public string GuideTitle { get; set; }
+  public string GuideImagePath { get; set; }
+  public string GuideText { get; set; }
+
+  public EventContentPlayGuideExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.DisplayOrder = 0;
+    this.GuideTitle = null;
+    this.GuideImagePath = null;
+    this.GuideText = null;
   }
 }
 

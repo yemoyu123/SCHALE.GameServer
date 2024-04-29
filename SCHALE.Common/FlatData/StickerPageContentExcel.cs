@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StickerPageContentExcel : IFlatbufferObject
@@ -127,6 +128,97 @@ public struct StickerPageContentExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StickerPageContentExcel> EndStickerPageContentExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StickerPageContentExcel>(o);
+  }
+  public StickerPageContentExcelT UnPack() {
+    var _o = new StickerPageContentExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StickerPageContentExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StickerPageContent");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StickerGroupId = TableEncryptionService.Convert(this.StickerGroupId, key);
+    _o.StickerPageId = TableEncryptionService.Convert(this.StickerPageId, key);
+    _o.StickerSlot = TableEncryptionService.Convert(this.StickerSlot, key);
+    _o.StickerGetConditionType = TableEncryptionService.Convert(this.StickerGetConditionType, key);
+    _o.StickerCheckPassType = TableEncryptionService.Convert(this.StickerCheckPassType, key);
+    _o.GetStickerConditionType = TableEncryptionService.Convert(this.GetStickerConditionType, key);
+    _o.StickerGetConditionCount = TableEncryptionService.Convert(this.StickerGetConditionCount, key);
+    _o.StickerGetConditionParameter = new List<long>();
+    for (var _j = 0; _j < this.StickerGetConditionParameterLength; ++_j) {_o.StickerGetConditionParameter.Add(TableEncryptionService.Convert(this.StickerGetConditionParameter(_j), key));}
+    _o.StickerGetConditionParameterTag = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.StickerGetConditionParameterTagLength; ++_j) {_o.StickerGetConditionParameterTag.Add(TableEncryptionService.Convert(this.StickerGetConditionParameterTag(_j), key));}
+    _o.PackedStickerIconLocalizeEtcId = TableEncryptionService.Convert(this.PackedStickerIconLocalizeEtcId, key);
+    _o.PackedStickerIconPath = TableEncryptionService.Convert(this.PackedStickerIconPath, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.StickerDetailPath = TableEncryptionService.Convert(this.StickerDetailPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StickerPageContentExcel> Pack(FlatBufferBuilder builder, StickerPageContentExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StickerPageContentExcel>);
+    var _StickerGetConditionParameter = default(VectorOffset);
+    if (_o.StickerGetConditionParameter != null) {
+      var __StickerGetConditionParameter = _o.StickerGetConditionParameter.ToArray();
+      _StickerGetConditionParameter = CreateStickerGetConditionParameterVector(builder, __StickerGetConditionParameter);
+    }
+    var _StickerGetConditionParameterTag = default(VectorOffset);
+    if (_o.StickerGetConditionParameterTag != null) {
+      var __StickerGetConditionParameterTag = _o.StickerGetConditionParameterTag.ToArray();
+      _StickerGetConditionParameterTag = CreateStickerGetConditionParameterTagVector(builder, __StickerGetConditionParameterTag);
+    }
+    var _PackedStickerIconPath = _o.PackedStickerIconPath == null ? default(StringOffset) : builder.CreateString(_o.PackedStickerIconPath);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _StickerDetailPath = _o.StickerDetailPath == null ? default(StringOffset) : builder.CreateString(_o.StickerDetailPath);
+    return CreateStickerPageContentExcel(
+      builder,
+      _o.Id,
+      _o.StickerGroupId,
+      _o.StickerPageId,
+      _o.StickerSlot,
+      _o.StickerGetConditionType,
+      _o.StickerCheckPassType,
+      _o.GetStickerConditionType,
+      _o.StickerGetConditionCount,
+      _StickerGetConditionParameter,
+      _StickerGetConditionParameterTag,
+      _o.PackedStickerIconLocalizeEtcId,
+      _PackedStickerIconPath,
+      _IconPath,
+      _StickerDetailPath);
+  }
+}
+
+public class StickerPageContentExcelT
+{
+  public long Id { get; set; }
+  public long StickerGroupId { get; set; }
+  public long StickerPageId { get; set; }
+  public long StickerSlot { get; set; }
+  public SCHALE.Common.FlatData.StickerGetConditionType StickerGetConditionType { get; set; }
+  public SCHALE.Common.FlatData.StickerCheckPassType StickerCheckPassType { get; set; }
+  public SCHALE.Common.FlatData.GetStickerConditionType GetStickerConditionType { get; set; }
+  public long StickerGetConditionCount { get; set; }
+  public List<long> StickerGetConditionParameter { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> StickerGetConditionParameterTag { get; set; }
+  public uint PackedStickerIconLocalizeEtcId { get; set; }
+  public string PackedStickerIconPath { get; set; }
+  public string IconPath { get; set; }
+  public string StickerDetailPath { get; set; }
+
+  public StickerPageContentExcelT() {
+    this.Id = 0;
+    this.StickerGroupId = 0;
+    this.StickerPageId = 0;
+    this.StickerSlot = 0;
+    this.StickerGetConditionType = SCHALE.Common.FlatData.StickerGetConditionType.None;
+    this.StickerCheckPassType = SCHALE.Common.FlatData.StickerCheckPassType.None;
+    this.GetStickerConditionType = SCHALE.Common.FlatData.GetStickerConditionType.None;
+    this.StickerGetConditionCount = 0;
+    this.StickerGetConditionParameter = null;
+    this.StickerGetConditionParameterTag = null;
+    this.PackedStickerIconLocalizeEtcId = 0;
+    this.PackedStickerIconPath = null;
+    this.IconPath = null;
+    this.StickerDetailPath = null;
   }
 }
 

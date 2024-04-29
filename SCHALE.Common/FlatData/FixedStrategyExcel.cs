@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FixedStrategyExcel : IFlatbufferObject
@@ -65,6 +66,62 @@ public struct FixedStrategyExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FixedStrategyExcel> EndFixedStrategyExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FixedStrategyExcel>(o);
+  }
+  public FixedStrategyExcelT UnPack() {
+    var _o = new FixedStrategyExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FixedStrategyExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FixedStrategy");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StageEnterEchelon01FixedEchelonId = TableEncryptionService.Convert(this.StageEnterEchelon01FixedEchelonId, key);
+    _o.StageEnterEchelon01Starttile = TableEncryptionService.Convert(this.StageEnterEchelon01Starttile, key);
+    _o.StageEnterEchelon02FixedEchelonId = TableEncryptionService.Convert(this.StageEnterEchelon02FixedEchelonId, key);
+    _o.StageEnterEchelon02Starttile = TableEncryptionService.Convert(this.StageEnterEchelon02Starttile, key);
+    _o.StageEnterEchelon03FixedEchelonId = TableEncryptionService.Convert(this.StageEnterEchelon03FixedEchelonId, key);
+    _o.StageEnterEchelon03Starttile = TableEncryptionService.Convert(this.StageEnterEchelon03Starttile, key);
+    _o.StageEnterEchelon04FixedEchelonId = TableEncryptionService.Convert(this.StageEnterEchelon04FixedEchelonId, key);
+    _o.StageEnterEchelon04Starttile = TableEncryptionService.Convert(this.StageEnterEchelon04Starttile, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FixedStrategyExcel> Pack(FlatBufferBuilder builder, FixedStrategyExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FixedStrategyExcel>);
+    return CreateFixedStrategyExcel(
+      builder,
+      _o.Id,
+      _o.StageEnterEchelon01FixedEchelonId,
+      _o.StageEnterEchelon01Starttile,
+      _o.StageEnterEchelon02FixedEchelonId,
+      _o.StageEnterEchelon02Starttile,
+      _o.StageEnterEchelon03FixedEchelonId,
+      _o.StageEnterEchelon03Starttile,
+      _o.StageEnterEchelon04FixedEchelonId,
+      _o.StageEnterEchelon04Starttile);
+  }
+}
+
+public class FixedStrategyExcelT
+{
+  public long Id { get; set; }
+  public long StageEnterEchelon01FixedEchelonId { get; set; }
+  public long StageEnterEchelon01Starttile { get; set; }
+  public long StageEnterEchelon02FixedEchelonId { get; set; }
+  public long StageEnterEchelon02Starttile { get; set; }
+  public long StageEnterEchelon03FixedEchelonId { get; set; }
+  public long StageEnterEchelon03Starttile { get; set; }
+  public long StageEnterEchelon04FixedEchelonId { get; set; }
+  public long StageEnterEchelon04Starttile { get; set; }
+
+  public FixedStrategyExcelT() {
+    this.Id = 0;
+    this.StageEnterEchelon01FixedEchelonId = 0;
+    this.StageEnterEchelon01Starttile = 0;
+    this.StageEnterEchelon02FixedEchelonId = 0;
+    this.StageEnterEchelon02Starttile = 0;
+    this.StageEnterEchelon03FixedEchelonId = 0;
+    this.StageEnterEchelon03Starttile = 0;
+    this.StageEnterEchelon04FixedEchelonId = 0;
+    this.StageEnterEchelon04Starttile = 0;
   }
 }
 

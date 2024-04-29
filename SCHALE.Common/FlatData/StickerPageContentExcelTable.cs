@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StickerPageContentExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct StickerPageContentExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StickerPageContentExcelTable> EndStickerPageContentExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StickerPageContentExcelTable>(o);
+  }
+  public StickerPageContentExcelTableT UnPack() {
+    var _o = new StickerPageContentExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StickerPageContentExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StickerPageContentExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.StickerPageContentExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.StickerPageContentExcelTable> Pack(FlatBufferBuilder builder, StickerPageContentExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StickerPageContentExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.StickerPageContentExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.StickerPageContentExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateStickerPageContentExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class StickerPageContentExcelTableT
+{
+  public List<SCHALE.Common.FlatData.StickerPageContentExcelT> DataList { get; set; }
+
+  public StickerPageContentExcelTableT() {
+    this.DataList = null;
   }
 }
 

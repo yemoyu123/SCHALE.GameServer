@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestTileExcel : IFlatbufferObject
@@ -153,6 +154,130 @@ public struct ConquestTileExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestTileExcel> EndConquestTileExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestTileExcel>(o);
+  }
+  public ConquestTileExcelT UnPack() {
+    var _o = new ConquestTileExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestTileExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestTile");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.EventId = TableEncryptionService.Convert(this.EventId, key);
+    _o.Step = TableEncryptionService.Convert(this.Step, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.TileNameLocalize = TableEncryptionService.Convert(this.TileNameLocalize, key);
+    _o.TileImageName = TableEncryptionService.Convert(this.TileImageName, key);
+    _o.Playable = TableEncryptionService.Convert(this.Playable, key);
+    _o.TileType = TableEncryptionService.Convert(this.TileType, key);
+    _o.NotMapFog = TableEncryptionService.Convert(this.NotMapFog, key);
+    _o.GroupBonusId = TableEncryptionService.Convert(this.GroupBonusId, key);
+    _o.ConquestCostType = TableEncryptionService.Convert(this.ConquestCostType, key);
+    _o.ConquestCostId = TableEncryptionService.Convert(this.ConquestCostId, key);
+    _o.ConquestCostAmount = TableEncryptionService.Convert(this.ConquestCostAmount, key);
+    _o.ManageCostType = TableEncryptionService.Convert(this.ManageCostType, key);
+    _o.ManageCostId = TableEncryptionService.Convert(this.ManageCostId, key);
+    _o.ManageCostAmount = TableEncryptionService.Convert(this.ManageCostAmount, key);
+    _o.ConquestRewardId = TableEncryptionService.Convert(this.ConquestRewardId, key);
+    _o.MassErosionId = TableEncryptionService.Convert(this.MassErosionId, key);
+    _o.Upgrade2CostType = TableEncryptionService.Convert(this.Upgrade2CostType, key);
+    _o.Upgrade2CostId = TableEncryptionService.Convert(this.Upgrade2CostId, key);
+    _o.Upgrade2CostAmount = TableEncryptionService.Convert(this.Upgrade2CostAmount, key);
+    _o.Upgrade3CostType = TableEncryptionService.Convert(this.Upgrade3CostType, key);
+    _o.Upgrade3CostId = TableEncryptionService.Convert(this.Upgrade3CostId, key);
+    _o.Upgrade3CostAmount = TableEncryptionService.Convert(this.Upgrade3CostAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestTileExcel> Pack(FlatBufferBuilder builder, ConquestTileExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestTileExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _TileNameLocalize = _o.TileNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.TileNameLocalize);
+    var _TileImageName = _o.TileImageName == null ? default(StringOffset) : builder.CreateString(_o.TileImageName);
+    return CreateConquestTileExcel(
+      builder,
+      _o.Id,
+      _Name,
+      _o.EventId,
+      _o.Step,
+      _PrefabName,
+      _TileNameLocalize,
+      _TileImageName,
+      _o.Playable,
+      _o.TileType,
+      _o.NotMapFog,
+      _o.GroupBonusId,
+      _o.ConquestCostType,
+      _o.ConquestCostId,
+      _o.ConquestCostAmount,
+      _o.ManageCostType,
+      _o.ManageCostId,
+      _o.ManageCostAmount,
+      _o.ConquestRewardId,
+      _o.MassErosionId,
+      _o.Upgrade2CostType,
+      _o.Upgrade2CostId,
+      _o.Upgrade2CostAmount,
+      _o.Upgrade3CostType,
+      _o.Upgrade3CostId,
+      _o.Upgrade3CostAmount);
+  }
+}
+
+public class ConquestTileExcelT
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public long EventId { get; set; }
+  public int Step { get; set; }
+  public string PrefabName { get; set; }
+  public string TileNameLocalize { get; set; }
+  public string TileImageName { get; set; }
+  public bool Playable { get; set; }
+  public SCHALE.Common.FlatData.ConquestTileType TileType { get; set; }
+  public bool NotMapFog { get; set; }
+  public long GroupBonusId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ConquestCostType { get; set; }
+  public long ConquestCostId { get; set; }
+  public int ConquestCostAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ManageCostType { get; set; }
+  public long ManageCostId { get; set; }
+  public int ManageCostAmount { get; set; }
+  public long ConquestRewardId { get; set; }
+  public long MassErosionId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType Upgrade2CostType { get; set; }
+  public long Upgrade2CostId { get; set; }
+  public int Upgrade2CostAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType Upgrade3CostType { get; set; }
+  public long Upgrade3CostId { get; set; }
+  public int Upgrade3CostAmount { get; set; }
+
+  public ConquestTileExcelT() {
+    this.Id = 0;
+    this.Name = null;
+    this.EventId = 0;
+    this.Step = 0;
+    this.PrefabName = null;
+    this.TileNameLocalize = null;
+    this.TileImageName = null;
+    this.Playable = false;
+    this.TileType = SCHALE.Common.FlatData.ConquestTileType.None;
+    this.NotMapFog = false;
+    this.GroupBonusId = 0;
+    this.ConquestCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ConquestCostId = 0;
+    this.ConquestCostAmount = 0;
+    this.ManageCostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ManageCostId = 0;
+    this.ManageCostAmount = 0;
+    this.ConquestRewardId = 0;
+    this.MassErosionId = 0;
+    this.Upgrade2CostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.Upgrade2CostId = 0;
+    this.Upgrade2CostAmount = 0;
+    this.Upgrade3CostType = SCHALE.Common.FlatData.ParcelType.None;
+    this.Upgrade3CostId = 0;
+    this.Upgrade3CostAmount = 0;
   }
 }
 

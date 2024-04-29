@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioCharacterEmotionExcel : IFlatbufferObject
@@ -43,6 +44,35 @@ public struct ScenarioCharacterEmotionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioCharacterEmotionExcel> EndScenarioCharacterEmotionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioCharacterEmotionExcel>(o);
+  }
+  public ScenarioCharacterEmotionExcelT UnPack() {
+    var _o = new ScenarioCharacterEmotionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioCharacterEmotionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioCharacterEmotion");
+    _o.EmoticonName = TableEncryptionService.Convert(this.EmoticonName, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioCharacterEmotionExcel> Pack(FlatBufferBuilder builder, ScenarioCharacterEmotionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioCharacterEmotionExcel>);
+    var _EmoticonName = _o.EmoticonName == null ? default(StringOffset) : builder.CreateString(_o.EmoticonName);
+    return CreateScenarioCharacterEmotionExcel(
+      builder,
+      _EmoticonName,
+      _o.Name);
+  }
+}
+
+public class ScenarioCharacterEmotionExcelT
+{
+  public string EmoticonName { get; set; }
+  public uint Name { get; set; }
+
+  public ScenarioCharacterEmotionExcelT() {
+    this.EmoticonName = null;
+    this.Name = 0;
   }
 }
 

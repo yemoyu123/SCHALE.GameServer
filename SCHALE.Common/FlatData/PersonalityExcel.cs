@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PersonalityExcel : IFlatbufferObject
@@ -43,6 +44,35 @@ public struct PersonalityExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PersonalityExcel> EndPersonalityExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PersonalityExcel>(o);
+  }
+  public PersonalityExcelT UnPack() {
+    var _o = new PersonalityExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PersonalityExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Personality");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.PersonalityExcel> Pack(FlatBufferBuilder builder, PersonalityExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PersonalityExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    return CreatePersonalityExcel(
+      builder,
+      _o.Id,
+      _Name);
+  }
+}
+
+public class PersonalityExcelT
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+
+  public PersonalityExcelT() {
+    this.Id = 0;
+    this.Name = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestMapExcel : IFlatbufferObject
@@ -135,6 +136,97 @@ public struct ConquestMapExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestMapExcel> EndConquestMapExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestMapExcel>(o);
+  }
+  public ConquestMapExcelT UnPack() {
+    var _o = new ConquestMapExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestMapExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestMap");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.MapDifficulty = TableEncryptionService.Convert(this.MapDifficulty, key);
+    _o.StepIndex = TableEncryptionService.Convert(this.StepIndex, key);
+    _o.ConquestMap = TableEncryptionService.Convert(this.ConquestMap, key);
+    _o.StepEnterScenarioGroupId = TableEncryptionService.Convert(this.StepEnterScenarioGroupId, key);
+    _o.StepOpenConditionType = new List<SCHALE.Common.FlatData.ConquestConditionType>();
+    for (var _j = 0; _j < this.StepOpenConditionTypeLength; ++_j) {_o.StepOpenConditionType.Add(TableEncryptionService.Convert(this.StepOpenConditionType(_j), key));}
+    _o.StepOpenConditionParameter = new List<string>();
+    for (var _j = 0; _j < this.StepOpenConditionParameterLength; ++_j) {_o.StepOpenConditionParameter.Add(TableEncryptionService.Convert(this.StepOpenConditionParameter(_j), key));}
+    _o.MapGoalLocalize = TableEncryptionService.Convert(this.MapGoalLocalize, key);
+    _o.StepGoalLocalize = TableEncryptionService.Convert(this.StepGoalLocalize, key);
+    _o.StepNameLocalize = TableEncryptionService.Convert(this.StepNameLocalize, key);
+    _o.ConquestMapBG = TableEncryptionService.Convert(this.ConquestMapBG, key);
+    _o.CameraSettingId = TableEncryptionService.Convert(this.CameraSettingId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestMapExcel> Pack(FlatBufferBuilder builder, ConquestMapExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestMapExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _ConquestMap = _o.ConquestMap == null ? default(StringOffset) : builder.CreateString(_o.ConquestMap);
+    var _StepOpenConditionType = default(VectorOffset);
+    if (_o.StepOpenConditionType != null) {
+      var __StepOpenConditionType = _o.StepOpenConditionType.ToArray();
+      _StepOpenConditionType = CreateStepOpenConditionTypeVector(builder, __StepOpenConditionType);
+    }
+    var _StepOpenConditionParameter = default(VectorOffset);
+    if (_o.StepOpenConditionParameter != null) {
+      var __StepOpenConditionParameter = new StringOffset[_o.StepOpenConditionParameter.Count];
+      for (var _j = 0; _j < __StepOpenConditionParameter.Length; ++_j) { __StepOpenConditionParameter[_j] = builder.CreateString(_o.StepOpenConditionParameter[_j]); }
+      _StepOpenConditionParameter = CreateStepOpenConditionParameterVector(builder, __StepOpenConditionParameter);
+    }
+    var _MapGoalLocalize = _o.MapGoalLocalize == null ? default(StringOffset) : builder.CreateString(_o.MapGoalLocalize);
+    var _StepGoalLocalize = _o.StepGoalLocalize == null ? default(StringOffset) : builder.CreateString(_o.StepGoalLocalize);
+    var _StepNameLocalize = _o.StepNameLocalize == null ? default(StringOffset) : builder.CreateString(_o.StepNameLocalize);
+    var _ConquestMapBG = _o.ConquestMapBG == null ? default(StringOffset) : builder.CreateString(_o.ConquestMapBG);
+    return CreateConquestMapExcel(
+      builder,
+      _o.EventContentId,
+      _DevName,
+      _o.MapDifficulty,
+      _o.StepIndex,
+      _ConquestMap,
+      _o.StepEnterScenarioGroupId,
+      _StepOpenConditionType,
+      _StepOpenConditionParameter,
+      _MapGoalLocalize,
+      _StepGoalLocalize,
+      _StepNameLocalize,
+      _ConquestMapBG,
+      _o.CameraSettingId);
+  }
+}
+
+public class ConquestMapExcelT
+{
+  public long EventContentId { get; set; }
+  public string DevName { get; set; }
+  public SCHALE.Common.FlatData.StageDifficulty MapDifficulty { get; set; }
+  public int StepIndex { get; set; }
+  public string ConquestMap { get; set; }
+  public long StepEnterScenarioGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.ConquestConditionType> StepOpenConditionType { get; set; }
+  public List<string> StepOpenConditionParameter { get; set; }
+  public string MapGoalLocalize { get; set; }
+  public string StepGoalLocalize { get; set; }
+  public string StepNameLocalize { get; set; }
+  public string ConquestMapBG { get; set; }
+  public long CameraSettingId { get; set; }
+
+  public ConquestMapExcelT() {
+    this.EventContentId = 0;
+    this.DevName = null;
+    this.MapDifficulty = SCHALE.Common.FlatData.StageDifficulty.None;
+    this.StepIndex = 0;
+    this.ConquestMap = null;
+    this.StepEnterScenarioGroupId = 0;
+    this.StepOpenConditionType = null;
+    this.StepOpenConditionParameter = null;
+    this.MapGoalLocalize = null;
+    this.StepGoalLocalize = null;
+    this.StepNameLocalize = null;
+    this.ConquestMapBG = null;
+    this.CameraSettingId = 0;
   }
 }
 

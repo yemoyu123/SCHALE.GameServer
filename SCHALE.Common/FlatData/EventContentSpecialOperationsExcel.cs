@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentSpecialOperationsExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct EventContentSpecialOperationsExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentSpecialOperationsExcel> EndEventContentSpecialOperationsExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentSpecialOperationsExcel>(o);
+  }
+  public EventContentSpecialOperationsExcelT UnPack() {
+    var _o = new EventContentSpecialOperationsExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentSpecialOperationsExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentSpecialOperations");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.PointItemId = TableEncryptionService.Convert(this.PointItemId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentSpecialOperationsExcel> Pack(FlatBufferBuilder builder, EventContentSpecialOperationsExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentSpecialOperationsExcel>);
+    return CreateEventContentSpecialOperationsExcel(
+      builder,
+      _o.EventContentId,
+      _o.PointItemId);
+  }
+}
+
+public class EventContentSpecialOperationsExcelT
+{
+  public long EventContentId { get; set; }
+  public long PointItemId { get; set; }
+
+  public EventContentSpecialOperationsExcelT() {
+    this.EventContentId = 0;
+    this.PointItemId = 0;
   }
 }
 

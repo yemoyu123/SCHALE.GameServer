@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PickupDuplicateBonusExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct PickupDuplicateBonusExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PickupDuplicateBonusExcel> EndPickupDuplicateBonusExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PickupDuplicateBonusExcel>(o);
+  }
+  public PickupDuplicateBonusExcelT UnPack() {
+    var _o = new PickupDuplicateBonusExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PickupDuplicateBonusExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PickupDuplicateBonus");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.ShopCategoryType = TableEncryptionService.Convert(this.ShopCategoryType, key);
+    _o.ShopId = TableEncryptionService.Convert(this.ShopId, key);
+    _o.PickupCharacterId = TableEncryptionService.Convert(this.PickupCharacterId, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.PickupDuplicateBonusExcel> Pack(FlatBufferBuilder builder, PickupDuplicateBonusExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PickupDuplicateBonusExcel>);
+    return CreatePickupDuplicateBonusExcel(
+      builder,
+      _o.Id,
+      _o.ShopCategoryType,
+      _o.ShopId,
+      _o.PickupCharacterId,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount);
+  }
+}
+
+public class PickupDuplicateBonusExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ShopCategoryType ShopCategoryType { get; set; }
+  public long ShopId { get; set; }
+  public long PickupCharacterId { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public long RewardParcelAmount { get; set; }
+
+  public PickupDuplicateBonusExcelT() {
+    this.Id = 0;
+    this.ShopCategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.ShopId = 0;
+    this.PickupCharacterId = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
   }
 }
 

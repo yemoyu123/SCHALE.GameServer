@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentMiniEventTokenExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentMiniEventTokenExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelTable> EndEventContentMiniEventTokenExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelTable>(o);
+  }
+  public EventContentMiniEventTokenExcelTableT UnPack() {
+    var _o = new EventContentMiniEventTokenExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentMiniEventTokenExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentMiniEventTokenExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelTable> Pack(FlatBufferBuilder builder, EventContentMiniEventTokenExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentMiniEventTokenExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentMiniEventTokenExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentMiniEventTokenExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentMiniEventTokenExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentMiniEventTokenExcelT> DataList { get; set; }
+
+  public EventContentMiniEventTokenExcelTableT() {
+    this.DataList = null;
   }
 }
 

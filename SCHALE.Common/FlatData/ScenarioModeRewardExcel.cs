@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioModeRewardExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct ScenarioModeRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioModeRewardExcel> EndScenarioModeRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioModeRewardExcel>(o);
+  }
+  public ScenarioModeRewardExcelT UnPack() {
+    var _o = new ScenarioModeRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioModeRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioModeReward");
+    _o.ScenarioModeRewardId = TableEncryptionService.Convert(this.ScenarioModeRewardId, key);
+    _o.RewardTag = TableEncryptionService.Convert(this.RewardTag, key);
+    _o.RewardProb = TableEncryptionService.Convert(this.RewardProb, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardParcelId = TableEncryptionService.Convert(this.RewardParcelId, key);
+    _o.RewardParcelAmount = TableEncryptionService.Convert(this.RewardParcelAmount, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioModeRewardExcel> Pack(FlatBufferBuilder builder, ScenarioModeRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioModeRewardExcel>);
+    return CreateScenarioModeRewardExcel(
+      builder,
+      _o.ScenarioModeRewardId,
+      _o.RewardTag,
+      _o.RewardProb,
+      _o.RewardParcelType,
+      _o.RewardParcelId,
+      _o.RewardParcelAmount,
+      _o.IsDisplayed);
+  }
+}
+
+public class ScenarioModeRewardExcelT
+{
+  public long ScenarioModeRewardId { get; set; }
+  public SCHALE.Common.FlatData.RewardTag RewardTag { get; set; }
+  public int RewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardParcelId { get; set; }
+  public int RewardParcelAmount { get; set; }
+  public bool IsDisplayed { get; set; }
+
+  public ScenarioModeRewardExcelT() {
+    this.ScenarioModeRewardId = 0;
+    this.RewardTag = SCHALE.Common.FlatData.RewardTag.Default;
+    this.RewardProb = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardParcelId = 0;
+    this.RewardParcelAmount = 0;
+    this.IsDisplayed = false;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopFilterClassifiedExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct ShopFilterClassifiedExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopFilterClassifiedExcel> EndShopFilterClassifiedExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopFilterClassifiedExcel>(o);
+  }
+  public ShopFilterClassifiedExcelT UnPack() {
+    var _o = new ShopFilterClassifiedExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopFilterClassifiedExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopFilterClassified");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.ConsumeParcelType = TableEncryptionService.Convert(this.ConsumeParcelType, key);
+    _o.ConsumeParcelId = TableEncryptionService.Convert(this.ConsumeParcelId, key);
+    _o.ShopFilterType = TableEncryptionService.Convert(this.ShopFilterType, key);
+    _o.GoodsId = TableEncryptionService.Convert(this.GoodsId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopFilterClassifiedExcel> Pack(FlatBufferBuilder builder, ShopFilterClassifiedExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopFilterClassifiedExcel>);
+    return CreateShopFilterClassifiedExcel(
+      builder,
+      _o.Id,
+      _o.CategoryType,
+      _o.ConsumeParcelType,
+      _o.ConsumeParcelId,
+      _o.ShopFilterType,
+      _o.GoodsId);
+  }
+}
+
+public class ShopFilterClassifiedExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ShopCategoryType CategoryType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ConsumeParcelType { get; set; }
+  public long ConsumeParcelId { get; set; }
+  public SCHALE.Common.FlatData.ShopFilterType ShopFilterType { get; set; }
+  public long GoodsId { get; set; }
+
+  public ShopFilterClassifiedExcelT() {
+    this.Id = 0;
+    this.CategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.ConsumeParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ConsumeParcelId = 0;
+    this.ShopFilterType = SCHALE.Common.FlatData.ShopFilterType.GachaTicket;
+    this.GoodsId = 0;
   }
 }
 

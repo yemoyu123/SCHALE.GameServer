@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct OpenConditionExcel : IFlatbufferObject
@@ -133,6 +134,122 @@ public struct OpenConditionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.OpenConditionExcel> EndOpenConditionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.OpenConditionExcel>(o);
+  }
+  public OpenConditionExcelT UnPack() {
+    var _o = new OpenConditionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(OpenConditionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("OpenCondition");
+    _o.OpenConditionContentType = TableEncryptionService.Convert(this.OpenConditionContentType, key);
+    _o.LockUI = new List<string>();
+    for (var _j = 0; _j < this.LockUILength; ++_j) {_o.LockUI.Add(TableEncryptionService.Convert(this.LockUI(_j), key));}
+    _o.ShortcutPopupPriority = TableEncryptionService.Convert(this.ShortcutPopupPriority, key);
+    _o.ShortcutUIName = new List<string>();
+    for (var _j = 0; _j < this.ShortcutUINameLength; ++_j) {_o.ShortcutUIName.Add(TableEncryptionService.Convert(this.ShortcutUIName(_j), key));}
+    _o.ShortcutParam = TableEncryptionService.Convert(this.ShortcutParam, key);
+    _o.Scene = TableEncryptionService.Convert(this.Scene, key);
+    _o.HideWhenLocked = TableEncryptionService.Convert(this.HideWhenLocked, key);
+    _o.AccountLevel = TableEncryptionService.Convert(this.AccountLevel, key);
+    _o.ScenarioModeId = TableEncryptionService.Convert(this.ScenarioModeId, key);
+    _o.CampaignStageId = TableEncryptionService.Convert(this.CampaignStageId, key);
+    _o.MultipleConditionCheckType = TableEncryptionService.Convert(this.MultipleConditionCheckType, key);
+    _o.OpenDayOfWeek = TableEncryptionService.Convert(this.OpenDayOfWeek, key);
+    _o.OpenHour = TableEncryptionService.Convert(this.OpenHour, key);
+    _o.CloseDayOfWeek = TableEncryptionService.Convert(this.CloseDayOfWeek, key);
+    _o.CloseHour = TableEncryptionService.Convert(this.CloseHour, key);
+    _o.OpenedCafeId = TableEncryptionService.Convert(this.OpenedCafeId, key);
+    _o.CafeIdforCafeRank = TableEncryptionService.Convert(this.CafeIdforCafeRank, key);
+    _o.CafeRank = TableEncryptionService.Convert(this.CafeRank, key);
+    _o.ContentsOpenShow = TableEncryptionService.Convert(this.ContentsOpenShow, key);
+    _o.ContentsOpenShortcutUI = TableEncryptionService.Convert(this.ContentsOpenShortcutUI, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.OpenConditionExcel> Pack(FlatBufferBuilder builder, OpenConditionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.OpenConditionExcel>);
+    var _LockUI = default(VectorOffset);
+    if (_o.LockUI != null) {
+      var __LockUI = new StringOffset[_o.LockUI.Count];
+      for (var _j = 0; _j < __LockUI.Length; ++_j) { __LockUI[_j] = builder.CreateString(_o.LockUI[_j]); }
+      _LockUI = CreateLockUIVector(builder, __LockUI);
+    }
+    var _ShortcutUIName = default(VectorOffset);
+    if (_o.ShortcutUIName != null) {
+      var __ShortcutUIName = new StringOffset[_o.ShortcutUIName.Count];
+      for (var _j = 0; _j < __ShortcutUIName.Length; ++_j) { __ShortcutUIName[_j] = builder.CreateString(_o.ShortcutUIName[_j]); }
+      _ShortcutUIName = CreateShortcutUINameVector(builder, __ShortcutUIName);
+    }
+    var _Scene = _o.Scene == null ? default(StringOffset) : builder.CreateString(_o.Scene);
+    var _ContentsOpenShortcutUI = _o.ContentsOpenShortcutUI == null ? default(StringOffset) : builder.CreateString(_o.ContentsOpenShortcutUI);
+    return CreateOpenConditionExcel(
+      builder,
+      _o.OpenConditionContentType,
+      _LockUI,
+      _o.ShortcutPopupPriority,
+      _ShortcutUIName,
+      _o.ShortcutParam,
+      _Scene,
+      _o.HideWhenLocked,
+      _o.AccountLevel,
+      _o.ScenarioModeId,
+      _o.CampaignStageId,
+      _o.MultipleConditionCheckType,
+      _o.OpenDayOfWeek,
+      _o.OpenHour,
+      _o.CloseDayOfWeek,
+      _o.CloseHour,
+      _o.OpenedCafeId,
+      _o.CafeIdforCafeRank,
+      _o.CafeRank,
+      _o.ContentsOpenShow,
+      _ContentsOpenShortcutUI);
+  }
+}
+
+public class OpenConditionExcelT
+{
+  public SCHALE.Common.FlatData.OpenConditionContent OpenConditionContentType { get; set; }
+  public List<string> LockUI { get; set; }
+  public long ShortcutPopupPriority { get; set; }
+  public List<string> ShortcutUIName { get; set; }
+  public int ShortcutParam { get; set; }
+  public string Scene { get; set; }
+  public bool HideWhenLocked { get; set; }
+  public long AccountLevel { get; set; }
+  public long ScenarioModeId { get; set; }
+  public long CampaignStageId { get; set; }
+  public SCHALE.Common.FlatData.MultipleConditionCheckType MultipleConditionCheckType { get; set; }
+  public SCHALE.Common.FlatData.WeekDay OpenDayOfWeek { get; set; }
+  public long OpenHour { get; set; }
+  public SCHALE.Common.FlatData.WeekDay CloseDayOfWeek { get; set; }
+  public long CloseHour { get; set; }
+  public long OpenedCafeId { get; set; }
+  public long CafeIdforCafeRank { get; set; }
+  public long CafeRank { get; set; }
+  public bool ContentsOpenShow { get; set; }
+  public string ContentsOpenShortcutUI { get; set; }
+
+  public OpenConditionExcelT() {
+    this.OpenConditionContentType = SCHALE.Common.FlatData.OpenConditionContent.Shop;
+    this.LockUI = null;
+    this.ShortcutPopupPriority = 0;
+    this.ShortcutUIName = null;
+    this.ShortcutParam = 0;
+    this.Scene = null;
+    this.HideWhenLocked = false;
+    this.AccountLevel = 0;
+    this.ScenarioModeId = 0;
+    this.CampaignStageId = 0;
+    this.MultipleConditionCheckType = SCHALE.Common.FlatData.MultipleConditionCheckType.And;
+    this.OpenDayOfWeek = SCHALE.Common.FlatData.WeekDay.Sunday;
+    this.OpenHour = 0;
+    this.CloseDayOfWeek = SCHALE.Common.FlatData.WeekDay.Sunday;
+    this.CloseHour = 0;
+    this.OpenedCafeId = 0;
+    this.CafeIdforCafeRank = 0;
+    this.CafeRank = 0;
+    this.ContentsOpenShow = false;
+    this.ContentsOpenShortcutUI = null;
   }
 }
 

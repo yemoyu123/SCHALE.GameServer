@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterSkillListExcel : IFlatbufferObject
@@ -179,6 +180,165 @@ public struct CharacterSkillListExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterSkillListExcel> EndCharacterSkillListExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterSkillListExcel>(o);
+  }
+  public CharacterSkillListExcelT UnPack() {
+    var _o = new CharacterSkillListExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterSkillListExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterSkillList");
+    _o.CharacterSkillListGroupId = TableEncryptionService.Convert(this.CharacterSkillListGroupId, key);
+    _o.MinimumGradeCharacterWeapon = TableEncryptionService.Convert(this.MinimumGradeCharacterWeapon, key);
+    _o.MinimumTierCharacterGear = TableEncryptionService.Convert(this.MinimumTierCharacterGear, key);
+    _o.FormIndex = TableEncryptionService.Convert(this.FormIndex, key);
+    _o.IsRootMotion = TableEncryptionService.Convert(this.IsRootMotion, key);
+    _o.IsMoveLeftRight = TableEncryptionService.Convert(this.IsMoveLeftRight, key);
+    _o.UseRandomAnimation = TableEncryptionService.Convert(this.UseRandomAnimation, key);
+    _o.TSAInteractionId = TableEncryptionService.Convert(this.TSAInteractionId, key);
+    _o.NormalSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.NormalSkillGroupIdLength; ++_j) {_o.NormalSkillGroupId.Add(TableEncryptionService.Convert(this.NormalSkillGroupId(_j), key));}
+    _o.NormalSkillTimeLineIndex = new List<int>();
+    for (var _j = 0; _j < this.NormalSkillTimeLineIndexLength; ++_j) {_o.NormalSkillTimeLineIndex.Add(TableEncryptionService.Convert(this.NormalSkillTimeLineIndex(_j), key));}
+    _o.ExSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.ExSkillGroupIdLength; ++_j) {_o.ExSkillGroupId.Add(TableEncryptionService.Convert(this.ExSkillGroupId(_j), key));}
+    _o.ExSkillTimeLineIndex = new List<int>();
+    for (var _j = 0; _j < this.ExSkillTimeLineIndexLength; ++_j) {_o.ExSkillTimeLineIndex.Add(TableEncryptionService.Convert(this.ExSkillTimeLineIndex(_j), key));}
+    _o.PublicSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.PublicSkillGroupIdLength; ++_j) {_o.PublicSkillGroupId.Add(TableEncryptionService.Convert(this.PublicSkillGroupId(_j), key));}
+    _o.PublicSkillTimeLineIndex = new List<int>();
+    for (var _j = 0; _j < this.PublicSkillTimeLineIndexLength; ++_j) {_o.PublicSkillTimeLineIndex.Add(TableEncryptionService.Convert(this.PublicSkillTimeLineIndex(_j), key));}
+    _o.PassiveSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.PassiveSkillGroupIdLength; ++_j) {_o.PassiveSkillGroupId.Add(TableEncryptionService.Convert(this.PassiveSkillGroupId(_j), key));}
+    _o.LeaderSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.LeaderSkillGroupIdLength; ++_j) {_o.LeaderSkillGroupId.Add(TableEncryptionService.Convert(this.LeaderSkillGroupId(_j), key));}
+    _o.ExtraPassiveSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.ExtraPassiveSkillGroupIdLength; ++_j) {_o.ExtraPassiveSkillGroupId.Add(TableEncryptionService.Convert(this.ExtraPassiveSkillGroupId(_j), key));}
+    _o.HiddenPassiveSkillGroupId = new List<string>();
+    for (var _j = 0; _j < this.HiddenPassiveSkillGroupIdLength; ++_j) {_o.HiddenPassiveSkillGroupId.Add(TableEncryptionService.Convert(this.HiddenPassiveSkillGroupId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterSkillListExcel> Pack(FlatBufferBuilder builder, CharacterSkillListExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterSkillListExcel>);
+    var _NormalSkillGroupId = default(VectorOffset);
+    if (_o.NormalSkillGroupId != null) {
+      var __NormalSkillGroupId = new StringOffset[_o.NormalSkillGroupId.Count];
+      for (var _j = 0; _j < __NormalSkillGroupId.Length; ++_j) { __NormalSkillGroupId[_j] = builder.CreateString(_o.NormalSkillGroupId[_j]); }
+      _NormalSkillGroupId = CreateNormalSkillGroupIdVector(builder, __NormalSkillGroupId);
+    }
+    var _NormalSkillTimeLineIndex = default(VectorOffset);
+    if (_o.NormalSkillTimeLineIndex != null) {
+      var __NormalSkillTimeLineIndex = _o.NormalSkillTimeLineIndex.ToArray();
+      _NormalSkillTimeLineIndex = CreateNormalSkillTimeLineIndexVector(builder, __NormalSkillTimeLineIndex);
+    }
+    var _ExSkillGroupId = default(VectorOffset);
+    if (_o.ExSkillGroupId != null) {
+      var __ExSkillGroupId = new StringOffset[_o.ExSkillGroupId.Count];
+      for (var _j = 0; _j < __ExSkillGroupId.Length; ++_j) { __ExSkillGroupId[_j] = builder.CreateString(_o.ExSkillGroupId[_j]); }
+      _ExSkillGroupId = CreateExSkillGroupIdVector(builder, __ExSkillGroupId);
+    }
+    var _ExSkillTimeLineIndex = default(VectorOffset);
+    if (_o.ExSkillTimeLineIndex != null) {
+      var __ExSkillTimeLineIndex = _o.ExSkillTimeLineIndex.ToArray();
+      _ExSkillTimeLineIndex = CreateExSkillTimeLineIndexVector(builder, __ExSkillTimeLineIndex);
+    }
+    var _PublicSkillGroupId = default(VectorOffset);
+    if (_o.PublicSkillGroupId != null) {
+      var __PublicSkillGroupId = new StringOffset[_o.PublicSkillGroupId.Count];
+      for (var _j = 0; _j < __PublicSkillGroupId.Length; ++_j) { __PublicSkillGroupId[_j] = builder.CreateString(_o.PublicSkillGroupId[_j]); }
+      _PublicSkillGroupId = CreatePublicSkillGroupIdVector(builder, __PublicSkillGroupId);
+    }
+    var _PublicSkillTimeLineIndex = default(VectorOffset);
+    if (_o.PublicSkillTimeLineIndex != null) {
+      var __PublicSkillTimeLineIndex = _o.PublicSkillTimeLineIndex.ToArray();
+      _PublicSkillTimeLineIndex = CreatePublicSkillTimeLineIndexVector(builder, __PublicSkillTimeLineIndex);
+    }
+    var _PassiveSkillGroupId = default(VectorOffset);
+    if (_o.PassiveSkillGroupId != null) {
+      var __PassiveSkillGroupId = new StringOffset[_o.PassiveSkillGroupId.Count];
+      for (var _j = 0; _j < __PassiveSkillGroupId.Length; ++_j) { __PassiveSkillGroupId[_j] = builder.CreateString(_o.PassiveSkillGroupId[_j]); }
+      _PassiveSkillGroupId = CreatePassiveSkillGroupIdVector(builder, __PassiveSkillGroupId);
+    }
+    var _LeaderSkillGroupId = default(VectorOffset);
+    if (_o.LeaderSkillGroupId != null) {
+      var __LeaderSkillGroupId = new StringOffset[_o.LeaderSkillGroupId.Count];
+      for (var _j = 0; _j < __LeaderSkillGroupId.Length; ++_j) { __LeaderSkillGroupId[_j] = builder.CreateString(_o.LeaderSkillGroupId[_j]); }
+      _LeaderSkillGroupId = CreateLeaderSkillGroupIdVector(builder, __LeaderSkillGroupId);
+    }
+    var _ExtraPassiveSkillGroupId = default(VectorOffset);
+    if (_o.ExtraPassiveSkillGroupId != null) {
+      var __ExtraPassiveSkillGroupId = new StringOffset[_o.ExtraPassiveSkillGroupId.Count];
+      for (var _j = 0; _j < __ExtraPassiveSkillGroupId.Length; ++_j) { __ExtraPassiveSkillGroupId[_j] = builder.CreateString(_o.ExtraPassiveSkillGroupId[_j]); }
+      _ExtraPassiveSkillGroupId = CreateExtraPassiveSkillGroupIdVector(builder, __ExtraPassiveSkillGroupId);
+    }
+    var _HiddenPassiveSkillGroupId = default(VectorOffset);
+    if (_o.HiddenPassiveSkillGroupId != null) {
+      var __HiddenPassiveSkillGroupId = new StringOffset[_o.HiddenPassiveSkillGroupId.Count];
+      for (var _j = 0; _j < __HiddenPassiveSkillGroupId.Length; ++_j) { __HiddenPassiveSkillGroupId[_j] = builder.CreateString(_o.HiddenPassiveSkillGroupId[_j]); }
+      _HiddenPassiveSkillGroupId = CreateHiddenPassiveSkillGroupIdVector(builder, __HiddenPassiveSkillGroupId);
+    }
+    return CreateCharacterSkillListExcel(
+      builder,
+      _o.CharacterSkillListGroupId,
+      _o.MinimumGradeCharacterWeapon,
+      _o.MinimumTierCharacterGear,
+      _o.FormIndex,
+      _o.IsRootMotion,
+      _o.IsMoveLeftRight,
+      _o.UseRandomAnimation,
+      _o.TSAInteractionId,
+      _NormalSkillGroupId,
+      _NormalSkillTimeLineIndex,
+      _ExSkillGroupId,
+      _ExSkillTimeLineIndex,
+      _PublicSkillGroupId,
+      _PublicSkillTimeLineIndex,
+      _PassiveSkillGroupId,
+      _LeaderSkillGroupId,
+      _ExtraPassiveSkillGroupId,
+      _HiddenPassiveSkillGroupId);
+  }
+}
+
+public class CharacterSkillListExcelT
+{
+  public long CharacterSkillListGroupId { get; set; }
+  public int MinimumGradeCharacterWeapon { get; set; }
+  public int MinimumTierCharacterGear { get; set; }
+  public int FormIndex { get; set; }
+  public bool IsRootMotion { get; set; }
+  public bool IsMoveLeftRight { get; set; }
+  public bool UseRandomAnimation { get; set; }
+  public long TSAInteractionId { get; set; }
+  public List<string> NormalSkillGroupId { get; set; }
+  public List<int> NormalSkillTimeLineIndex { get; set; }
+  public List<string> ExSkillGroupId { get; set; }
+  public List<int> ExSkillTimeLineIndex { get; set; }
+  public List<string> PublicSkillGroupId { get; set; }
+  public List<int> PublicSkillTimeLineIndex { get; set; }
+  public List<string> PassiveSkillGroupId { get; set; }
+  public List<string> LeaderSkillGroupId { get; set; }
+  public List<string> ExtraPassiveSkillGroupId { get; set; }
+  public List<string> HiddenPassiveSkillGroupId { get; set; }
+
+  public CharacterSkillListExcelT() {
+    this.CharacterSkillListGroupId = 0;
+    this.MinimumGradeCharacterWeapon = 0;
+    this.MinimumTierCharacterGear = 0;
+    this.FormIndex = 0;
+    this.IsRootMotion = false;
+    this.IsMoveLeftRight = false;
+    this.UseRandomAnimation = false;
+    this.TSAInteractionId = 0;
+    this.NormalSkillGroupId = null;
+    this.NormalSkillTimeLineIndex = null;
+    this.ExSkillGroupId = null;
+    this.ExSkillTimeLineIndex = null;
+    this.PublicSkillGroupId = null;
+    this.PublicSkillTimeLineIndex = null;
+    this.PassiveSkillGroupId = null;
+    this.LeaderSkillGroupId = null;
+    this.ExtraPassiveSkillGroupId = null;
+    this.HiddenPassiveSkillGroupId = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AccountLevelExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct AccountLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AccountLevelExcel> EndAccountLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AccountLevelExcel>(o);
+  }
+  public AccountLevelExcelT UnPack() {
+    var _o = new AccountLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AccountLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AccountLevel");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Exp = TableEncryptionService.Convert(this.Exp, key);
+    _o.APAutoChargeMax = TableEncryptionService.Convert(this.APAutoChargeMax, key);
+    _o.NeedReportEvent = TableEncryptionService.Convert(this.NeedReportEvent, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AccountLevelExcel> Pack(FlatBufferBuilder builder, AccountLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AccountLevelExcel>);
+    return CreateAccountLevelExcel(
+      builder,
+      _o.Id,
+      _o.Level,
+      _o.Exp,
+      _o.APAutoChargeMax,
+      _o.NeedReportEvent);
+  }
+}
+
+public class AccountLevelExcelT
+{
+  public long Id { get; set; }
+  public long Level { get; set; }
+  public long Exp { get; set; }
+  public long APAutoChargeMax { get; set; }
+  public bool NeedReportEvent { get; set; }
+
+  public AccountLevelExcelT() {
+    this.Id = 0;
+    this.Level = 0;
+    this.Exp = 0;
+    this.APAutoChargeMax = 0;
+    this.NeedReportEvent = false;
   }
 }
 

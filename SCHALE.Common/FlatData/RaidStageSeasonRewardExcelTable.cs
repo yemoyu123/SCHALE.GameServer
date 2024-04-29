@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RaidStageSeasonRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct RaidStageSeasonRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelTable> EndRaidStageSeasonRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelTable>(o);
+  }
+  public RaidStageSeasonRewardExcelTableT UnPack() {
+    var _o = new RaidStageSeasonRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RaidStageSeasonRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RaidStageSeasonRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelTable> Pack(FlatBufferBuilder builder, RaidStageSeasonRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.RaidStageSeasonRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.RaidStageSeasonRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateRaidStageSeasonRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class RaidStageSeasonRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.RaidStageSeasonRewardExcelT> DataList { get; set; }
+
+  public RaidStageSeasonRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

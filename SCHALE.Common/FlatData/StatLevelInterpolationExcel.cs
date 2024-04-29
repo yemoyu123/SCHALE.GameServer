@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StatLevelInterpolationExcel : IFlatbufferObject
@@ -49,6 +50,40 @@ public struct StatLevelInterpolationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StatLevelInterpolationExcel> EndStatLevelInterpolationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StatLevelInterpolationExcel>(o);
+  }
+  public StatLevelInterpolationExcelT UnPack() {
+    var _o = new StatLevelInterpolationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StatLevelInterpolationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StatLevelInterpolation");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.StatTypeIndex = new List<long>();
+    for (var _j = 0; _j < this.StatTypeIndexLength; ++_j) {_o.StatTypeIndex.Add(TableEncryptionService.Convert(this.StatTypeIndex(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.StatLevelInterpolationExcel> Pack(FlatBufferBuilder builder, StatLevelInterpolationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StatLevelInterpolationExcel>);
+    var _StatTypeIndex = default(VectorOffset);
+    if (_o.StatTypeIndex != null) {
+      var __StatTypeIndex = _o.StatTypeIndex.ToArray();
+      _StatTypeIndex = CreateStatTypeIndexVector(builder, __StatTypeIndex);
+    }
+    return CreateStatLevelInterpolationExcel(
+      builder,
+      _o.Level,
+      _StatTypeIndex);
+  }
+}
+
+public class StatLevelInterpolationExcelT
+{
+  public long Level { get; set; }
+  public List<long> StatTypeIndex { get; set; }
+
+  public StatLevelInterpolationExcelT() {
+    this.Level = 0;
+    this.StatTypeIndex = null;
   }
 }
 

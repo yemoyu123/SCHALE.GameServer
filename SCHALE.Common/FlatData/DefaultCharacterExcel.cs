@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultCharacterExcel : IFlatbufferObject
@@ -77,6 +78,74 @@ public struct DefaultCharacterExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultCharacterExcel> EndDefaultCharacterExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultCharacterExcel>(o);
+  }
+  public DefaultCharacterExcelT UnPack() {
+    var _o = new DefaultCharacterExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultCharacterExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultCharacter");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.FavoriteCharacter = TableEncryptionService.Convert(this.FavoriteCharacter, key);
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Exp = TableEncryptionService.Convert(this.Exp, key);
+    _o.FavorExp = TableEncryptionService.Convert(this.FavorExp, key);
+    _o.FavorRank = TableEncryptionService.Convert(this.FavorRank, key);
+    _o.StarGrade = TableEncryptionService.Convert(this.StarGrade, key);
+    _o.ExSkillLevel = TableEncryptionService.Convert(this.ExSkillLevel, key);
+    _o.PassiveSkillLevel = TableEncryptionService.Convert(this.PassiveSkillLevel, key);
+    _o.ExtraPassiveSkillLevel = TableEncryptionService.Convert(this.ExtraPassiveSkillLevel, key);
+    _o.CommonSkillLevel = TableEncryptionService.Convert(this.CommonSkillLevel, key);
+    _o.LeaderSkillLevel = TableEncryptionService.Convert(this.LeaderSkillLevel, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultCharacterExcel> Pack(FlatBufferBuilder builder, DefaultCharacterExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultCharacterExcel>);
+    return CreateDefaultCharacterExcel(
+      builder,
+      _o.CharacterId,
+      _o.FavoriteCharacter,
+      _o.Level,
+      _o.Exp,
+      _o.FavorExp,
+      _o.FavorRank,
+      _o.StarGrade,
+      _o.ExSkillLevel,
+      _o.PassiveSkillLevel,
+      _o.ExtraPassiveSkillLevel,
+      _o.CommonSkillLevel,
+      _o.LeaderSkillLevel);
+  }
+}
+
+public class DefaultCharacterExcelT
+{
+  public long CharacterId { get; set; }
+  public bool FavoriteCharacter { get; set; }
+  public int Level { get; set; }
+  public int Exp { get; set; }
+  public int FavorExp { get; set; }
+  public int FavorRank { get; set; }
+  public int StarGrade { get; set; }
+  public int ExSkillLevel { get; set; }
+  public int PassiveSkillLevel { get; set; }
+  public int ExtraPassiveSkillLevel { get; set; }
+  public int CommonSkillLevel { get; set; }
+  public int LeaderSkillLevel { get; set; }
+
+  public DefaultCharacterExcelT() {
+    this.CharacterId = 0;
+    this.FavoriteCharacter = false;
+    this.Level = 0;
+    this.Exp = 0;
+    this.FavorExp = 0;
+    this.FavorRank = 0;
+    this.StarGrade = 0;
+    this.ExSkillLevel = 0;
+    this.PassiveSkillLevel = 0;
+    this.ExtraPassiveSkillLevel = 0;
+    this.CommonSkillLevel = 0;
+    this.LeaderSkillLevel = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentTreasureCellRewardExcel : IFlatbufferObject
@@ -91,6 +92,65 @@ public struct EventContentTreasureCellRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentTreasureCellRewardExcel> EndEventContentTreasureCellRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentTreasureCellRewardExcel>(o);
+  }
+  public EventContentTreasureCellRewardExcelT UnPack() {
+    var _o = new EventContentTreasureCellRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentTreasureCellRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentTreasureCellReward");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.LocalizeCodeID = TableEncryptionService.Convert(this.LocalizeCodeID, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentTreasureCellRewardExcel> Pack(FlatBufferBuilder builder, EventContentTreasureCellRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentTreasureCellRewardExcel>);
+    var _LocalizeCodeID = _o.LocalizeCodeID == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCodeID);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateEventContentTreasureCellRewardExcel(
+      builder,
+      _o.Id,
+      _LocalizeCodeID,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class EventContentTreasureCellRewardExcelT
+{
+  public long Id { get; set; }
+  public string LocalizeCodeID { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public EventContentTreasureCellRewardExcelT() {
+    this.Id = 0;
+    this.LocalizeCodeID = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

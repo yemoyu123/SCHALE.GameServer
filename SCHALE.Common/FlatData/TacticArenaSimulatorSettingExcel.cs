@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticArenaSimulatorSettingExcel : IFlatbufferObject
@@ -89,6 +90,86 @@ public struct TacticArenaSimulatorSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticArenaSimulatorSettingExcel> EndTacticArenaSimulatorSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticArenaSimulatorSettingExcel>(o);
+  }
+  public TacticArenaSimulatorSettingExcelT UnPack() {
+    var _o = new TacticArenaSimulatorSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticArenaSimulatorSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticArenaSimulatorSetting");
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.Repeat = TableEncryptionService.Convert(this.Repeat, key);
+    _o.AttackerFrom = TableEncryptionService.Convert(this.AttackerFrom, key);
+    _o.AttackerUserArenaGroup = TableEncryptionService.Convert(this.AttackerUserArenaGroup, key);
+    _o.AttackerUserArenaRank = TableEncryptionService.Convert(this.AttackerUserArenaRank, key);
+    _o.AttackerPresetGroupId = TableEncryptionService.Convert(this.AttackerPresetGroupId, key);
+    _o.AttackerStrikerNum = TableEncryptionService.Convert(this.AttackerStrikerNum, key);
+    _o.AttackerSpecialNum = TableEncryptionService.Convert(this.AttackerSpecialNum, key);
+    _o.DefenderFrom = TableEncryptionService.Convert(this.DefenderFrom, key);
+    _o.DefenderUserArenaGroup = TableEncryptionService.Convert(this.DefenderUserArenaGroup, key);
+    _o.DefenderUserArenaRank = TableEncryptionService.Convert(this.DefenderUserArenaRank, key);
+    _o.DefenderPresetGroupId = TableEncryptionService.Convert(this.DefenderPresetGroupId, key);
+    _o.DefenderStrikerNum = TableEncryptionService.Convert(this.DefenderStrikerNum, key);
+    _o.DefenderSpecialNum = TableEncryptionService.Convert(this.DefenderSpecialNum, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticArenaSimulatorSettingExcel> Pack(FlatBufferBuilder builder, TacticArenaSimulatorSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticArenaSimulatorSettingExcel>);
+    return CreateTacticArenaSimulatorSettingExcel(
+      builder,
+      _o.Order,
+      _o.Repeat,
+      _o.AttackerFrom,
+      _o.AttackerUserArenaGroup,
+      _o.AttackerUserArenaRank,
+      _o.AttackerPresetGroupId,
+      _o.AttackerStrikerNum,
+      _o.AttackerSpecialNum,
+      _o.DefenderFrom,
+      _o.DefenderUserArenaGroup,
+      _o.DefenderUserArenaRank,
+      _o.DefenderPresetGroupId,
+      _o.DefenderStrikerNum,
+      _o.DefenderSpecialNum,
+      _o.GroundId);
+  }
+}
+
+public class TacticArenaSimulatorSettingExcelT
+{
+  public long Order { get; set; }
+  public long Repeat { get; set; }
+  public SCHALE.Common.FlatData.ArenaSimulatorServer AttackerFrom { get; set; }
+  public long AttackerUserArenaGroup { get; set; }
+  public long AttackerUserArenaRank { get; set; }
+  public long AttackerPresetGroupId { get; set; }
+  public long AttackerStrikerNum { get; set; }
+  public long AttackerSpecialNum { get; set; }
+  public SCHALE.Common.FlatData.ArenaSimulatorServer DefenderFrom { get; set; }
+  public long DefenderUserArenaGroup { get; set; }
+  public long DefenderUserArenaRank { get; set; }
+  public long DefenderPresetGroupId { get; set; }
+  public long DefenderStrikerNum { get; set; }
+  public long DefenderSpecialNum { get; set; }
+  public long GroundId { get; set; }
+
+  public TacticArenaSimulatorSettingExcelT() {
+    this.Order = 0;
+    this.Repeat = 0;
+    this.AttackerFrom = SCHALE.Common.FlatData.ArenaSimulatorServer.Preset;
+    this.AttackerUserArenaGroup = 0;
+    this.AttackerUserArenaRank = 0;
+    this.AttackerPresetGroupId = 0;
+    this.AttackerStrikerNum = 0;
+    this.AttackerSpecialNum = 0;
+    this.DefenderFrom = SCHALE.Common.FlatData.ArenaSimulatorServer.Preset;
+    this.DefenderUserArenaGroup = 0;
+    this.DefenderUserArenaRank = 0;
+    this.DefenderPresetGroupId = 0;
+    this.DefenderStrikerNum = 0;
+    this.DefenderSpecialNum = 0;
+    this.GroundId = 0;
   }
 }
 

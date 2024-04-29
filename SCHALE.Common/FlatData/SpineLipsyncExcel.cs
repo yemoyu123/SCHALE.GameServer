@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SpineLipsyncExcel : IFlatbufferObject
@@ -43,6 +44,35 @@ public struct SpineLipsyncExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SpineLipsyncExcel> EndSpineLipsyncExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SpineLipsyncExcel>(o);
+  }
+  public SpineLipsyncExcelT UnPack() {
+    var _o = new SpineLipsyncExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SpineLipsyncExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SpineLipsync");
+    _o.VoiceId = TableEncryptionService.Convert(this.VoiceId, key);
+    _o.AnimJson = TableEncryptionService.Convert(this.AnimJson, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SpineLipsyncExcel> Pack(FlatBufferBuilder builder, SpineLipsyncExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SpineLipsyncExcel>);
+    var _AnimJson = _o.AnimJson == null ? default(StringOffset) : builder.CreateString(_o.AnimJson);
+    return CreateSpineLipsyncExcel(
+      builder,
+      _o.VoiceId,
+      _AnimJson);
+  }
+}
+
+public class SpineLipsyncExcelT
+{
+  public uint VoiceId { get; set; }
+  public string AnimJson { get; set; }
+
+  public SpineLipsyncExcelT() {
+    this.VoiceId = 0;
+    this.AnimJson = null;
   }
 }
 

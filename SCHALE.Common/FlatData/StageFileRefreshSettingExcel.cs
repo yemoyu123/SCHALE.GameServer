@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StageFileRefreshSettingExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct StageFileRefreshSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StageFileRefreshSettingExcel> EndStageFileRefreshSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StageFileRefreshSettingExcel>(o);
+  }
+  public StageFileRefreshSettingExcelT UnPack() {
+    var _o = new StageFileRefreshSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StageFileRefreshSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StageFileRefreshSetting");
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.ForceSave = TableEncryptionService.Convert(this.ForceSave, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StageFileRefreshSettingExcel> Pack(FlatBufferBuilder builder, StageFileRefreshSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StageFileRefreshSettingExcel>);
+    return CreateStageFileRefreshSettingExcel(
+      builder,
+      _o.GroundId,
+      _o.ForceSave);
+  }
+}
+
+public class StageFileRefreshSettingExcelT
+{
+  public long GroundId { get; set; }
+  public bool ForceSave { get; set; }
+
+  public StageFileRefreshSettingExcelT() {
+    this.GroundId = 0;
+    this.ForceSave = false;
   }
 }
 

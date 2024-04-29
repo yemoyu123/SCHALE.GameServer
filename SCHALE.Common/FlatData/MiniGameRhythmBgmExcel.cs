@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameRhythmBgmExcel : IFlatbufferObject
@@ -93,6 +94,70 @@ public struct MiniGameRhythmBgmExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameRhythmBgmExcel> EndMiniGameRhythmBgmExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameRhythmBgmExcel>(o);
+  }
+  public MiniGameRhythmBgmExcelT UnPack() {
+    var _o = new MiniGameRhythmBgmExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameRhythmBgmExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameRhythmBgm");
+    _o.RhythmBgmId = TableEncryptionService.Convert(this.RhythmBgmId, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.StageSelectImagePath = TableEncryptionService.Convert(this.StageSelectImagePath, key);
+    _o.Bpm = TableEncryptionService.Convert(this.Bpm, key);
+    _o.Bgm = TableEncryptionService.Convert(this.Bgm, key);
+    _o.BgmNameText = TableEncryptionService.Convert(this.BgmNameText, key);
+    _o.BgmArtistText = TableEncryptionService.Convert(this.BgmArtistText, key);
+    _o.HasLyricist = TableEncryptionService.Convert(this.HasLyricist, key);
+    _o.BgmComposerText = TableEncryptionService.Convert(this.BgmComposerText, key);
+    _o.BgmLength = TableEncryptionService.Convert(this.BgmLength, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameRhythmBgmExcel> Pack(FlatBufferBuilder builder, MiniGameRhythmBgmExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameRhythmBgmExcel>);
+    var _StageSelectImagePath = _o.StageSelectImagePath == null ? default(StringOffset) : builder.CreateString(_o.StageSelectImagePath);
+    var _BgmNameText = _o.BgmNameText == null ? default(StringOffset) : builder.CreateString(_o.BgmNameText);
+    var _BgmArtistText = _o.BgmArtistText == null ? default(StringOffset) : builder.CreateString(_o.BgmArtistText);
+    var _BgmComposerText = _o.BgmComposerText == null ? default(StringOffset) : builder.CreateString(_o.BgmComposerText);
+    return CreateMiniGameRhythmBgmExcel(
+      builder,
+      _o.RhythmBgmId,
+      _o.EventContentId,
+      _StageSelectImagePath,
+      _o.Bpm,
+      _o.Bgm,
+      _BgmNameText,
+      _BgmArtistText,
+      _o.HasLyricist,
+      _BgmComposerText,
+      _o.BgmLength);
+  }
+}
+
+public class MiniGameRhythmBgmExcelT
+{
+  public long RhythmBgmId { get; set; }
+  public long EventContentId { get; set; }
+  public string StageSelectImagePath { get; set; }
+  public long Bpm { get; set; }
+  public long Bgm { get; set; }
+  public string BgmNameText { get; set; }
+  public string BgmArtistText { get; set; }
+  public bool HasLyricist { get; set; }
+  public string BgmComposerText { get; set; }
+  public int BgmLength { get; set; }
+
+  public MiniGameRhythmBgmExcelT() {
+    this.RhythmBgmId = 0;
+    this.EventContentId = 0;
+    this.StageSelectImagePath = null;
+    this.Bpm = 0;
+    this.Bgm = 0;
+    this.BgmNameText = null;
+    this.BgmArtistText = null;
+    this.HasLyricist = false;
+    this.BgmComposerText = null;
+    this.BgmLength = 0;
   }
 }
 

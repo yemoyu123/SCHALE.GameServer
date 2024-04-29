@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignStageRewardExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct CampaignStageRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignStageRewardExcel> EndCampaignStageRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignStageRewardExcel>(o);
+  }
+  public CampaignStageRewardExcelT UnPack() {
+    var _o = new CampaignStageRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignStageRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignStageReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.RewardTag = TableEncryptionService.Convert(this.RewardTag, key);
+    _o.StageRewardProb = TableEncryptionService.Convert(this.StageRewardProb, key);
+    _o.StageRewardParcelType = TableEncryptionService.Convert(this.StageRewardParcelType, key);
+    _o.StageRewardId = TableEncryptionService.Convert(this.StageRewardId, key);
+    _o.StageRewardAmount = TableEncryptionService.Convert(this.StageRewardAmount, key);
+    _o.IsDisplayed = TableEncryptionService.Convert(this.IsDisplayed, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignStageRewardExcel> Pack(FlatBufferBuilder builder, CampaignStageRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignStageRewardExcel>);
+    return CreateCampaignStageRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.RewardTag,
+      _o.StageRewardProb,
+      _o.StageRewardParcelType,
+      _o.StageRewardId,
+      _o.StageRewardAmount,
+      _o.IsDisplayed);
+  }
+}
+
+public class CampaignStageRewardExcelT
+{
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.RewardTag RewardTag { get; set; }
+  public int StageRewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StageRewardParcelType { get; set; }
+  public long StageRewardId { get; set; }
+  public int StageRewardAmount { get; set; }
+  public bool IsDisplayed { get; set; }
+
+  public CampaignStageRewardExcelT() {
+    this.GroupId = 0;
+    this.RewardTag = SCHALE.Common.FlatData.RewardTag.Default;
+    this.StageRewardProb = 0;
+    this.StageRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StageRewardId = 0;
+    this.StageRewardAmount = 0;
+    this.IsDisplayed = false;
   }
 }
 

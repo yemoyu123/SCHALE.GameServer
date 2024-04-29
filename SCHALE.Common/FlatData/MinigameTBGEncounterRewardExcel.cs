@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGEncounterRewardExcel : IFlatbufferObject
@@ -61,6 +62,58 @@ public struct MinigameTBGEncounterRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterRewardExcel> EndMinigameTBGEncounterRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGEncounterRewardExcel>(o);
+  }
+  public MinigameTBGEncounterRewardExcelT UnPack() {
+    var _o = new MinigameTBGEncounterRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGEncounterRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGEncounterReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.TBGOptionSuccessType = TableEncryptionService.Convert(this.TBGOptionSuccessType, key);
+    _o.Paremeter = TableEncryptionService.Convert(this.Paremeter, key);
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelId = TableEncryptionService.Convert(this.ParcelId, key);
+    _o.Amount = TableEncryptionService.Convert(this.Amount, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGEncounterRewardExcel> Pack(FlatBufferBuilder builder, MinigameTBGEncounterRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGEncounterRewardExcel>);
+    return CreateMinigameTBGEncounterRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.UniqueId,
+      _o.TBGOptionSuccessType,
+      _o.Paremeter,
+      _o.ParcelType,
+      _o.ParcelId,
+      _o.Amount,
+      _o.Prob);
+  }
+}
+
+public class MinigameTBGEncounterRewardExcelT
+{
+  public long GroupId { get; set; }
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.TBGOptionSuccessType TBGOptionSuccessType { get; set; }
+  public long Paremeter { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelId { get; set; }
+  public long Amount { get; set; }
+  public int Prob { get; set; }
+
+  public MinigameTBGEncounterRewardExcelT() {
+    this.GroupId = 0;
+    this.UniqueId = 0;
+    this.TBGOptionSuccessType = SCHALE.Common.FlatData.TBGOptionSuccessType.None;
+    this.Paremeter = 0;
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelId = 0;
+    this.Amount = 0;
+    this.Prob = 0;
   }
 }
 

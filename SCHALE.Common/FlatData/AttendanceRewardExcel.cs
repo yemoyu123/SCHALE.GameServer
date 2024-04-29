@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AttendanceRewardExcel : IFlatbufferObject
@@ -95,6 +96,69 @@ public struct AttendanceRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AttendanceRewardExcel> EndAttendanceRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AttendanceRewardExcel>(o);
+  }
+  public AttendanceRewardExcelT UnPack() {
+    var _o = new AttendanceRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AttendanceRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AttendanceReward");
+    _o.AttendanceId = TableEncryptionService.Convert(this.AttendanceId, key);
+    _o.Day = TableEncryptionService.Convert(this.Day, key);
+    _o.RewardIcon = TableEncryptionService.Convert(this.RewardIcon, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardId = new List<long>();
+    for (var _j = 0; _j < this.RewardIdLength; ++_j) {_o.RewardId.Add(TableEncryptionService.Convert(this.RewardId(_j), key));}
+    _o.RewardAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.AttendanceRewardExcel> Pack(FlatBufferBuilder builder, AttendanceRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AttendanceRewardExcel>);
+    var _RewardIcon = _o.RewardIcon == null ? default(StringOffset) : builder.CreateString(_o.RewardIcon);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardId = default(VectorOffset);
+    if (_o.RewardId != null) {
+      var __RewardId = _o.RewardId.ToArray();
+      _RewardId = CreateRewardIdVector(builder, __RewardId);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    return CreateAttendanceRewardExcel(
+      builder,
+      _o.AttendanceId,
+      _o.Day,
+      _RewardIcon,
+      _RewardParcelType,
+      _RewardId,
+      _RewardAmount);
+  }
+}
+
+public class AttendanceRewardExcelT
+{
+  public long AttendanceId { get; set; }
+  public long Day { get; set; }
+  public string RewardIcon { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardId { get; set; }
+  public List<long> RewardAmount { get; set; }
+
+  public AttendanceRewardExcelT() {
+    this.AttendanceId = 0;
+    this.Day = 0;
+    this.RewardIcon = null;
+    this.RewardParcelType = null;
+    this.RewardId = null;
+    this.RewardAmount = null;
   }
 }
 

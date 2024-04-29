@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstConquestExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct ConstConquestExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstConquestExcel> EndConstConquestExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstConquestExcel>(o);
+  }
+  public ConstConquestExcelT UnPack() {
+    var _o = new ConstConquestExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstConquestExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstConquest");
+    _o.ManageUnitChange = TableEncryptionService.Convert(this.ManageUnitChange, key);
+    _o.AssistCount = TableEncryptionService.Convert(this.AssistCount, key);
+    _o.PlayTimeLimitInSeconds = TableEncryptionService.Convert(this.PlayTimeLimitInSeconds, key);
+    _o.AnimationUnitAmountMin = TableEncryptionService.Convert(this.AnimationUnitAmountMin, key);
+    _o.AnimationUnitAmountMax = TableEncryptionService.Convert(this.AnimationUnitAmountMax, key);
+    _o.AnimationUnitDelay = TableEncryptionService.Convert(this.AnimationUnitDelay, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstConquestExcel> Pack(FlatBufferBuilder builder, ConstConquestExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstConquestExcel>);
+    return CreateConstConquestExcel(
+      builder,
+      _o.ManageUnitChange,
+      _o.AssistCount,
+      _o.PlayTimeLimitInSeconds,
+      _o.AnimationUnitAmountMin,
+      _o.AnimationUnitAmountMax,
+      _o.AnimationUnitDelay);
+  }
+}
+
+public class ConstConquestExcelT
+{
+  public int ManageUnitChange { get; set; }
+  public int AssistCount { get; set; }
+  public int PlayTimeLimitInSeconds { get; set; }
+  public int AnimationUnitAmountMin { get; set; }
+  public int AnimationUnitAmountMax { get; set; }
+  public float AnimationUnitDelay { get; set; }
+
+  public ConstConquestExcelT() {
+    this.ManageUnitChange = 0;
+    this.AssistCount = 0;
+    this.PlayTimeLimitInSeconds = 0;
+    this.AnimationUnitAmountMin = 0;
+    this.AnimationUnitAmountMax = 0;
+    this.AnimationUnitDelay = 0.0f;
   }
 }
 

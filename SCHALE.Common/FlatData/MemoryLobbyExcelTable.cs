@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MemoryLobbyExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct MemoryLobbyExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MemoryLobbyExcelTable> EndMemoryLobbyExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MemoryLobbyExcelTable>(o);
+  }
+  public MemoryLobbyExcelTableT UnPack() {
+    var _o = new MemoryLobbyExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MemoryLobbyExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MemoryLobbyExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.MemoryLobbyExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.MemoryLobbyExcelTable> Pack(FlatBufferBuilder builder, MemoryLobbyExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MemoryLobbyExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.MemoryLobbyExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.MemoryLobbyExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateMemoryLobbyExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class MemoryLobbyExcelTableT
+{
+  public List<SCHALE.Common.FlatData.MemoryLobbyExcelT> DataList { get; set; }
+
+  public MemoryLobbyExcelTableT() {
+    this.DataList = null;
   }
 }
 

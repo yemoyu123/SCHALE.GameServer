@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CostumeExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CostumeExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CostumeExcelTable> EndCostumeExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CostumeExcelTable>(o);
+  }
+  public CostumeExcelTableT UnPack() {
+    var _o = new CostumeExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CostumeExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CostumeExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CostumeExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CostumeExcelTable> Pack(FlatBufferBuilder builder, CostumeExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CostumeExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CostumeExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CostumeExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCostumeExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CostumeExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CostumeExcelT> DataList { get; set; }
+
+  public CostumeExcelTableT() {
+    this.DataList = null;
   }
 }
 

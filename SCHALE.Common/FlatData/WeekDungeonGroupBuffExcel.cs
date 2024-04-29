@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct WeekDungeonGroupBuffExcel : IFlatbufferObject
@@ -55,6 +56,47 @@ public struct WeekDungeonGroupBuffExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.WeekDungeonGroupBuffExcel> EndWeekDungeonGroupBuffExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.WeekDungeonGroupBuffExcel>(o);
+  }
+  public WeekDungeonGroupBuffExcelT UnPack() {
+    var _o = new WeekDungeonGroupBuffExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(WeekDungeonGroupBuffExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("WeekDungeonGroupBuff");
+    _o.WeekDungeonBuffId = TableEncryptionService.Convert(this.WeekDungeonBuffId, key);
+    _o.School = TableEncryptionService.Convert(this.School, key);
+    _o.RecommandLocalizeEtcId = TableEncryptionService.Convert(this.RecommandLocalizeEtcId, key);
+    _o.FormationLocalizeEtcId = TableEncryptionService.Convert(this.FormationLocalizeEtcId, key);
+    _o.SkillGroupId = TableEncryptionService.Convert(this.SkillGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.WeekDungeonGroupBuffExcel> Pack(FlatBufferBuilder builder, WeekDungeonGroupBuffExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.WeekDungeonGroupBuffExcel>);
+    var _SkillGroupId = _o.SkillGroupId == null ? default(StringOffset) : builder.CreateString(_o.SkillGroupId);
+    return CreateWeekDungeonGroupBuffExcel(
+      builder,
+      _o.WeekDungeonBuffId,
+      _o.School,
+      _o.RecommandLocalizeEtcId,
+      _o.FormationLocalizeEtcId,
+      _SkillGroupId);
+  }
+}
+
+public class WeekDungeonGroupBuffExcelT
+{
+  public long WeekDungeonBuffId { get; set; }
+  public SCHALE.Common.FlatData.School School { get; set; }
+  public uint RecommandLocalizeEtcId { get; set; }
+  public uint FormationLocalizeEtcId { get; set; }
+  public string SkillGroupId { get; set; }
+
+  public WeekDungeonGroupBuffExcelT() {
+    this.WeekDungeonBuffId = 0;
+    this.School = SCHALE.Common.FlatData.School.None;
+    this.RecommandLocalizeEtcId = 0;
+    this.FormationLocalizeEtcId = 0;
+    this.SkillGroupId = null;
   }
 }
 

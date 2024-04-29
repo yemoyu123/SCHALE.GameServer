@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaRewardExcel : IFlatbufferObject
@@ -113,6 +114,88 @@ public struct ArenaRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaRewardExcel> EndArenaRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaRewardExcel>(o);
+  }
+  public ArenaRewardExcelT UnPack() {
+    var _o = new ArenaRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaReward");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.ArenaRewardType = TableEncryptionService.Convert(this.ArenaRewardType, key);
+    _o.RankStart = TableEncryptionService.Convert(this.RankStart, key);
+    _o.RankEnd = TableEncryptionService.Convert(this.RankEnd, key);
+    _o.RankIconPath = TableEncryptionService.Convert(this.RankIconPath, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelUniqueId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelUniqueIdLength; ++_j) {_o.RewardParcelUniqueId.Add(TableEncryptionService.Convert(this.RewardParcelUniqueId(_j), key));}
+    _o.RewardParcelUniqueName = new List<string>();
+    for (var _j = 0; _j < this.RewardParcelUniqueNameLength; ++_j) {_o.RewardParcelUniqueName.Add(TableEncryptionService.Convert(this.RewardParcelUniqueName(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaRewardExcel> Pack(FlatBufferBuilder builder, ArenaRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaRewardExcel>);
+    var _RankIconPath = _o.RankIconPath == null ? default(StringOffset) : builder.CreateString(_o.RankIconPath);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelUniqueId = default(VectorOffset);
+    if (_o.RewardParcelUniqueId != null) {
+      var __RewardParcelUniqueId = _o.RewardParcelUniqueId.ToArray();
+      _RewardParcelUniqueId = CreateRewardParcelUniqueIdVector(builder, __RewardParcelUniqueId);
+    }
+    var _RewardParcelUniqueName = default(VectorOffset);
+    if (_o.RewardParcelUniqueName != null) {
+      var __RewardParcelUniqueName = new StringOffset[_o.RewardParcelUniqueName.Count];
+      for (var _j = 0; _j < __RewardParcelUniqueName.Length; ++_j) { __RewardParcelUniqueName[_j] = builder.CreateString(_o.RewardParcelUniqueName[_j]); }
+      _RewardParcelUniqueName = CreateRewardParcelUniqueNameVector(builder, __RewardParcelUniqueName);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateArenaRewardExcel(
+      builder,
+      _o.UniqueId,
+      _o.ArenaRewardType,
+      _o.RankStart,
+      _o.RankEnd,
+      _RankIconPath,
+      _RewardParcelType,
+      _RewardParcelUniqueId,
+      _RewardParcelUniqueName,
+      _RewardParcelAmount);
+  }
+}
+
+public class ArenaRewardExcelT
+{
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.ArenaRewardType ArenaRewardType { get; set; }
+  public long RankStart { get; set; }
+  public long RankEnd { get; set; }
+  public string RankIconPath { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelUniqueId { get; set; }
+  public List<string> RewardParcelUniqueName { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public ArenaRewardExcelT() {
+    this.UniqueId = 0;
+    this.ArenaRewardType = SCHALE.Common.FlatData.ArenaRewardType.None;
+    this.RankStart = 0;
+    this.RankEnd = 0;
+    this.RankIconPath = null;
+    this.RewardParcelType = null;
+    this.RewardParcelUniqueId = null;
+    this.RewardParcelUniqueName = null;
+    this.RewardParcelAmount = null;
   }
 }
 

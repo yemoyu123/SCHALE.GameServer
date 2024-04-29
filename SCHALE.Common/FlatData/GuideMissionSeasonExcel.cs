@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GuideMissionSeasonExcel : IFlatbufferObject
@@ -201,6 +202,138 @@ public struct GuideMissionSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GuideMissionSeasonExcel> EndGuideMissionSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GuideMissionSeasonExcel>(o);
+  }
+  public GuideMissionSeasonExcelT UnPack() {
+    var _o = new GuideMissionSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GuideMissionSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GuideMissionSeason");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TitleLocalizeCode = TableEncryptionService.Convert(this.TitleLocalizeCode, key);
+    _o.PermanentInfomationLocalizeCode = TableEncryptionService.Convert(this.PermanentInfomationLocalizeCode, key);
+    _o.InfomationLocalizeCode = TableEncryptionService.Convert(this.InfomationLocalizeCode, key);
+    _o.AccountType = TableEncryptionService.Convert(this.AccountType, key);
+    _o.Enabled = TableEncryptionService.Convert(this.Enabled, key);
+    _o.BannerOpenDate = TableEncryptionService.Convert(this.BannerOpenDate, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.StartableEndDate = TableEncryptionService.Convert(this.StartableEndDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.CloseBannerAfterCompletion = TableEncryptionService.Convert(this.CloseBannerAfterCompletion, key);
+    _o.MaximumLoginCount = TableEncryptionService.Convert(this.MaximumLoginCount, key);
+    _o.ExpiryDate = TableEncryptionService.Convert(this.ExpiryDate, key);
+    _o.SpineCharacterId = TableEncryptionService.Convert(this.SpineCharacterId, key);
+    _o.RequirementParcelImage = TableEncryptionService.Convert(this.RequirementParcelImage, key);
+    _o.RewardImage = TableEncryptionService.Convert(this.RewardImage, key);
+    _o.LobbyBannerImage = TableEncryptionService.Convert(this.LobbyBannerImage, key);
+    _o.BackgroundImage = TableEncryptionService.Convert(this.BackgroundImage, key);
+    _o.TitleImage = TableEncryptionService.Convert(this.TitleImage, key);
+    _o.RequirementParcelType = TableEncryptionService.Convert(this.RequirementParcelType, key);
+    _o.RequirementParcelId = TableEncryptionService.Convert(this.RequirementParcelId, key);
+    _o.RequirementParcelAmount = TableEncryptionService.Convert(this.RequirementParcelAmount, key);
+    _o.TabType = TableEncryptionService.Convert(this.TabType, key);
+    _o.IsPermanent = TableEncryptionService.Convert(this.IsPermanent, key);
+    _o.PreSeasonId = TableEncryptionService.Convert(this.PreSeasonId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GuideMissionSeasonExcel> Pack(FlatBufferBuilder builder, GuideMissionSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GuideMissionSeasonExcel>);
+    var _TitleLocalizeCode = _o.TitleLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.TitleLocalizeCode);
+    var _PermanentInfomationLocalizeCode = _o.PermanentInfomationLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.PermanentInfomationLocalizeCode);
+    var _InfomationLocalizeCode = _o.InfomationLocalizeCode == null ? default(StringOffset) : builder.CreateString(_o.InfomationLocalizeCode);
+    var _BannerOpenDate = _o.BannerOpenDate == null ? default(StringOffset) : builder.CreateString(_o.BannerOpenDate);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _StartableEndDate = _o.StartableEndDate == null ? default(StringOffset) : builder.CreateString(_o.StartableEndDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    var _RequirementParcelImage = _o.RequirementParcelImage == null ? default(StringOffset) : builder.CreateString(_o.RequirementParcelImage);
+    var _RewardImage = _o.RewardImage == null ? default(StringOffset) : builder.CreateString(_o.RewardImage);
+    var _LobbyBannerImage = _o.LobbyBannerImage == null ? default(StringOffset) : builder.CreateString(_o.LobbyBannerImage);
+    var _BackgroundImage = _o.BackgroundImage == null ? default(StringOffset) : builder.CreateString(_o.BackgroundImage);
+    var _TitleImage = _o.TitleImage == null ? default(StringOffset) : builder.CreateString(_o.TitleImage);
+    return CreateGuideMissionSeasonExcel(
+      builder,
+      _o.Id,
+      _TitleLocalizeCode,
+      _PermanentInfomationLocalizeCode,
+      _InfomationLocalizeCode,
+      _o.AccountType,
+      _o.Enabled,
+      _BannerOpenDate,
+      _StartDate,
+      _StartableEndDate,
+      _EndDate,
+      _o.CloseBannerAfterCompletion,
+      _o.MaximumLoginCount,
+      _o.ExpiryDate,
+      _o.SpineCharacterId,
+      _RequirementParcelImage,
+      _RewardImage,
+      _LobbyBannerImage,
+      _BackgroundImage,
+      _TitleImage,
+      _o.RequirementParcelType,
+      _o.RequirementParcelId,
+      _o.RequirementParcelAmount,
+      _o.TabType,
+      _o.IsPermanent,
+      _o.PreSeasonId);
+  }
+}
+
+public class GuideMissionSeasonExcelT
+{
+  public long Id { get; set; }
+  public string TitleLocalizeCode { get; set; }
+  public string PermanentInfomationLocalizeCode { get; set; }
+  public string InfomationLocalizeCode { get; set; }
+  public SCHALE.Common.FlatData.AccountState AccountType { get; set; }
+  public bool Enabled { get; set; }
+  public string BannerOpenDate { get; set; }
+  public string StartDate { get; set; }
+  public string StartableEndDate { get; set; }
+  public string EndDate { get; set; }
+  public bool CloseBannerAfterCompletion { get; set; }
+  public long MaximumLoginCount { get; set; }
+  public long ExpiryDate { get; set; }
+  public long SpineCharacterId { get; set; }
+  public string RequirementParcelImage { get; set; }
+  public string RewardImage { get; set; }
+  public string LobbyBannerImage { get; set; }
+  public string BackgroundImage { get; set; }
+  public string TitleImage { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RequirementParcelType { get; set; }
+  public long RequirementParcelId { get; set; }
+  public int RequirementParcelAmount { get; set; }
+  public SCHALE.Common.FlatData.GuideMissionTabType TabType { get; set; }
+  public bool IsPermanent { get; set; }
+  public long PreSeasonId { get; set; }
+
+  public GuideMissionSeasonExcelT() {
+    this.Id = 0;
+    this.TitleLocalizeCode = null;
+    this.PermanentInfomationLocalizeCode = null;
+    this.InfomationLocalizeCode = null;
+    this.AccountType = SCHALE.Common.FlatData.AccountState.WaitingSignIn;
+    this.Enabled = false;
+    this.BannerOpenDate = null;
+    this.StartDate = null;
+    this.StartableEndDate = null;
+    this.EndDate = null;
+    this.CloseBannerAfterCompletion = false;
+    this.MaximumLoginCount = 0;
+    this.ExpiryDate = 0;
+    this.SpineCharacterId = 0;
+    this.RequirementParcelImage = null;
+    this.RewardImage = null;
+    this.LobbyBannerImage = null;
+    this.BackgroundImage = null;
+    this.TitleImage = null;
+    this.RequirementParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RequirementParcelId = 0;
+    this.RequirementParcelAmount = 0;
+    this.TabType = SCHALE.Common.FlatData.GuideMissionTabType.None;
+    this.IsPermanent = false;
+    this.PreSeasonId = 0;
   }
 }
 

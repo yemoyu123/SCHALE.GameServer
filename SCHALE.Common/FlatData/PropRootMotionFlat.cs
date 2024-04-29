@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PropRootMotionFlat : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct PropRootMotionFlat : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PropRootMotionFlat> EndPropRootMotionFlat(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PropRootMotionFlat>(o);
+  }
+  public PropRootMotionFlatT UnPack() {
+    var _o = new PropRootMotionFlatT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PropRootMotionFlatT _o) {
+		byte[] key = { 0 };
+    _o.RootMotions = new List<SCHALE.Common.FlatData.PropMotionT>();
+    for (var _j = 0; _j < this.RootMotionsLength; ++_j) {_o.RootMotions.Add(this.RootMotions(_j).HasValue ? this.RootMotions(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.PropRootMotionFlat> Pack(FlatBufferBuilder builder, PropRootMotionFlatT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PropRootMotionFlat>);
+    var _RootMotions = default(VectorOffset);
+    if (_o.RootMotions != null) {
+      var __RootMotions = new Offset<SCHALE.Common.FlatData.PropMotion>[_o.RootMotions.Count];
+      for (var _j = 0; _j < __RootMotions.Length; ++_j) { __RootMotions[_j] = SCHALE.Common.FlatData.PropMotion.Pack(builder, _o.RootMotions[_j]); }
+      _RootMotions = CreateRootMotionsVector(builder, __RootMotions);
+    }
+    return CreatePropRootMotionFlat(
+      builder,
+      _RootMotions);
+  }
+}
+
+public class PropRootMotionFlatT
+{
+  public List<SCHALE.Common.FlatData.PropMotionT> RootMotions { get; set; }
+
+  public PropRootMotionFlatT() {
+    this.RootMotions = null;
   }
 }
 

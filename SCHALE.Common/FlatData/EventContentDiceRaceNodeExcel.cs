@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentDiceRaceNodeExcel : IFlatbufferObject
@@ -93,6 +94,72 @@ public struct EventContentDiceRaceNodeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceNodeExcel> EndEventContentDiceRaceNodeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentDiceRaceNodeExcel>(o);
+  }
+  public EventContentDiceRaceNodeExcelT UnPack() {
+    var _o = new EventContentDiceRaceNodeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentDiceRaceNodeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentDiceRaceNode");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.NodeId = TableEncryptionService.Convert(this.NodeId, key);
+    _o.EventContentDiceRaceNodeType = TableEncryptionService.Convert(this.EventContentDiceRaceNodeType, key);
+    _o.MoveForwardTypeArg = TableEncryptionService.Convert(this.MoveForwardTypeArg, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceNodeExcel> Pack(FlatBufferBuilder builder, EventContentDiceRaceNodeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentDiceRaceNodeExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    return CreateEventContentDiceRaceNodeExcel(
+      builder,
+      _o.EventContentId,
+      _o.NodeId,
+      _o.EventContentDiceRaceNodeType,
+      _o.MoveForwardTypeArg,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardAmount);
+  }
+}
+
+public class EventContentDiceRaceNodeExcelT
+{
+  public long EventContentId { get; set; }
+  public long NodeId { get; set; }
+  public SCHALE.Common.FlatData.EventContentDiceRaceNodeType EventContentDiceRaceNodeType { get; set; }
+  public int MoveForwardTypeArg { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardAmount { get; set; }
+
+  public EventContentDiceRaceNodeExcelT() {
+    this.EventContentId = 0;
+    this.NodeId = 0;
+    this.EventContentDiceRaceNodeType = SCHALE.Common.FlatData.EventContentDiceRaceNodeType.StartNode;
+    this.MoveForwardTypeArg = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardAmount = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentCardExcel : IFlatbufferObject
@@ -93,6 +94,68 @@ public struct EventContentCardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentCardExcel> EndEventContentCardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentCardExcel>(o);
+  }
+  public EventContentCardExcelT UnPack() {
+    var _o = new EventContentCardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentCardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentCard");
+    _o.CardGroupId = TableEncryptionService.Convert(this.CardGroupId, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.LocalizeEtcId = TableEncryptionService.Convert(this.LocalizeEtcId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+    _o.BackIconPath = TableEncryptionService.Convert(this.BackIconPath, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentCardExcel> Pack(FlatBufferBuilder builder, EventContentCardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentCardExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    var _BackIconPath = _o.BackIconPath == null ? default(StringOffset) : builder.CreateString(_o.BackIconPath);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    return CreateEventContentCardExcel(
+      builder,
+      _o.CardGroupId,
+      _o.EventContentId,
+      _o.LocalizeEtcId,
+      _IconPath,
+      _BackIconPath,
+      _RewardParcelType,
+      _RewardParcelId);
+  }
+}
+
+public class EventContentCardExcelT
+{
+  public int CardGroupId { get; set; }
+  public long EventContentId { get; set; }
+  public uint LocalizeEtcId { get; set; }
+  public string IconPath { get; set; }
+  public string BackIconPath { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+
+  public EventContentCardExcelT() {
+    this.CardGroupId = 0;
+    this.EventContentId = 0;
+    this.LocalizeEtcId = 0;
+    this.IconPath = null;
+    this.BackIconPath = null;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
   }
 }
 

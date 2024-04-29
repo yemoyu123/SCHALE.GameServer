@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentCharacterBonusExcel : IFlatbufferObject
@@ -69,6 +70,54 @@ public struct EventContentCharacterBonusExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentCharacterBonusExcel> EndEventContentCharacterBonusExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentCharacterBonusExcel>(o);
+  }
+  public EventContentCharacterBonusExcelT UnPack() {
+    var _o = new EventContentCharacterBonusExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentCharacterBonusExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentCharacterBonus");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.EventContentItemType_ = new List<SCHALE.Common.FlatData.EventContentItemType>();
+    for (var _j = 0; _j < this.EventContentItemType_Length; ++_j) {_o.EventContentItemType_.Add(TableEncryptionService.Convert(this.EventContentItemType_(_j), key));}
+    _o.BonusPercentage = new List<long>();
+    for (var _j = 0; _j < this.BonusPercentageLength; ++_j) {_o.BonusPercentage.Add(TableEncryptionService.Convert(this.BonusPercentage(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentCharacterBonusExcel> Pack(FlatBufferBuilder builder, EventContentCharacterBonusExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentCharacterBonusExcel>);
+    var _EventContentItemType_ = default(VectorOffset);
+    if (_o.EventContentItemType_ != null) {
+      var __EventContentItemType_ = _o.EventContentItemType_.ToArray();
+      _EventContentItemType_ = CreateEventContentItemType_Vector(builder, __EventContentItemType_);
+    }
+    var _BonusPercentage = default(VectorOffset);
+    if (_o.BonusPercentage != null) {
+      var __BonusPercentage = _o.BonusPercentage.ToArray();
+      _BonusPercentage = CreateBonusPercentageVector(builder, __BonusPercentage);
+    }
+    return CreateEventContentCharacterBonusExcel(
+      builder,
+      _o.EventContentId,
+      _o.CharacterId,
+      _EventContentItemType_,
+      _BonusPercentage);
+  }
+}
+
+public class EventContentCharacterBonusExcelT
+{
+  public long EventContentId { get; set; }
+  public long CharacterId { get; set; }
+  public List<SCHALE.Common.FlatData.EventContentItemType> EventContentItemType_ { get; set; }
+  public List<long> BonusPercentage { get; set; }
+
+  public EventContentCharacterBonusExcelT() {
+    this.EventContentId = 0;
+    this.CharacterId = 0;
+    this.EventContentItemType_ = null;
+    this.BonusPercentage = null;
   }
 }
 

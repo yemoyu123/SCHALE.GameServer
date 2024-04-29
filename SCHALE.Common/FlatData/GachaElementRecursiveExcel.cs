@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaElementRecursiveExcel : IFlatbufferObject
@@ -61,6 +62,58 @@ public struct GachaElementRecursiveExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaElementRecursiveExcel> EndGachaElementRecursiveExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaElementRecursiveExcel>(o);
+  }
+  public GachaElementRecursiveExcelT UnPack() {
+    var _o = new GachaElementRecursiveExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaElementRecursiveExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaElementRecursive");
+    _o.ID = TableEncryptionService.Convert(this.ID, key);
+    _o.GachaGroupID = TableEncryptionService.Convert(this.GachaGroupID, key);
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelID = TableEncryptionService.Convert(this.ParcelID, key);
+    _o.ParcelAmountMin = TableEncryptionService.Convert(this.ParcelAmountMin, key);
+    _o.ParcelAmountMax = TableEncryptionService.Convert(this.ParcelAmountMax, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.State = TableEncryptionService.Convert(this.State, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaElementRecursiveExcel> Pack(FlatBufferBuilder builder, GachaElementRecursiveExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaElementRecursiveExcel>);
+    return CreateGachaElementRecursiveExcel(
+      builder,
+      _o.ID,
+      _o.GachaGroupID,
+      _o.ParcelType,
+      _o.ParcelID,
+      _o.ParcelAmountMin,
+      _o.ParcelAmountMax,
+      _o.Prob,
+      _o.State);
+  }
+}
+
+public class GachaElementRecursiveExcelT
+{
+  public long ID { get; set; }
+  public long GachaGroupID { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelID { get; set; }
+  public int ParcelAmountMin { get; set; }
+  public int ParcelAmountMax { get; set; }
+  public int Prob { get; set; }
+  public int State { get; set; }
+
+  public GachaElementRecursiveExcelT() {
+    this.ID = 0;
+    this.GachaGroupID = 0;
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelID = 0;
+    this.ParcelAmountMin = 0;
+    this.ParcelAmountMax = 0;
+    this.Prob = 0;
+    this.State = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioExcel : IFlatbufferObject
@@ -89,6 +90,74 @@ public struct ScenarioExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioExcel> EndScenarioExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioExcel>(o);
+  }
+  public ScenarioExcelT UnPack() {
+    var _o = new ScenarioExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Scenario");
+    _o.None = new List<SCHALE.Common.FlatData.ScenarioBGType>();
+    for (var _j = 0; _j < this.NoneLength; ++_j) {_o.None.Add(TableEncryptionService.Convert(this.None(_j), key));}
+    _o.Idle = new List<SCHALE.Common.FlatData.ScenarioCharacterAction>();
+    for (var _j = 0; _j < this.IdleLength; ++_j) {_o.Idle.Add(TableEncryptionService.Convert(this.Idle(_j), key));}
+    _o.Cafe = TableEncryptionService.Convert(this.Cafe, key);
+    _o.Talk = TableEncryptionService.Convert(this.Talk, key);
+    _o.Open = TableEncryptionService.Convert(this.Open, key);
+    _o.EnterConver = TableEncryptionService.Convert(this.EnterConver, key);
+    _o.Center = TableEncryptionService.Convert(this.Center, key);
+    _o.Instant = TableEncryptionService.Convert(this.Instant, key);
+    _o.Prologue = TableEncryptionService.Convert(this.Prologue, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioExcel> Pack(FlatBufferBuilder builder, ScenarioExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioExcel>);
+    var _None = default(VectorOffset);
+    if (_o.None != null) {
+      var __None = _o.None.ToArray();
+      _None = CreateNoneVector(builder, __None);
+    }
+    var _Idle = default(VectorOffset);
+    if (_o.Idle != null) {
+      var __Idle = _o.Idle.ToArray();
+      _Idle = CreateIdleVector(builder, __Idle);
+    }
+    return CreateScenarioExcel(
+      builder,
+      _None,
+      _Idle,
+      _o.Cafe,
+      _o.Talk,
+      _o.Open,
+      _o.EnterConver,
+      _o.Center,
+      _o.Instant,
+      _o.Prologue);
+  }
+}
+
+public class ScenarioExcelT
+{
+  public List<SCHALE.Common.FlatData.ScenarioBGType> None { get; set; }
+  public List<SCHALE.Common.FlatData.ScenarioCharacterAction> Idle { get; set; }
+  public SCHALE.Common.FlatData.DialogCategory Cafe { get; set; }
+  public SCHALE.Common.FlatData.DialogType Talk { get; set; }
+  public SCHALE.Common.FlatData.StoryCondition Open { get; set; }
+  public SCHALE.Common.FlatData.EmojiEvent EnterConver { get; set; }
+  public SCHALE.Common.FlatData.ScenarioZoomAnchors Center { get; set; }
+  public SCHALE.Common.FlatData.ScenarioZoomType Instant { get; set; }
+  public SCHALE.Common.FlatData.ScenarioContentType Prologue { get; set; }
+
+  public ScenarioExcelT() {
+    this.None = null;
+    this.Idle = null;
+    this.Cafe = SCHALE.Common.FlatData.DialogCategory.Cafe;
+    this.Talk = SCHALE.Common.FlatData.DialogType.Talk;
+    this.Open = SCHALE.Common.FlatData.StoryCondition.Open;
+    this.EnterConver = SCHALE.Common.FlatData.EmojiEvent.EnterConver;
+    this.Center = SCHALE.Common.FlatData.ScenarioZoomAnchors.Center;
+    this.Instant = SCHALE.Common.FlatData.ScenarioZoomType.Instant;
+    this.Prologue = SCHALE.Common.FlatData.ScenarioContentType.Prologue;
   }
 }
 

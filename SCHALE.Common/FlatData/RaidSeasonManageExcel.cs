@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RaidSeasonManageExcel : IFlatbufferObject
@@ -117,6 +118,88 @@ public struct RaidSeasonManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RaidSeasonManageExcel> EndRaidSeasonManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RaidSeasonManageExcel>(o);
+  }
+  public RaidSeasonManageExcelT UnPack() {
+    var _o = new RaidSeasonManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RaidSeasonManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("RaidSeasonManage");
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.SeasonDisplay = TableEncryptionService.Convert(this.SeasonDisplay, key);
+    _o.SeasonStartData = TableEncryptionService.Convert(this.SeasonStartData, key);
+    _o.SeasonEndData = TableEncryptionService.Convert(this.SeasonEndData, key);
+    _o.SettlementEndDate = TableEncryptionService.Convert(this.SettlementEndDate, key);
+    _o.OpenRaidBossGroup = new List<string>();
+    for (var _j = 0; _j < this.OpenRaidBossGroupLength; ++_j) {_o.OpenRaidBossGroup.Add(TableEncryptionService.Convert(this.OpenRaidBossGroup(_j), key));}
+    _o.RankingRewardGroupId = TableEncryptionService.Convert(this.RankingRewardGroupId, key);
+    _o.MaxSeasonRewardGauage = TableEncryptionService.Convert(this.MaxSeasonRewardGauage, key);
+    _o.StackedSeasonRewardGauge = new List<long>();
+    for (var _j = 0; _j < this.StackedSeasonRewardGaugeLength; ++_j) {_o.StackedSeasonRewardGauge.Add(TableEncryptionService.Convert(this.StackedSeasonRewardGauge(_j), key));}
+    _o.SeasonRewardId = new List<long>();
+    for (var _j = 0; _j < this.SeasonRewardIdLength; ++_j) {_o.SeasonRewardId.Add(TableEncryptionService.Convert(this.SeasonRewardId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.RaidSeasonManageExcel> Pack(FlatBufferBuilder builder, RaidSeasonManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RaidSeasonManageExcel>);
+    var _SeasonStartData = _o.SeasonStartData == null ? default(StringOffset) : builder.CreateString(_o.SeasonStartData);
+    var _SeasonEndData = _o.SeasonEndData == null ? default(StringOffset) : builder.CreateString(_o.SeasonEndData);
+    var _SettlementEndDate = _o.SettlementEndDate == null ? default(StringOffset) : builder.CreateString(_o.SettlementEndDate);
+    var _OpenRaidBossGroup = default(VectorOffset);
+    if (_o.OpenRaidBossGroup != null) {
+      var __OpenRaidBossGroup = new StringOffset[_o.OpenRaidBossGroup.Count];
+      for (var _j = 0; _j < __OpenRaidBossGroup.Length; ++_j) { __OpenRaidBossGroup[_j] = builder.CreateString(_o.OpenRaidBossGroup[_j]); }
+      _OpenRaidBossGroup = CreateOpenRaidBossGroupVector(builder, __OpenRaidBossGroup);
+    }
+    var _StackedSeasonRewardGauge = default(VectorOffset);
+    if (_o.StackedSeasonRewardGauge != null) {
+      var __StackedSeasonRewardGauge = _o.StackedSeasonRewardGauge.ToArray();
+      _StackedSeasonRewardGauge = CreateStackedSeasonRewardGaugeVector(builder, __StackedSeasonRewardGauge);
+    }
+    var _SeasonRewardId = default(VectorOffset);
+    if (_o.SeasonRewardId != null) {
+      var __SeasonRewardId = _o.SeasonRewardId.ToArray();
+      _SeasonRewardId = CreateSeasonRewardIdVector(builder, __SeasonRewardId);
+    }
+    return CreateRaidSeasonManageExcel(
+      builder,
+      _o.SeasonId,
+      _o.SeasonDisplay,
+      _SeasonStartData,
+      _SeasonEndData,
+      _SettlementEndDate,
+      _OpenRaidBossGroup,
+      _o.RankingRewardGroupId,
+      _o.MaxSeasonRewardGauage,
+      _StackedSeasonRewardGauge,
+      _SeasonRewardId);
+  }
+}
+
+public class RaidSeasonManageExcelT
+{
+  public long SeasonId { get; set; }
+  public long SeasonDisplay { get; set; }
+  public string SeasonStartData { get; set; }
+  public string SeasonEndData { get; set; }
+  public string SettlementEndDate { get; set; }
+  public List<string> OpenRaidBossGroup { get; set; }
+  public long RankingRewardGroupId { get; set; }
+  public int MaxSeasonRewardGauage { get; set; }
+  public List<long> StackedSeasonRewardGauge { get; set; }
+  public List<long> SeasonRewardId { get; set; }
+
+  public RaidSeasonManageExcelT() {
+    this.SeasonId = 0;
+    this.SeasonDisplay = 0;
+    this.SeasonStartData = null;
+    this.SeasonEndData = null;
+    this.SettlementEndDate = null;
+    this.OpenRaidBossGroup = null;
+    this.RankingRewardGroupId = 0;
+    this.MaxSeasonRewardGauage = 0;
+    this.StackedSeasonRewardGauge = null;
+    this.SeasonRewardId = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaMapExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ArenaMapExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaMapExcelTable> EndArenaMapExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaMapExcelTable>(o);
+  }
+  public ArenaMapExcelTableT UnPack() {
+    var _o = new ArenaMapExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaMapExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaMapExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ArenaMapExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaMapExcelTable> Pack(FlatBufferBuilder builder, ArenaMapExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaMapExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ArenaMapExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ArenaMapExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateArenaMapExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ArenaMapExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ArenaMapExcelT> DataList { get; set; }
+
+  public ArenaMapExcelTableT() {
+    this.DataList = null;
   }
 }
 

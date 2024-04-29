@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterDialogEventExcel : IFlatbufferObject
@@ -159,6 +160,125 @@ public struct CharacterDialogEventExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterDialogEventExcel> EndCharacterDialogEventExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterDialogEventExcel>(o);
+  }
+  public CharacterDialogEventExcelT UnPack() {
+    var _o = new CharacterDialogEventExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterDialogEventExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterDialogEvent");
+    _o.CostumeUniqueId = TableEncryptionService.Convert(this.CostumeUniqueId, key);
+    _o.OriginalCharacterId = TableEncryptionService.Convert(this.OriginalCharacterId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.EventID = TableEncryptionService.Convert(this.EventID, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.DialogCategory = TableEncryptionService.Convert(this.DialogCategory, key);
+    _o.DialogCondition = TableEncryptionService.Convert(this.DialogCondition, key);
+    _o.DialogConditionDetail = TableEncryptionService.Convert(this.DialogConditionDetail, key);
+    _o.DialogConditionDetailValue = TableEncryptionService.Convert(this.DialogConditionDetailValue, key);
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.DialogType = TableEncryptionService.Convert(this.DialogType, key);
+    _o.ActionName = TableEncryptionService.Convert(this.ActionName, key);
+    _o.Duration = TableEncryptionService.Convert(this.Duration, key);
+    _o.AnimationName = TableEncryptionService.Convert(this.AnimationName, key);
+    _o.LocalizeKR = TableEncryptionService.Convert(this.LocalizeKR, key);
+    _o.LocalizeJP = TableEncryptionService.Convert(this.LocalizeJP, key);
+    _o.VoiceId = new List<uint>();
+    for (var _j = 0; _j < this.VoiceIdLength; ++_j) {_o.VoiceId.Add(TableEncryptionService.Convert(this.VoiceId(_j), key));}
+    _o.CollectionVisible = TableEncryptionService.Convert(this.CollectionVisible, key);
+    _o.CVCollectionType = TableEncryptionService.Convert(this.CVCollectionType, key);
+    _o.UnlockEventSeason = TableEncryptionService.Convert(this.UnlockEventSeason, key);
+    _o.ScenarioGroupId = TableEncryptionService.Convert(this.ScenarioGroupId, key);
+    _o.LocalizeCVGroup = TableEncryptionService.Convert(this.LocalizeCVGroup, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterDialogEventExcel> Pack(FlatBufferBuilder builder, CharacterDialogEventExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterDialogEventExcel>);
+    var _ActionName = _o.ActionName == null ? default(StringOffset) : builder.CreateString(_o.ActionName);
+    var _AnimationName = _o.AnimationName == null ? default(StringOffset) : builder.CreateString(_o.AnimationName);
+    var _LocalizeKR = _o.LocalizeKR == null ? default(StringOffset) : builder.CreateString(_o.LocalizeKR);
+    var _LocalizeJP = _o.LocalizeJP == null ? default(StringOffset) : builder.CreateString(_o.LocalizeJP);
+    var _VoiceId = default(VectorOffset);
+    if (_o.VoiceId != null) {
+      var __VoiceId = _o.VoiceId.ToArray();
+      _VoiceId = CreateVoiceIdVector(builder, __VoiceId);
+    }
+    var _LocalizeCVGroup = _o.LocalizeCVGroup == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCVGroup);
+    return CreateCharacterDialogEventExcel(
+      builder,
+      _o.CostumeUniqueId,
+      _o.OriginalCharacterId,
+      _o.DisplayOrder,
+      _o.EventID,
+      _o.ProductionStep,
+      _o.DialogCategory,
+      _o.DialogCondition,
+      _o.DialogConditionDetail,
+      _o.DialogConditionDetailValue,
+      _o.GroupId,
+      _o.DialogType,
+      _ActionName,
+      _o.Duration,
+      _AnimationName,
+      _LocalizeKR,
+      _LocalizeJP,
+      _VoiceId,
+      _o.CollectionVisible,
+      _o.CVCollectionType,
+      _o.UnlockEventSeason,
+      _o.ScenarioGroupId,
+      _LocalizeCVGroup);
+  }
+}
+
+public class CharacterDialogEventExcelT
+{
+  public long CostumeUniqueId { get; set; }
+  public long OriginalCharacterId { get; set; }
+  public long DisplayOrder { get; set; }
+  public long EventID { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public SCHALE.Common.FlatData.DialogCategory DialogCategory { get; set; }
+  public SCHALE.Common.FlatData.DialogCondition DialogCondition { get; set; }
+  public SCHALE.Common.FlatData.DialogConditionDetail DialogConditionDetail { get; set; }
+  public long DialogConditionDetailValue { get; set; }
+  public long GroupId { get; set; }
+  public SCHALE.Common.FlatData.DialogType DialogType { get; set; }
+  public string ActionName { get; set; }
+  public long Duration { get; set; }
+  public string AnimationName { get; set; }
+  public string LocalizeKR { get; set; }
+  public string LocalizeJP { get; set; }
+  public List<uint> VoiceId { get; set; }
+  public bool CollectionVisible { get; set; }
+  public SCHALE.Common.FlatData.CVCollectionType CVCollectionType { get; set; }
+  public long UnlockEventSeason { get; set; }
+  public long ScenarioGroupId { get; set; }
+  public string LocalizeCVGroup { get; set; }
+
+  public CharacterDialogEventExcelT() {
+    this.CostumeUniqueId = 0;
+    this.OriginalCharacterId = 0;
+    this.DisplayOrder = 0;
+    this.EventID = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.DialogCategory = SCHALE.Common.FlatData.DialogCategory.Cafe;
+    this.DialogCondition = SCHALE.Common.FlatData.DialogCondition.Idle;
+    this.DialogConditionDetail = SCHALE.Common.FlatData.DialogConditionDetail.None;
+    this.DialogConditionDetailValue = 0;
+    this.GroupId = 0;
+    this.DialogType = SCHALE.Common.FlatData.DialogType.Talk;
+    this.ActionName = null;
+    this.Duration = 0;
+    this.AnimationName = null;
+    this.LocalizeKR = null;
+    this.LocalizeJP = null;
+    this.VoiceId = null;
+    this.CollectionVisible = false;
+    this.CVCollectionType = SCHALE.Common.FlatData.CVCollectionType.CVNormal;
+    this.UnlockEventSeason = 0;
+    this.ScenarioGroupId = 0;
+    this.LocalizeCVGroup = null;
   }
 }
 

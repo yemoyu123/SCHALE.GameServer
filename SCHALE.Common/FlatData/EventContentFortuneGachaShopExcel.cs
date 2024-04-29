@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentFortuneGachaShopExcel : IFlatbufferObject
@@ -113,6 +114,92 @@ public struct EventContentFortuneGachaShopExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaShopExcel> EndEventContentFortuneGachaShopExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentFortuneGachaShopExcel>(o);
+  }
+  public EventContentFortuneGachaShopExcelT UnPack() {
+    var _o = new EventContentFortuneGachaShopExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentFortuneGachaShopExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentFortuneGachaShop");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Grade = TableEncryptionService.Convert(this.Grade, key);
+    _o.CostGoodsId = TableEncryptionService.Convert(this.CostGoodsId, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.FortuneGachaGroupId = TableEncryptionService.Convert(this.FortuneGachaGroupId, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.ProbModifyValue = TableEncryptionService.Convert(this.ProbModifyValue, key);
+    _o.ProbModifyLimit = TableEncryptionService.Convert(this.ProbModifyLimit, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentFortuneGachaShopExcel> Pack(FlatBufferBuilder builder, EventContentFortuneGachaShopExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentFortuneGachaShopExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateEventContentFortuneGachaShopExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.Grade,
+      _o.CostGoodsId,
+      _o.IsLegacy,
+      _o.FortuneGachaGroupId,
+      _o.Prob,
+      _o.ProbModifyValue,
+      _o.ProbModifyLimit,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class EventContentFortuneGachaShopExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public int Grade { get; set; }
+  public long CostGoodsId { get; set; }
+  public bool IsLegacy { get; set; }
+  public int FortuneGachaGroupId { get; set; }
+  public int Prob { get; set; }
+  public int ProbModifyValue { get; set; }
+  public int ProbModifyLimit { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public EventContentFortuneGachaShopExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.Grade = 0;
+    this.CostGoodsId = 0;
+    this.IsLegacy = false;
+    this.FortuneGachaGroupId = 0;
+    this.Prob = 0;
+    this.ProbModifyValue = 0;
+    this.ProbModifyLimit = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PresetCharacterGroupSettingExcel : IFlatbufferObject
@@ -47,6 +48,45 @@ public struct PresetCharacterGroupSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel> EndPresetCharacterGroupSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel>(o);
+  }
+  public PresetCharacterGroupSettingExcelT UnPack() {
+    var _o = new PresetCharacterGroupSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PresetCharacterGroupSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PresetCharacterGroupSetting");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.ArenaSimulatorFixed = TableEncryptionService.Convert(this.ArenaSimulatorFixed, key);
+    _o.PresetType = new List<string>();
+    for (var _j = 0; _j < this.PresetTypeLength; ++_j) {_o.PresetType.Add(TableEncryptionService.Convert(this.PresetType(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel> Pack(FlatBufferBuilder builder, PresetCharacterGroupSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PresetCharacterGroupSettingExcel>);
+    var _PresetType = default(VectorOffset);
+    if (_o.PresetType != null) {
+      var __PresetType = new StringOffset[_o.PresetType.Count];
+      for (var _j = 0; _j < __PresetType.Length; ++_j) { __PresetType[_j] = builder.CreateString(_o.PresetType[_j]); }
+      _PresetType = CreatePresetTypeVector(builder, __PresetType);
+    }
+    return CreatePresetCharacterGroupSettingExcel(
+      builder,
+      _o.CharacterId,
+      _o.ArenaSimulatorFixed,
+      _PresetType);
+  }
+}
+
+public class PresetCharacterGroupSettingExcelT
+{
+  public long CharacterId { get; set; }
+  public bool ArenaSimulatorFixed { get; set; }
+  public List<string> PresetType { get; set; }
+
+  public PresetCharacterGroupSettingExcelT() {
+    this.CharacterId = 0;
+    this.ArenaSimulatorFixed = false;
+    this.PresetType = null;
   }
 }
 

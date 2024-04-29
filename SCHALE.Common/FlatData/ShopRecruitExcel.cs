@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopRecruitExcel : IFlatbufferObject
@@ -173,6 +174,138 @@ public struct ShopRecruitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopRecruitExcel> EndShopRecruitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopRecruitExcel>(o);
+  }
+  public ShopRecruitExcelT UnPack() {
+    var _o = new ShopRecruitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopRecruitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopRecruit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CategoryType = TableEncryptionService.Convert(this.CategoryType, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.OneGachaGoodsId = TableEncryptionService.Convert(this.OneGachaGoodsId, key);
+    _o.TenGachaGoodsId = TableEncryptionService.Convert(this.TenGachaGoodsId, key);
+    _o.GoodsDevName = TableEncryptionService.Convert(this.GoodsDevName, key);
+    _o.DisplayTag = TableEncryptionService.Convert(this.DisplayTag, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.GachaBannerPath = TableEncryptionService.Convert(this.GachaBannerPath, key);
+    _o.VideoId = new List<long>();
+    for (var _j = 0; _j < this.VideoIdLength; ++_j) {_o.VideoId.Add(TableEncryptionService.Convert(this.VideoId(_j), key));}
+    _o.LinkedRobbyBannerId = TableEncryptionService.Convert(this.LinkedRobbyBannerId, key);
+    _o.InfoCharacterId = new List<long>();
+    for (var _j = 0; _j < this.InfoCharacterIdLength; ++_j) {_o.InfoCharacterId.Add(TableEncryptionService.Convert(this.InfoCharacterId(_j), key));}
+    _o.SalePeriodFrom = TableEncryptionService.Convert(this.SalePeriodFrom, key);
+    _o.SalePeriodTo = TableEncryptionService.Convert(this.SalePeriodTo, key);
+    _o.RecruitCoinId = TableEncryptionService.Convert(this.RecruitCoinId, key);
+    _o.RecruitSellectionShopId = TableEncryptionService.Convert(this.RecruitSellectionShopId, key);
+    _o.PurchaseCooltimeMin = TableEncryptionService.Convert(this.PurchaseCooltimeMin, key);
+    _o.PurchaseCountLimit = TableEncryptionService.Convert(this.PurchaseCountLimit, key);
+    _o.PurchaseCountResetType = TableEncryptionService.Convert(this.PurchaseCountResetType, key);
+    _o.IsNewbie = TableEncryptionService.Convert(this.IsNewbie, key);
+    _o.IsSelectRecruit = TableEncryptionService.Convert(this.IsSelectRecruit, key);
+    _o.DirectPayInvisibleTokenId = TableEncryptionService.Convert(this.DirectPayInvisibleTokenId, key);
+    _o.DirectPayAndroidShopCashId = TableEncryptionService.Convert(this.DirectPayAndroidShopCashId, key);
+    _o.DirectPayAppleShopCashId = TableEncryptionService.Convert(this.DirectPayAppleShopCashId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopRecruitExcel> Pack(FlatBufferBuilder builder, ShopRecruitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopRecruitExcel>);
+    var _GoodsDevName = _o.GoodsDevName == null ? default(StringOffset) : builder.CreateString(_o.GoodsDevName);
+    var _GachaBannerPath = _o.GachaBannerPath == null ? default(StringOffset) : builder.CreateString(_o.GachaBannerPath);
+    var _VideoId = default(VectorOffset);
+    if (_o.VideoId != null) {
+      var __VideoId = _o.VideoId.ToArray();
+      _VideoId = CreateVideoIdVector(builder, __VideoId);
+    }
+    var _InfoCharacterId = default(VectorOffset);
+    if (_o.InfoCharacterId != null) {
+      var __InfoCharacterId = _o.InfoCharacterId.ToArray();
+      _InfoCharacterId = CreateInfoCharacterIdVector(builder, __InfoCharacterId);
+    }
+    var _SalePeriodFrom = _o.SalePeriodFrom == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodFrom);
+    var _SalePeriodTo = _o.SalePeriodTo == null ? default(StringOffset) : builder.CreateString(_o.SalePeriodTo);
+    return CreateShopRecruitExcel(
+      builder,
+      _o.Id,
+      _o.CategoryType,
+      _o.IsLegacy,
+      _o.OneGachaGoodsId,
+      _o.TenGachaGoodsId,
+      _GoodsDevName,
+      _o.DisplayTag,
+      _o.DisplayOrder,
+      _GachaBannerPath,
+      _VideoId,
+      _o.LinkedRobbyBannerId,
+      _InfoCharacterId,
+      _SalePeriodFrom,
+      _SalePeriodTo,
+      _o.RecruitCoinId,
+      _o.RecruitSellectionShopId,
+      _o.PurchaseCooltimeMin,
+      _o.PurchaseCountLimit,
+      _o.PurchaseCountResetType,
+      _o.IsNewbie,
+      _o.IsSelectRecruit,
+      _o.DirectPayInvisibleTokenId,
+      _o.DirectPayAndroidShopCashId,
+      _o.DirectPayAppleShopCashId);
+  }
+}
+
+public class ShopRecruitExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.ShopCategoryType CategoryType { get; set; }
+  public bool IsLegacy { get; set; }
+  public long OneGachaGoodsId { get; set; }
+  public long TenGachaGoodsId { get; set; }
+  public string GoodsDevName { get; set; }
+  public SCHALE.Common.FlatData.GachaDisplayTag DisplayTag { get; set; }
+  public long DisplayOrder { get; set; }
+  public string GachaBannerPath { get; set; }
+  public List<long> VideoId { get; set; }
+  public long LinkedRobbyBannerId { get; set; }
+  public List<long> InfoCharacterId { get; set; }
+  public string SalePeriodFrom { get; set; }
+  public string SalePeriodTo { get; set; }
+  public long RecruitCoinId { get; set; }
+  public long RecruitSellectionShopId { get; set; }
+  public long PurchaseCooltimeMin { get; set; }
+  public long PurchaseCountLimit { get; set; }
+  public SCHALE.Common.FlatData.PurchaseCountResetType PurchaseCountResetType { get; set; }
+  public bool IsNewbie { get; set; }
+  public bool IsSelectRecruit { get; set; }
+  public long DirectPayInvisibleTokenId { get; set; }
+  public long DirectPayAndroidShopCashId { get; set; }
+  public long DirectPayAppleShopCashId { get; set; }
+
+  public ShopRecruitExcelT() {
+    this.Id = 0;
+    this.CategoryType = SCHALE.Common.FlatData.ShopCategoryType.General;
+    this.IsLegacy = false;
+    this.OneGachaGoodsId = 0;
+    this.TenGachaGoodsId = 0;
+    this.GoodsDevName = null;
+    this.DisplayTag = SCHALE.Common.FlatData.GachaDisplayTag.None;
+    this.DisplayOrder = 0;
+    this.GachaBannerPath = null;
+    this.VideoId = null;
+    this.LinkedRobbyBannerId = 0;
+    this.InfoCharacterId = null;
+    this.SalePeriodFrom = null;
+    this.SalePeriodTo = null;
+    this.RecruitCoinId = 0;
+    this.RecruitSellectionShopId = 0;
+    this.PurchaseCooltimeMin = 0;
+    this.PurchaseCountLimit = 0;
+    this.PurchaseCountResetType = SCHALE.Common.FlatData.PurchaseCountResetType.None;
+    this.IsNewbie = false;
+    this.IsSelectRecruit = false;
+    this.DirectPayInvisibleTokenId = 0;
+    this.DirectPayAndroidShopCashId = 0;
+    this.DirectPayAppleShopCashId = 0;
   }
 }
 

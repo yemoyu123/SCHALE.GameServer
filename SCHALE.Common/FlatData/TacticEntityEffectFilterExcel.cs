@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticEntityEffectFilterExcel : IFlatbufferObject
@@ -47,6 +48,39 @@ public struct TacticEntityEffectFilterExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticEntityEffectFilterExcel> EndTacticEntityEffectFilterExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticEntityEffectFilterExcel>(o);
+  }
+  public TacticEntityEffectFilterExcelT UnPack() {
+    var _o = new TacticEntityEffectFilterExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticEntityEffectFilterExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticEntityEffectFilter");
+    _o.TargetEffectName = TableEncryptionService.Convert(this.TargetEffectName, key);
+    _o.ShowEffectToVehicle = TableEncryptionService.Convert(this.ShowEffectToVehicle, key);
+    _o.ShowEffectToBoss = TableEncryptionService.Convert(this.ShowEffectToBoss, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticEntityEffectFilterExcel> Pack(FlatBufferBuilder builder, TacticEntityEffectFilterExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticEntityEffectFilterExcel>);
+    var _TargetEffectName = _o.TargetEffectName == null ? default(StringOffset) : builder.CreateString(_o.TargetEffectName);
+    return CreateTacticEntityEffectFilterExcel(
+      builder,
+      _TargetEffectName,
+      _o.ShowEffectToVehicle,
+      _o.ShowEffectToBoss);
+  }
+}
+
+public class TacticEntityEffectFilterExcelT
+{
+  public string TargetEffectName { get; set; }
+  public bool ShowEffectToVehicle { get; set; }
+  public bool ShowEffectToBoss { get; set; }
+
+  public TacticEntityEffectFilterExcelT() {
+    this.TargetEffectName = null;
+    this.ShowEffectToVehicle = false;
+    this.ShowEffectToBoss = false;
   }
 }
 

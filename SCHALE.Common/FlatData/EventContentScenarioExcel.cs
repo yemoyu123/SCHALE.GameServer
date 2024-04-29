@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentScenarioExcel : IFlatbufferObject
@@ -171,6 +172,139 @@ public struct EventContentScenarioExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentScenarioExcel> EndEventContentScenarioExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentScenarioExcel>(o);
+  }
+  public EventContentScenarioExcelT UnPack() {
+    var _o = new EventContentScenarioExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentScenarioExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentScenario");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.ReplayDisplayGroup = TableEncryptionService.Convert(this.ReplayDisplayGroup, key);
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.RecollectionNumber = TableEncryptionService.Convert(this.RecollectionNumber, key);
+    _o.IsRecollection = TableEncryptionService.Convert(this.IsRecollection, key);
+    _o.IsMeetup = TableEncryptionService.Convert(this.IsMeetup, key);
+    _o.IsOmnibus = TableEncryptionService.Convert(this.IsOmnibus, key);
+    _o.ScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.ScenarioGroupIdLength; ++_j) {_o.ScenarioGroupId.Add(TableEncryptionService.Convert(this.ScenarioGroupId(_j), key));}
+    _o.ScenarioConditionType = TableEncryptionService.Convert(this.ScenarioConditionType, key);
+    _o.ConditionAmount = TableEncryptionService.Convert(this.ConditionAmount, key);
+    _o.ConditionEventContentId = TableEncryptionService.Convert(this.ConditionEventContentId, key);
+    _o.ClearedScenarioGroupId = TableEncryptionService.Convert(this.ClearedScenarioGroupId, key);
+    _o.RecollectionSummaryLocalizeScenarioId = TableEncryptionService.Convert(this.RecollectionSummaryLocalizeScenarioId, key);
+    _o.RecollectionResource = TableEncryptionService.Convert(this.RecollectionResource, key);
+    _o.IsRecollectionHorizon = TableEncryptionService.Convert(this.IsRecollectionHorizon, key);
+    _o.CostParcelType = TableEncryptionService.Convert(this.CostParcelType, key);
+    _o.CostId = TableEncryptionService.Convert(this.CostId, key);
+    _o.CostAmount = TableEncryptionService.Convert(this.CostAmount, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardId = new List<long>();
+    for (var _j = 0; _j < this.RewardIdLength; ++_j) {_o.RewardId.Add(TableEncryptionService.Convert(this.RewardId(_j), key));}
+    _o.RewardAmount = new List<int>();
+    for (var _j = 0; _j < this.RewardAmountLength; ++_j) {_o.RewardAmount.Add(TableEncryptionService.Convert(this.RewardAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentScenarioExcel> Pack(FlatBufferBuilder builder, EventContentScenarioExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentScenarioExcel>);
+    var _ScenarioGroupId = default(VectorOffset);
+    if (_o.ScenarioGroupId != null) {
+      var __ScenarioGroupId = _o.ScenarioGroupId.ToArray();
+      _ScenarioGroupId = CreateScenarioGroupIdVector(builder, __ScenarioGroupId);
+    }
+    var _RecollectionResource = _o.RecollectionResource == null ? default(StringOffset) : builder.CreateString(_o.RecollectionResource);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardId = default(VectorOffset);
+    if (_o.RewardId != null) {
+      var __RewardId = _o.RewardId.ToArray();
+      _RewardId = CreateRewardIdVector(builder, __RewardId);
+    }
+    var _RewardAmount = default(VectorOffset);
+    if (_o.RewardAmount != null) {
+      var __RewardAmount = _o.RewardAmount.ToArray();
+      _RewardAmount = CreateRewardAmountVector(builder, __RewardAmount);
+    }
+    return CreateEventContentScenarioExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.ReplayDisplayGroup,
+      _o.Order,
+      _o.RecollectionNumber,
+      _o.IsRecollection,
+      _o.IsMeetup,
+      _o.IsOmnibus,
+      _ScenarioGroupId,
+      _o.ScenarioConditionType,
+      _o.ConditionAmount,
+      _o.ConditionEventContentId,
+      _o.ClearedScenarioGroupId,
+      _o.RecollectionSummaryLocalizeScenarioId,
+      _RecollectionResource,
+      _o.IsRecollectionHorizon,
+      _o.CostParcelType,
+      _o.CostId,
+      _o.CostAmount,
+      _RewardParcelType,
+      _RewardId,
+      _RewardAmount);
+  }
+}
+
+public class EventContentScenarioExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public int ReplayDisplayGroup { get; set; }
+  public long Order { get; set; }
+  public long RecollectionNumber { get; set; }
+  public bool IsRecollection { get; set; }
+  public bool IsMeetup { get; set; }
+  public bool IsOmnibus { get; set; }
+  public List<long> ScenarioGroupId { get; set; }
+  public SCHALE.Common.FlatData.EventContentScenarioConditionType ScenarioConditionType { get; set; }
+  public long ConditionAmount { get; set; }
+  public long ConditionEventContentId { get; set; }
+  public long ClearedScenarioGroupId { get; set; }
+  public uint RecollectionSummaryLocalizeScenarioId { get; set; }
+  public string RecollectionResource { get; set; }
+  public bool IsRecollectionHorizon { get; set; }
+  public SCHALE.Common.FlatData.ParcelType CostParcelType { get; set; }
+  public long CostId { get; set; }
+  public int CostAmount { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardId { get; set; }
+  public List<int> RewardAmount { get; set; }
+
+  public EventContentScenarioExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.ReplayDisplayGroup = 0;
+    this.Order = 0;
+    this.RecollectionNumber = 0;
+    this.IsRecollection = false;
+    this.IsMeetup = false;
+    this.IsOmnibus = false;
+    this.ScenarioGroupId = null;
+    this.ScenarioConditionType = SCHALE.Common.FlatData.EventContentScenarioConditionType.None;
+    this.ConditionAmount = 0;
+    this.ConditionEventContentId = 0;
+    this.ClearedScenarioGroupId = 0;
+    this.RecollectionSummaryLocalizeScenarioId = 0;
+    this.RecollectionResource = null;
+    this.IsRecollectionHorizon = false;
+    this.CostParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.CostId = 0;
+    this.CostAmount = 0;
+    this.RewardParcelType = null;
+    this.RewardId = null;
+    this.RewardAmount = null;
   }
 }
 

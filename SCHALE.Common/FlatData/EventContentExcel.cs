@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct EventContentExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentExcel> EndEventContentExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentExcel>(o);
+  }
+  public EventContentExcelT UnPack() {
+    var _o = new EventContentExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContent");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.DevName = TableEncryptionService.Convert(this.DevName, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.BgImagePath = TableEncryptionService.Convert(this.BgImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentExcel> Pack(FlatBufferBuilder builder, EventContentExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentExcel>);
+    var _DevName = _o.DevName == null ? default(StringOffset) : builder.CreateString(_o.DevName);
+    var _BgImagePath = _o.BgImagePath == null ? default(StringOffset) : builder.CreateString(_o.BgImagePath);
+    return CreateEventContentExcel(
+      builder,
+      _o.Id,
+      _DevName,
+      _o.EventContentId,
+      _BgImagePath);
+  }
+}
+
+public class EventContentExcelT
+{
+  public long Id { get; set; }
+  public string DevName { get; set; }
+  public long EventContentId { get; set; }
+  public string BgImagePath { get; set; }
+
+  public EventContentExcelT() {
+    this.Id = 0;
+    this.DevName = null;
+    this.EventContentId = 0;
+    this.BgImagePath = null;
   }
 }
 

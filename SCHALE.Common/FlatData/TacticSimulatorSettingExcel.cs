@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticSimulatorSettingExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct TacticSimulatorSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticSimulatorSettingExcel> EndTacticSimulatorSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticSimulatorSettingExcel>(o);
+  }
+  public TacticSimulatorSettingExcelT UnPack() {
+    var _o = new TacticSimulatorSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticSimulatorSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticSimulatorSetting");
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.GetExp = TableEncryptionService.Convert(this.GetExp, key);
+    _o.GetStarGrade = TableEncryptionService.Convert(this.GetStarGrade, key);
+    _o.Equipment = TableEncryptionService.Convert(this.Equipment, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticSimulatorSettingExcel> Pack(FlatBufferBuilder builder, TacticSimulatorSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticSimulatorSettingExcel>);
+    return CreateTacticSimulatorSettingExcel(
+      builder,
+      _o.GroundId,
+      _o.GetExp,
+      _o.GetStarGrade,
+      _o.Equipment);
+  }
+}
+
+public class TacticSimulatorSettingExcelT
+{
+  public long GroundId { get; set; }
+  public long GetExp { get; set; }
+  public long GetStarGrade { get; set; }
+  public long Equipment { get; set; }
+
+  public TacticSimulatorSettingExcelT() {
+    this.GroundId = 0;
+    this.GetExp = 0;
+    this.GetStarGrade = 0;
+    this.Equipment = 0;
   }
 }
 

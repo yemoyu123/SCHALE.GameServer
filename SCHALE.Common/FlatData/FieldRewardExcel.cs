@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldRewardExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct FieldRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldRewardExcel> EndFieldRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldRewardExcel>(o);
+  }
+  public FieldRewardExcelT UnPack() {
+    var _o = new FieldRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.RewardProb = TableEncryptionService.Convert(this.RewardProb, key);
+    _o.RewardParcelType = TableEncryptionService.Convert(this.RewardParcelType, key);
+    _o.RewardId = TableEncryptionService.Convert(this.RewardId, key);
+    _o.RewardAmount = TableEncryptionService.Convert(this.RewardAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldRewardExcel> Pack(FlatBufferBuilder builder, FieldRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldRewardExcel>);
+    return CreateFieldRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.RewardProb,
+      _o.RewardParcelType,
+      _o.RewardId,
+      _o.RewardAmount);
+  }
+}
+
+public class FieldRewardExcelT
+{
+  public long GroupId { get; set; }
+  public int RewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType RewardParcelType { get; set; }
+  public long RewardId { get; set; }
+  public int RewardAmount { get; set; }
+
+  public FieldRewardExcelT() {
+    this.GroupId = 0;
+    this.RewardProb = 0;
+    this.RewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.RewardId = 0;
+    this.RewardAmount = 0;
   }
 }
 

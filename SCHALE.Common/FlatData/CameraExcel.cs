@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CameraExcel : IFlatbufferObject
@@ -73,6 +74,70 @@ public struct CameraExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CameraExcel> EndCameraExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CameraExcel>(o);
+  }
+  public CameraExcelT UnPack() {
+    var _o = new CameraExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CameraExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Camera");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.MinDistance = TableEncryptionService.Convert(this.MinDistance, key);
+    _o.MaxDistance = TableEncryptionService.Convert(this.MaxDistance, key);
+    _o.RotationX = TableEncryptionService.Convert(this.RotationX, key);
+    _o.RotationY = TableEncryptionService.Convert(this.RotationY, key);
+    _o.MoveInstantly = TableEncryptionService.Convert(this.MoveInstantly, key);
+    _o.MoveInstantlyRotationSave = TableEncryptionService.Convert(this.MoveInstantlyRotationSave, key);
+    _o.LeftMargin = TableEncryptionService.Convert(this.LeftMargin, key);
+    _o.BottomMargin = TableEncryptionService.Convert(this.BottomMargin, key);
+    _o.IgnoreEnemies = TableEncryptionService.Convert(this.IgnoreEnemies, key);
+    _o.UseRailPointCompensation = TableEncryptionService.Convert(this.UseRailPointCompensation, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CameraExcel> Pack(FlatBufferBuilder builder, CameraExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CameraExcel>);
+    return CreateCameraExcel(
+      builder,
+      _o.UniqueId,
+      _o.MinDistance,
+      _o.MaxDistance,
+      _o.RotationX,
+      _o.RotationY,
+      _o.MoveInstantly,
+      _o.MoveInstantlyRotationSave,
+      _o.LeftMargin,
+      _o.BottomMargin,
+      _o.IgnoreEnemies,
+      _o.UseRailPointCompensation);
+  }
+}
+
+public class CameraExcelT
+{
+  public long UniqueId { get; set; }
+  public float MinDistance { get; set; }
+  public float MaxDistance { get; set; }
+  public float RotationX { get; set; }
+  public float RotationY { get; set; }
+  public bool MoveInstantly { get; set; }
+  public bool MoveInstantlyRotationSave { get; set; }
+  public float LeftMargin { get; set; }
+  public float BottomMargin { get; set; }
+  public bool IgnoreEnemies { get; set; }
+  public bool UseRailPointCompensation { get; set; }
+
+  public CameraExcelT() {
+    this.UniqueId = 0;
+    this.MinDistance = 0.0f;
+    this.MaxDistance = 0.0f;
+    this.RotationX = 0.0f;
+    this.RotationY = 0.0f;
+    this.MoveInstantly = false;
+    this.MoveInstantlyRotationSave = false;
+    this.LeftMargin = 0.0f;
+    this.BottomMargin = 0.0f;
+    this.IgnoreEnemies = false;
+    this.UseRailPointCompensation = false;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CafeInteractionExcel : IFlatbufferObject
@@ -111,6 +112,87 @@ public struct CafeInteractionExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CafeInteractionExcel> EndCafeInteractionExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CafeInteractionExcel>(o);
+  }
+  public CafeInteractionExcelT UnPack() {
+    var _o = new CafeInteractionExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CafeInteractionExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CafeInteraction");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.IgnoreIfUnobtained = TableEncryptionService.Convert(this.IgnoreIfUnobtained, key);
+    _o.IgnoreIfUnobtainedStartDate = TableEncryptionService.Convert(this.IgnoreIfUnobtainedStartDate, key);
+    _o.IgnoreIfUnobtainedEndDate = TableEncryptionService.Convert(this.IgnoreIfUnobtainedEndDate, key);
+    _o.BubbleType_ = new List<SCHALE.Common.FlatData.BubbleType>();
+    for (var _j = 0; _j < this.BubbleType_Length; ++_j) {_o.BubbleType_.Add(TableEncryptionService.Convert(this.BubbleType_(_j), key));}
+    _o.BubbleDuration = new List<long>();
+    for (var _j = 0; _j < this.BubbleDurationLength; ++_j) {_o.BubbleDuration.Add(TableEncryptionService.Convert(this.BubbleDuration(_j), key));}
+    _o.FavorEmoticonRewardParcelType = TableEncryptionService.Convert(this.FavorEmoticonRewardParcelType, key);
+    _o.FavorEmoticonRewardId = TableEncryptionService.Convert(this.FavorEmoticonRewardId, key);
+    _o.FavorEmoticonRewardAmount = TableEncryptionService.Convert(this.FavorEmoticonRewardAmount, key);
+    _o.CafeCharacterState = new List<string>();
+    for (var _j = 0; _j < this.CafeCharacterStateLength; ++_j) {_o.CafeCharacterState.Add(TableEncryptionService.Convert(this.CafeCharacterState(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.CafeInteractionExcel> Pack(FlatBufferBuilder builder, CafeInteractionExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CafeInteractionExcel>);
+    var _IgnoreIfUnobtainedStartDate = _o.IgnoreIfUnobtainedStartDate == null ? default(StringOffset) : builder.CreateString(_o.IgnoreIfUnobtainedStartDate);
+    var _IgnoreIfUnobtainedEndDate = _o.IgnoreIfUnobtainedEndDate == null ? default(StringOffset) : builder.CreateString(_o.IgnoreIfUnobtainedEndDate);
+    var _BubbleType_ = default(VectorOffset);
+    if (_o.BubbleType_ != null) {
+      var __BubbleType_ = _o.BubbleType_.ToArray();
+      _BubbleType_ = CreateBubbleType_Vector(builder, __BubbleType_);
+    }
+    var _BubbleDuration = default(VectorOffset);
+    if (_o.BubbleDuration != null) {
+      var __BubbleDuration = _o.BubbleDuration.ToArray();
+      _BubbleDuration = CreateBubbleDurationVector(builder, __BubbleDuration);
+    }
+    var _CafeCharacterState = default(VectorOffset);
+    if (_o.CafeCharacterState != null) {
+      var __CafeCharacterState = new StringOffset[_o.CafeCharacterState.Count];
+      for (var _j = 0; _j < __CafeCharacterState.Length; ++_j) { __CafeCharacterState[_j] = builder.CreateString(_o.CafeCharacterState[_j]); }
+      _CafeCharacterState = CreateCafeCharacterStateVector(builder, __CafeCharacterState);
+    }
+    return CreateCafeInteractionExcel(
+      builder,
+      _o.CharacterId,
+      _o.IgnoreIfUnobtained,
+      _IgnoreIfUnobtainedStartDate,
+      _IgnoreIfUnobtainedEndDate,
+      _BubbleType_,
+      _BubbleDuration,
+      _o.FavorEmoticonRewardParcelType,
+      _o.FavorEmoticonRewardId,
+      _o.FavorEmoticonRewardAmount,
+      _CafeCharacterState);
+  }
+}
+
+public class CafeInteractionExcelT
+{
+  public long CharacterId { get; set; }
+  public bool IgnoreIfUnobtained { get; set; }
+  public string IgnoreIfUnobtainedStartDate { get; set; }
+  public string IgnoreIfUnobtainedEndDate { get; set; }
+  public List<SCHALE.Common.FlatData.BubbleType> BubbleType_ { get; set; }
+  public List<long> BubbleDuration { get; set; }
+  public SCHALE.Common.FlatData.ParcelType FavorEmoticonRewardParcelType { get; set; }
+  public long FavorEmoticonRewardId { get; set; }
+  public long FavorEmoticonRewardAmount { get; set; }
+  public List<string> CafeCharacterState { get; set; }
+
+  public CafeInteractionExcelT() {
+    this.CharacterId = 0;
+    this.IgnoreIfUnobtained = false;
+    this.IgnoreIfUnobtainedStartDate = null;
+    this.IgnoreIfUnobtainedEndDate = null;
+    this.BubbleType_ = null;
+    this.BubbleDuration = null;
+    this.FavorEmoticonRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.FavorEmoticonRewardId = 0;
+    this.FavorEmoticonRewardAmount = 0;
+    this.CafeCharacterState = null;
   }
 }
 

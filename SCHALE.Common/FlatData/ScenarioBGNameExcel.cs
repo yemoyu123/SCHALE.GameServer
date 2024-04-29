@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioBGNameExcel : IFlatbufferObject
@@ -83,6 +84,65 @@ public struct ScenarioBGNameExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioBGNameExcel> EndScenarioBGNameExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioBGNameExcel>(o);
+  }
+  public ScenarioBGNameExcelT UnPack() {
+    var _o = new ScenarioBGNameExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioBGNameExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioBGName");
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.ProductionStep = TableEncryptionService.Convert(this.ProductionStep, key);
+    _o.BGFileName = TableEncryptionService.Convert(this.BGFileName, key);
+    _o.BGType = TableEncryptionService.Convert(this.BGType, key);
+    _o.AnimationRoot = TableEncryptionService.Convert(this.AnimationRoot, key);
+    _o.AnimationName = TableEncryptionService.Convert(this.AnimationName, key);
+    _o.SpineScale = TableEncryptionService.Convert(this.SpineScale, key);
+    _o.SpineLocalPosX = TableEncryptionService.Convert(this.SpineLocalPosX, key);
+    _o.SpineLocalPosY = TableEncryptionService.Convert(this.SpineLocalPosY, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioBGNameExcel> Pack(FlatBufferBuilder builder, ScenarioBGNameExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioBGNameExcel>);
+    var _BGFileName = _o.BGFileName == null ? default(StringOffset) : builder.CreateString(_o.BGFileName);
+    var _AnimationRoot = _o.AnimationRoot == null ? default(StringOffset) : builder.CreateString(_o.AnimationRoot);
+    var _AnimationName = _o.AnimationName == null ? default(StringOffset) : builder.CreateString(_o.AnimationName);
+    return CreateScenarioBGNameExcel(
+      builder,
+      _o.Name,
+      _o.ProductionStep,
+      _BGFileName,
+      _o.BGType,
+      _AnimationRoot,
+      _AnimationName,
+      _o.SpineScale,
+      _o.SpineLocalPosX,
+      _o.SpineLocalPosY);
+  }
+}
+
+public class ScenarioBGNameExcelT
+{
+  public uint Name { get; set; }
+  public SCHALE.Common.FlatData.ProductionStep ProductionStep { get; set; }
+  public string BGFileName { get; set; }
+  public SCHALE.Common.FlatData.ScenarioBGType BGType { get; set; }
+  public string AnimationRoot { get; set; }
+  public string AnimationName { get; set; }
+  public float SpineScale { get; set; }
+  public int SpineLocalPosX { get; set; }
+  public int SpineLocalPosY { get; set; }
+
+  public ScenarioBGNameExcelT() {
+    this.Name = 0;
+    this.ProductionStep = SCHALE.Common.FlatData.ProductionStep.ToDo;
+    this.BGFileName = null;
+    this.BGType = SCHALE.Common.FlatData.ScenarioBGType.None;
+    this.AnimationRoot = null;
+    this.AnimationName = null;
+    this.SpineScale = 0.0f;
+    this.SpineLocalPosX = 0;
+    this.SpineLocalPosY = 0;
   }
 }
 

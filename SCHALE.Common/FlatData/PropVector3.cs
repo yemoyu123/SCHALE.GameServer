@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PropVector3 : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct PropVector3 : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PropVector3> EndPropVector3(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PropVector3>(o);
+  }
+  public PropVector3T UnPack() {
+    var _o = new PropVector3T();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PropVector3T _o) {
+		byte[] key = { 0 };
+    _o.X = TableEncryptionService.Convert(this.X, key);
+    _o.Y = TableEncryptionService.Convert(this.Y, key);
+    _o.Z = TableEncryptionService.Convert(this.Z, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.PropVector3> Pack(FlatBufferBuilder builder, PropVector3T _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PropVector3>);
+    return CreatePropVector3(
+      builder,
+      _o.X,
+      _o.Y,
+      _o.Z);
+  }
+}
+
+public class PropVector3T
+{
+  public float X { get; set; }
+  public float Y { get; set; }
+  public float Z { get; set; }
+
+  public PropVector3T() {
+    this.X = 0.0f;
+    this.Y = 0.0f;
+    this.Z = 0.0f;
   }
 }
 

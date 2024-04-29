@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AttendanceRewardExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct AttendanceRewardExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AttendanceRewardExcelTable> EndAttendanceRewardExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AttendanceRewardExcelTable>(o);
+  }
+  public AttendanceRewardExcelTableT UnPack() {
+    var _o = new AttendanceRewardExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AttendanceRewardExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AttendanceRewardExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.AttendanceRewardExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.AttendanceRewardExcelTable> Pack(FlatBufferBuilder builder, AttendanceRewardExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AttendanceRewardExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.AttendanceRewardExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.AttendanceRewardExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateAttendanceRewardExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class AttendanceRewardExcelTableT
+{
+  public List<SCHALE.Common.FlatData.AttendanceRewardExcelT> DataList { get; set; }
+
+  public AttendanceRewardExcelTableT() {
+    this.DataList = null;
   }
 }
 

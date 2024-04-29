@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstNewbieContentExcel : IFlatbufferObject
@@ -65,6 +66,52 @@ public struct ConstNewbieContentExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstNewbieContentExcel> EndConstNewbieContentExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstNewbieContentExcel>(o);
+  }
+  public ConstNewbieContentExcelT UnPack() {
+    var _o = new ConstNewbieContentExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstNewbieContentExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstNewbieContent");
+    _o.NewbieGachaReleaseDate = TableEncryptionService.Convert(this.NewbieGachaReleaseDate, key);
+    _o.NewbieGachaCheckDays = TableEncryptionService.Convert(this.NewbieGachaCheckDays, key);
+    _o.NewbieGachaTokenGraceTime = TableEncryptionService.Convert(this.NewbieGachaTokenGraceTime, key);
+    _o.NewbieAttendanceReleaseDate = TableEncryptionService.Convert(this.NewbieAttendanceReleaseDate, key);
+    _o.NewbieAttendanceStartableEndDay = TableEncryptionService.Convert(this.NewbieAttendanceStartableEndDay, key);
+    _o.NewbieAttendanceEndDay = TableEncryptionService.Convert(this.NewbieAttendanceEndDay, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstNewbieContentExcel> Pack(FlatBufferBuilder builder, ConstNewbieContentExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstNewbieContentExcel>);
+    var _NewbieGachaReleaseDate = _o.NewbieGachaReleaseDate == null ? default(StringOffset) : builder.CreateString(_o.NewbieGachaReleaseDate);
+    var _NewbieAttendanceReleaseDate = _o.NewbieAttendanceReleaseDate == null ? default(StringOffset) : builder.CreateString(_o.NewbieAttendanceReleaseDate);
+    return CreateConstNewbieContentExcel(
+      builder,
+      _NewbieGachaReleaseDate,
+      _o.NewbieGachaCheckDays,
+      _o.NewbieGachaTokenGraceTime,
+      _NewbieAttendanceReleaseDate,
+      _o.NewbieAttendanceStartableEndDay,
+      _o.NewbieAttendanceEndDay);
+  }
+}
+
+public class ConstNewbieContentExcelT
+{
+  public string NewbieGachaReleaseDate { get; set; }
+  public int NewbieGachaCheckDays { get; set; }
+  public int NewbieGachaTokenGraceTime { get; set; }
+  public string NewbieAttendanceReleaseDate { get; set; }
+  public int NewbieAttendanceStartableEndDay { get; set; }
+  public int NewbieAttendanceEndDay { get; set; }
+
+  public ConstNewbieContentExcelT() {
+    this.NewbieGachaReleaseDate = null;
+    this.NewbieGachaCheckDays = 0;
+    this.NewbieGachaTokenGraceTime = 0;
+    this.NewbieAttendanceReleaseDate = null;
+    this.NewbieAttendanceStartableEndDay = 0;
+    this.NewbieAttendanceEndDay = 0;
   }
 }
 

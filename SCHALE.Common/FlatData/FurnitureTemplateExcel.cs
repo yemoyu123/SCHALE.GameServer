@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FurnitureTemplateExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct FurnitureTemplateExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FurnitureTemplateExcel> EndFurnitureTemplateExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FurnitureTemplateExcel>(o);
+  }
+  public FurnitureTemplateExcelT UnPack() {
+    var _o = new FurnitureTemplateExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FurnitureTemplateExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FurnitureTemplate");
+    _o.FurnitureTemplateId = TableEncryptionService.Convert(this.FurnitureTemplateId, key);
+    _o.FunitureTemplateTitle = TableEncryptionService.Convert(this.FunitureTemplateTitle, key);
+    _o.ThumbnailImagePath = TableEncryptionService.Convert(this.ThumbnailImagePath, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FurnitureTemplateExcel> Pack(FlatBufferBuilder builder, FurnitureTemplateExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FurnitureTemplateExcel>);
+    var _ThumbnailImagePath = _o.ThumbnailImagePath == null ? default(StringOffset) : builder.CreateString(_o.ThumbnailImagePath);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    return CreateFurnitureTemplateExcel(
+      builder,
+      _o.FurnitureTemplateId,
+      _o.FunitureTemplateTitle,
+      _ThumbnailImagePath,
+      _ImagePath);
+  }
+}
+
+public class FurnitureTemplateExcelT
+{
+  public long FurnitureTemplateId { get; set; }
+  public uint FunitureTemplateTitle { get; set; }
+  public string ThumbnailImagePath { get; set; }
+  public string ImagePath { get; set; }
+
+  public FurnitureTemplateExcelT() {
+    this.FurnitureTemplateId = 0;
+    this.FunitureTemplateTitle = 0;
+    this.ThumbnailImagePath = null;
+    this.ImagePath = null;
   }
 }
 

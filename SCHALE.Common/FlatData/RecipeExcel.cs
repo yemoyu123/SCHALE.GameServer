@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct RecipeExcel : IFlatbufferObject
@@ -109,6 +110,82 @@ public struct RecipeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.RecipeExcel> EndRecipeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.RecipeExcel>(o);
+  }
+  public RecipeExcelT UnPack() {
+    var _o = new RecipeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(RecipeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Recipe");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.RecipeType = TableEncryptionService.Convert(this.RecipeType, key);
+    _o.RecipeIngredientId = TableEncryptionService.Convert(this.RecipeIngredientId, key);
+    _o.RecipeSelectionGroupId = TableEncryptionService.Convert(this.RecipeSelectionGroupId, key);
+    _o.ParcelType_ = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.ParcelType_Length; ++_j) {_o.ParcelType_.Add(TableEncryptionService.Convert(this.ParcelType_(_j), key));}
+    _o.ParcelId = new List<long>();
+    for (var _j = 0; _j < this.ParcelIdLength; ++_j) {_o.ParcelId.Add(TableEncryptionService.Convert(this.ParcelId(_j), key));}
+    _o.ResultAmountMin = new List<long>();
+    for (var _j = 0; _j < this.ResultAmountMinLength; ++_j) {_o.ResultAmountMin.Add(TableEncryptionService.Convert(this.ResultAmountMin(_j), key));}
+    _o.ResultAmountMax = new List<long>();
+    for (var _j = 0; _j < this.ResultAmountMaxLength; ++_j) {_o.ResultAmountMax.Add(TableEncryptionService.Convert(this.ResultAmountMax(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.RecipeExcel> Pack(FlatBufferBuilder builder, RecipeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.RecipeExcel>);
+    var _ParcelType_ = default(VectorOffset);
+    if (_o.ParcelType_ != null) {
+      var __ParcelType_ = _o.ParcelType_.ToArray();
+      _ParcelType_ = CreateParcelType_Vector(builder, __ParcelType_);
+    }
+    var _ParcelId = default(VectorOffset);
+    if (_o.ParcelId != null) {
+      var __ParcelId = _o.ParcelId.ToArray();
+      _ParcelId = CreateParcelIdVector(builder, __ParcelId);
+    }
+    var _ResultAmountMin = default(VectorOffset);
+    if (_o.ResultAmountMin != null) {
+      var __ResultAmountMin = _o.ResultAmountMin.ToArray();
+      _ResultAmountMin = CreateResultAmountMinVector(builder, __ResultAmountMin);
+    }
+    var _ResultAmountMax = default(VectorOffset);
+    if (_o.ResultAmountMax != null) {
+      var __ResultAmountMax = _o.ResultAmountMax.ToArray();
+      _ResultAmountMax = CreateResultAmountMaxVector(builder, __ResultAmountMax);
+    }
+    return CreateRecipeExcel(
+      builder,
+      _o.Id,
+      _o.RecipeType,
+      _o.RecipeIngredientId,
+      _o.RecipeSelectionGroupId,
+      _ParcelType_,
+      _ParcelId,
+      _ResultAmountMin,
+      _ResultAmountMax);
+  }
+}
+
+public class RecipeExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.RecipeType RecipeType { get; set; }
+  public long RecipeIngredientId { get; set; }
+  public long RecipeSelectionGroupId { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> ParcelType_ { get; set; }
+  public List<long> ParcelId { get; set; }
+  public List<long> ResultAmountMin { get; set; }
+  public List<long> ResultAmountMax { get; set; }
+
+  public RecipeExcelT() {
+    this.Id = 0;
+    this.RecipeType = SCHALE.Common.FlatData.RecipeType.None;
+    this.RecipeIngredientId = 0;
+    this.RecipeSelectionGroupId = 0;
+    this.ParcelType_ = null;
+    this.ParcelId = null;
+    this.ResultAmountMin = null;
+    this.ResultAmountMax = null;
   }
 }
 

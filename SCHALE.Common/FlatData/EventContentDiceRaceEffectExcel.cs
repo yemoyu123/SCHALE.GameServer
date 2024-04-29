@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentDiceRaceEffectExcel : IFlatbufferObject
@@ -67,6 +68,53 @@ public struct EventContentDiceRaceEffectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceEffectExcel> EndEventContentDiceRaceEffectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentDiceRaceEffectExcel>(o);
+  }
+  public EventContentDiceRaceEffectExcelT UnPack() {
+    var _o = new EventContentDiceRaceEffectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentDiceRaceEffectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentDiceRaceEffect");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentDiceRaceResultType = TableEncryptionService.Convert(this.EventContentDiceRaceResultType, key);
+    _o.IsDiceResult = TableEncryptionService.Convert(this.IsDiceResult, key);
+    _o.AniClip = TableEncryptionService.Convert(this.AniClip, key);
+    _o.VoiceId = new List<uint>();
+    for (var _j = 0; _j < this.VoiceIdLength; ++_j) {_o.VoiceId.Add(TableEncryptionService.Convert(this.VoiceId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceEffectExcel> Pack(FlatBufferBuilder builder, EventContentDiceRaceEffectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentDiceRaceEffectExcel>);
+    var _AniClip = _o.AniClip == null ? default(StringOffset) : builder.CreateString(_o.AniClip);
+    var _VoiceId = default(VectorOffset);
+    if (_o.VoiceId != null) {
+      var __VoiceId = _o.VoiceId.ToArray();
+      _VoiceId = CreateVoiceIdVector(builder, __VoiceId);
+    }
+    return CreateEventContentDiceRaceEffectExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentDiceRaceResultType,
+      _o.IsDiceResult,
+      _AniClip,
+      _VoiceId);
+  }
+}
+
+public class EventContentDiceRaceEffectExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentDiceRaceResultType EventContentDiceRaceResultType { get; set; }
+  public bool IsDiceResult { get; set; }
+  public string AniClip { get; set; }
+  public List<uint> VoiceId { get; set; }
+
+  public EventContentDiceRaceEffectExcelT() {
+    this.EventContentId = 0;
+    this.EventContentDiceRaceResultType = SCHALE.Common.FlatData.EventContentDiceRaceResultType.DiceResult1;
+    this.IsDiceResult = false;
+    this.AniClip = null;
+    this.VoiceId = null;
   }
 }
 

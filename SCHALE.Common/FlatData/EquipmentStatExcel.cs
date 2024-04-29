@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EquipmentStatExcel : IFlatbufferObject
@@ -127,6 +128,101 @@ public struct EquipmentStatExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EquipmentStatExcel> EndEquipmentStatExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EquipmentStatExcel>(o);
+  }
+  public EquipmentStatExcelT UnPack() {
+    var _o = new EquipmentStatExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EquipmentStatExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EquipmentStat");
+    _o.EquipmentId = TableEncryptionService.Convert(this.EquipmentId, key);
+    _o.StatLevelUpType = TableEncryptionService.Convert(this.StatLevelUpType, key);
+    _o.StatType = new List<SCHALE.Common.FlatData.EquipmentOptionType>();
+    for (var _j = 0; _j < this.StatTypeLength; ++_j) {_o.StatType.Add(TableEncryptionService.Convert(this.StatType(_j), key));}
+    _o.MinStat = new List<long>();
+    for (var _j = 0; _j < this.MinStatLength; ++_j) {_o.MinStat.Add(TableEncryptionService.Convert(this.MinStat(_j), key));}
+    _o.MaxStat = new List<long>();
+    for (var _j = 0; _j < this.MaxStatLength; ++_j) {_o.MaxStat.Add(TableEncryptionService.Convert(this.MaxStat(_j), key));}
+    _o.LevelUpInsertLimit = TableEncryptionService.Convert(this.LevelUpInsertLimit, key);
+    _o.LevelUpFeedExp = TableEncryptionService.Convert(this.LevelUpFeedExp, key);
+    _o.LevelUpFeedCostCurrency = TableEncryptionService.Convert(this.LevelUpFeedCostCurrency, key);
+    _o.LevelUpFeedCostAmount = TableEncryptionService.Convert(this.LevelUpFeedCostAmount, key);
+    _o.EquipmentCategory = TableEncryptionService.Convert(this.EquipmentCategory, key);
+    _o.LevelUpFeedAddExp = TableEncryptionService.Convert(this.LevelUpFeedAddExp, key);
+    _o.DefaultMaxLevel = TableEncryptionService.Convert(this.DefaultMaxLevel, key);
+    _o.TranscendenceMax = TableEncryptionService.Convert(this.TranscendenceMax, key);
+    _o.DamageFactorGroupId = TableEncryptionService.Convert(this.DamageFactorGroupId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EquipmentStatExcel> Pack(FlatBufferBuilder builder, EquipmentStatExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EquipmentStatExcel>);
+    var _StatType = default(VectorOffset);
+    if (_o.StatType != null) {
+      var __StatType = _o.StatType.ToArray();
+      _StatType = CreateStatTypeVector(builder, __StatType);
+    }
+    var _MinStat = default(VectorOffset);
+    if (_o.MinStat != null) {
+      var __MinStat = _o.MinStat.ToArray();
+      _MinStat = CreateMinStatVector(builder, __MinStat);
+    }
+    var _MaxStat = default(VectorOffset);
+    if (_o.MaxStat != null) {
+      var __MaxStat = _o.MaxStat.ToArray();
+      _MaxStat = CreateMaxStatVector(builder, __MaxStat);
+    }
+    var _DamageFactorGroupId = _o.DamageFactorGroupId == null ? default(StringOffset) : builder.CreateString(_o.DamageFactorGroupId);
+    return CreateEquipmentStatExcel(
+      builder,
+      _o.EquipmentId,
+      _o.StatLevelUpType,
+      _StatType,
+      _MinStat,
+      _MaxStat,
+      _o.LevelUpInsertLimit,
+      _o.LevelUpFeedExp,
+      _o.LevelUpFeedCostCurrency,
+      _o.LevelUpFeedCostAmount,
+      _o.EquipmentCategory,
+      _o.LevelUpFeedAddExp,
+      _o.DefaultMaxLevel,
+      _o.TranscendenceMax,
+      _DamageFactorGroupId);
+  }
+}
+
+public class EquipmentStatExcelT
+{
+  public long EquipmentId { get; set; }
+  public SCHALE.Common.FlatData.StatLevelUpType StatLevelUpType { get; set; }
+  public List<SCHALE.Common.FlatData.EquipmentOptionType> StatType { get; set; }
+  public List<long> MinStat { get; set; }
+  public List<long> MaxStat { get; set; }
+  public int LevelUpInsertLimit { get; set; }
+  public long LevelUpFeedExp { get; set; }
+  public SCHALE.Common.FlatData.CurrencyTypes LevelUpFeedCostCurrency { get; set; }
+  public long LevelUpFeedCostAmount { get; set; }
+  public SCHALE.Common.FlatData.EquipmentCategory EquipmentCategory { get; set; }
+  public long LevelUpFeedAddExp { get; set; }
+  public int DefaultMaxLevel { get; set; }
+  public int TranscendenceMax { get; set; }
+  public string DamageFactorGroupId { get; set; }
+
+  public EquipmentStatExcelT() {
+    this.EquipmentId = 0;
+    this.StatLevelUpType = SCHALE.Common.FlatData.StatLevelUpType.Standard;
+    this.StatType = null;
+    this.MinStat = null;
+    this.MaxStat = null;
+    this.LevelUpInsertLimit = 0;
+    this.LevelUpFeedExp = 0;
+    this.LevelUpFeedCostCurrency = SCHALE.Common.FlatData.CurrencyTypes.Invalid;
+    this.LevelUpFeedCostAmount = 0;
+    this.EquipmentCategory = SCHALE.Common.FlatData.EquipmentCategory.Unable;
+    this.LevelUpFeedAddExp = 0;
+    this.DefaultMaxLevel = 0;
+    this.TranscendenceMax = 0;
+    this.DamageFactorGroupId = null;
   }
 }
 

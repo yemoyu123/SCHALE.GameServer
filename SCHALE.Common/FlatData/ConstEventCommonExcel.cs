@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConstEventCommonExcel : IFlatbufferObject
@@ -93,6 +94,80 @@ public struct ConstEventCommonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConstEventCommonExcel> EndConstEventCommonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConstEventCommonExcel>(o);
+  }
+  public ConstEventCommonExcelT UnPack() {
+    var _o = new ConstEventCommonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConstEventCommonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConstEventCommon");
+    _o.EventContentHardStageCount = TableEncryptionService.Convert(this.EventContentHardStageCount, key);
+    _o.EventStrategyPlayTimeLimitInSeconds = TableEncryptionService.Convert(this.EventStrategyPlayTimeLimitInSeconds, key);
+    _o.SubEventChangeLimitSeconds = TableEncryptionService.Convert(this.SubEventChangeLimitSeconds, key);
+    _o.SubEventInstantClear = TableEncryptionService.Convert(this.SubEventInstantClear, key);
+    _o.CardShopProbWeightCount = TableEncryptionService.Convert(this.CardShopProbWeightCount, key);
+    _o.CardShopProbWeightRarity = TableEncryptionService.Convert(this.CardShopProbWeightRarity, key);
+    _o.MeetupScenarioReplayResource = TableEncryptionService.Convert(this.MeetupScenarioReplayResource, key);
+    _o.MeetupScenarioReplayTitleLocalize = TableEncryptionService.Convert(this.MeetupScenarioReplayTitleLocalize, key);
+    _o.SpecialOperactionCollectionGroupId = TableEncryptionService.Convert(this.SpecialOperactionCollectionGroupId, key);
+    _o.TreasureNormalVariationAmount = TableEncryptionService.Convert(this.TreasureNormalVariationAmount, key);
+    _o.TreasureLoopVariationAmount = TableEncryptionService.Convert(this.TreasureLoopVariationAmount, key);
+    _o.TreasureLimitVariationLoopCount = TableEncryptionService.Convert(this.TreasureLimitVariationLoopCount, key);
+    _o.TreasureLimitVariationClearLoopCount = TableEncryptionService.Convert(this.TreasureLimitVariationClearLoopCount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConstEventCommonExcel> Pack(FlatBufferBuilder builder, ConstEventCommonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConstEventCommonExcel>);
+    var _MeetupScenarioReplayResource = _o.MeetupScenarioReplayResource == null ? default(StringOffset) : builder.CreateString(_o.MeetupScenarioReplayResource);
+    var _MeetupScenarioReplayTitleLocalize = _o.MeetupScenarioReplayTitleLocalize == null ? default(StringOffset) : builder.CreateString(_o.MeetupScenarioReplayTitleLocalize);
+    return CreateConstEventCommonExcel(
+      builder,
+      _o.EventContentHardStageCount,
+      _o.EventStrategyPlayTimeLimitInSeconds,
+      _o.SubEventChangeLimitSeconds,
+      _o.SubEventInstantClear,
+      _o.CardShopProbWeightCount,
+      _o.CardShopProbWeightRarity,
+      _MeetupScenarioReplayResource,
+      _MeetupScenarioReplayTitleLocalize,
+      _o.SpecialOperactionCollectionGroupId,
+      _o.TreasureNormalVariationAmount,
+      _o.TreasureLoopVariationAmount,
+      _o.TreasureLimitVariationLoopCount,
+      _o.TreasureLimitVariationClearLoopCount);
+  }
+}
+
+public class ConstEventCommonExcelT
+{
+  public int EventContentHardStageCount { get; set; }
+  public long EventStrategyPlayTimeLimitInSeconds { get; set; }
+  public long SubEventChangeLimitSeconds { get; set; }
+  public bool SubEventInstantClear { get; set; }
+  public long CardShopProbWeightCount { get; set; }
+  public SCHALE.Common.FlatData.Rarity CardShopProbWeightRarity { get; set; }
+  public string MeetupScenarioReplayResource { get; set; }
+  public string MeetupScenarioReplayTitleLocalize { get; set; }
+  public long SpecialOperactionCollectionGroupId { get; set; }
+  public int TreasureNormalVariationAmount { get; set; }
+  public int TreasureLoopVariationAmount { get; set; }
+  public int TreasureLimitVariationLoopCount { get; set; }
+  public int TreasureLimitVariationClearLoopCount { get; set; }
+
+  public ConstEventCommonExcelT() {
+    this.EventContentHardStageCount = 0;
+    this.EventStrategyPlayTimeLimitInSeconds = 0;
+    this.SubEventChangeLimitSeconds = 0;
+    this.SubEventInstantClear = false;
+    this.CardShopProbWeightCount = 0;
+    this.CardShopProbWeightRarity = SCHALE.Common.FlatData.Rarity.N;
+    this.MeetupScenarioReplayResource = null;
+    this.MeetupScenarioReplayTitleLocalize = null;
+    this.SpecialOperactionCollectionGroupId = 0;
+    this.TreasureNormalVariationAmount = 0;
+    this.TreasureLoopVariationAmount = 0;
+    this.TreasureLimitVariationLoopCount = 0;
+    this.TreasureLimitVariationClearLoopCount = 0;
   }
 }
 

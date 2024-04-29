@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct FieldMasteryExcel : IFlatbufferObject
@@ -65,6 +66,62 @@ public struct FieldMasteryExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.FieldMasteryExcel> EndFieldMasteryExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.FieldMasteryExcel>(o);
+  }
+  public FieldMasteryExcelT UnPack() {
+    var _o = new FieldMasteryExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(FieldMasteryExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("FieldMastery");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.SeasonId = TableEncryptionService.Convert(this.SeasonId, key);
+    _o.Order = TableEncryptionService.Convert(this.Order, key);
+    _o.ExpAmount = TableEncryptionService.Convert(this.ExpAmount, key);
+    _o.TokenType = TableEncryptionService.Convert(this.TokenType, key);
+    _o.TokenId = TableEncryptionService.Convert(this.TokenId, key);
+    _o.TokenRequirement = TableEncryptionService.Convert(this.TokenRequirement, key);
+    _o.AccomplishmentConditionType = TableEncryptionService.Convert(this.AccomplishmentConditionType, key);
+    _o.AccomplishmentConditionId = TableEncryptionService.Convert(this.AccomplishmentConditionId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.FieldMasteryExcel> Pack(FlatBufferBuilder builder, FieldMasteryExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.FieldMasteryExcel>);
+    return CreateFieldMasteryExcel(
+      builder,
+      _o.UniqueId,
+      _o.SeasonId,
+      _o.Order,
+      _o.ExpAmount,
+      _o.TokenType,
+      _o.TokenId,
+      _o.TokenRequirement,
+      _o.AccomplishmentConditionType,
+      _o.AccomplishmentConditionId);
+  }
+}
+
+public class FieldMasteryExcelT
+{
+  public long UniqueId { get; set; }
+  public long SeasonId { get; set; }
+  public int Order { get; set; }
+  public long ExpAmount { get; set; }
+  public SCHALE.Common.FlatData.ParcelType TokenType { get; set; }
+  public long TokenId { get; set; }
+  public long TokenRequirement { get; set; }
+  public SCHALE.Common.FlatData.FieldConditionType AccomplishmentConditionType { get; set; }
+  public long AccomplishmentConditionId { get; set; }
+
+  public FieldMasteryExcelT() {
+    this.UniqueId = 0;
+    this.SeasonId = 0;
+    this.Order = 0;
+    this.ExpAmount = 0;
+    this.TokenType = SCHALE.Common.FlatData.ParcelType.None;
+    this.TokenId = 0;
+    this.TokenRequirement = 0;
+    this.AccomplishmentConditionType = SCHALE.Common.FlatData.FieldConditionType.Invalid;
+    this.AccomplishmentConditionId = 0;
   }
 }
 

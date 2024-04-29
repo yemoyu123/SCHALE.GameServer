@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestGroupBonusExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct ConquestGroupBonusExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcelTable> EndConquestGroupBonusExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcelTable>(o);
+  }
+  public ConquestGroupBonusExcelTableT UnPack() {
+    var _o = new ConquestGroupBonusExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestGroupBonusExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestGroupBonusExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.ConquestGroupBonusExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcelTable> Pack(FlatBufferBuilder builder, ConquestGroupBonusExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.ConquestGroupBonusExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.ConquestGroupBonusExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateConquestGroupBonusExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class ConquestGroupBonusExcelTableT
+{
+  public List<SCHALE.Common.FlatData.ConquestGroupBonusExcelT> DataList { get; set; }
+
+  public ConquestGroupBonusExcelTableT() {
+    this.DataList = null;
   }
 }
 

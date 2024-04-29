@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BattleLevelFactorExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct BattleLevelFactorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BattleLevelFactorExcel> EndBattleLevelFactorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BattleLevelFactorExcel>(o);
+  }
+  public BattleLevelFactorExcelT UnPack() {
+    var _o = new BattleLevelFactorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BattleLevelFactorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("BattleLevelFactor");
+    _o.LevelDiff = TableEncryptionService.Convert(this.LevelDiff, key);
+    _o.DamageRate = TableEncryptionService.Convert(this.DamageRate, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BattleLevelFactorExcel> Pack(FlatBufferBuilder builder, BattleLevelFactorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BattleLevelFactorExcel>);
+    return CreateBattleLevelFactorExcel(
+      builder,
+      _o.LevelDiff,
+      _o.DamageRate);
+  }
+}
+
+public class BattleLevelFactorExcelT
+{
+  public int LevelDiff { get; set; }
+  public long DamageRate { get; set; }
+
+  public BattleLevelFactorExcelT() {
+    this.LevelDiff = 0;
+    this.DamageRate = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ObstacleExcel : IFlatbufferObject
@@ -171,6 +172,127 @@ public struct ObstacleExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ObstacleExcel> EndObstacleExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ObstacleExcel>(o);
+  }
+  public ObstacleExcelT UnPack() {
+    var _o = new ObstacleExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ObstacleExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Obstacle");
+    _o.Index = TableEncryptionService.Convert(this.Index, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.JumpAble = TableEncryptionService.Convert(this.JumpAble, key);
+    _o.SubOffset = new List<float>();
+    for (var _j = 0; _j < this.SubOffsetLength; ++_j) {_o.SubOffset.Add(TableEncryptionService.Convert(this.SubOffset(_j), key));}
+    _o.X = TableEncryptionService.Convert(this.X, key);
+    _o.Z = TableEncryptionService.Convert(this.Z, key);
+    _o.Hp = TableEncryptionService.Convert(this.Hp, key);
+    _o.MaxHp = TableEncryptionService.Convert(this.MaxHp, key);
+    _o.BlockRate = TableEncryptionService.Convert(this.BlockRate, key);
+    _o.EvasionRate = TableEncryptionService.Convert(this.EvasionRate, key);
+    _o.DestroyType = TableEncryptionService.Convert(this.DestroyType, key);
+    _o.Point1Offeset = new List<float>();
+    for (var _j = 0; _j < this.Point1OffesetLength; ++_j) {_o.Point1Offeset.Add(TableEncryptionService.Convert(this.Point1Offeset(_j), key));}
+    _o.EnemyPoint1Osset = new List<float>();
+    for (var _j = 0; _j < this.EnemyPoint1OssetLength; ++_j) {_o.EnemyPoint1Osset.Add(TableEncryptionService.Convert(this.EnemyPoint1Osset(_j), key));}
+    _o.Point2Offeset = new List<float>();
+    for (var _j = 0; _j < this.Point2OffesetLength; ++_j) {_o.Point2Offeset.Add(TableEncryptionService.Convert(this.Point2Offeset(_j), key));}
+    _o.EnemyPoint2Osset = new List<float>();
+    for (var _j = 0; _j < this.EnemyPoint2OssetLength; ++_j) {_o.EnemyPoint2Osset.Add(TableEncryptionService.Convert(this.EnemyPoint2Osset(_j), key));}
+    _o.SubObstacleID = new List<long>();
+    for (var _j = 0; _j < this.SubObstacleIDLength; ++_j) {_o.SubObstacleID.Add(TableEncryptionService.Convert(this.SubObstacleID(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ObstacleExcel> Pack(FlatBufferBuilder builder, ObstacleExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ObstacleExcel>);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _SubOffset = default(VectorOffset);
+    if (_o.SubOffset != null) {
+      var __SubOffset = _o.SubOffset.ToArray();
+      _SubOffset = CreateSubOffsetVector(builder, __SubOffset);
+    }
+    var _Point1Offeset = default(VectorOffset);
+    if (_o.Point1Offeset != null) {
+      var __Point1Offeset = _o.Point1Offeset.ToArray();
+      _Point1Offeset = CreatePoint1OffesetVector(builder, __Point1Offeset);
+    }
+    var _EnemyPoint1Osset = default(VectorOffset);
+    if (_o.EnemyPoint1Osset != null) {
+      var __EnemyPoint1Osset = _o.EnemyPoint1Osset.ToArray();
+      _EnemyPoint1Osset = CreateEnemyPoint1OssetVector(builder, __EnemyPoint1Osset);
+    }
+    var _Point2Offeset = default(VectorOffset);
+    if (_o.Point2Offeset != null) {
+      var __Point2Offeset = _o.Point2Offeset.ToArray();
+      _Point2Offeset = CreatePoint2OffesetVector(builder, __Point2Offeset);
+    }
+    var _EnemyPoint2Osset = default(VectorOffset);
+    if (_o.EnemyPoint2Osset != null) {
+      var __EnemyPoint2Osset = _o.EnemyPoint2Osset.ToArray();
+      _EnemyPoint2Osset = CreateEnemyPoint2OssetVector(builder, __EnemyPoint2Osset);
+    }
+    var _SubObstacleID = default(VectorOffset);
+    if (_o.SubObstacleID != null) {
+      var __SubObstacleID = _o.SubObstacleID.ToArray();
+      _SubObstacleID = CreateSubObstacleIDVector(builder, __SubObstacleID);
+    }
+    return CreateObstacleExcel(
+      builder,
+      _o.Index,
+      _PrefabName,
+      _o.JumpAble,
+      _SubOffset,
+      _o.X,
+      _o.Z,
+      _o.Hp,
+      _o.MaxHp,
+      _o.BlockRate,
+      _o.EvasionRate,
+      _o.DestroyType,
+      _Point1Offeset,
+      _EnemyPoint1Osset,
+      _Point2Offeset,
+      _EnemyPoint2Osset,
+      _SubObstacleID);
+  }
+}
+
+public class ObstacleExcelT
+{
+  public long Index { get; set; }
+  public string PrefabName { get; set; }
+  public bool JumpAble { get; set; }
+  public List<float> SubOffset { get; set; }
+  public float X { get; set; }
+  public float Z { get; set; }
+  public long Hp { get; set; }
+  public long MaxHp { get; set; }
+  public int BlockRate { get; set; }
+  public int EvasionRate { get; set; }
+  public SCHALE.Common.FlatData.ObstacleDestroyType DestroyType { get; set; }
+  public List<float> Point1Offeset { get; set; }
+  public List<float> EnemyPoint1Osset { get; set; }
+  public List<float> Point2Offeset { get; set; }
+  public List<float> EnemyPoint2Osset { get; set; }
+  public List<long> SubObstacleID { get; set; }
+
+  public ObstacleExcelT() {
+    this.Index = 0;
+    this.PrefabName = null;
+    this.JumpAble = false;
+    this.SubOffset = null;
+    this.X = 0.0f;
+    this.Z = 0.0f;
+    this.Hp = 0;
+    this.MaxHp = 0;
+    this.BlockRate = 0;
+    this.EvasionRate = 0;
+    this.DestroyType = SCHALE.Common.FlatData.ObstacleDestroyType.Remain;
+    this.Point1Offeset = null;
+    this.EnemyPoint1Osset = null;
+    this.Point2Offeset = null;
+    this.EnemyPoint2Osset = null;
+    this.SubObstacleID = null;
   }
 }
 

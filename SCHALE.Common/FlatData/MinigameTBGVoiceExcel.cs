@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MinigameTBGVoiceExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct MinigameTBGVoiceExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MinigameTBGVoiceExcel> EndMinigameTBGVoiceExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MinigameTBGVoiceExcel>(o);
+  }
+  public MinigameTBGVoiceExcelT UnPack() {
+    var _o = new MinigameTBGVoiceExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MinigameTBGVoiceExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MinigameTBGVoice");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.VoiceCondition = TableEncryptionService.Convert(this.VoiceCondition, key);
+    _o.VoiceId = TableEncryptionService.Convert(this.VoiceId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MinigameTBGVoiceExcel> Pack(FlatBufferBuilder builder, MinigameTBGVoiceExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MinigameTBGVoiceExcel>);
+    return CreateMinigameTBGVoiceExcel(
+      builder,
+      _o.EventContentId,
+      _o.UniqueId,
+      _o.VoiceCondition,
+      _o.VoiceId);
+  }
+}
+
+public class MinigameTBGVoiceExcelT
+{
+  public long EventContentId { get; set; }
+  public long UniqueId { get; set; }
+  public SCHALE.Common.FlatData.TBGVoiceCondition VoiceCondition { get; set; }
+  public uint VoiceId { get; set; }
+
+  public MinigameTBGVoiceExcelT() {
+    this.EventContentId = 0;
+    this.UniqueId = 0;
+    this.VoiceCondition = SCHALE.Common.FlatData.TBGVoiceCondition.None;
+    this.VoiceId = 0;
   }
 }
 

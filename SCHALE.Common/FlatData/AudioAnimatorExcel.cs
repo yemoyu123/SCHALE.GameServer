@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AudioAnimatorExcel : IFlatbufferObject
@@ -111,6 +112,93 @@ public struct AudioAnimatorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AudioAnimatorExcel> EndAudioAnimatorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AudioAnimatorExcel>(o);
+  }
+  public AudioAnimatorExcelT UnPack() {
+    var _o = new AudioAnimatorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AudioAnimatorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AudioAnimator");
+    _o.ControllerNameHash = TableEncryptionService.Convert(this.ControllerNameHash, key);
+    _o.VoiceNamePrefix = TableEncryptionService.Convert(this.VoiceNamePrefix, key);
+    _o.StateNameHash = TableEncryptionService.Convert(this.StateNameHash, key);
+    _o.StateName = TableEncryptionService.Convert(this.StateName, key);
+    _o.IgnoreInterruptDelay = TableEncryptionService.Convert(this.IgnoreInterruptDelay, key);
+    _o.IgnoreInterruptPlay = TableEncryptionService.Convert(this.IgnoreInterruptPlay, key);
+    _o.Volume = TableEncryptionService.Convert(this.Volume, key);
+    _o.Delay = TableEncryptionService.Convert(this.Delay, key);
+    _o.RandomPitchMin = TableEncryptionService.Convert(this.RandomPitchMin, key);
+    _o.RandomPitchMax = TableEncryptionService.Convert(this.RandomPitchMax, key);
+    _o.AudioPriority = TableEncryptionService.Convert(this.AudioPriority, key);
+    _o.AudioClipPath = new List<string>();
+    for (var _j = 0; _j < this.AudioClipPathLength; ++_j) {_o.AudioClipPath.Add(TableEncryptionService.Convert(this.AudioClipPath(_j), key));}
+    _o.VoiceHash = new List<uint>();
+    for (var _j = 0; _j < this.VoiceHashLength; ++_j) {_o.VoiceHash.Add(TableEncryptionService.Convert(this.VoiceHash(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.AudioAnimatorExcel> Pack(FlatBufferBuilder builder, AudioAnimatorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AudioAnimatorExcel>);
+    var _VoiceNamePrefix = _o.VoiceNamePrefix == null ? default(StringOffset) : builder.CreateString(_o.VoiceNamePrefix);
+    var _StateName = _o.StateName == null ? default(StringOffset) : builder.CreateString(_o.StateName);
+    var _AudioClipPath = default(VectorOffset);
+    if (_o.AudioClipPath != null) {
+      var __AudioClipPath = new StringOffset[_o.AudioClipPath.Count];
+      for (var _j = 0; _j < __AudioClipPath.Length; ++_j) { __AudioClipPath[_j] = builder.CreateString(_o.AudioClipPath[_j]); }
+      _AudioClipPath = CreateAudioClipPathVector(builder, __AudioClipPath);
+    }
+    var _VoiceHash = default(VectorOffset);
+    if (_o.VoiceHash != null) {
+      var __VoiceHash = _o.VoiceHash.ToArray();
+      _VoiceHash = CreateVoiceHashVector(builder, __VoiceHash);
+    }
+    return CreateAudioAnimatorExcel(
+      builder,
+      _o.ControllerNameHash,
+      _VoiceNamePrefix,
+      _o.StateNameHash,
+      _StateName,
+      _o.IgnoreInterruptDelay,
+      _o.IgnoreInterruptPlay,
+      _o.Volume,
+      _o.Delay,
+      _o.RandomPitchMin,
+      _o.RandomPitchMax,
+      _o.AudioPriority,
+      _AudioClipPath,
+      _VoiceHash);
+  }
+}
+
+public class AudioAnimatorExcelT
+{
+  public uint ControllerNameHash { get; set; }
+  public string VoiceNamePrefix { get; set; }
+  public uint StateNameHash { get; set; }
+  public string StateName { get; set; }
+  public bool IgnoreInterruptDelay { get; set; }
+  public bool IgnoreInterruptPlay { get; set; }
+  public float Volume { get; set; }
+  public float Delay { get; set; }
+  public int RandomPitchMin { get; set; }
+  public int RandomPitchMax { get; set; }
+  public int AudioPriority { get; set; }
+  public List<string> AudioClipPath { get; set; }
+  public List<uint> VoiceHash { get; set; }
+
+  public AudioAnimatorExcelT() {
+    this.ControllerNameHash = 0;
+    this.VoiceNamePrefix = null;
+    this.StateNameHash = 0;
+    this.StateName = null;
+    this.IgnoreInterruptDelay = false;
+    this.IgnoreInterruptPlay = false;
+    this.Volume = 0.0f;
+    this.Delay = 0.0f;
+    this.RandomPitchMin = 0;
+    this.RandomPitchMax = 0;
+    this.AudioPriority = 0;
+    this.AudioClipPath = null;
+    this.VoiceHash = null;
   }
 }
 

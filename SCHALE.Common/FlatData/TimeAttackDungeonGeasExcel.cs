@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TimeAttackDungeonGeasExcel : IFlatbufferObject
@@ -147,6 +148,129 @@ public struct TimeAttackDungeonGeasExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel> EndTimeAttackDungeonGeasExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel>(o);
+  }
+  public TimeAttackDungeonGeasExcelT UnPack() {
+    var _o = new TimeAttackDungeonGeasExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TimeAttackDungeonGeasExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TimeAttackDungeonGeas");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TimeAttackDungeonType = TableEncryptionService.Convert(this.TimeAttackDungeonType, key);
+    _o.LocalizeEtcKey = TableEncryptionService.Convert(this.LocalizeEtcKey, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.ClearDefaultPoint = TableEncryptionService.Convert(this.ClearDefaultPoint, key);
+    _o.ClearTimeWeightPoint = TableEncryptionService.Convert(this.ClearTimeWeightPoint, key);
+    _o.TimeWeightConst = TableEncryptionService.Convert(this.TimeWeightConst, key);
+    _o.Difficulty = TableEncryptionService.Convert(this.Difficulty, key);
+    _o.RecommandLevel = TableEncryptionService.Convert(this.RecommandLevel, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.AllyPassiveSkillId = new List<string>();
+    for (var _j = 0; _j < this.AllyPassiveSkillIdLength; ++_j) {_o.AllyPassiveSkillId.Add(TableEncryptionService.Convert(this.AllyPassiveSkillId(_j), key));}
+    _o.AllyPassiveSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.AllyPassiveSkillLevelLength; ++_j) {_o.AllyPassiveSkillLevel.Add(TableEncryptionService.Convert(this.AllyPassiveSkillLevel(_j), key));}
+    _o.EnemyPassiveSkillId = new List<string>();
+    for (var _j = 0; _j < this.EnemyPassiveSkillIdLength; ++_j) {_o.EnemyPassiveSkillId.Add(TableEncryptionService.Convert(this.EnemyPassiveSkillId(_j), key));}
+    _o.EnemyPassiveSkillLevel = new List<int>();
+    for (var _j = 0; _j < this.EnemyPassiveSkillLevelLength; ++_j) {_o.EnemyPassiveSkillLevel.Add(TableEncryptionService.Convert(this.EnemyPassiveSkillLevel(_j), key));}
+    _o.GeasIconPath = new List<string>();
+    for (var _j = 0; _j < this.GeasIconPathLength; ++_j) {_o.GeasIconPath.Add(TableEncryptionService.Convert(this.GeasIconPath(_j), key));}
+    _o.GeasLocalizeEtcKey = new List<uint>();
+    for (var _j = 0; _j < this.GeasLocalizeEtcKeyLength; ++_j) {_o.GeasLocalizeEtcKey.Add(TableEncryptionService.Convert(this.GeasLocalizeEtcKey(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel> Pack(FlatBufferBuilder builder, TimeAttackDungeonGeasExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TimeAttackDungeonGeasExcel>);
+    var _AllyPassiveSkillId = default(VectorOffset);
+    if (_o.AllyPassiveSkillId != null) {
+      var __AllyPassiveSkillId = new StringOffset[_o.AllyPassiveSkillId.Count];
+      for (var _j = 0; _j < __AllyPassiveSkillId.Length; ++_j) { __AllyPassiveSkillId[_j] = builder.CreateString(_o.AllyPassiveSkillId[_j]); }
+      _AllyPassiveSkillId = CreateAllyPassiveSkillIdVector(builder, __AllyPassiveSkillId);
+    }
+    var _AllyPassiveSkillLevel = default(VectorOffset);
+    if (_o.AllyPassiveSkillLevel != null) {
+      var __AllyPassiveSkillLevel = _o.AllyPassiveSkillLevel.ToArray();
+      _AllyPassiveSkillLevel = CreateAllyPassiveSkillLevelVector(builder, __AllyPassiveSkillLevel);
+    }
+    var _EnemyPassiveSkillId = default(VectorOffset);
+    if (_o.EnemyPassiveSkillId != null) {
+      var __EnemyPassiveSkillId = new StringOffset[_o.EnemyPassiveSkillId.Count];
+      for (var _j = 0; _j < __EnemyPassiveSkillId.Length; ++_j) { __EnemyPassiveSkillId[_j] = builder.CreateString(_o.EnemyPassiveSkillId[_j]); }
+      _EnemyPassiveSkillId = CreateEnemyPassiveSkillIdVector(builder, __EnemyPassiveSkillId);
+    }
+    var _EnemyPassiveSkillLevel = default(VectorOffset);
+    if (_o.EnemyPassiveSkillLevel != null) {
+      var __EnemyPassiveSkillLevel = _o.EnemyPassiveSkillLevel.ToArray();
+      _EnemyPassiveSkillLevel = CreateEnemyPassiveSkillLevelVector(builder, __EnemyPassiveSkillLevel);
+    }
+    var _GeasIconPath = default(VectorOffset);
+    if (_o.GeasIconPath != null) {
+      var __GeasIconPath = new StringOffset[_o.GeasIconPath.Count];
+      for (var _j = 0; _j < __GeasIconPath.Length; ++_j) { __GeasIconPath[_j] = builder.CreateString(_o.GeasIconPath[_j]); }
+      _GeasIconPath = CreateGeasIconPathVector(builder, __GeasIconPath);
+    }
+    var _GeasLocalizeEtcKey = default(VectorOffset);
+    if (_o.GeasLocalizeEtcKey != null) {
+      var __GeasLocalizeEtcKey = _o.GeasLocalizeEtcKey.ToArray();
+      _GeasLocalizeEtcKey = CreateGeasLocalizeEtcKeyVector(builder, __GeasLocalizeEtcKey);
+    }
+    return CreateTimeAttackDungeonGeasExcel(
+      builder,
+      _o.Id,
+      _o.TimeAttackDungeonType,
+      _o.LocalizeEtcKey,
+      _o.BattleDuration,
+      _o.ClearDefaultPoint,
+      _o.ClearTimeWeightPoint,
+      _o.TimeWeightConst,
+      _o.Difficulty,
+      _o.RecommandLevel,
+      _o.GroundId,
+      _AllyPassiveSkillId,
+      _AllyPassiveSkillLevel,
+      _EnemyPassiveSkillId,
+      _EnemyPassiveSkillLevel,
+      _GeasIconPath,
+      _GeasLocalizeEtcKey);
+  }
+}
+
+public class TimeAttackDungeonGeasExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TimeAttackDungeonType TimeAttackDungeonType { get; set; }
+  public uint LocalizeEtcKey { get; set; }
+  public long BattleDuration { get; set; }
+  public long ClearDefaultPoint { get; set; }
+  public long ClearTimeWeightPoint { get; set; }
+  public long TimeWeightConst { get; set; }
+  public int Difficulty { get; set; }
+  public int RecommandLevel { get; set; }
+  public long GroundId { get; set; }
+  public List<string> AllyPassiveSkillId { get; set; }
+  public List<int> AllyPassiveSkillLevel { get; set; }
+  public List<string> EnemyPassiveSkillId { get; set; }
+  public List<int> EnemyPassiveSkillLevel { get; set; }
+  public List<string> GeasIconPath { get; set; }
+  public List<uint> GeasLocalizeEtcKey { get; set; }
+
+  public TimeAttackDungeonGeasExcelT() {
+    this.Id = 0;
+    this.TimeAttackDungeonType = SCHALE.Common.FlatData.TimeAttackDungeonType.None;
+    this.LocalizeEtcKey = 0;
+    this.BattleDuration = 0;
+    this.ClearDefaultPoint = 0;
+    this.ClearTimeWeightPoint = 0;
+    this.TimeWeightConst = 0;
+    this.Difficulty = 0;
+    this.RecommandLevel = 0;
+    this.GroundId = 0;
+    this.AllyPassiveSkillId = null;
+    this.AllyPassiveSkillLevel = null;
+    this.EnemyPassiveSkillId = null;
+    this.EnemyPassiveSkillLevel = null;
+    this.GeasIconPath = null;
+    this.GeasLocalizeEtcKey = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct GachaCraftOpenTagExcel : IFlatbufferObject
@@ -49,6 +50,40 @@ public struct GachaCraftOpenTagExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.GachaCraftOpenTagExcel> EndGachaCraftOpenTagExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.GachaCraftOpenTagExcel>(o);
+  }
+  public GachaCraftOpenTagExcelT UnPack() {
+    var _o = new GachaCraftOpenTagExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(GachaCraftOpenTagExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("GachaCraftOpenTag");
+    _o.NodeTier = TableEncryptionService.Convert(this.NodeTier, key);
+    _o.Tag_ = new List<SCHALE.Common.FlatData.Tag>();
+    for (var _j = 0; _j < this.Tag_Length; ++_j) {_o.Tag_.Add(TableEncryptionService.Convert(this.Tag_(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.GachaCraftOpenTagExcel> Pack(FlatBufferBuilder builder, GachaCraftOpenTagExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.GachaCraftOpenTagExcel>);
+    var _Tag_ = default(VectorOffset);
+    if (_o.Tag_ != null) {
+      var __Tag_ = _o.Tag_.ToArray();
+      _Tag_ = CreateTag_Vector(builder, __Tag_);
+    }
+    return CreateGachaCraftOpenTagExcel(
+      builder,
+      _o.NodeTier,
+      _Tag_);
+  }
+}
+
+public class GachaCraftOpenTagExcelT
+{
+  public SCHALE.Common.FlatData.CraftNodeTier NodeTier { get; set; }
+  public List<SCHALE.Common.FlatData.Tag> Tag_ { get; set; }
+
+  public GachaCraftOpenTagExcelT() {
+    this.NodeTier = SCHALE.Common.FlatData.CraftNodeTier.Base;
+    this.Tag_ = null;
   }
 }
 

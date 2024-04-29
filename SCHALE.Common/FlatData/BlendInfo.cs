@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct BlendInfo : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct BlendInfo : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.BlendInfo> EndBlendInfo(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.BlendInfo>(o);
+  }
+  public BlendInfoT UnPack() {
+    var _o = new BlendInfoT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(BlendInfoT _o) {
+		byte[] key = { 0 };
+    _o.From = TableEncryptionService.Convert(this.From, key);
+    _o.To = TableEncryptionService.Convert(this.To, key);
+    _o.Blend = TableEncryptionService.Convert(this.Blend, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.BlendInfo> Pack(FlatBufferBuilder builder, BlendInfoT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.BlendInfo>);
+    return CreateBlendInfo(
+      builder,
+      _o.From,
+      _o.To,
+      _o.Blend);
+  }
+}
+
+public class BlendInfoT
+{
+  public int From { get; set; }
+  public int To { get; set; }
+  public float Blend { get; set; }
+
+  public BlendInfoT() {
+    this.From = 0;
+    this.To = 0;
+    this.Blend = 0.0f;
   }
 }
 

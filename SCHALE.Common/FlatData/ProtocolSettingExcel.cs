@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ProtocolSettingExcel : IFlatbufferObject
@@ -55,6 +56,47 @@ public struct ProtocolSettingExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ProtocolSettingExcel> EndProtocolSettingExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ProtocolSettingExcel>(o);
+  }
+  public ProtocolSettingExcelT UnPack() {
+    var _o = new ProtocolSettingExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ProtocolSettingExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ProtocolSetting");
+    _o.Protocol = TableEncryptionService.Convert(this.Protocol, key);
+    _o.OpenConditionContent = TableEncryptionService.Convert(this.OpenConditionContent, key);
+    _o.Currency = TableEncryptionService.Convert(this.Currency, key);
+    _o.Inventory = TableEncryptionService.Convert(this.Inventory, key);
+    _o.Mail = TableEncryptionService.Convert(this.Mail, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ProtocolSettingExcel> Pack(FlatBufferBuilder builder, ProtocolSettingExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ProtocolSettingExcel>);
+    var _Protocol = _o.Protocol == null ? default(StringOffset) : builder.CreateString(_o.Protocol);
+    return CreateProtocolSettingExcel(
+      builder,
+      _Protocol,
+      _o.OpenConditionContent,
+      _o.Currency,
+      _o.Inventory,
+      _o.Mail);
+  }
+}
+
+public class ProtocolSettingExcelT
+{
+  public string Protocol { get; set; }
+  public SCHALE.Common.FlatData.OpenConditionContent OpenConditionContent { get; set; }
+  public bool Currency { get; set; }
+  public bool Inventory { get; set; }
+  public bool Mail { get; set; }
+
+  public ProtocolSettingExcelT() {
+    this.Protocol = null;
+    this.OpenConditionContent = SCHALE.Common.FlatData.OpenConditionContent.Shop;
+    this.Currency = false;
+    this.Inventory = false;
+    this.Mail = false;
   }
 }
 

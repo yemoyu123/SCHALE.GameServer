@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShortcutTypeExcel : IFlatbufferObject
@@ -53,6 +54,44 @@ public struct ShortcutTypeExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShortcutTypeExcel> EndShortcutTypeExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShortcutTypeExcel>(o);
+  }
+  public ShortcutTypeExcelT UnPack() {
+    var _o = new ShortcutTypeExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShortcutTypeExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShortcutType");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.IsAscending = TableEncryptionService.Convert(this.IsAscending, key);
+    _o.ContentType = new List<SCHALE.Common.FlatData.ShortcutContentType>();
+    for (var _j = 0; _j < this.ContentTypeLength; ++_j) {_o.ContentType.Add(TableEncryptionService.Convert(this.ContentType(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ShortcutTypeExcel> Pack(FlatBufferBuilder builder, ShortcutTypeExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShortcutTypeExcel>);
+    var _ContentType = default(VectorOffset);
+    if (_o.ContentType != null) {
+      var __ContentType = _o.ContentType.ToArray();
+      _ContentType = CreateContentTypeVector(builder, __ContentType);
+    }
+    return CreateShortcutTypeExcel(
+      builder,
+      _o.Id,
+      _o.IsAscending,
+      _ContentType);
+  }
+}
+
+public class ShortcutTypeExcelT
+{
+  public long Id { get; set; }
+  public bool IsAscending { get; set; }
+  public List<SCHALE.Common.FlatData.ShortcutContentType> ContentType { get; set; }
+
+  public ShortcutTypeExcelT() {
+    this.Id = 0;
+    this.IsAscending = false;
+    this.ContentType = null;
   }
 }
 

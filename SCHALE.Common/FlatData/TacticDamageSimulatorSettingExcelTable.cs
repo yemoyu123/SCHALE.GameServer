@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TacticDamageSimulatorSettingExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct TacticDamageSimulatorSettingExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelTable> EndTacticDamageSimulatorSettingExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelTable>(o);
+  }
+  public TacticDamageSimulatorSettingExcelTableT UnPack() {
+    var _o = new TacticDamageSimulatorSettingExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TacticDamageSimulatorSettingExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TacticDamageSimulatorSettingExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelTable> Pack(FlatBufferBuilder builder, TacticDamageSimulatorSettingExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateTacticDamageSimulatorSettingExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class TacticDamageSimulatorSettingExcelTableT
+{
+  public List<SCHALE.Common.FlatData.TacticDamageSimulatorSettingExcelT> DataList { get; set; }
+
+  public TacticDamageSimulatorSettingExcelTableT() {
+    this.DataList = null;
   }
 }
 

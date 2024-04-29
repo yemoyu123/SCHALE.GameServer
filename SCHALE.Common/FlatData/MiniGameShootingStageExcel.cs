@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MiniGameShootingStageExcel : IFlatbufferObject
@@ -91,6 +92,73 @@ public struct MiniGameShootingStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MiniGameShootingStageExcel> EndMiniGameShootingStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MiniGameShootingStageExcel>(o);
+  }
+  public MiniGameShootingStageExcelT UnPack() {
+    var _o = new MiniGameShootingStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MiniGameShootingStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MiniGameShootingStage");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.BgmId = TableEncryptionService.Convert(this.BgmId, key);
+    _o.CostGoodsId = TableEncryptionService.Convert(this.CostGoodsId, key);
+    _o.Difficulty = TableEncryptionService.Convert(this.Difficulty, key);
+    _o.DesignLevel = TableEncryptionService.Convert(this.DesignLevel, key);
+    _o.ArtLevel = TableEncryptionService.Convert(this.ArtLevel, key);
+    _o.StartBattleDuration = TableEncryptionService.Convert(this.StartBattleDuration, key);
+    _o.DefaultBattleDuration = TableEncryptionService.Convert(this.DefaultBattleDuration, key);
+    _o.DefaultLogicEffect = TableEncryptionService.Convert(this.DefaultLogicEffect, key);
+    _o.CameraSizeRate = TableEncryptionService.Convert(this.CameraSizeRate, key);
+    _o.EventContentStageRewardId = TableEncryptionService.Convert(this.EventContentStageRewardId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MiniGameShootingStageExcel> Pack(FlatBufferBuilder builder, MiniGameShootingStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MiniGameShootingStageExcel>);
+    var _DesignLevel = _o.DesignLevel == null ? default(StringOffset) : builder.CreateString(_o.DesignLevel);
+    var _ArtLevel = _o.ArtLevel == null ? default(StringOffset) : builder.CreateString(_o.ArtLevel);
+    var _DefaultLogicEffect = _o.DefaultLogicEffect == null ? default(StringOffset) : builder.CreateString(_o.DefaultLogicEffect);
+    return CreateMiniGameShootingStageExcel(
+      builder,
+      _o.UniqueId,
+      _o.BgmId,
+      _o.CostGoodsId,
+      _o.Difficulty,
+      _DesignLevel,
+      _ArtLevel,
+      _o.StartBattleDuration,
+      _o.DefaultBattleDuration,
+      _DefaultLogicEffect,
+      _o.CameraSizeRate,
+      _o.EventContentStageRewardId);
+  }
+}
+
+public class MiniGameShootingStageExcelT
+{
+  public long UniqueId { get; set; }
+  public long BgmId { get; set; }
+  public long CostGoodsId { get; set; }
+  public SCHALE.Common.FlatData.Difficulty Difficulty { get; set; }
+  public string DesignLevel { get; set; }
+  public string ArtLevel { get; set; }
+  public long StartBattleDuration { get; set; }
+  public long DefaultBattleDuration { get; set; }
+  public string DefaultLogicEffect { get; set; }
+  public float CameraSizeRate { get; set; }
+  public long EventContentStageRewardId { get; set; }
+
+  public MiniGameShootingStageExcelT() {
+    this.UniqueId = 0;
+    this.BgmId = 0;
+    this.CostGoodsId = 0;
+    this.Difficulty = SCHALE.Common.FlatData.Difficulty.Normal;
+    this.DesignLevel = null;
+    this.ArtLevel = null;
+    this.StartBattleDuration = 0;
+    this.DefaultBattleDuration = 0;
+    this.DefaultLogicEffect = null;
+    this.CameraSizeRate = 0.0f;
+    this.EventContentStageRewardId = 0;
   }
 }
 

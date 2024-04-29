@@ -14,6 +14,11 @@ namespace SCHALE.GameServer.Controllers.Api
     [Route("/api/[controller]")]
     public class GatewayController : ControllerBase
     {
+        static JsonSerializerOptions jsonOptions = new() // ignore null or fields not set, if this breaks anything, remove it, idk if it does but it makes the pcap logs look more readable
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+        };
+
         IProtocolHandlerFactory protocolHandlerFactory;
         ILogger<GatewayController> logger;
 
@@ -84,24 +89,45 @@ namespace SCHALE.GameServer.Controllers.Api
 
                 return Results.Json(new
                 {
-                    packet = JsonSerializer.Serialize(rsp, new JsonSerializerOptions() // ignore null or fields not set, if this breaks anything, remove it, idk if it does but it makes the pcap logs look more readable
-                    {
-                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
-                    }),
-
+                    packet = JsonSerializer.Serialize(rsp, jsonOptions),
                     protocol = ((BasePacket)rsp).Protocol.ToString()
                 });
 
             protocolErrorRet:
                 return Results.Json(new
                 {
-                    packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = "Protocol not implemented (Server Error)", ErrorCode = WebAPIErrorCode.InternalServerError }),
+                    packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = "Protocol not implemented (Server Error)", ErrorCode = WebAPIErrorCode.InternalServerError }, jsonOptions),
                     protocol = Protocol.Error.ToString()
                 });
-            } catch (Exception)
-            {
-                throw;
             }
+            catch (WebAPIException ex)
+            {
+                return Results.Json(new
+                {
+                    packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = string.IsNullOrEmpty(ex.Message) ? ex.ErrorCode.ToString() : ex.Message, ErrorCode = ex.ErrorCode }, jsonOptions),
+                    protocol = Protocol.Error.ToString()
+                });
+            }
+        }
+    }
+
+    public class WebAPIException : Exception
+    {
+        public WebAPIErrorCode ErrorCode { get; }
+
+        public WebAPIException()
+        {
+            ErrorCode = WebAPIErrorCode.InternalServerError;
+        }
+
+        public WebAPIException(WebAPIErrorCode errorCode)
+        {
+            ErrorCode = errorCode;
+        }
+
+        public WebAPIException(WebAPIErrorCode errorCode, string message) : base(message)
+        {
+            ErrorCode = errorCode;
         }
     }
 }

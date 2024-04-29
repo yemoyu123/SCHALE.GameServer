@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TerrainAdaptationFactorExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct TerrainAdaptationFactorExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcel> EndTerrainAdaptationFactorExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcel>(o);
+  }
+  public TerrainAdaptationFactorExcelT UnPack() {
+    var _o = new TerrainAdaptationFactorExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TerrainAdaptationFactorExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TerrainAdaptationFactor");
+    _o.TerrainAdaptation = TableEncryptionService.Convert(this.TerrainAdaptation, key);
+    _o.TerrainAdaptationStat = TableEncryptionService.Convert(this.TerrainAdaptationStat, key);
+    _o.ShotFactor = TableEncryptionService.Convert(this.ShotFactor, key);
+    _o.BlockFactor = TableEncryptionService.Convert(this.BlockFactor, key);
+    _o.AccuracyFactor = TableEncryptionService.Convert(this.AccuracyFactor, key);
+    _o.DodgeFactor = TableEncryptionService.Convert(this.DodgeFactor, key);
+    _o.AttackPowerFactor = TableEncryptionService.Convert(this.AttackPowerFactor, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcel> Pack(FlatBufferBuilder builder, TerrainAdaptationFactorExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TerrainAdaptationFactorExcel>);
+    return CreateTerrainAdaptationFactorExcel(
+      builder,
+      _o.TerrainAdaptation,
+      _o.TerrainAdaptationStat,
+      _o.ShotFactor,
+      _o.BlockFactor,
+      _o.AccuracyFactor,
+      _o.DodgeFactor,
+      _o.AttackPowerFactor);
+  }
+}
+
+public class TerrainAdaptationFactorExcelT
+{
+  public SCHALE.Common.FlatData.StageTopography TerrainAdaptation { get; set; }
+  public SCHALE.Common.FlatData.TerrainAdaptationStat TerrainAdaptationStat { get; set; }
+  public long ShotFactor { get; set; }
+  public long BlockFactor { get; set; }
+  public long AccuracyFactor { get; set; }
+  public long DodgeFactor { get; set; }
+  public long AttackPowerFactor { get; set; }
+
+  public TerrainAdaptationFactorExcelT() {
+    this.TerrainAdaptation = SCHALE.Common.FlatData.StageTopography.Street;
+    this.TerrainAdaptationStat = SCHALE.Common.FlatData.TerrainAdaptationStat.D;
+    this.ShotFactor = 0;
+    this.BlockFactor = 0;
+    this.AccuracyFactor = 0;
+    this.DodgeFactor = 0;
+    this.AttackPowerFactor = 0;
   }
 }
 

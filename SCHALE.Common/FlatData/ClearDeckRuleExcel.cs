@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ClearDeckRuleExcel : IFlatbufferObject
@@ -37,6 +38,34 @@ public struct ClearDeckRuleExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ClearDeckRuleExcel> EndClearDeckRuleExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ClearDeckRuleExcel>(o);
+  }
+  public ClearDeckRuleExcelT UnPack() {
+    var _o = new ClearDeckRuleExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ClearDeckRuleExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ClearDeckRule");
+    _o.ContentType = TableEncryptionService.Convert(this.ContentType, key);
+    _o.SizeLimit = TableEncryptionService.Convert(this.SizeLimit, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ClearDeckRuleExcel> Pack(FlatBufferBuilder builder, ClearDeckRuleExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ClearDeckRuleExcel>);
+    return CreateClearDeckRuleExcel(
+      builder,
+      _o.ContentType,
+      _o.SizeLimit);
+  }
+}
+
+public class ClearDeckRuleExcelT
+{
+  public SCHALE.Common.FlatData.ContentType ContentType { get; set; }
+  public long SizeLimit { get; set; }
+
+  public ClearDeckRuleExcelT() {
+    this.ContentType = SCHALE.Common.FlatData.ContentType.None;
+    this.SizeLimit = 0;
   }
 }
 

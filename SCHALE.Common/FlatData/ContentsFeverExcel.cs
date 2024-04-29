@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ContentsFeverExcel : IFlatbufferObject
@@ -49,6 +50,46 @@ public struct ContentsFeverExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ContentsFeverExcel> EndContentsFeverExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ContentsFeverExcel>(o);
+  }
+  public ContentsFeverExcelT UnPack() {
+    var _o = new ContentsFeverExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ContentsFeverExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ContentsFever");
+    _o.ConditionContent = TableEncryptionService.Convert(this.ConditionContent, key);
+    _o.SkillFeverCheckCondition = TableEncryptionService.Convert(this.SkillFeverCheckCondition, key);
+    _o.SkillCostFever = TableEncryptionService.Convert(this.SkillCostFever, key);
+    _o.FeverStartTime = TableEncryptionService.Convert(this.FeverStartTime, key);
+    _o.FeverDurationTime = TableEncryptionService.Convert(this.FeverDurationTime, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ContentsFeverExcel> Pack(FlatBufferBuilder builder, ContentsFeverExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ContentsFeverExcel>);
+    return CreateContentsFeverExcel(
+      builder,
+      _o.ConditionContent,
+      _o.SkillFeverCheckCondition,
+      _o.SkillCostFever,
+      _o.FeverStartTime,
+      _o.FeverDurationTime);
+  }
+}
+
+public class ContentsFeverExcelT
+{
+  public SCHALE.Common.FlatData.FeverBattleType ConditionContent { get; set; }
+  public SCHALE.Common.FlatData.SkillPriorityCheckTarget SkillFeverCheckCondition { get; set; }
+  public long SkillCostFever { get; set; }
+  public long FeverStartTime { get; set; }
+  public long FeverDurationTime { get; set; }
+
+  public ContentsFeverExcelT() {
+    this.ConditionContent = SCHALE.Common.FlatData.FeverBattleType.Campaign;
+    this.SkillFeverCheckCondition = SCHALE.Common.FlatData.SkillPriorityCheckTarget.Ally;
+    this.SkillCostFever = 0;
+    this.FeverStartTime = 0;
+    this.FeverDurationTime = 0;
   }
 }
 

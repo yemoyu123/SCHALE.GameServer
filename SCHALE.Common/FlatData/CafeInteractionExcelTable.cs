@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CafeInteractionExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct CafeInteractionExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CafeInteractionExcelTable> EndCafeInteractionExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CafeInteractionExcelTable>(o);
+  }
+  public CafeInteractionExcelTableT UnPack() {
+    var _o = new CafeInteractionExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CafeInteractionExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CafeInteractionExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.CafeInteractionExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.CafeInteractionExcelTable> Pack(FlatBufferBuilder builder, CafeInteractionExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CafeInteractionExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.CafeInteractionExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.CafeInteractionExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateCafeInteractionExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class CafeInteractionExcelTableT
+{
+  public List<SCHALE.Common.FlatData.CafeInteractionExcelT> DataList { get; set; }
+
+  public CafeInteractionExcelTableT() {
+    this.DataList = null;
   }
 }
 

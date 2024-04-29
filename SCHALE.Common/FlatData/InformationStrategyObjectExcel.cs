@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct InformationStrategyObjectExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct InformationStrategyObjectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.InformationStrategyObjectExcel> EndInformationStrategyObjectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.InformationStrategyObjectExcel>(o);
+  }
+  public InformationStrategyObjectExcelT UnPack() {
+    var _o = new InformationStrategyObjectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(InformationStrategyObjectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("InformationStrategyObject");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StageId = TableEncryptionService.Convert(this.StageId, key);
+    _o.PageName = TableEncryptionService.Convert(this.PageName, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.InformationStrategyObjectExcel> Pack(FlatBufferBuilder builder, InformationStrategyObjectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.InformationStrategyObjectExcel>);
+    var _PageName = _o.PageName == null ? default(StringOffset) : builder.CreateString(_o.PageName);
+    var _LocalizeCodeId = _o.LocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCodeId);
+    return CreateInformationStrategyObjectExcel(
+      builder,
+      _o.Id,
+      _o.StageId,
+      _PageName,
+      _LocalizeCodeId);
+  }
+}
+
+public class InformationStrategyObjectExcelT
+{
+  public long Id { get; set; }
+  public long StageId { get; set; }
+  public string PageName { get; set; }
+  public string LocalizeCodeId { get; set; }
+
+  public InformationStrategyObjectExcelT() {
+    this.Id = 0;
+    this.StageId = 0;
+    this.PageName = null;
+    this.LocalizeCodeId = null;
   }
 }
 

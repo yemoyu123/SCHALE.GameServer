@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EmoticonSpecialExcel : IFlatbufferObject
@@ -47,6 +48,39 @@ public struct EmoticonSpecialExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EmoticonSpecialExcel> EndEmoticonSpecialExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EmoticonSpecialExcel>(o);
+  }
+  public EmoticonSpecialExcelT UnPack() {
+    var _o = new EmoticonSpecialExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EmoticonSpecialExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EmoticonSpecial");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.CharacterUniqueId = TableEncryptionService.Convert(this.CharacterUniqueId, key);
+    _o.Random = TableEncryptionService.Convert(this.Random, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EmoticonSpecialExcel> Pack(FlatBufferBuilder builder, EmoticonSpecialExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EmoticonSpecialExcel>);
+    var _Random = _o.Random == null ? default(StringOffset) : builder.CreateString(_o.Random);
+    return CreateEmoticonSpecialExcel(
+      builder,
+      _o.UniqueId,
+      _o.CharacterUniqueId,
+      _Random);
+  }
+}
+
+public class EmoticonSpecialExcelT
+{
+  public long UniqueId { get; set; }
+  public long CharacterUniqueId { get; set; }
+  public string Random { get; set; }
+
+  public EmoticonSpecialExcelT() {
+    this.UniqueId = 0;
+    this.CharacterUniqueId = 0;
+    this.Random = null;
   }
 }
 

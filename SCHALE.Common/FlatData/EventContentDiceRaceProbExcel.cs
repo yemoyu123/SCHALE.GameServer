@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentDiceRaceProbExcel : IFlatbufferObject
@@ -53,6 +54,50 @@ public struct EventContentDiceRaceProbExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceProbExcel> EndEventContentDiceRaceProbExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentDiceRaceProbExcel>(o);
+  }
+  public EventContentDiceRaceProbExcelT UnPack() {
+    var _o = new EventContentDiceRaceProbExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentDiceRaceProbExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentDiceRaceProb");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.EventContentDiceRaceResultType = TableEncryptionService.Convert(this.EventContentDiceRaceResultType, key);
+    _o.CostItemId = TableEncryptionService.Convert(this.CostItemId, key);
+    _o.CostItemAmount = TableEncryptionService.Convert(this.CostItemAmount, key);
+    _o.DiceResult = TableEncryptionService.Convert(this.DiceResult, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentDiceRaceProbExcel> Pack(FlatBufferBuilder builder, EventContentDiceRaceProbExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentDiceRaceProbExcel>);
+    return CreateEventContentDiceRaceProbExcel(
+      builder,
+      _o.EventContentId,
+      _o.EventContentDiceRaceResultType,
+      _o.CostItemId,
+      _o.CostItemAmount,
+      _o.DiceResult,
+      _o.Prob);
+  }
+}
+
+public class EventContentDiceRaceProbExcelT
+{
+  public long EventContentId { get; set; }
+  public SCHALE.Common.FlatData.EventContentDiceRaceResultType EventContentDiceRaceResultType { get; set; }
+  public long CostItemId { get; set; }
+  public int CostItemAmount { get; set; }
+  public int DiceResult { get; set; }
+  public int Prob { get; set; }
+
+  public EventContentDiceRaceProbExcelT() {
+    this.EventContentId = 0;
+    this.EventContentDiceRaceResultType = SCHALE.Common.FlatData.EventContentDiceRaceResultType.DiceResult1;
+    this.CostItemId = 0;
+    this.CostItemAmount = 0;
+    this.DiceResult = 0;
+    this.Prob = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignUnitExcel : IFlatbufferObject
@@ -127,6 +128,97 @@ public struct CampaignUnitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignUnitExcel> EndCampaignUnitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignUnitExcel>(o);
+  }
+  public CampaignUnitExcelT UnPack() {
+    var _o = new CampaignUnitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignUnitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignUnit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.StrategyPrefabName = TableEncryptionService.Convert(this.StrategyPrefabName, key);
+    _o.EnterScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.EnterScenarioGroupIdLength; ++_j) {_o.EnterScenarioGroupId.Add(TableEncryptionService.Convert(this.EnterScenarioGroupId(_j), key));}
+    _o.ClearScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.ClearScenarioGroupIdLength; ++_j) {_o.ClearScenarioGroupId.Add(TableEncryptionService.Convert(this.ClearScenarioGroupId(_j), key));}
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.MoveRange = TableEncryptionService.Convert(this.MoveRange, key);
+    _o.AIMoveType = TableEncryptionService.Convert(this.AIMoveType, key);
+    _o.Grade = TableEncryptionService.Convert(this.Grade, key);
+    _o.EnvironmentType = TableEncryptionService.Convert(this.EnvironmentType, key);
+    _o.Scale = TableEncryptionService.Convert(this.Scale, key);
+    _o.IsTacticSkip = TableEncryptionService.Convert(this.IsTacticSkip, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignUnitExcel> Pack(FlatBufferBuilder builder, CampaignUnitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignUnitExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _StrategyPrefabName = _o.StrategyPrefabName == null ? default(StringOffset) : builder.CreateString(_o.StrategyPrefabName);
+    var _EnterScenarioGroupId = default(VectorOffset);
+    if (_o.EnterScenarioGroupId != null) {
+      var __EnterScenarioGroupId = _o.EnterScenarioGroupId.ToArray();
+      _EnterScenarioGroupId = CreateEnterScenarioGroupIdVector(builder, __EnterScenarioGroupId);
+    }
+    var _ClearScenarioGroupId = default(VectorOffset);
+    if (_o.ClearScenarioGroupId != null) {
+      var __ClearScenarioGroupId = _o.ClearScenarioGroupId.ToArray();
+      _ClearScenarioGroupId = CreateClearScenarioGroupIdVector(builder, __ClearScenarioGroupId);
+    }
+    return CreateCampaignUnitExcel(
+      builder,
+      _o.Id,
+      _o.Key,
+      _Name,
+      _PrefabName,
+      _StrategyPrefabName,
+      _EnterScenarioGroupId,
+      _ClearScenarioGroupId,
+      _o.GroundId,
+      _o.MoveRange,
+      _o.AIMoveType,
+      _o.Grade,
+      _o.EnvironmentType,
+      _o.Scale,
+      _o.IsTacticSkip);
+  }
+}
+
+public class CampaignUnitExcelT
+{
+  public long Id { get; set; }
+  public uint Key { get; set; }
+  public string Name { get; set; }
+  public string PrefabName { get; set; }
+  public string StrategyPrefabName { get; set; }
+  public List<long> EnterScenarioGroupId { get; set; }
+  public List<long> ClearScenarioGroupId { get; set; }
+  public long GroundId { get; set; }
+  public int MoveRange { get; set; }
+  public SCHALE.Common.FlatData.StrategyAIType AIMoveType { get; set; }
+  public SCHALE.Common.FlatData.HexaUnitGrade Grade { get; set; }
+  public SCHALE.Common.FlatData.TacticEnvironment EnvironmentType { get; set; }
+  public float Scale { get; set; }
+  public bool IsTacticSkip { get; set; }
+
+  public CampaignUnitExcelT() {
+    this.Id = 0;
+    this.Key = 0;
+    this.Name = null;
+    this.PrefabName = null;
+    this.StrategyPrefabName = null;
+    this.EnterScenarioGroupId = null;
+    this.ClearScenarioGroupId = null;
+    this.GroundId = 0;
+    this.MoveRange = 0;
+    this.AIMoveType = SCHALE.Common.FlatData.StrategyAIType.None;
+    this.Grade = SCHALE.Common.FlatData.HexaUnitGrade.Grade1;
+    this.EnvironmentType = SCHALE.Common.FlatData.TacticEnvironment.None;
+    this.Scale = 0.0f;
+    this.IsTacticSkip = false;
   }
 }
 

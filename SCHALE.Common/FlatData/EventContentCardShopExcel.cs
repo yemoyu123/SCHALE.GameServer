@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentCardShopExcel : IFlatbufferObject
@@ -113,6 +114,92 @@ public struct EventContentCardShopExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentCardShopExcel> EndEventContentCardShopExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentCardShopExcel>(o);
+  }
+  public EventContentCardShopExcelT UnPack() {
+    var _o = new EventContentCardShopExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentCardShopExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentCardShop");
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Rarity = TableEncryptionService.Convert(this.Rarity, key);
+    _o.CostGoodsId = TableEncryptionService.Convert(this.CostGoodsId, key);
+    _o.CardGroupId = TableEncryptionService.Convert(this.CardGroupId, key);
+    _o.IsLegacy = TableEncryptionService.Convert(this.IsLegacy, key);
+    _o.RefreshGroup = TableEncryptionService.Convert(this.RefreshGroup, key);
+    _o.Prob = TableEncryptionService.Convert(this.Prob, key);
+    _o.ProbWeight1 = TableEncryptionService.Convert(this.ProbWeight1, key);
+    _o.RewardParcelType = new List<SCHALE.Common.FlatData.ParcelType>();
+    for (var _j = 0; _j < this.RewardParcelTypeLength; ++_j) {_o.RewardParcelType.Add(TableEncryptionService.Convert(this.RewardParcelType(_j), key));}
+    _o.RewardParcelId = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelIdLength; ++_j) {_o.RewardParcelId.Add(TableEncryptionService.Convert(this.RewardParcelId(_j), key));}
+    _o.RewardParcelAmount = new List<long>();
+    for (var _j = 0; _j < this.RewardParcelAmountLength; ++_j) {_o.RewardParcelAmount.Add(TableEncryptionService.Convert(this.RewardParcelAmount(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentCardShopExcel> Pack(FlatBufferBuilder builder, EventContentCardShopExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentCardShopExcel>);
+    var _RewardParcelType = default(VectorOffset);
+    if (_o.RewardParcelType != null) {
+      var __RewardParcelType = _o.RewardParcelType.ToArray();
+      _RewardParcelType = CreateRewardParcelTypeVector(builder, __RewardParcelType);
+    }
+    var _RewardParcelId = default(VectorOffset);
+    if (_o.RewardParcelId != null) {
+      var __RewardParcelId = _o.RewardParcelId.ToArray();
+      _RewardParcelId = CreateRewardParcelIdVector(builder, __RewardParcelId);
+    }
+    var _RewardParcelAmount = default(VectorOffset);
+    if (_o.RewardParcelAmount != null) {
+      var __RewardParcelAmount = _o.RewardParcelAmount.ToArray();
+      _RewardParcelAmount = CreateRewardParcelAmountVector(builder, __RewardParcelAmount);
+    }
+    return CreateEventContentCardShopExcel(
+      builder,
+      _o.EventContentId,
+      _o.Id,
+      _o.Rarity,
+      _o.CostGoodsId,
+      _o.CardGroupId,
+      _o.IsLegacy,
+      _o.RefreshGroup,
+      _o.Prob,
+      _o.ProbWeight1,
+      _RewardParcelType,
+      _RewardParcelId,
+      _RewardParcelAmount);
+  }
+}
+
+public class EventContentCardShopExcelT
+{
+  public long EventContentId { get; set; }
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.Rarity Rarity { get; set; }
+  public long CostGoodsId { get; set; }
+  public int CardGroupId { get; set; }
+  public bool IsLegacy { get; set; }
+  public int RefreshGroup { get; set; }
+  public int Prob { get; set; }
+  public int ProbWeight1 { get; set; }
+  public List<SCHALE.Common.FlatData.ParcelType> RewardParcelType { get; set; }
+  public List<long> RewardParcelId { get; set; }
+  public List<long> RewardParcelAmount { get; set; }
+
+  public EventContentCardShopExcelT() {
+    this.EventContentId = 0;
+    this.Id = 0;
+    this.Rarity = SCHALE.Common.FlatData.Rarity.N;
+    this.CostGoodsId = 0;
+    this.CardGroupId = 0;
+    this.IsLegacy = false;
+    this.RefreshGroup = 0;
+    this.Prob = 0;
+    this.ProbWeight1 = 0;
+    this.RewardParcelType = null;
+    this.RewardParcelId = null;
+    this.RewardParcelAmount = null;
   }
 }
 

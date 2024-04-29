@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct DefaultEchelonExcel : IFlatbufferObject
@@ -73,6 +74,58 @@ public struct DefaultEchelonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.DefaultEchelonExcel> EndDefaultEchelonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.DefaultEchelonExcel>(o);
+  }
+  public DefaultEchelonExcelT UnPack() {
+    var _o = new DefaultEchelonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(DefaultEchelonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("DefaultEchelon");
+    _o.EchlonId = TableEncryptionService.Convert(this.EchlonId, key);
+    _o.LeaderId = TableEncryptionService.Convert(this.LeaderId, key);
+    _o.MainId = new List<long>();
+    for (var _j = 0; _j < this.MainIdLength; ++_j) {_o.MainId.Add(TableEncryptionService.Convert(this.MainId(_j), key));}
+    _o.SupportId = new List<long>();
+    for (var _j = 0; _j < this.SupportIdLength; ++_j) {_o.SupportId.Add(TableEncryptionService.Convert(this.SupportId(_j), key));}
+    _o.TssId = TableEncryptionService.Convert(this.TssId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.DefaultEchelonExcel> Pack(FlatBufferBuilder builder, DefaultEchelonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.DefaultEchelonExcel>);
+    var _MainId = default(VectorOffset);
+    if (_o.MainId != null) {
+      var __MainId = _o.MainId.ToArray();
+      _MainId = CreateMainIdVector(builder, __MainId);
+    }
+    var _SupportId = default(VectorOffset);
+    if (_o.SupportId != null) {
+      var __SupportId = _o.SupportId.ToArray();
+      _SupportId = CreateSupportIdVector(builder, __SupportId);
+    }
+    return CreateDefaultEchelonExcel(
+      builder,
+      _o.EchlonId,
+      _o.LeaderId,
+      _MainId,
+      _SupportId,
+      _o.TssId);
+  }
+}
+
+public class DefaultEchelonExcelT
+{
+  public int EchlonId { get; set; }
+  public long LeaderId { get; set; }
+  public List<long> MainId { get; set; }
+  public List<long> SupportId { get; set; }
+  public long TssId { get; set; }
+
+  public DefaultEchelonExcelT() {
+    this.EchlonId = 0;
+    this.LeaderId = 0;
+    this.MainId = null;
+    this.SupportId = null;
+    this.TssId = 0;
   }
 }
 

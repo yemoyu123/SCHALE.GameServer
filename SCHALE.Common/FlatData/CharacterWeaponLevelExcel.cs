@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterWeaponLevelExcel : IFlatbufferObject
@@ -41,6 +42,38 @@ public struct CharacterWeaponLevelExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterWeaponLevelExcel> EndCharacterWeaponLevelExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterWeaponLevelExcel>(o);
+  }
+  public CharacterWeaponLevelExcelT UnPack() {
+    var _o = new CharacterWeaponLevelExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterWeaponLevelExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterWeaponLevel");
+    _o.Level = TableEncryptionService.Convert(this.Level, key);
+    _o.Exp = TableEncryptionService.Convert(this.Exp, key);
+    _o.TotalExp = TableEncryptionService.Convert(this.TotalExp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterWeaponLevelExcel> Pack(FlatBufferBuilder builder, CharacterWeaponLevelExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterWeaponLevelExcel>);
+    return CreateCharacterWeaponLevelExcel(
+      builder,
+      _o.Level,
+      _o.Exp,
+      _o.TotalExp);
+  }
+}
+
+public class CharacterWeaponLevelExcelT
+{
+  public int Level { get; set; }
+  public long Exp { get; set; }
+  public long TotalExp { get; set; }
+
+  public CharacterWeaponLevelExcelT() {
+    this.Level = 0;
+    this.Exp = 0;
+    this.TotalExp = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct VoiceSpineExcel : IFlatbufferObject
@@ -79,6 +80,65 @@ public struct VoiceSpineExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.VoiceSpineExcel> EndVoiceSpineExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.VoiceSpineExcel>(o);
+  }
+  public VoiceSpineExcelT UnPack() {
+    var _o = new VoiceSpineExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(VoiceSpineExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("VoiceSpine");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Nation_ = new List<SCHALE.Common.FlatData.Nation>();
+    for (var _j = 0; _j < this.Nation_Length; ++_j) {_o.Nation_.Add(TableEncryptionService.Convert(this.Nation_(_j), key));}
+    _o.Path = new List<string>();
+    for (var _j = 0; _j < this.PathLength; ++_j) {_o.Path.Add(TableEncryptionService.Convert(this.Path(_j), key));}
+    _o.SoundVolume = new List<float>();
+    for (var _j = 0; _j < this.SoundVolumeLength; ++_j) {_o.SoundVolume.Add(TableEncryptionService.Convert(this.SoundVolume(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.VoiceSpineExcel> Pack(FlatBufferBuilder builder, VoiceSpineExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.VoiceSpineExcel>);
+    var _Nation_ = default(VectorOffset);
+    if (_o.Nation_ != null) {
+      var __Nation_ = _o.Nation_.ToArray();
+      _Nation_ = CreateNation_Vector(builder, __Nation_);
+    }
+    var _Path = default(VectorOffset);
+    if (_o.Path != null) {
+      var __Path = new StringOffset[_o.Path.Count];
+      for (var _j = 0; _j < __Path.Length; ++_j) { __Path[_j] = builder.CreateString(_o.Path[_j]); }
+      _Path = CreatePathVector(builder, __Path);
+    }
+    var _SoundVolume = default(VectorOffset);
+    if (_o.SoundVolume != null) {
+      var __SoundVolume = _o.SoundVolume.ToArray();
+      _SoundVolume = CreateSoundVolumeVector(builder, __SoundVolume);
+    }
+    return CreateVoiceSpineExcel(
+      builder,
+      _o.UniqueId,
+      _o.Id,
+      _Nation_,
+      _Path,
+      _SoundVolume);
+  }
+}
+
+public class VoiceSpineExcelT
+{
+  public long UniqueId { get; set; }
+  public uint Id { get; set; }
+  public List<SCHALE.Common.FlatData.Nation> Nation_ { get; set; }
+  public List<string> Path { get; set; }
+  public List<float> SoundVolume { get; set; }
+
+  public VoiceSpineExcelT() {
+    this.UniqueId = 0;
+    this.Id = 0;
+    this.Nation_ = null;
+    this.Path = null;
+    this.SoundVolume = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AnimatorData : IFlatbufferObject
@@ -59,6 +60,47 @@ public struct AnimatorData : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AnimatorData> EndAnimatorData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AnimatorData>(o);
+  }
+  public AnimatorDataT UnPack() {
+    var _o = new AnimatorDataT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AnimatorDataT _o) {
+		byte[] key = { 0 };
+    _o.DefaultStateName = TableEncryptionService.Convert(this.DefaultStateName, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.DataList = new List<SCHALE.Common.FlatData.AniStateDataT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.AnimatorData> Pack(FlatBufferBuilder builder, AnimatorDataT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AnimatorData>);
+    var _DefaultStateName = _o.DefaultStateName == null ? default(StringOffset) : builder.CreateString(_o.DefaultStateName);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.AniStateData>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.AniStateData.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateAnimatorData(
+      builder,
+      _DefaultStateName,
+      _Name,
+      _DataList);
+  }
+}
+
+public class AnimatorDataT
+{
+  public string DefaultStateName { get; set; }
+  public string Name { get; set; }
+  public List<SCHALE.Common.FlatData.AniStateDataT> DataList { get; set; }
+
+  public AnimatorDataT() {
+    this.DefaultStateName = null;
+    this.Name = null;
+    this.DataList = null;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaSeasonExcel : IFlatbufferObject
@@ -61,6 +62,48 @@ public struct ArenaSeasonExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaSeasonExcel> EndArenaSeasonExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaSeasonExcel>(o);
+  }
+  public ArenaSeasonExcelT UnPack() {
+    var _o = new ArenaSeasonExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaSeasonExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaSeason");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.SeasonStartDate = TableEncryptionService.Convert(this.SeasonStartDate, key);
+    _o.SeasonEndDate = TableEncryptionService.Convert(this.SeasonEndDate, key);
+    _o.SeasonGroupLimit = TableEncryptionService.Convert(this.SeasonGroupLimit, key);
+    _o.PrevSeasonId = TableEncryptionService.Convert(this.PrevSeasonId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaSeasonExcel> Pack(FlatBufferBuilder builder, ArenaSeasonExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaSeasonExcel>);
+    var _SeasonStartDate = _o.SeasonStartDate == null ? default(StringOffset) : builder.CreateString(_o.SeasonStartDate);
+    var _SeasonEndDate = _o.SeasonEndDate == null ? default(StringOffset) : builder.CreateString(_o.SeasonEndDate);
+    return CreateArenaSeasonExcel(
+      builder,
+      _o.UniqueId,
+      _SeasonStartDate,
+      _SeasonEndDate,
+      _o.SeasonGroupLimit,
+      _o.PrevSeasonId);
+  }
+}
+
+public class ArenaSeasonExcelT
+{
+  public long UniqueId { get; set; }
+  public string SeasonStartDate { get; set; }
+  public string SeasonEndDate { get; set; }
+  public long SeasonGroupLimit { get; set; }
+  public long PrevSeasonId { get; set; }
+
+  public ArenaSeasonExcelT() {
+    this.UniqueId = 0;
+    this.SeasonStartDate = null;
+    this.SeasonEndDate = null;
+    this.SeasonGroupLimit = 0;
+    this.PrevSeasonId = 0;
   }
 }
 

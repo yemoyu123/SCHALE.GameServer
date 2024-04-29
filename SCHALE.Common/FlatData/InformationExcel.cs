@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct InformationExcel : IFlatbufferObject
@@ -73,6 +74,62 @@ public struct InformationExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.InformationExcel> EndInformationExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.InformationExcel>(o);
+  }
+  public InformationExcelT UnPack() {
+    var _o = new InformationExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(InformationExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("Information");
+    _o.GroupID = TableEncryptionService.Convert(this.GroupID, key);
+    _o.PageName = TableEncryptionService.Convert(this.PageName, key);
+    _o.LocalizeCodeId = TableEncryptionService.Convert(this.LocalizeCodeId, key);
+    _o.TutorialParentName = new List<string>();
+    for (var _j = 0; _j < this.TutorialParentNameLength; ++_j) {_o.TutorialParentName.Add(TableEncryptionService.Convert(this.TutorialParentName(_j), key));}
+    _o.UIName = new List<string>();
+    for (var _j = 0; _j < this.UINameLength; ++_j) {_o.UIName.Add(TableEncryptionService.Convert(this.UIName(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.InformationExcel> Pack(FlatBufferBuilder builder, InformationExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.InformationExcel>);
+    var _PageName = _o.PageName == null ? default(StringOffset) : builder.CreateString(_o.PageName);
+    var _LocalizeCodeId = _o.LocalizeCodeId == null ? default(StringOffset) : builder.CreateString(_o.LocalizeCodeId);
+    var _TutorialParentName = default(VectorOffset);
+    if (_o.TutorialParentName != null) {
+      var __TutorialParentName = new StringOffset[_o.TutorialParentName.Count];
+      for (var _j = 0; _j < __TutorialParentName.Length; ++_j) { __TutorialParentName[_j] = builder.CreateString(_o.TutorialParentName[_j]); }
+      _TutorialParentName = CreateTutorialParentNameVector(builder, __TutorialParentName);
+    }
+    var _UIName = default(VectorOffset);
+    if (_o.UIName != null) {
+      var __UIName = new StringOffset[_o.UIName.Count];
+      for (var _j = 0; _j < __UIName.Length; ++_j) { __UIName[_j] = builder.CreateString(_o.UIName[_j]); }
+      _UIName = CreateUINameVector(builder, __UIName);
+    }
+    return CreateInformationExcel(
+      builder,
+      _o.GroupID,
+      _PageName,
+      _LocalizeCodeId,
+      _TutorialParentName,
+      _UIName);
+  }
+}
+
+public class InformationExcelT
+{
+  public long GroupID { get; set; }
+  public string PageName { get; set; }
+  public string LocalizeCodeId { get; set; }
+  public List<string> TutorialParentName { get; set; }
+  public List<string> UIName { get; set; }
+
+  public InformationExcelT() {
+    this.GroupID = 0;
+    this.PageName = null;
+    this.LocalizeCodeId = null;
+    this.TutorialParentName = null;
+    this.UIName = null;
   }
 }
 

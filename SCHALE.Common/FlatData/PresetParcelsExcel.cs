@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct PresetParcelsExcel : IFlatbufferObject
@@ -45,6 +46,42 @@ public struct PresetParcelsExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.PresetParcelsExcel> EndPresetParcelsExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.PresetParcelsExcel>(o);
+  }
+  public PresetParcelsExcelT UnPack() {
+    var _o = new PresetParcelsExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(PresetParcelsExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("PresetParcels");
+    _o.ParcelType = TableEncryptionService.Convert(this.ParcelType, key);
+    _o.ParcelId = TableEncryptionService.Convert(this.ParcelId, key);
+    _o.PresetGroupId = TableEncryptionService.Convert(this.PresetGroupId, key);
+    _o.ParcelAmount = TableEncryptionService.Convert(this.ParcelAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.PresetParcelsExcel> Pack(FlatBufferBuilder builder, PresetParcelsExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.PresetParcelsExcel>);
+    return CreatePresetParcelsExcel(
+      builder,
+      _o.ParcelType,
+      _o.ParcelId,
+      _o.PresetGroupId,
+      _o.ParcelAmount);
+  }
+}
+
+public class PresetParcelsExcelT
+{
+  public SCHALE.Common.FlatData.ParcelType ParcelType { get; set; }
+  public long ParcelId { get; set; }
+  public long PresetGroupId { get; set; }
+  public long ParcelAmount { get; set; }
+
+  public PresetParcelsExcelT() {
+    this.ParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ParcelId = 0;
+    this.PresetGroupId = 0;
+    this.ParcelAmount = 0;
   }
 }
 

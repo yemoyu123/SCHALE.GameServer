@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EventContentPlayGuideExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct EventContentPlayGuideExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcelTable> EndEventContentPlayGuideExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcelTable>(o);
+  }
+  public EventContentPlayGuideExcelTableT UnPack() {
+    var _o = new EventContentPlayGuideExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EventContentPlayGuideExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EventContentPlayGuideExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.EventContentPlayGuideExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcelTable> Pack(FlatBufferBuilder builder, EventContentPlayGuideExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.EventContentPlayGuideExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.EventContentPlayGuideExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateEventContentPlayGuideExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class EventContentPlayGuideExcelTableT
+{
+  public List<SCHALE.Common.FlatData.EventContentPlayGuideExcelT> DataList { get; set; }
+
+  public EventContentPlayGuideExcelTableT() {
+    this.DataList = null;
   }
 }
 

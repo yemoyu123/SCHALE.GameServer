@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct VoiceLogicEffectExcel : IFlatbufferObject
@@ -61,6 +62,52 @@ public struct VoiceLogicEffectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.VoiceLogicEffectExcel> EndVoiceLogicEffectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.VoiceLogicEffectExcel>(o);
+  }
+  public VoiceLogicEffectExcelT UnPack() {
+    var _o = new VoiceLogicEffectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(VoiceLogicEffectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("VoiceLogicEffect");
+    _o.LogicEffectNameHash = TableEncryptionService.Convert(this.LogicEffectNameHash, key);
+    _o.Self = TableEncryptionService.Convert(this.Self, key);
+    _o.Priority = TableEncryptionService.Convert(this.Priority, key);
+    _o.VoiceHash = new List<uint>();
+    for (var _j = 0; _j < this.VoiceHashLength; ++_j) {_o.VoiceHash.Add(TableEncryptionService.Convert(this.VoiceHash(_j), key));}
+    _o.VoiceId = TableEncryptionService.Convert(this.VoiceId, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.VoiceLogicEffectExcel> Pack(FlatBufferBuilder builder, VoiceLogicEffectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.VoiceLogicEffectExcel>);
+    var _VoiceHash = default(VectorOffset);
+    if (_o.VoiceHash != null) {
+      var __VoiceHash = _o.VoiceHash.ToArray();
+      _VoiceHash = CreateVoiceHashVector(builder, __VoiceHash);
+    }
+    return CreateVoiceLogicEffectExcel(
+      builder,
+      _o.LogicEffectNameHash,
+      _o.Self,
+      _o.Priority,
+      _VoiceHash,
+      _o.VoiceId);
+  }
+}
+
+public class VoiceLogicEffectExcelT
+{
+  public uint LogicEffectNameHash { get; set; }
+  public bool Self { get; set; }
+  public int Priority { get; set; }
+  public List<uint> VoiceHash { get; set; }
+  public uint VoiceId { get; set; }
+
+  public VoiceLogicEffectExcelT() {
+    this.LogicEffectNameHash = 0;
+    this.Self = false;
+    this.Priority = 0;
+    this.VoiceHash = null;
+    this.VoiceId = 0;
   }
 }
 

@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ConquestPlayGuideExcel : IFlatbufferObject
@@ -71,6 +72,53 @@ public struct ConquestPlayGuideExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ConquestPlayGuideExcel> EndConquestPlayGuideExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ConquestPlayGuideExcel>(o);
+  }
+  public ConquestPlayGuideExcelT UnPack() {
+    var _o = new ConquestPlayGuideExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ConquestPlayGuideExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ConquestPlayGuide");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EventContentId = TableEncryptionService.Convert(this.EventContentId, key);
+    _o.DisplayOrder = TableEncryptionService.Convert(this.DisplayOrder, key);
+    _o.GuideTitle = TableEncryptionService.Convert(this.GuideTitle, key);
+    _o.GuideImagePath = TableEncryptionService.Convert(this.GuideImagePath, key);
+    _o.GuideText = TableEncryptionService.Convert(this.GuideText, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ConquestPlayGuideExcel> Pack(FlatBufferBuilder builder, ConquestPlayGuideExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ConquestPlayGuideExcel>);
+    var _GuideTitle = _o.GuideTitle == null ? default(StringOffset) : builder.CreateString(_o.GuideTitle);
+    var _GuideImagePath = _o.GuideImagePath == null ? default(StringOffset) : builder.CreateString(_o.GuideImagePath);
+    var _GuideText = _o.GuideText == null ? default(StringOffset) : builder.CreateString(_o.GuideText);
+    return CreateConquestPlayGuideExcel(
+      builder,
+      _o.Id,
+      _o.EventContentId,
+      _o.DisplayOrder,
+      _GuideTitle,
+      _GuideImagePath,
+      _GuideText);
+  }
+}
+
+public class ConquestPlayGuideExcelT
+{
+  public long Id { get; set; }
+  public long EventContentId { get; set; }
+  public int DisplayOrder { get; set; }
+  public string GuideTitle { get; set; }
+  public string GuideImagePath { get; set; }
+  public string GuideText { get; set; }
+
+  public ConquestPlayGuideExcelT() {
+    this.Id = 0;
+    this.EventContentId = 0;
+    this.DisplayOrder = 0;
+    this.GuideTitle = null;
+    this.GuideImagePath = null;
+    this.GuideText = null;
   }
 }
 

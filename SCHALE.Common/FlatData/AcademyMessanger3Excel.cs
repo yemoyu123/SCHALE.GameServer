@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct AcademyMessanger3Excel : IFlatbufferObject
@@ -103,6 +104,85 @@ public struct AcademyMessanger3Excel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.AcademyMessanger3Excel> EndAcademyMessanger3Excel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.AcademyMessanger3Excel>(o);
+  }
+  public AcademyMessanger3ExcelT UnPack() {
+    var _o = new AcademyMessanger3ExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(AcademyMessanger3ExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("AcademyMessanger3");
+    _o.MessageGroupId = TableEncryptionService.Convert(this.MessageGroupId, key);
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.MessageCondition = TableEncryptionService.Convert(this.MessageCondition, key);
+    _o.ConditionValue = TableEncryptionService.Convert(this.ConditionValue, key);
+    _o.PreConditionGroupId = TableEncryptionService.Convert(this.PreConditionGroupId, key);
+    _o.PreConditionFavorScheduleId = TableEncryptionService.Convert(this.PreConditionFavorScheduleId, key);
+    _o.FavorScheduleId = TableEncryptionService.Convert(this.FavorScheduleId, key);
+    _o.NextGroupId = TableEncryptionService.Convert(this.NextGroupId, key);
+    _o.FeedbackTimeMillisec = TableEncryptionService.Convert(this.FeedbackTimeMillisec, key);
+    _o.MessageType = TableEncryptionService.Convert(this.MessageType, key);
+    _o.ImagePath = TableEncryptionService.Convert(this.ImagePath, key);
+    _o.MessageKR = TableEncryptionService.Convert(this.MessageKR, key);
+    _o.MessageJP = TableEncryptionService.Convert(this.MessageJP, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.AcademyMessanger3Excel> Pack(FlatBufferBuilder builder, AcademyMessanger3ExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.AcademyMessanger3Excel>);
+    var _ImagePath = _o.ImagePath == null ? default(StringOffset) : builder.CreateString(_o.ImagePath);
+    var _MessageKR = _o.MessageKR == null ? default(StringOffset) : builder.CreateString(_o.MessageKR);
+    var _MessageJP = _o.MessageJP == null ? default(StringOffset) : builder.CreateString(_o.MessageJP);
+    return CreateAcademyMessanger3Excel(
+      builder,
+      _o.MessageGroupId,
+      _o.Id,
+      _o.CharacterId,
+      _o.MessageCondition,
+      _o.ConditionValue,
+      _o.PreConditionGroupId,
+      _o.PreConditionFavorScheduleId,
+      _o.FavorScheduleId,
+      _o.NextGroupId,
+      _o.FeedbackTimeMillisec,
+      _o.MessageType,
+      _ImagePath,
+      _MessageKR,
+      _MessageJP);
+  }
+}
+
+public class AcademyMessanger3ExcelT
+{
+  public long MessageGroupId { get; set; }
+  public long Id { get; set; }
+  public long CharacterId { get; set; }
+  public SCHALE.Common.FlatData.AcademyMessageConditions MessageCondition { get; set; }
+  public long ConditionValue { get; set; }
+  public long PreConditionGroupId { get; set; }
+  public long PreConditionFavorScheduleId { get; set; }
+  public long FavorScheduleId { get; set; }
+  public long NextGroupId { get; set; }
+  public long FeedbackTimeMillisec { get; set; }
+  public SCHALE.Common.FlatData.AcademyMessageTypes MessageType { get; set; }
+  public string ImagePath { get; set; }
+  public string MessageKR { get; set; }
+  public string MessageJP { get; set; }
+
+  public AcademyMessanger3ExcelT() {
+    this.MessageGroupId = 0;
+    this.Id = 0;
+    this.CharacterId = 0;
+    this.MessageCondition = SCHALE.Common.FlatData.AcademyMessageConditions.None;
+    this.ConditionValue = 0;
+    this.PreConditionGroupId = 0;
+    this.PreConditionFavorScheduleId = 0;
+    this.FavorScheduleId = 0;
+    this.NextGroupId = 0;
+    this.FeedbackTimeMillisec = 0;
+    this.MessageType = SCHALE.Common.FlatData.AcademyMessageTypes.None;
+    this.ImagePath = null;
+    this.MessageKR = null;
+    this.MessageJP = null;
   }
 }
 

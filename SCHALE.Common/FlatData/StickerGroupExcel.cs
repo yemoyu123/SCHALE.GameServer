@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct StickerGroupExcel : IFlatbufferObject
@@ -97,6 +98,74 @@ public struct StickerGroupExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.StickerGroupExcel> EndStickerGroupExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.StickerGroupExcel>(o);
+  }
+  public StickerGroupExcelT UnPack() {
+    var _o = new StickerGroupExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(StickerGroupExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("StickerGroup");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Layout = TableEncryptionService.Convert(this.Layout, key);
+    _o.UniqueLayoutPath = TableEncryptionService.Convert(this.UniqueLayoutPath, key);
+    _o.StickerGroupIconpath = TableEncryptionService.Convert(this.StickerGroupIconpath, key);
+    _o.PageCompleteSlot = TableEncryptionService.Convert(this.PageCompleteSlot, key);
+    _o.PageCompleteRewardParcelType = TableEncryptionService.Convert(this.PageCompleteRewardParcelType, key);
+    _o.PageCompleteRewardParcelId = TableEncryptionService.Convert(this.PageCompleteRewardParcelId, key);
+    _o.PageCompleteRewardAmount = TableEncryptionService.Convert(this.PageCompleteRewardAmount, key);
+    _o.LocalizeTitle = TableEncryptionService.Convert(this.LocalizeTitle, key);
+    _o.LocalizeDescription = TableEncryptionService.Convert(this.LocalizeDescription, key);
+    _o.StickerGroupCoverpath = TableEncryptionService.Convert(this.StickerGroupCoverpath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.StickerGroupExcel> Pack(FlatBufferBuilder builder, StickerGroupExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.StickerGroupExcel>);
+    var _Layout = _o.Layout == null ? default(StringOffset) : builder.CreateString(_o.Layout);
+    var _UniqueLayoutPath = _o.UniqueLayoutPath == null ? default(StringOffset) : builder.CreateString(_o.UniqueLayoutPath);
+    var _StickerGroupIconpath = _o.StickerGroupIconpath == null ? default(StringOffset) : builder.CreateString(_o.StickerGroupIconpath);
+    var _StickerGroupCoverpath = _o.StickerGroupCoverpath == null ? default(StringOffset) : builder.CreateString(_o.StickerGroupCoverpath);
+    return CreateStickerGroupExcel(
+      builder,
+      _o.Id,
+      _Layout,
+      _UniqueLayoutPath,
+      _StickerGroupIconpath,
+      _o.PageCompleteSlot,
+      _o.PageCompleteRewardParcelType,
+      _o.PageCompleteRewardParcelId,
+      _o.PageCompleteRewardAmount,
+      _o.LocalizeTitle,
+      _o.LocalizeDescription,
+      _StickerGroupCoverpath);
+  }
+}
+
+public class StickerGroupExcelT
+{
+  public long Id { get; set; }
+  public string Layout { get; set; }
+  public string UniqueLayoutPath { get; set; }
+  public string StickerGroupIconpath { get; set; }
+  public long PageCompleteSlot { get; set; }
+  public SCHALE.Common.FlatData.ParcelType PageCompleteRewardParcelType { get; set; }
+  public long PageCompleteRewardParcelId { get; set; }
+  public int PageCompleteRewardAmount { get; set; }
+  public uint LocalizeTitle { get; set; }
+  public uint LocalizeDescription { get; set; }
+  public string StickerGroupCoverpath { get; set; }
+
+  public StickerGroupExcelT() {
+    this.Id = 0;
+    this.Layout = null;
+    this.UniqueLayoutPath = null;
+    this.StickerGroupIconpath = null;
+    this.PageCompleteSlot = 0;
+    this.PageCompleteRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.PageCompleteRewardParcelId = 0;
+    this.PageCompleteRewardAmount = 0;
+    this.LocalizeTitle = 0;
+    this.LocalizeDescription = 0;
+    this.StickerGroupCoverpath = null;
   }
 }
 

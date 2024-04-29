@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct TimeAttackDungeonSeasonManageExcel : IFlatbufferObject
@@ -85,6 +86,66 @@ public struct TimeAttackDungeonSeasonManageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonSeasonManageExcel> EndTimeAttackDungeonSeasonManageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.TimeAttackDungeonSeasonManageExcel>(o);
+  }
+  public TimeAttackDungeonSeasonManageExcelT UnPack() {
+    var _o = new TimeAttackDungeonSeasonManageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(TimeAttackDungeonSeasonManageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("TimeAttackDungeonSeasonManage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.StartDate = TableEncryptionService.Convert(this.StartDate, key);
+    _o.EndDate = TableEncryptionService.Convert(this.EndDate, key);
+    _o.UISlot = TableEncryptionService.Convert(this.UISlot, key);
+    _o.DungeonId = TableEncryptionService.Convert(this.DungeonId, key);
+    _o.DifficultyGeas = new List<long>();
+    for (var _j = 0; _j < this.DifficultyGeasLength; ++_j) {_o.DifficultyGeas.Add(TableEncryptionService.Convert(this.DifficultyGeas(_j), key));}
+    _o.TimeAttackDungeonRewardId = TableEncryptionService.Convert(this.TimeAttackDungeonRewardId, key);
+    _o.RoomLifeTimeInSeconds = TableEncryptionService.Convert(this.RoomLifeTimeInSeconds, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.TimeAttackDungeonSeasonManageExcel> Pack(FlatBufferBuilder builder, TimeAttackDungeonSeasonManageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.TimeAttackDungeonSeasonManageExcel>);
+    var _StartDate = _o.StartDate == null ? default(StringOffset) : builder.CreateString(_o.StartDate);
+    var _EndDate = _o.EndDate == null ? default(StringOffset) : builder.CreateString(_o.EndDate);
+    var _DifficultyGeas = default(VectorOffset);
+    if (_o.DifficultyGeas != null) {
+      var __DifficultyGeas = _o.DifficultyGeas.ToArray();
+      _DifficultyGeas = CreateDifficultyGeasVector(builder, __DifficultyGeas);
+    }
+    return CreateTimeAttackDungeonSeasonManageExcel(
+      builder,
+      _o.Id,
+      _StartDate,
+      _EndDate,
+      _o.UISlot,
+      _o.DungeonId,
+      _DifficultyGeas,
+      _o.TimeAttackDungeonRewardId,
+      _o.RoomLifeTimeInSeconds);
+  }
+}
+
+public class TimeAttackDungeonSeasonManageExcelT
+{
+  public long Id { get; set; }
+  public string StartDate { get; set; }
+  public string EndDate { get; set; }
+  public long UISlot { get; set; }
+  public long DungeonId { get; set; }
+  public List<long> DifficultyGeas { get; set; }
+  public long TimeAttackDungeonRewardId { get; set; }
+  public long RoomLifeTimeInSeconds { get; set; }
+
+  public TimeAttackDungeonSeasonManageExcelT() {
+    this.Id = 0;
+    this.StartDate = null;
+    this.EndDate = null;
+    this.UISlot = 0;
+    this.DungeonId = 0;
+    this.DifficultyGeas = null;
+    this.TimeAttackDungeonRewardId = 0;
+    this.RoomLifeTimeInSeconds = 0;
   }
 }
 

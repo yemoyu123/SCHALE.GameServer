@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct KnockBackExcelTable : IFlatbufferObject
@@ -39,6 +40,37 @@ public struct KnockBackExcelTable : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.KnockBackExcelTable> EndKnockBackExcelTable(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.KnockBackExcelTable>(o);
+  }
+  public KnockBackExcelTableT UnPack() {
+    var _o = new KnockBackExcelTableT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(KnockBackExcelTableT _o) {
+		byte[] key = TableEncryptionService.CreateKey("KnockBackExcel");
+    _o.DataList = new List<SCHALE.Common.FlatData.KnockBackExcelT>();
+    for (var _j = 0; _j < this.DataListLength; ++_j) {_o.DataList.Add(this.DataList(_j).HasValue ? this.DataList(_j).Value.UnPack() : null);}
+  }
+  public static Offset<SCHALE.Common.FlatData.KnockBackExcelTable> Pack(FlatBufferBuilder builder, KnockBackExcelTableT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.KnockBackExcelTable>);
+    var _DataList = default(VectorOffset);
+    if (_o.DataList != null) {
+      var __DataList = new Offset<SCHALE.Common.FlatData.KnockBackExcel>[_o.DataList.Count];
+      for (var _j = 0; _j < __DataList.Length; ++_j) { __DataList[_j] = SCHALE.Common.FlatData.KnockBackExcel.Pack(builder, _o.DataList[_j]); }
+      _DataList = CreateDataListVector(builder, __DataList);
+    }
+    return CreateKnockBackExcelTable(
+      builder,
+      _DataList);
+  }
+}
+
+public class KnockBackExcelTableT
+{
+  public List<SCHALE.Common.FlatData.KnockBackExcelT> DataList { get; set; }
+
+  public KnockBackExcelTableT() {
+    this.DataList = null;
   }
 }
 

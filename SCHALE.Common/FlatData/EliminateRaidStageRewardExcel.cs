@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct EliminateRaidStageRewardExcel : IFlatbufferObject
@@ -63,6 +64,55 @@ public struct EliminateRaidStageRewardExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.EliminateRaidStageRewardExcel> EndEliminateRaidStageRewardExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.EliminateRaidStageRewardExcel>(o);
+  }
+  public EliminateRaidStageRewardExcelT UnPack() {
+    var _o = new EliminateRaidStageRewardExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(EliminateRaidStageRewardExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("EliminateRaidStageReward");
+    _o.GroupId = TableEncryptionService.Convert(this.GroupId, key);
+    _o.IsClearStageRewardHideInfo = TableEncryptionService.Convert(this.IsClearStageRewardHideInfo, key);
+    _o.ClearStageRewardProb = TableEncryptionService.Convert(this.ClearStageRewardProb, key);
+    _o.ClearStageRewardParcelType = TableEncryptionService.Convert(this.ClearStageRewardParcelType, key);
+    _o.ClearStageRewardParcelUniqueID = TableEncryptionService.Convert(this.ClearStageRewardParcelUniqueID, key);
+    _o.ClearStageRewardParcelUniqueName = TableEncryptionService.Convert(this.ClearStageRewardParcelUniqueName, key);
+    _o.ClearStageRewardAmount = TableEncryptionService.Convert(this.ClearStageRewardAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.EliminateRaidStageRewardExcel> Pack(FlatBufferBuilder builder, EliminateRaidStageRewardExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.EliminateRaidStageRewardExcel>);
+    var _ClearStageRewardParcelUniqueName = _o.ClearStageRewardParcelUniqueName == null ? default(StringOffset) : builder.CreateString(_o.ClearStageRewardParcelUniqueName);
+    return CreateEliminateRaidStageRewardExcel(
+      builder,
+      _o.GroupId,
+      _o.IsClearStageRewardHideInfo,
+      _o.ClearStageRewardProb,
+      _o.ClearStageRewardParcelType,
+      _o.ClearStageRewardParcelUniqueID,
+      _ClearStageRewardParcelUniqueName,
+      _o.ClearStageRewardAmount);
+  }
+}
+
+public class EliminateRaidStageRewardExcelT
+{
+  public long GroupId { get; set; }
+  public bool IsClearStageRewardHideInfo { get; set; }
+  public long ClearStageRewardProb { get; set; }
+  public SCHALE.Common.FlatData.ParcelType ClearStageRewardParcelType { get; set; }
+  public long ClearStageRewardParcelUniqueID { get; set; }
+  public string ClearStageRewardParcelUniqueName { get; set; }
+  public long ClearStageRewardAmount { get; set; }
+
+  public EliminateRaidStageRewardExcelT() {
+    this.GroupId = 0;
+    this.IsClearStageRewardHideInfo = false;
+    this.ClearStageRewardProb = 0;
+    this.ClearStageRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.ClearStageRewardParcelUniqueID = 0;
+    this.ClearStageRewardParcelUniqueName = null;
+    this.ClearStageRewardAmount = 0;
   }
 }
 

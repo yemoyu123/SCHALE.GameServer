@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CharacterStatLimitExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct CharacterStatLimitExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CharacterStatLimitExcel> EndCharacterStatLimitExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CharacterStatLimitExcel>(o);
+  }
+  public CharacterStatLimitExcelT UnPack() {
+    var _o = new CharacterStatLimitExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CharacterStatLimitExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CharacterStatLimit");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.TacticEntityType = TableEncryptionService.Convert(this.TacticEntityType, key);
+    _o.StatType = TableEncryptionService.Convert(this.StatType, key);
+    _o.StatMinValue = TableEncryptionService.Convert(this.StatMinValue, key);
+    _o.StatMaxValue = TableEncryptionService.Convert(this.StatMaxValue, key);
+    _o.StatRatioMinValue = TableEncryptionService.Convert(this.StatRatioMinValue, key);
+    _o.StatRatioMaxValue = TableEncryptionService.Convert(this.StatRatioMaxValue, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CharacterStatLimitExcel> Pack(FlatBufferBuilder builder, CharacterStatLimitExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CharacterStatLimitExcel>);
+    return CreateCharacterStatLimitExcel(
+      builder,
+      _o.Id,
+      _o.TacticEntityType,
+      _o.StatType,
+      _o.StatMinValue,
+      _o.StatMaxValue,
+      _o.StatRatioMinValue,
+      _o.StatRatioMaxValue);
+  }
+}
+
+public class CharacterStatLimitExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.TacticEntityType TacticEntityType { get; set; }
+  public SCHALE.Common.FlatData.StatType StatType { get; set; }
+  public long StatMinValue { get; set; }
+  public long StatMaxValue { get; set; }
+  public long StatRatioMinValue { get; set; }
+  public long StatRatioMaxValue { get; set; }
+
+  public CharacterStatLimitExcelT() {
+    this.Id = 0;
+    this.TacticEntityType = SCHALE.Common.FlatData.TacticEntityType.None;
+    this.StatType = SCHALE.Common.FlatData.StatType.None;
+    this.StatMinValue = 0;
+    this.StatMaxValue = 0;
+    this.StatRatioMinValue = 0;
+    this.StatRatioMaxValue = 0;
   }
 }
 

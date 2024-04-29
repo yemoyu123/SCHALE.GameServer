@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct MultiFloorRaidStageExcel : IFlatbufferObject
@@ -207,6 +208,161 @@ public struct MultiFloorRaidStageExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.MultiFloorRaidStageExcel> EndMultiFloorRaidStageExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.MultiFloorRaidStageExcel>(o);
+  }
+  public MultiFloorRaidStageExcelT UnPack() {
+    var _o = new MultiFloorRaidStageExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(MultiFloorRaidStageExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("MultiFloorRaidStage");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.EchelonExtensionType = TableEncryptionService.Convert(this.EchelonExtensionType, key);
+    _o.BossGroupId = TableEncryptionService.Convert(this.BossGroupId, key);
+    _o.AssistSlot = TableEncryptionService.Convert(this.AssistSlot, key);
+    _o.StageOpenCondition = TableEncryptionService.Convert(this.StageOpenCondition, key);
+    _o.FloorListSection = TableEncryptionService.Convert(this.FloorListSection, key);
+    _o.FloorListSectionOpenCondition = TableEncryptionService.Convert(this.FloorListSectionOpenCondition, key);
+    _o.FloorListSectionLabel = TableEncryptionService.Convert(this.FloorListSectionLabel, key);
+    _o.Difficulty = TableEncryptionService.Convert(this.Difficulty, key);
+    _o.UseBossIndex = TableEncryptionService.Convert(this.UseBossIndex, key);
+    _o.UseBossAIPhaseSync = TableEncryptionService.Convert(this.UseBossAIPhaseSync, key);
+    _o.FloorListImgPath = TableEncryptionService.Convert(this.FloorListImgPath, key);
+    _o.FloorImgPath = TableEncryptionService.Convert(this.FloorImgPath, key);
+    _o.RaidCharacterId = TableEncryptionService.Convert(this.RaidCharacterId, key);
+    _o.BossCharacterId = new List<long>();
+    for (var _j = 0; _j < this.BossCharacterIdLength; ++_j) {_o.BossCharacterId.Add(TableEncryptionService.Convert(this.BossCharacterId(_j), key));}
+    _o.StatChangeId = new List<long>();
+    for (var _j = 0; _j < this.StatChangeIdLength; ++_j) {_o.StatChangeId.Add(TableEncryptionService.Convert(this.StatChangeId(_j), key));}
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.RecommendLevel = TableEncryptionService.Convert(this.RecommendLevel, key);
+    _o.RewardGroupId = TableEncryptionService.Convert(this.RewardGroupId, key);
+    _o.BattleReadyTimelinePath = new List<string>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePathLength; ++_j) {_o.BattleReadyTimelinePath.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePath(_j), key));}
+    _o.BattleReadyTimelinePhaseStart = new List<int>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePhaseStartLength; ++_j) {_o.BattleReadyTimelinePhaseStart.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePhaseStart(_j), key));}
+    _o.BattleReadyTimelinePhaseEnd = new List<int>();
+    for (var _j = 0; _j < this.BattleReadyTimelinePhaseEndLength; ++_j) {_o.BattleReadyTimelinePhaseEnd.Add(TableEncryptionService.Convert(this.BattleReadyTimelinePhaseEnd(_j), key));}
+    _o.VictoryTimelinePath = TableEncryptionService.Convert(this.VictoryTimelinePath, key);
+    _o.ShowSkillCard = TableEncryptionService.Convert(this.ShowSkillCard, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.MultiFloorRaidStageExcel> Pack(FlatBufferBuilder builder, MultiFloorRaidStageExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.MultiFloorRaidStageExcel>);
+    var _BossGroupId = _o.BossGroupId == null ? default(StringOffset) : builder.CreateString(_o.BossGroupId);
+    var _FloorListImgPath = _o.FloorListImgPath == null ? default(StringOffset) : builder.CreateString(_o.FloorListImgPath);
+    var _FloorImgPath = _o.FloorImgPath == null ? default(StringOffset) : builder.CreateString(_o.FloorImgPath);
+    var _BossCharacterId = default(VectorOffset);
+    if (_o.BossCharacterId != null) {
+      var __BossCharacterId = _o.BossCharacterId.ToArray();
+      _BossCharacterId = CreateBossCharacterIdVector(builder, __BossCharacterId);
+    }
+    var _StatChangeId = default(VectorOffset);
+    if (_o.StatChangeId != null) {
+      var __StatChangeId = _o.StatChangeId.ToArray();
+      _StatChangeId = CreateStatChangeIdVector(builder, __StatChangeId);
+    }
+    var _BattleReadyTimelinePath = default(VectorOffset);
+    if (_o.BattleReadyTimelinePath != null) {
+      var __BattleReadyTimelinePath = new StringOffset[_o.BattleReadyTimelinePath.Count];
+      for (var _j = 0; _j < __BattleReadyTimelinePath.Length; ++_j) { __BattleReadyTimelinePath[_j] = builder.CreateString(_o.BattleReadyTimelinePath[_j]); }
+      _BattleReadyTimelinePath = CreateBattleReadyTimelinePathVector(builder, __BattleReadyTimelinePath);
+    }
+    var _BattleReadyTimelinePhaseStart = default(VectorOffset);
+    if (_o.BattleReadyTimelinePhaseStart != null) {
+      var __BattleReadyTimelinePhaseStart = _o.BattleReadyTimelinePhaseStart.ToArray();
+      _BattleReadyTimelinePhaseStart = CreateBattleReadyTimelinePhaseStartVector(builder, __BattleReadyTimelinePhaseStart);
+    }
+    var _BattleReadyTimelinePhaseEnd = default(VectorOffset);
+    if (_o.BattleReadyTimelinePhaseEnd != null) {
+      var __BattleReadyTimelinePhaseEnd = _o.BattleReadyTimelinePhaseEnd.ToArray();
+      _BattleReadyTimelinePhaseEnd = CreateBattleReadyTimelinePhaseEndVector(builder, __BattleReadyTimelinePhaseEnd);
+    }
+    var _VictoryTimelinePath = _o.VictoryTimelinePath == null ? default(StringOffset) : builder.CreateString(_o.VictoryTimelinePath);
+    return CreateMultiFloorRaidStageExcel(
+      builder,
+      _o.Id,
+      _o.EchelonExtensionType,
+      _BossGroupId,
+      _o.AssistSlot,
+      _o.StageOpenCondition,
+      _o.FloorListSection,
+      _o.FloorListSectionOpenCondition,
+      _o.FloorListSectionLabel,
+      _o.Difficulty,
+      _o.UseBossIndex,
+      _o.UseBossAIPhaseSync,
+      _FloorListImgPath,
+      _FloorImgPath,
+      _o.RaidCharacterId,
+      _BossCharacterId,
+      _StatChangeId,
+      _o.BattleDuration,
+      _o.GroundId,
+      _o.RecommendLevel,
+      _o.RewardGroupId,
+      _BattleReadyTimelinePath,
+      _BattleReadyTimelinePhaseStart,
+      _BattleReadyTimelinePhaseEnd,
+      _VictoryTimelinePath,
+      _o.ShowSkillCard);
+  }
+}
+
+public class MultiFloorRaidStageExcelT
+{
+  public long Id { get; set; }
+  public SCHALE.Common.FlatData.EchelonExtensionType EchelonExtensionType { get; set; }
+  public string BossGroupId { get; set; }
+  public int AssistSlot { get; set; }
+  public long StageOpenCondition { get; set; }
+  public bool FloorListSection { get; set; }
+  public long FloorListSectionOpenCondition { get; set; }
+  public uint FloorListSectionLabel { get; set; }
+  public int Difficulty { get; set; }
+  public bool UseBossIndex { get; set; }
+  public bool UseBossAIPhaseSync { get; set; }
+  public string FloorListImgPath { get; set; }
+  public string FloorImgPath { get; set; }
+  public long RaidCharacterId { get; set; }
+  public List<long> BossCharacterId { get; set; }
+  public List<long> StatChangeId { get; set; }
+  public long BattleDuration { get; set; }
+  public long GroundId { get; set; }
+  public long RecommendLevel { get; set; }
+  public long RewardGroupId { get; set; }
+  public List<string> BattleReadyTimelinePath { get; set; }
+  public List<int> BattleReadyTimelinePhaseStart { get; set; }
+  public List<int> BattleReadyTimelinePhaseEnd { get; set; }
+  public string VictoryTimelinePath { get; set; }
+  public bool ShowSkillCard { get; set; }
+
+  public MultiFloorRaidStageExcelT() {
+    this.Id = 0;
+    this.EchelonExtensionType = SCHALE.Common.FlatData.EchelonExtensionType.Base;
+    this.BossGroupId = null;
+    this.AssistSlot = 0;
+    this.StageOpenCondition = 0;
+    this.FloorListSection = false;
+    this.FloorListSectionOpenCondition = 0;
+    this.FloorListSectionLabel = 0;
+    this.Difficulty = 0;
+    this.UseBossIndex = false;
+    this.UseBossAIPhaseSync = false;
+    this.FloorListImgPath = null;
+    this.FloorImgPath = null;
+    this.RaidCharacterId = 0;
+    this.BossCharacterId = null;
+    this.StatChangeId = null;
+    this.BattleDuration = 0;
+    this.GroundId = 0;
+    this.RecommendLevel = 0;
+    this.RewardGroupId = 0;
+    this.BattleReadyTimelinePath = null;
+    this.BattleReadyTimelinePhaseStart = null;
+    this.BattleReadyTimelinePhaseEnd = null;
+    this.VictoryTimelinePath = null;
+    this.ShowSkillCard = false;
   }
 }
 

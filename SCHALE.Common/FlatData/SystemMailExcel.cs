@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct SystemMailExcel : IFlatbufferObject
@@ -57,6 +58,44 @@ public struct SystemMailExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.SystemMailExcel> EndSystemMailExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.SystemMailExcel>(o);
+  }
+  public SystemMailExcelT UnPack() {
+    var _o = new SystemMailExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(SystemMailExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("SystemMail");
+    _o.MailType = TableEncryptionService.Convert(this.MailType, key);
+    _o.ExpiredDay = TableEncryptionService.Convert(this.ExpiredDay, key);
+    _o.Sender = TableEncryptionService.Convert(this.Sender, key);
+    _o.Comment = TableEncryptionService.Convert(this.Comment, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.SystemMailExcel> Pack(FlatBufferBuilder builder, SystemMailExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.SystemMailExcel>);
+    var _Sender = _o.Sender == null ? default(StringOffset) : builder.CreateString(_o.Sender);
+    var _Comment = _o.Comment == null ? default(StringOffset) : builder.CreateString(_o.Comment);
+    return CreateSystemMailExcel(
+      builder,
+      _o.MailType,
+      _o.ExpiredDay,
+      _Sender,
+      _Comment);
+  }
+}
+
+public class SystemMailExcelT
+{
+  public SCHALE.Common.FlatData.MailType MailType { get; set; }
+  public long ExpiredDay { get; set; }
+  public string Sender { get; set; }
+  public string Comment { get; set; }
+
+  public SystemMailExcelT() {
+    this.MailType = SCHALE.Common.FlatData.MailType.System;
+    this.ExpiredDay = 0;
+    this.Sender = null;
+    this.Comment = null;
   }
 }
 

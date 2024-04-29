@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ShopCashScenarioResourceInfoExcel : IFlatbufferObject
@@ -47,6 +48,39 @@ public struct ShopCashScenarioResourceInfoExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ShopCashScenarioResourceInfoExcel> EndShopCashScenarioResourceInfoExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ShopCashScenarioResourceInfoExcel>(o);
+  }
+  public ShopCashScenarioResourceInfoExcelT UnPack() {
+    var _o = new ShopCashScenarioResourceInfoExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ShopCashScenarioResourceInfoExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ShopCashScenarioResourceInfo");
+    _o.ScenarioResrouceInfoId = TableEncryptionService.Convert(this.ScenarioResrouceInfoId, key);
+    _o.ShopCashId = TableEncryptionService.Convert(this.ShopCashId, key);
+    _o.IconPath = TableEncryptionService.Convert(this.IconPath, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ShopCashScenarioResourceInfoExcel> Pack(FlatBufferBuilder builder, ShopCashScenarioResourceInfoExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ShopCashScenarioResourceInfoExcel>);
+    var _IconPath = _o.IconPath == null ? default(StringOffset) : builder.CreateString(_o.IconPath);
+    return CreateShopCashScenarioResourceInfoExcel(
+      builder,
+      _o.ScenarioResrouceInfoId,
+      _o.ShopCashId,
+      _IconPath);
+  }
+}
+
+public class ShopCashScenarioResourceInfoExcelT
+{
+  public long ScenarioResrouceInfoId { get; set; }
+  public long ShopCashId { get; set; }
+  public string IconPath { get; set; }
+
+  public ShopCashScenarioResourceInfoExcelT() {
+    this.ScenarioResrouceInfoId = 0;
+    this.ShopCashId = 0;
+    this.IconPath = null;
   }
 }
 

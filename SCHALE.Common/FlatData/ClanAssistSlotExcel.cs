@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ClanAssistSlotExcel : IFlatbufferObject
@@ -57,6 +58,54 @@ public struct ClanAssistSlotExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ClanAssistSlotExcel> EndClanAssistSlotExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ClanAssistSlotExcel>(o);
+  }
+  public ClanAssistSlotExcelT UnPack() {
+    var _o = new ClanAssistSlotExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ClanAssistSlotExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ClanAssistSlot");
+    _o.SlotId = TableEncryptionService.Convert(this.SlotId, key);
+    _o.EchelonType = TableEncryptionService.Convert(this.EchelonType, key);
+    _o.SlotNumber = TableEncryptionService.Convert(this.SlotNumber, key);
+    _o.AssistTermRewardPeriodFromSec = TableEncryptionService.Convert(this.AssistTermRewardPeriodFromSec, key);
+    _o.AssistRewardLimit = TableEncryptionService.Convert(this.AssistRewardLimit, key);
+    _o.AssistRentRewardDailyMaxCount = TableEncryptionService.Convert(this.AssistRentRewardDailyMaxCount, key);
+    _o.AssistRentalFeeAmount = TableEncryptionService.Convert(this.AssistRentalFeeAmount, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.ClanAssistSlotExcel> Pack(FlatBufferBuilder builder, ClanAssistSlotExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ClanAssistSlotExcel>);
+    return CreateClanAssistSlotExcel(
+      builder,
+      _o.SlotId,
+      _o.EchelonType,
+      _o.SlotNumber,
+      _o.AssistTermRewardPeriodFromSec,
+      _o.AssistRewardLimit,
+      _o.AssistRentRewardDailyMaxCount,
+      _o.AssistRentalFeeAmount);
+  }
+}
+
+public class ClanAssistSlotExcelT
+{
+  public long SlotId { get; set; }
+  public SCHALE.Common.FlatData.EchelonType EchelonType { get; set; }
+  public long SlotNumber { get; set; }
+  public long AssistTermRewardPeriodFromSec { get; set; }
+  public long AssistRewardLimit { get; set; }
+  public long AssistRentRewardDailyMaxCount { get; set; }
+  public long AssistRentalFeeAmount { get; set; }
+
+  public ClanAssistSlotExcelT() {
+    this.SlotId = 0;
+    this.EchelonType = SCHALE.Common.FlatData.EchelonType.None;
+    this.SlotNumber = 0;
+    this.AssistTermRewardPeriodFromSec = 0;
+    this.AssistRewardLimit = 0;
+    this.AssistRentRewardDailyMaxCount = 0;
+    this.AssistRentalFeeAmount = 0;
   }
 }
 

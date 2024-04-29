@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct CampaignStrategyObjectExcel : IFlatbufferObject
@@ -107,6 +108,89 @@ public struct CampaignStrategyObjectExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.CampaignStrategyObjectExcel> EndCampaignStrategyObjectExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.CampaignStrategyObjectExcel>(o);
+  }
+  public CampaignStrategyObjectExcelT UnPack() {
+    var _o = new CampaignStrategyObjectExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(CampaignStrategyObjectExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("CampaignStrategyObject");
+    _o.Id = TableEncryptionService.Convert(this.Id, key);
+    _o.Key = TableEncryptionService.Convert(this.Key, key);
+    _o.Name = TableEncryptionService.Convert(this.Name, key);
+    _o.PrefabName = TableEncryptionService.Convert(this.PrefabName, key);
+    _o.StrategyObjectType = TableEncryptionService.Convert(this.StrategyObjectType, key);
+    _o.StrategyRewardParcelType = TableEncryptionService.Convert(this.StrategyRewardParcelType, key);
+    _o.StrategyRewardID = TableEncryptionService.Convert(this.StrategyRewardID, key);
+    _o.StrategyRewardName = TableEncryptionService.Convert(this.StrategyRewardName, key);
+    _o.StrategyRewardAmount = TableEncryptionService.Convert(this.StrategyRewardAmount, key);
+    _o.StrategySightRange = TableEncryptionService.Convert(this.StrategySightRange, key);
+    _o.PortalId = TableEncryptionService.Convert(this.PortalId, key);
+    _o.HealValue = TableEncryptionService.Convert(this.HealValue, key);
+    _o.SwithId = TableEncryptionService.Convert(this.SwithId, key);
+    _o.BuffId = TableEncryptionService.Convert(this.BuffId, key);
+    _o.Disposable = TableEncryptionService.Convert(this.Disposable, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.CampaignStrategyObjectExcel> Pack(FlatBufferBuilder builder, CampaignStrategyObjectExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.CampaignStrategyObjectExcel>);
+    var _Name = _o.Name == null ? default(StringOffset) : builder.CreateString(_o.Name);
+    var _PrefabName = _o.PrefabName == null ? default(StringOffset) : builder.CreateString(_o.PrefabName);
+    var _StrategyRewardName = _o.StrategyRewardName == null ? default(StringOffset) : builder.CreateString(_o.StrategyRewardName);
+    return CreateCampaignStrategyObjectExcel(
+      builder,
+      _o.Id,
+      _o.Key,
+      _Name,
+      _PrefabName,
+      _o.StrategyObjectType,
+      _o.StrategyRewardParcelType,
+      _o.StrategyRewardID,
+      _StrategyRewardName,
+      _o.StrategyRewardAmount,
+      _o.StrategySightRange,
+      _o.PortalId,
+      _o.HealValue,
+      _o.SwithId,
+      _o.BuffId,
+      _o.Disposable);
+  }
+}
+
+public class CampaignStrategyObjectExcelT
+{
+  public long Id { get; set; }
+  public uint Key { get; set; }
+  public string Name { get; set; }
+  public string PrefabName { get; set; }
+  public SCHALE.Common.FlatData.StrategyObjectType StrategyObjectType { get; set; }
+  public SCHALE.Common.FlatData.ParcelType StrategyRewardParcelType { get; set; }
+  public long StrategyRewardID { get; set; }
+  public string StrategyRewardName { get; set; }
+  public int StrategyRewardAmount { get; set; }
+  public long StrategySightRange { get; set; }
+  public int PortalId { get; set; }
+  public int HealValue { get; set; }
+  public int SwithId { get; set; }
+  public int BuffId { get; set; }
+  public bool Disposable { get; set; }
+
+  public CampaignStrategyObjectExcelT() {
+    this.Id = 0;
+    this.Key = 0;
+    this.Name = null;
+    this.PrefabName = null;
+    this.StrategyObjectType = SCHALE.Common.FlatData.StrategyObjectType.None;
+    this.StrategyRewardParcelType = SCHALE.Common.FlatData.ParcelType.None;
+    this.StrategyRewardID = 0;
+    this.StrategyRewardName = null;
+    this.StrategyRewardAmount = 0;
+    this.StrategySightRange = 0;
+    this.PortalId = 0;
+    this.HealValue = 0;
+    this.SwithId = 0;
+    this.BuffId = 0;
+    this.Disposable = false;
   }
 }
 

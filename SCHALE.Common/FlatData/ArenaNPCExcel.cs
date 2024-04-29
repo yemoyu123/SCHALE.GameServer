@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ArenaNPCExcel : IFlatbufferObject
@@ -121,6 +122,94 @@ public struct ArenaNPCExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ArenaNPCExcel> EndArenaNPCExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ArenaNPCExcel>(o);
+  }
+  public ArenaNPCExcelT UnPack() {
+    var _o = new ArenaNPCExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ArenaNPCExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ArenaNPC");
+    _o.UniqueId = TableEncryptionService.Convert(this.UniqueId, key);
+    _o.Rank = TableEncryptionService.Convert(this.Rank, key);
+    _o.NPCAccountLevel = TableEncryptionService.Convert(this.NPCAccountLevel, key);
+    _o.NPCLevel = TableEncryptionService.Convert(this.NPCLevel, key);
+    _o.NPCLevelDeviation = TableEncryptionService.Convert(this.NPCLevelDeviation, key);
+    _o.NPCStarGrade = TableEncryptionService.Convert(this.NPCStarGrade, key);
+    _o.UseTSS = TableEncryptionService.Convert(this.UseTSS, key);
+    _o.ExceptionCharacterRarities = new List<SCHALE.Common.FlatData.Rarity>();
+    for (var _j = 0; _j < this.ExceptionCharacterRaritiesLength; ++_j) {_o.ExceptionCharacterRarities.Add(TableEncryptionService.Convert(this.ExceptionCharacterRarities(_j), key));}
+    _o.ExceptionMainCharacterIds = new List<long>();
+    for (var _j = 0; _j < this.ExceptionMainCharacterIdsLength; ++_j) {_o.ExceptionMainCharacterIds.Add(TableEncryptionService.Convert(this.ExceptionMainCharacterIds(_j), key));}
+    _o.ExceptionSupportCharacterIds = new List<long>();
+    for (var _j = 0; _j < this.ExceptionSupportCharacterIdsLength; ++_j) {_o.ExceptionSupportCharacterIds.Add(TableEncryptionService.Convert(this.ExceptionSupportCharacterIds(_j), key));}
+    _o.ExceptionTSSIds = new List<long>();
+    for (var _j = 0; _j < this.ExceptionTSSIdsLength; ++_j) {_o.ExceptionTSSIds.Add(TableEncryptionService.Convert(this.ExceptionTSSIds(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ArenaNPCExcel> Pack(FlatBufferBuilder builder, ArenaNPCExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ArenaNPCExcel>);
+    var _ExceptionCharacterRarities = default(VectorOffset);
+    if (_o.ExceptionCharacterRarities != null) {
+      var __ExceptionCharacterRarities = _o.ExceptionCharacterRarities.ToArray();
+      _ExceptionCharacterRarities = CreateExceptionCharacterRaritiesVector(builder, __ExceptionCharacterRarities);
+    }
+    var _ExceptionMainCharacterIds = default(VectorOffset);
+    if (_o.ExceptionMainCharacterIds != null) {
+      var __ExceptionMainCharacterIds = _o.ExceptionMainCharacterIds.ToArray();
+      _ExceptionMainCharacterIds = CreateExceptionMainCharacterIdsVector(builder, __ExceptionMainCharacterIds);
+    }
+    var _ExceptionSupportCharacterIds = default(VectorOffset);
+    if (_o.ExceptionSupportCharacterIds != null) {
+      var __ExceptionSupportCharacterIds = _o.ExceptionSupportCharacterIds.ToArray();
+      _ExceptionSupportCharacterIds = CreateExceptionSupportCharacterIdsVector(builder, __ExceptionSupportCharacterIds);
+    }
+    var _ExceptionTSSIds = default(VectorOffset);
+    if (_o.ExceptionTSSIds != null) {
+      var __ExceptionTSSIds = _o.ExceptionTSSIds.ToArray();
+      _ExceptionTSSIds = CreateExceptionTSSIdsVector(builder, __ExceptionTSSIds);
+    }
+    return CreateArenaNPCExcel(
+      builder,
+      _o.UniqueId,
+      _o.Rank,
+      _o.NPCAccountLevel,
+      _o.NPCLevel,
+      _o.NPCLevelDeviation,
+      _o.NPCStarGrade,
+      _o.UseTSS,
+      _ExceptionCharacterRarities,
+      _ExceptionMainCharacterIds,
+      _ExceptionSupportCharacterIds,
+      _ExceptionTSSIds);
+  }
+}
+
+public class ArenaNPCExcelT
+{
+  public long UniqueId { get; set; }
+  public long Rank { get; set; }
+  public long NPCAccountLevel { get; set; }
+  public long NPCLevel { get; set; }
+  public long NPCLevelDeviation { get; set; }
+  public long NPCStarGrade { get; set; }
+  public bool UseTSS { get; set; }
+  public List<SCHALE.Common.FlatData.Rarity> ExceptionCharacterRarities { get; set; }
+  public List<long> ExceptionMainCharacterIds { get; set; }
+  public List<long> ExceptionSupportCharacterIds { get; set; }
+  public List<long> ExceptionTSSIds { get; set; }
+
+  public ArenaNPCExcelT() {
+    this.UniqueId = 0;
+    this.Rank = 0;
+    this.NPCAccountLevel = 0;
+    this.NPCLevel = 0;
+    this.NPCLevelDeviation = 0;
+    this.NPCStarGrade = 0;
+    this.UseTSS = false;
+    this.ExceptionCharacterRarities = null;
+    this.ExceptionMainCharacterIds = null;
+    this.ExceptionSupportCharacterIds = null;
+    this.ExceptionTSSIds = null;
   }
 }
 

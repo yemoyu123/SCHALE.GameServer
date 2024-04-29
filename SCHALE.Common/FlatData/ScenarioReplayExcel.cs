@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct ScenarioReplayExcel : IFlatbufferObject
@@ -89,6 +90,74 @@ public struct ScenarioReplayExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.ScenarioReplayExcel> EndScenarioReplayExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.ScenarioReplayExcel>(o);
+  }
+  public ScenarioReplayExcelT UnPack() {
+    var _o = new ScenarioReplayExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(ScenarioReplayExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("ScenarioReplay");
+    _o.ModeId = TableEncryptionService.Convert(this.ModeId, key);
+    _o.VolumeId = TableEncryptionService.Convert(this.VolumeId, key);
+    _o.ReplayType = TableEncryptionService.Convert(this.ReplayType, key);
+    _o.ChapterId = TableEncryptionService.Convert(this.ChapterId, key);
+    _o.EpisodeId = TableEncryptionService.Convert(this.EpisodeId, key);
+    _o.FrontScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.FrontScenarioGroupIdLength; ++_j) {_o.FrontScenarioGroupId.Add(TableEncryptionService.Convert(this.FrontScenarioGroupId(_j), key));}
+    _o.GroundId = TableEncryptionService.Convert(this.GroundId, key);
+    _o.BattleDuration = TableEncryptionService.Convert(this.BattleDuration, key);
+    _o.BackScenarioGroupId = new List<long>();
+    for (var _j = 0; _j < this.BackScenarioGroupIdLength; ++_j) {_o.BackScenarioGroupId.Add(TableEncryptionService.Convert(this.BackScenarioGroupId(_j), key));}
+  }
+  public static Offset<SCHALE.Common.FlatData.ScenarioReplayExcel> Pack(FlatBufferBuilder builder, ScenarioReplayExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.ScenarioReplayExcel>);
+    var _FrontScenarioGroupId = default(VectorOffset);
+    if (_o.FrontScenarioGroupId != null) {
+      var __FrontScenarioGroupId = _o.FrontScenarioGroupId.ToArray();
+      _FrontScenarioGroupId = CreateFrontScenarioGroupIdVector(builder, __FrontScenarioGroupId);
+    }
+    var _BackScenarioGroupId = default(VectorOffset);
+    if (_o.BackScenarioGroupId != null) {
+      var __BackScenarioGroupId = _o.BackScenarioGroupId.ToArray();
+      _BackScenarioGroupId = CreateBackScenarioGroupIdVector(builder, __BackScenarioGroupId);
+    }
+    return CreateScenarioReplayExcel(
+      builder,
+      _o.ModeId,
+      _o.VolumeId,
+      _o.ReplayType,
+      _o.ChapterId,
+      _o.EpisodeId,
+      _FrontScenarioGroupId,
+      _o.GroundId,
+      _o.BattleDuration,
+      _BackScenarioGroupId);
+  }
+}
+
+public class ScenarioReplayExcelT
+{
+  public long ModeId { get; set; }
+  public long VolumeId { get; set; }
+  public SCHALE.Common.FlatData.ScenarioModeReplayTypes ReplayType { get; set; }
+  public long ChapterId { get; set; }
+  public long EpisodeId { get; set; }
+  public List<long> FrontScenarioGroupId { get; set; }
+  public long GroundId { get; set; }
+  public long BattleDuration { get; set; }
+  public List<long> BackScenarioGroupId { get; set; }
+
+  public ScenarioReplayExcelT() {
+    this.ModeId = 0;
+    this.VolumeId = 0;
+    this.ReplayType = SCHALE.Common.FlatData.ScenarioModeReplayTypes.None;
+    this.ChapterId = 0;
+    this.EpisodeId = 0;
+    this.FrontScenarioGroupId = null;
+    this.GroundId = 0;
+    this.BattleDuration = 0;
+    this.BackScenarioGroupId = null;
   }
 }
 

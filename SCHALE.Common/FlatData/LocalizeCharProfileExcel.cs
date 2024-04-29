@@ -7,6 +7,7 @@ namespace SCHALE.Common.FlatData
 
 using global::System;
 using global::System.Collections.Generic;
+using global::SCHALE.Common.Crypto;
 using global::Google.FlatBuffers;
 
 public struct LocalizeCharProfileExcel : IFlatbufferObject
@@ -403,6 +404,215 @@ public struct LocalizeCharProfileExcel : IFlatbufferObject
   public static Offset<SCHALE.Common.FlatData.LocalizeCharProfileExcel> EndLocalizeCharProfileExcel(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<SCHALE.Common.FlatData.LocalizeCharProfileExcel>(o);
+  }
+  public LocalizeCharProfileExcelT UnPack() {
+    var _o = new LocalizeCharProfileExcelT();
+    this.UnPackTo(_o);
+    return _o;
+  }
+  public void UnPackTo(LocalizeCharProfileExcelT _o) {
+		byte[] key = TableEncryptionService.CreateKey("LocalizeCharProfile");
+    _o.CharacterId = TableEncryptionService.Convert(this.CharacterId, key);
+    _o.StatusMessageKr = TableEncryptionService.Convert(this.StatusMessageKr, key);
+    _o.StatusMessageJp = TableEncryptionService.Convert(this.StatusMessageJp, key);
+    _o.FullNameKr = TableEncryptionService.Convert(this.FullNameKr, key);
+    _o.FullNameJp = TableEncryptionService.Convert(this.FullNameJp, key);
+    _o.FamilyNameKr = TableEncryptionService.Convert(this.FamilyNameKr, key);
+    _o.FamilyNameRubyKr = TableEncryptionService.Convert(this.FamilyNameRubyKr, key);
+    _o.PersonalNameKr = TableEncryptionService.Convert(this.PersonalNameKr, key);
+    _o.PersonalNameRubyKr = TableEncryptionService.Convert(this.PersonalNameRubyKr, key);
+    _o.FamilyNameJp = TableEncryptionService.Convert(this.FamilyNameJp, key);
+    _o.FamilyNameRubyJp = TableEncryptionService.Convert(this.FamilyNameRubyJp, key);
+    _o.PersonalNameJp = TableEncryptionService.Convert(this.PersonalNameJp, key);
+    _o.PersonalNameRubyJp = TableEncryptionService.Convert(this.PersonalNameRubyJp, key);
+    _o.SchoolYearKr = TableEncryptionService.Convert(this.SchoolYearKr, key);
+    _o.SchoolYearJp = TableEncryptionService.Convert(this.SchoolYearJp, key);
+    _o.CharacterAgeKr = TableEncryptionService.Convert(this.CharacterAgeKr, key);
+    _o.CharacterAgeJp = TableEncryptionService.Convert(this.CharacterAgeJp, key);
+    _o.BirthDay = TableEncryptionService.Convert(this.BirthDay, key);
+    _o.BirthdayKr = TableEncryptionService.Convert(this.BirthdayKr, key);
+    _o.BirthdayJp = TableEncryptionService.Convert(this.BirthdayJp, key);
+    _o.CharHeightKr = TableEncryptionService.Convert(this.CharHeightKr, key);
+    _o.CharHeightJp = TableEncryptionService.Convert(this.CharHeightJp, key);
+    _o.DesignerNameKr = TableEncryptionService.Convert(this.DesignerNameKr, key);
+    _o.DesignerNameJp = TableEncryptionService.Convert(this.DesignerNameJp, key);
+    _o.IllustratorNameKr = TableEncryptionService.Convert(this.IllustratorNameKr, key);
+    _o.IllustratorNameJp = TableEncryptionService.Convert(this.IllustratorNameJp, key);
+    _o.CharacterVoiceKr = TableEncryptionService.Convert(this.CharacterVoiceKr, key);
+    _o.CharacterVoiceJp = TableEncryptionService.Convert(this.CharacterVoiceJp, key);
+    _o.HobbyKr = TableEncryptionService.Convert(this.HobbyKr, key);
+    _o.HobbyJp = TableEncryptionService.Convert(this.HobbyJp, key);
+    _o.WeaponNameKr = TableEncryptionService.Convert(this.WeaponNameKr, key);
+    _o.WeaponDescKr = TableEncryptionService.Convert(this.WeaponDescKr, key);
+    _o.WeaponNameJp = TableEncryptionService.Convert(this.WeaponNameJp, key);
+    _o.WeaponDescJp = TableEncryptionService.Convert(this.WeaponDescJp, key);
+    _o.ProfileIntroductionKr = TableEncryptionService.Convert(this.ProfileIntroductionKr, key);
+    _o.ProfileIntroductionJp = TableEncryptionService.Convert(this.ProfileIntroductionJp, key);
+    _o.CharacterSSRNewKr = TableEncryptionService.Convert(this.CharacterSSRNewKr, key);
+    _o.CharacterSSRNewJp = TableEncryptionService.Convert(this.CharacterSSRNewJp, key);
+  }
+  public static Offset<SCHALE.Common.FlatData.LocalizeCharProfileExcel> Pack(FlatBufferBuilder builder, LocalizeCharProfileExcelT _o) {
+    if (_o == null) return default(Offset<SCHALE.Common.FlatData.LocalizeCharProfileExcel>);
+    var _StatusMessageKr = _o.StatusMessageKr == null ? default(StringOffset) : builder.CreateString(_o.StatusMessageKr);
+    var _StatusMessageJp = _o.StatusMessageJp == null ? default(StringOffset) : builder.CreateString(_o.StatusMessageJp);
+    var _FullNameKr = _o.FullNameKr == null ? default(StringOffset) : builder.CreateString(_o.FullNameKr);
+    var _FullNameJp = _o.FullNameJp == null ? default(StringOffset) : builder.CreateString(_o.FullNameJp);
+    var _FamilyNameKr = _o.FamilyNameKr == null ? default(StringOffset) : builder.CreateString(_o.FamilyNameKr);
+    var _FamilyNameRubyKr = _o.FamilyNameRubyKr == null ? default(StringOffset) : builder.CreateString(_o.FamilyNameRubyKr);
+    var _PersonalNameKr = _o.PersonalNameKr == null ? default(StringOffset) : builder.CreateString(_o.PersonalNameKr);
+    var _PersonalNameRubyKr = _o.PersonalNameRubyKr == null ? default(StringOffset) : builder.CreateString(_o.PersonalNameRubyKr);
+    var _FamilyNameJp = _o.FamilyNameJp == null ? default(StringOffset) : builder.CreateString(_o.FamilyNameJp);
+    var _FamilyNameRubyJp = _o.FamilyNameRubyJp == null ? default(StringOffset) : builder.CreateString(_o.FamilyNameRubyJp);
+    var _PersonalNameJp = _o.PersonalNameJp == null ? default(StringOffset) : builder.CreateString(_o.PersonalNameJp);
+    var _PersonalNameRubyJp = _o.PersonalNameRubyJp == null ? default(StringOffset) : builder.CreateString(_o.PersonalNameRubyJp);
+    var _SchoolYearKr = _o.SchoolYearKr == null ? default(StringOffset) : builder.CreateString(_o.SchoolYearKr);
+    var _SchoolYearJp = _o.SchoolYearJp == null ? default(StringOffset) : builder.CreateString(_o.SchoolYearJp);
+    var _CharacterAgeKr = _o.CharacterAgeKr == null ? default(StringOffset) : builder.CreateString(_o.CharacterAgeKr);
+    var _CharacterAgeJp = _o.CharacterAgeJp == null ? default(StringOffset) : builder.CreateString(_o.CharacterAgeJp);
+    var _BirthDay = _o.BirthDay == null ? default(StringOffset) : builder.CreateString(_o.BirthDay);
+    var _BirthdayKr = _o.BirthdayKr == null ? default(StringOffset) : builder.CreateString(_o.BirthdayKr);
+    var _BirthdayJp = _o.BirthdayJp == null ? default(StringOffset) : builder.CreateString(_o.BirthdayJp);
+    var _CharHeightKr = _o.CharHeightKr == null ? default(StringOffset) : builder.CreateString(_o.CharHeightKr);
+    var _CharHeightJp = _o.CharHeightJp == null ? default(StringOffset) : builder.CreateString(_o.CharHeightJp);
+    var _DesignerNameKr = _o.DesignerNameKr == null ? default(StringOffset) : builder.CreateString(_o.DesignerNameKr);
+    var _DesignerNameJp = _o.DesignerNameJp == null ? default(StringOffset) : builder.CreateString(_o.DesignerNameJp);
+    var _IllustratorNameKr = _o.IllustratorNameKr == null ? default(StringOffset) : builder.CreateString(_o.IllustratorNameKr);
+    var _IllustratorNameJp = _o.IllustratorNameJp == null ? default(StringOffset) : builder.CreateString(_o.IllustratorNameJp);
+    var _CharacterVoiceKr = _o.CharacterVoiceKr == null ? default(StringOffset) : builder.CreateString(_o.CharacterVoiceKr);
+    var _CharacterVoiceJp = _o.CharacterVoiceJp == null ? default(StringOffset) : builder.CreateString(_o.CharacterVoiceJp);
+    var _HobbyKr = _o.HobbyKr == null ? default(StringOffset) : builder.CreateString(_o.HobbyKr);
+    var _HobbyJp = _o.HobbyJp == null ? default(StringOffset) : builder.CreateString(_o.HobbyJp);
+    var _WeaponNameKr = _o.WeaponNameKr == null ? default(StringOffset) : builder.CreateString(_o.WeaponNameKr);
+    var _WeaponDescKr = _o.WeaponDescKr == null ? default(StringOffset) : builder.CreateString(_o.WeaponDescKr);
+    var _WeaponNameJp = _o.WeaponNameJp == null ? default(StringOffset) : builder.CreateString(_o.WeaponNameJp);
+    var _WeaponDescJp = _o.WeaponDescJp == null ? default(StringOffset) : builder.CreateString(_o.WeaponDescJp);
+    var _ProfileIntroductionKr = _o.ProfileIntroductionKr == null ? default(StringOffset) : builder.CreateString(_o.ProfileIntroductionKr);
+    var _ProfileIntroductionJp = _o.ProfileIntroductionJp == null ? default(StringOffset) : builder.CreateString(_o.ProfileIntroductionJp);
+    var _CharacterSSRNewKr = _o.CharacterSSRNewKr == null ? default(StringOffset) : builder.CreateString(_o.CharacterSSRNewKr);
+    var _CharacterSSRNewJp = _o.CharacterSSRNewJp == null ? default(StringOffset) : builder.CreateString(_o.CharacterSSRNewJp);
+    return CreateLocalizeCharProfileExcel(
+      builder,
+      _o.CharacterId,
+      _StatusMessageKr,
+      _StatusMessageJp,
+      _FullNameKr,
+      _FullNameJp,
+      _FamilyNameKr,
+      _FamilyNameRubyKr,
+      _PersonalNameKr,
+      _PersonalNameRubyKr,
+      _FamilyNameJp,
+      _FamilyNameRubyJp,
+      _PersonalNameJp,
+      _PersonalNameRubyJp,
+      _SchoolYearKr,
+      _SchoolYearJp,
+      _CharacterAgeKr,
+      _CharacterAgeJp,
+      _BirthDay,
+      _BirthdayKr,
+      _BirthdayJp,
+      _CharHeightKr,
+      _CharHeightJp,
+      _DesignerNameKr,
+      _DesignerNameJp,
+      _IllustratorNameKr,
+      _IllustratorNameJp,
+      _CharacterVoiceKr,
+      _CharacterVoiceJp,
+      _HobbyKr,
+      _HobbyJp,
+      _WeaponNameKr,
+      _WeaponDescKr,
+      _WeaponNameJp,
+      _WeaponDescJp,
+      _ProfileIntroductionKr,
+      _ProfileIntroductionJp,
+      _CharacterSSRNewKr,
+      _CharacterSSRNewJp);
+  }
+}
+
+public class LocalizeCharProfileExcelT
+{
+  public long CharacterId { get; set; }
+  public string StatusMessageKr { get; set; }
+  public string StatusMessageJp { get; set; }
+  public string FullNameKr { get; set; }
+  public string FullNameJp { get; set; }
+  public string FamilyNameKr { get; set; }
+  public string FamilyNameRubyKr { get; set; }
+  public string PersonalNameKr { get; set; }
+  public string PersonalNameRubyKr { get; set; }
+  public string FamilyNameJp { get; set; }
+  public string FamilyNameRubyJp { get; set; }
+  public string PersonalNameJp { get; set; }
+  public string PersonalNameRubyJp { get; set; }
+  public string SchoolYearKr { get; set; }
+  public string SchoolYearJp { get; set; }
+  public string CharacterAgeKr { get; set; }
+  public string CharacterAgeJp { get; set; }
+  public string BirthDay { get; set; }
+  public string BirthdayKr { get; set; }
+  public string BirthdayJp { get; set; }
+  public string CharHeightKr { get; set; }
+  public string CharHeightJp { get; set; }
+  public string DesignerNameKr { get; set; }
+  public string DesignerNameJp { get; set; }
+  public string IllustratorNameKr { get; set; }
+  public string IllustratorNameJp { get; set; }
+  public string CharacterVoiceKr { get; set; }
+  public string CharacterVoiceJp { get; set; }
+  public string HobbyKr { get; set; }
+  public string HobbyJp { get; set; }
+  public string WeaponNameKr { get; set; }
+  public string WeaponDescKr { get; set; }
+  public string WeaponNameJp { get; set; }
+  public string WeaponDescJp { get; set; }
+  public string ProfileIntroductionKr { get; set; }
+  public string ProfileIntroductionJp { get; set; }
+  public string CharacterSSRNewKr { get; set; }
+  public string CharacterSSRNewJp { get; set; }
+
+  public LocalizeCharProfileExcelT() {
+    this.CharacterId = 0;
+    this.StatusMessageKr = null;
+    this.StatusMessageJp = null;
+    this.FullNameKr = null;
+    this.FullNameJp = null;
+    this.FamilyNameKr = null;
+    this.FamilyNameRubyKr = null;
+    this.PersonalNameKr = null;
+    this.PersonalNameRubyKr = null;
+    this.FamilyNameJp = null;
+    this.FamilyNameRubyJp = null;
+    this.PersonalNameJp = null;
+    this.PersonalNameRubyJp = null;
+    this.SchoolYearKr = null;
+    this.SchoolYearJp = null;
+    this.CharacterAgeKr = null;
+    this.CharacterAgeJp = null;
+    this.BirthDay = null;
+    this.BirthdayKr = null;
+    this.BirthdayJp = null;
+    this.CharHeightKr = null;
+    this.CharHeightJp = null;
+    this.DesignerNameKr = null;
+    this.DesignerNameJp = null;
+    this.IllustratorNameKr = null;
+    this.IllustratorNameJp = null;
+    this.CharacterVoiceKr = null;
+    this.CharacterVoiceJp = null;
+    this.HobbyKr = null;
+    this.HobbyJp = null;
+    this.WeaponNameKr = null;
+    this.WeaponDescKr = null;
+    this.WeaponNameJp = null;
+    this.WeaponDescJp = null;
+    this.ProfileIntroductionKr = null;
+    this.ProfileIntroductionJp = null;
+    this.CharacterSSRNewKr = null;
+    this.CharacterSSRNewJp = null;
   }
 }
 
