@@ -184,6 +184,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     AccountServerId = account.ServerId,
                     EchelonNumber = 1,
+                    EchelonType = EchelonType.Adventure,
                     LeaderServerId = newCharacters[0].ServerId,
                     MainSlotServerIds = newCharacters.Take(3).Select(x => x.ServerId).Append(0).ToList(),
                     SupportSlotServerIds = [0, 0]
