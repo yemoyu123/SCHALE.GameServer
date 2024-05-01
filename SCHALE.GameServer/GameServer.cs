@@ -5,6 +5,7 @@ using System.Reflection;
 using SCHALE.Common.Database;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
 using SCHALE.GameServer.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace SCHALE.GameServer
 {
@@ -13,13 +14,15 @@ namespace SCHALE.GameServer
         public static void Main(string[] args)
         {
             var config = new ConfigurationBuilder()
-                .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)
+                .SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!)
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.Local.json", true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
                 .Build();
 
             {
-                var logFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "logs", "log.txt");
+                var logFilePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory)!, "logs", "log.txt");
+
                 if (File.Exists(logFilePath))
                 {
                     var prevLogFilePath = Path.Combine(Path.GetDirectoryName(logFilePath)!, "log-prev.txt");
@@ -28,6 +31,7 @@ namespace SCHALE.GameServer
 
                     File.Move(logFilePath, prevLogFilePath);
                 }
+
                 Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo.File(logFilePath, restrictedToMinimumLevel: LogEventLevel.Verbose, shared: true)
@@ -44,10 +48,11 @@ namespace SCHALE.GameServer
                 builder.Host.UseSerilog();
 
                 // Add services to the container.
+                builder.Services.AddSQLServerProvider(config.GetConnectionString("SQLServer") ?? throw new ArgumentNullException("ConnectionStrings/SQLServer in appsettings is missing"));
                 builder.Services.AddControllers();
-                builder.Services.AddMongoDBProvider(config.GetConnectionString("MongoDB") ?? throw new ArgumentNullException("ConnectionStrings/MongoDB in appsettings is missing"));
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
+                builder.Services.AddExcelTableService();
 
                 // Add all Handler Groups
                 var handlerGroups = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(ProtocolHandlerBase)));
@@ -56,6 +61,13 @@ namespace SCHALE.GameServer
                     builder.Services.AddProtocolHandlerGroupByType(handlerGroup);
 
                 var app = builder.Build();
+
+                using (var scope = app.Services.CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetRequiredService<SCHALEContext>();
+                    if (context.Database.GetPendingMigrations().Any())
+                        context.Database.Migrate();
+                }
 
                 // Configure the HTTP request pipeline.
                 app.UseAuthorization();

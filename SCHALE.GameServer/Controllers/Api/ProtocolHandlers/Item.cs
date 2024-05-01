@@ -18,11 +18,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Item_List)]
         public ResponsePacket ListHandler(ItemListRequest req)
         {
+            var account = sessionKeyService.GetAccount(req.SessionKey);
+
             return new ItemListResponse()
             {
-                ItemDBs = [],
-                ExpiryItemDBs = [],
-                ServerNotification = ServerNotificationFlag.HasUnreadMail,
+                ItemDBs = [.. account.Items],
+                ExpiryItemDBs = []
             };
         }
     }

@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
 using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Parcel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.Database
 {
@@ -185,6 +185,18 @@ namespace SCHALE.Common.Database
 
     public class AccountDB
     {
+        [JsonIgnore]
+        public virtual ICollection<ItemDB> Items { get; }
+        
+        [JsonIgnore]
+        public virtual ICollection<CharacterDB> Characters { get; }
+        
+        [JsonIgnore]
+        public virtual ICollection<MissionProgressDB> MissionProgresses { get; }
+        
+        [JsonIgnore]
+        public virtual ICollection<EchelonDB> Echelons { get; }
+
         public AccountDB() { }
 
         public AccountDB(long publisherAccountId)
@@ -197,14 +209,13 @@ namespace SCHALE.Common.Database
         }
 
         [Key]
-        [Column("_id")]
         public long ServerId { get; set; }
         
-        public string Nickname { get; set; }
+        public string? Nickname { get; set; }
         
-        public string CallName { get; set; }
+        public string? CallName { get; set; }
         
-        public string DevId { get; set; }
+        public string? DevId { get; set; }
         
         public AccountState State { get; set; }
         
@@ -212,7 +223,7 @@ namespace SCHALE.Common.Database
         
         public long Exp { get; set; }
         
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         
         public int LobbyMode { get; set; }
         
@@ -222,7 +233,7 @@ namespace SCHALE.Common.Database
         
         public DateTime LastConnectTime { get; set; }
         
-        public DateTime BirthDay { get; set; }
+        public DateTime? BirthDay { get; set; }
         
         public DateTime CallNameUpdateTime { get; set; }
         
@@ -429,6 +440,8 @@ namespace SCHALE.Common.Database
         public int CafeRank { get; set; }
         public DateTime LastUpdate { get; set; }
         public DateTime? LastSummonDate { get; set; }
+
+        [NotMapped]
         public bool IsNew { get; set; }
         public Dictionary<long, CafeCharacterDB> CafeVisitCharacterDBs { get; set; }
         public List<FurnitureDB> FurnitureDBs { get; set; }
@@ -560,11 +573,20 @@ namespace SCHALE.Common.Database
 
     public class CharacterDB : ParcelBase
     {
+        [NotMapped]
         public override ParcelType Type { get => ParcelType.Character; }
 
         [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
+        public long AccountServerId { get; set; }
+
+        [JsonIgnore]
+        [NotMapped]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
 
+        [Key]
         public long ServerId { get; set; }
         public long UniqueId { get; set; }
         public int StarGrade { get; set; }
@@ -577,12 +599,14 @@ namespace SCHALE.Common.Database
         public int PassiveSkillLevel { get; set; }
         public int ExtraPassiveSkillLevel { get; set; }
         public int LeaderSkillLevel { get; set; }
+
+        [NotMapped]
         public bool IsNew { get; set; }
         public bool IsLocked { get; set; }
         public bool IsFavorite { get; set; }
-        public List<long> EquipmentServerIds { get; set; }
-        public Dictionary<int, int> PotentialStats { get; set; } = new() { };
-        public Dictionary<int, long> EquipmentSlotAndDBIds { get; set; }
+        public List<long> EquipmentServerIds { get; set; } = [];
+        public Dictionary<int, int> PotentialStats { get; set; } = [];
+        public Dictionary<int, long> EquipmentSlotAndDBIds { get; set; } = [];
     }
 
 
@@ -832,11 +856,18 @@ namespace SCHALE.Common.Database
     public abstract class ConsumableItemBaseDB : ParcelBase
     {
         [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
         public abstract bool CanConsume { get; }
 
         [JsonIgnore]
         public ParcelKeyPair Key { get; }
 
+        [JsonIgnore]
+        public long AccountServerId { get; set; }
+
+        [Key]
         public long ServerId { get; set; }
 
         public long UniqueId { get; set; }
@@ -1002,22 +1033,23 @@ namespace SCHALE.Common.Database
 
     public class EchelonDB
     {
+        [Key]
+        [JsonIgnore]
+        public long ServerId { get; set; }
+
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
         public long AccountServerId { get; set; }
         public EchelonType EchelonType { get; set; }
         public long EchelonNumber { get; set; }
         public EchelonExtensionType ExtensionType { get; set; }
         public long LeaderServerId { get; set; }
-        public int MainSlotCount { get; set; }
-        public int SupportSlotCount { get; set; }
-        public List<long> MainSlotServerIds { get; set; }
-        public List<long> SupportSlotServerIds { get; set; }
+        public List<long> MainSlotServerIds { get; set; } = [];
+        public List<long> SupportSlotServerIds { get; set; } = [];
         public long TSSInteractionServerId { get; set; }
         public EchelonStatusFlag UsingFlag { get; set; }
-        public bool IsUsing { get; set; }
-        public List<long> AllCharacterServerIds { get; set; }
-        public List<long> AllCharacterWithoutTSSServerIds { get; set; }
-        public List<long> BattleCharacterServerIds { get; set; }
-        public List<long> SkillCardMulliganCharacterIds { get; set; }
+        public List<long> SkillCardMulliganCharacterIds { get; set; } = [];
     }
 
 
@@ -1088,6 +1120,8 @@ namespace SCHALE.Common.Database
         public long Exp { get; set; }
         public int Tier { get; set; }
         public long BoundCharacterServerId { get; set; }
+
+        [NotMapped]
         public bool IsNew { get; set; }
         public bool IsLocked { get; set; }
     }
@@ -1464,15 +1498,20 @@ namespace SCHALE.Common.Database
 
     public class ItemDB : ConsumableItemBaseDB
     {
-        public override ParcelType Type { get => ParcelType.Item; }
+        [NotMapped]
+        public override ParcelType Type => ParcelType.Item;
 
+        [NotMapped]
         [JsonIgnore]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
 
+        [NotMapped]
         [JsonIgnore]
-        public override bool CanConsume { get; }
+        public override bool CanConsume => true;
 
+        [NotMapped]
         public bool IsNew { get; set; }
+
         public bool IsLocked { get; set; }
     }
 
@@ -1566,9 +1605,11 @@ namespace SCHALE.Common.Database
     public class MissionProgressDB
     {
         [Key]
-        [Column("_id")]
         [JsonIgnore]
         public long ServerId { get; set; }
+
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
 
         [JsonIgnore]
         public long AccountServerId { get; set; }
@@ -1576,22 +1617,7 @@ namespace SCHALE.Common.Database
         public long MissionUniqueId { get; set; }
         public bool Complete { get; set; }
         public DateTime StartTime { get; set; }
-
-        [JsonIgnore]
-        public string SerializedProgressParameters { get; private set; } = "{}";
-
-        [NotMapped]
-        public Dictionary<long, long> ProgressParameters
-        {
-            get
-            {
-                return JsonConvert.DeserializeObject<Dictionary<long, long>>(SerializedProgressParameters) ?? [];
-            }
-            set
-            {
-                SerializedProgressParameters = JsonConvert.SerializeObject(value);
-            }
-        }
+        public Dictionary<long, long> ProgressParameters { get; set; } = [];
     }
 
 

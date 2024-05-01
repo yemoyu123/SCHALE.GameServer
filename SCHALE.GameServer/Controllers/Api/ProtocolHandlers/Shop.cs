@@ -1,16 +1,16 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.GameServer.Services;
-using Serilog;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
     public class Shop : ProtocolHandlerBase
     {
-        private ISessionKeyService sessionKeyService;
-        private SCHALEContext context;
+        private readonly ISessionKeyService sessionKeyService;
+        private readonly SCHALEContext context;
 
-        public List<long> SavedGachaResults { get; set; } // temp storage until gacha management
+        // TODO: temp storage until gacha management
+        public List<long> SavedGachaResults { get; set; } = [];
 
         public Shop(IProtocolHandlerFactory protocolHandlerFactory, ISessionKeyService _sessionKeyService, SCHALEContext _context) : base(protocolHandlerFactory)
         {
@@ -21,14 +21,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Shop_BeforehandGachaGet)]
         public ResponsePacket BeforehandGachaGetHandler(ShopBeforehandGachaGetRequest req)
         {
-            return new ShopBeforehandGachaGetResponse()
-            {
-                SessionKey = new()
-                {
-                    MxToken = req.SessionKey.MxToken,
-                    AccountServerId = req.SessionKey.AccountServerId,
-                }
-            };
+            return new ShopBeforehandGachaGetResponse();
         }
 
         [ProtocolHandler(Protocol.Shop_BeforehandGachaRun)]

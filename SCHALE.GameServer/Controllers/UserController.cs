@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SCHALE.Common.Database;
-using SCHALE.Common.Database.Models;
 using SCHALE.GameServer.Models;
 
 namespace SCHALE.GameServer.Controllers
@@ -35,8 +34,9 @@ namespace SCHALE.GameServer.Controllers
             if (account is null)
             {
                 account = new() { DeviceId = deviceId, Token = Guid.NewGuid().ToString() };
-                context.Add(account);
+                context.GuestAccounts.Add(account);
                 context.SaveChanges();
+
                 rsp.IsNew = 1;
             }
 

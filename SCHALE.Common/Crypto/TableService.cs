@@ -40,7 +40,7 @@ namespace SCHALE.Common.Crypto
         {
             foreach (var type in Assembly.GetAssembly(typeof(AcademyFavorScheduleExcelTable))!.GetTypes().Where(t => t.IsAssignableTo(typeof(IFlatbufferObject)) && t.Name.EndsWith("ExcelTable")))
             {
-                var bytesFilePath = Path.Join(bytesDir, $"{type.Name}.bytes");
+                var bytesFilePath = Path.Join(bytesDir, $"{type.Name.ToLower()}.bytes");
                 if (!File.Exists(bytesFilePath))
                 {
                     Console.WriteLine($"bytes files for {type.Name} not found. skipping...");

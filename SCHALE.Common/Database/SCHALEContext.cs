@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using MongoDB.EntityFrameworkCore.Extensions;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 using SCHALE.Common.Database.Models;
 
 namespace SCHALE.Common.Database
@@ -11,7 +11,15 @@ namespace SCHALE.Common.Database
         public DbSet<GuestAccount> GuestAccounts { get; set; }
         public DbSet<AccountDB> Accounts { get; set; }
         public DbSet<MissionProgressDB> MissionProgresses { get; set; }
-        public DbSet<Counter> Counters { get; set; }
+        public DbSet<ItemDB> Items { get; set; }
+        public DbSet<CharacterDB> Characters { get; set; }
+        public DbSet<EchelonDB> Echelons { get; set; }
+        public DbSet<AccountTutorial> AccountTutorials { get; set; }
+
+        public static SCHALEContext Create(string connectionString) =>
+            new(new DbContextOptionsBuilder<SCHALEContext>()
+                .UseSqlServer(connectionString)
+                .Options);
 
         public SCHALEContext(DbContextOptions<SCHALEContext> options) : base(options)
         {
@@ -21,59 +29,53 @@ namespace SCHALE.Common.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<GuestAccount>().Property(x => x.Uid).HasValueGenerator<GuestAccountAutoIncrementValueGenerator>();
-            modelBuilder.Entity<GuestAccount>().ToCollection("guest_accounts");
+            modelBuilder.Entity<GuestAccount>().Property(x => x.Uid).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<AccountDB>().Property(x => x.ServerId).HasValueGenerator<AccountAutoIncrementValueGenerator>();
-            modelBuilder.Entity<AccountDB>().ToCollection("accounts");
+            modelBuilder.Entity<AccountDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.Items)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.Characters)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.MissionProgresses)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
 
-            modelBuilder.Entity<MissionProgressDB>().Property(x => x.ServerId).HasValueGenerator<MissionProgressAutoIncrementValueGenerator>();
-            modelBuilder.Entity<MissionProgressDB>().ToCollection("mission_progresses");
+            modelBuilder.Entity<ItemDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<EchelonDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Counter>().ToCollection("counters");
+            modelBuilder.Entity<CharacterDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<CharacterDB>().Property(x => x.EquipmentSlotAndDBIds).HasJsonConversion();
+            modelBuilder.Entity<CharacterDB>().Property(x => x.PotentialStats).HasJsonConversion();
+
+            modelBuilder.Entity<AccountTutorial>().Property(x => x.AccountServerId).ValueGeneratedNever();
+
+            modelBuilder.Entity<MissionProgressDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<MissionProgressDB>().Property(x => x.ProgressParameters).HasJsonConversion();
         }
+    }
 
-        private class AccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
+    public static class PropertyBuilderExtensions
+    {
+        public static PropertyBuilder<T> HasJsonConversion<T>(this PropertyBuilder<T> propertyBuilder) where T : class, new()
         {
-            protected override string Collection => "account";
-        }
+            ValueConverter<T, string> converter = new
+            (
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<T>(v) ?? new T()
+            );
 
-        private class GuestAccountAutoIncrementValueGenerator : AutoIncrementValueGenerator
-        {
-            protected override string Collection => "guest_account";
-        }
+            propertyBuilder.HasConversion(converter);
+            propertyBuilder.Metadata.SetValueConverter(converter);
 
-        private class MissionProgressAutoIncrementValueGenerator : AutoIncrementValueGenerator
-        {
-            protected override string Collection => "mission_progress";
-        }
-
-        private abstract class AutoIncrementValueGenerator : ValueGenerator<long>
-        {
-            protected abstract string Collection { get; }
-            public override bool GeneratesTemporaryValues => false;
-
-            public override long Next(EntityEntry entry)
-            {
-                if (entry.Context is not SCHALEContext)
-                {
-                    throw new ArgumentNullException($"{nameof(AutoIncrementValueGenerator)} is only implemented for {nameof(SCHALEContext)}");
-                }
-
-                var context = ((SCHALEContext)entry.Context);
-                var counter = context.Counters.SingleOrDefault(x => x.Id == Collection);
-
-                if (counter is null)
-                {
-                    counter = new Counter() { Id = Collection, Seq = 0 };
-                    context.Add(counter);
-                }
-
-                counter.Seq++;
-                context.SaveChanges();
-
-                return counter.Seq;
-            }
+            return propertyBuilder;
         }
     }
 }

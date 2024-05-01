@@ -14,22 +14,13 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             Log.Information($"ScenarioSkipRequest SkipPointScriptCount: " + req.SkipPointScriptCount);
 
             // skip story doesn't work yet, probably need to implement missiondb 
-            return new ScenarioSkipResponse()
-            {
-
-            };
+            return new ScenarioSkipResponse();
         }
 
         [ProtocolHandler(Protocol.Scenario_Select)]
         public ResponsePacket SelectHandler(ScenarioSelectRequest req)
         {
-
-            return new ScenarioSelectResponse()
-            {
-
-            };
+            return new ScenarioSelectResponse();
         }
-
-
     }
 }

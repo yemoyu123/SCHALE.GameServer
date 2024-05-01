@@ -17,8 +17,11 @@ namespace SCHALE.GameServer.Services
             context = _context;
         }
 
-        public AccountDB GetAccount(SessionKey sessionKey)
+        public AccountDB GetAccount(SessionKey? sessionKey)
         {
+            if (sessionKey is null)
+                throw new WebAPIException(WebAPIErrorCode.InvalidSession, "SessionKey not received");
+
             if (sessions.TryGetValue(sessionKey.AccountServerId, out Guid token) && token.ToString() == sessionKey.MxToken)
             {
                 var account = context.Accounts.SingleOrDefault(x => x.ServerId == sessionKey.AccountServerId);
@@ -53,7 +56,7 @@ namespace SCHALE.GameServer.Services
         }
     }
 
-    internal static class ServiceExtensions
+    internal static class SessionKeyServiceExtensions
     {
         public static void AddMemorySessionKeyService(this IServiceCollection services)
         {
@@ -64,6 +67,6 @@ namespace SCHALE.GameServer.Services
     public interface ISessionKeyService
     {
         public SessionKey? Create(long publisherAccountId);
-        public AccountDB GetAccount(SessionKey sessionKey);
+        public AccountDB GetAccount(SessionKey? sessionKey);
     }
 }

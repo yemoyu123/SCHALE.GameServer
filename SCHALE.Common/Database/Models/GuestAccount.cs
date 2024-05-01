@@ -7,7 +7,6 @@ namespace SCHALE.Common.Database.Models
     public class GuestAccount
     {
         [Key]
-        [Column("_id")]
         public long Uid { get; set; }
 
         public string DeviceId { get; set; }
