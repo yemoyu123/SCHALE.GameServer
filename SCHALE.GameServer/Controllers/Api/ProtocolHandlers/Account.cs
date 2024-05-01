@@ -185,7 +185,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     AccountServerId = account.ServerId,
                     EchelonNumber = 1,
                     LeaderServerId = newCharacters[0].ServerId,
-                    MainSlotServerIds = newCharacters.Take(3).Select(x => x.ServerId).Append(0).ToList()
+                    MainSlotServerIds = newCharacters.Take(3).Select(x => x.ServerId).Append(0).ToList(),
+                    SupportSlotServerIds = [0, 0]
                 });
             }
             context.SaveChanges();
