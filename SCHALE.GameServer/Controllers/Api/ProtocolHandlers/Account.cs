@@ -183,6 +183,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 context.Echelons.Add(new()
                 {
                     AccountServerId = account.ServerId,
+                    EchelonNumber = 1,
                     LeaderServerId = newCharacters[0].ServerId,
                     MainSlotServerIds = newCharacters.Take(3).Select(x => x.ServerId).Append(0).ToList()
                 });
@@ -286,18 +287,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 },
                 EchelonListResponse = new EchelonListResponse()
                 {
-                    EchelonDBs = [
-                        new EchelonDB()
-                        {
-                            AccountServerId = req.AccountId,
-                            EchelonType = EchelonType.Adventure,
-                            EchelonNumber = 1,
-                            LeaderServerId = 1,
-                            MainSlotServerIds = [1, 2, 3, 0 ],
-                            SupportSlotServerIds = [ 444, 0],
-                            SkillCardMulliganCharacterIds = []
-                        }
-                    ]
+                    EchelonDBs = [.. account.Echelons]
                 },
                 EventContentPermanentListResponse = new EventContentPermanentListResponse()
                 {

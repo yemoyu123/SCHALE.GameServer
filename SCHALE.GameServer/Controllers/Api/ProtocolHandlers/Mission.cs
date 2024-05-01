@@ -19,7 +19,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Mission_List)]
         public ResponsePacket ListHandler(MissionListRequest req)
         {
-            Log.Information($"MissionListRequest EventContentId: {req.EventContentId}");
+            Log.Debug($"MissionListRequest EventContentId: {req.EventContentId}");
 
             var missionProgresses = context.MissionProgresses.Where(x => x.AccountServerId == sessionKeyService.GetAccount(req.SessionKey).ServerId).ToList();
 
