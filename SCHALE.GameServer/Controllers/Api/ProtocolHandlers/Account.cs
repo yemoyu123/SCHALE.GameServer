@@ -170,6 +170,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     PotentialStats = { { 1, 0 }, { 2, 0 }, { 3, 0 } }
                 };
             }).ToList();
+
             account.AddCharacters(context, [.. newCharacters]);
             context.SaveChanges();
 
@@ -218,6 +219,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             var account = sessionKeyService.GetAccount(req.SessionKey);
 
+            // add everything manually
+            //AddAllCharacters(account);
+            //AddAllEquipment(account);
+            //AddAllItems(account);
+            //AddAllWeapons(account);
+
             return new AccountLoginSyncResponse()
             {
                 AccountCurrencySyncResponse = new AccountCurrencySyncResponse()
@@ -230,8 +237,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                         {
                             { CurrencyTypes.Gem, long.MaxValue }, // gacha currency 600
                             { CurrencyTypes.GemPaid, 0 },
-                            { CurrencyTypes.GemBonus, 89473598435 }, // default blue gem?
-                            { CurrencyTypes.Gold, long.MaxValue }, // credit 10,000
+                            { CurrencyTypes.GemBonus, long.MaxValue }, // default blue gem?
+                            { CurrencyTypes.Gold, 962_350_000 }, // credit 10,000
                             { CurrencyTypes.ActionPoint, long.MaxValue }, // energy  24
                             { CurrencyTypes.AcademyTicket, 3 },
                             { CurrencyTypes.ArenaTicket, 5 },
@@ -277,16 +284,21 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                             { CurrencyTypes.EliminateTicketB, DateTime.Parse("2024-04-26T19:29:12") },
                             { CurrencyTypes.EliminateTicketC, DateTime.Parse("2024-04-26T19:29:12") },
                             { CurrencyTypes.EliminateTicketD, DateTime.Parse("2024-04-26T19:29:12") }
-                    }
+                        }
                     }
                 },
                 CharacterListResponse = new CharacterListResponse()
                 {
                     CharacterDBs = [.. account.Characters],
                     TSSCharacterDBs = [],
-                    WeaponDBs = [],
+                    WeaponDBs = [.. account.Weapons],
                     CostumeDBs = [],
                 },
+                ItemListResponse = new ItemListResponse()
+                {
+                    ItemDBs = [.. account.Items],
+                },
+
                 EchelonListResponse = new EchelonListResponse()
                 {
                     EchelonDBs = [.. account.Echelons]
@@ -309,7 +321,13 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                         new() { EventContentId = 900701 },
                     ],
                 },
-                FriendCode = "SCHALE"
+
+                EquipmentItemListResponse = new EquipmentItemListResponse()
+                {
+                    EquipmentDBs = [.. account.Equipment]
+                },
+
+                FriendCode = "SCHALE",
             };
         }
 
@@ -389,13 +407,16 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket OpenCondition_EventListHandler(OpenConditionEventListRequest req)
         {
 
-            return new OpenConditionEventListResponse();
+            return new OpenConditionEventListResponse()
+            {
+                // all open for now ig
+                StaticOpenConditions = Enum.GetValues(typeof(OpenConditionContent)).Cast<OpenConditionContent>().ToDictionary(key => key, key => OpenConditionLockReason.None)
+            };
         }
 
         [ProtocolHandler(Protocol.Notification_EventContentReddotCheck)]
         public ResponsePacket Notification_EventContentReddotCheckHandler(NotificationEventContentReddotRequest req)
         {
-
             return new NotificationEventContentReddotResponse();
         }
 
@@ -405,6 +426,107 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
             return new BillingPurchaseListByYostarResponse();
         }
+
+        [ProtocolHandler(Protocol.WeekDungeon_List)]
+        public ResponsePacket WeekDungeon_ListHandler(WeekDungeonListRequest req)
+        {
+            return new WeekDungeonListResponse();
+        }
+
+        [ProtocolHandler(Protocol.SchoolDungeon_List)]
+        public ResponsePacket SchoolDungeon_ListHandler(SchoolDungeonListRequest req)
+        {
+            return new SchoolDungeonListResponse();
+        }
+
+        [ProtocolHandler(Protocol.MiniGame_MissionList)]
+        public ResponsePacket MiniGame_MissionListHandler(MiniGameMissionListRequest req)
+        {
+            return new MiniGameMissionListResponse();
+        }
+
+        // these will probably be commands
+        private void AddAllCharacters(AccountDB account)
+        {
+            var characterExcel = excelTableService.GetTable<CharacterExcelTable>().UnPack().DataList;
+            var allCharacters = characterExcel.Where(x => x.IsPlayable && x.IsPlayableCharacter && x.CollectionVisible && !account.Characters.Any(c => c.UniqueId == x.Id)).Select(x =>
+            {
+                return new CharacterDB()
+                {
+                    UniqueId = x.Id,
+                    StarGrade = x.MaxStarGrade,
+                    Level = 90,
+                    Exp = 0,
+                    PublicSkillLevel = 10,
+                    ExSkillLevel = 5,
+                    PassiveSkillLevel = 10,
+                    ExtraPassiveSkillLevel = 10,
+                    LeaderSkillLevel = 1,
+                    FavorRank = 500,
+                    IsNew = true,
+                    IsLocked = true,
+                    PotentialStats = { { 1, 0 }, { 2, 0 }, { 3, 0 } },
+                    EquipmentServerIds = [0, 0, 0]
+                };
+            }).ToList();
+
+            account.AddCharacters(context, [.. allCharacters]);
+            context.SaveChanges();
+        }
+
+        private void AddAllEquipment(AccountDB account)
+        {
+            var equipmentExcel = excelTableService.GetTable<EquipmentExcelTable>().UnPack().DataList;
+            var allEquipment = equipmentExcel.Select(x =>
+            {
+                return new EquipmentDB()
+                {
+                    UniqueId = x.Id,
+                    Level = 1,
+                    StackCount = 100, // ~ 90,000 cap, auto converted if over
+                };
+            }).ToList();
+
+            account.AddEquipment(context, [.. allEquipment]);
+            context.SaveChanges();
+        }
+
+        private void AddAllItems(AccountDB account)
+        {
+            var itemExcel = excelTableService.GetTable<ItemExcelTable>().UnPack().DataList;
+            var allItems = itemExcel.Select(x =>
+            {
+                return new ItemDB()
+                {
+                    IsNew = true,
+                    UniqueId = x.Id,
+                    StackCount = 5555,
+                };
+            }).ToList();
+
+            account.AddItems(context, [.. allItems]);
+            context.SaveChanges();
+        }
+
+        private void AddAllWeapons(AccountDB account)
+        {
+            // only for current characters
+            var allWeapons = account.Characters.Select(x =>
+            {
+                return new WeaponDB()
+                {
+                    UniqueId = x.UniqueId,
+                    BoundCharacterServerId = x.ServerId,
+                    IsLocked = false,
+                    StarGrade = 5,
+                    Level = 70
+                };
+            });
+
+            account.AddWeapons(context, [.. allWeapons]);
+            context.SaveChanges();
+        }
+
     }
 
 }

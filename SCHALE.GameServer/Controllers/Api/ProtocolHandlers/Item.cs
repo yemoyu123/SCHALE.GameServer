@@ -26,5 +26,13 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 ExpiryItemDBs = []
             };
         }
+
+        [ProtocolHandler(Protocol.Item_AutoSynth)]
+        public ResponsePacket AutoSynthHandler(ItemAutoSynthRequest req)
+        {
+            return new ItemAutoSynthResponse()
+            {
+            };
+        }
     }
 }

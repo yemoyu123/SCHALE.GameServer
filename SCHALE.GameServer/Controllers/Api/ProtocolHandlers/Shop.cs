@@ -27,15 +27,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Shop_BeforehandGachaRun)]
         public ResponsePacket BeforehandGachaRunHandler(ShopBeforehandGachaRunRequest req)
         {
-            // character ids here, just some limited 3 stars for now for fun
-            SavedGachaResults = [10059, 20007, 10033, 10074, 10045, 10053, 10054, 10021, 20022, 10057];
+            SavedGachaResults = [16003, 16003, 16003, 16003, 16003, 16003, 16003, 16003, 16003, 16003];
 
             return new ShopBeforehandGachaRunResponse()
             {
                 SelectGachaSnapshot = new BeforehandGachaSnapshotDB()
                 {
                     ShopUniqueId = 3,
-                    GoodsId = 1,    
+                    GoodsId = 1,
                     LastResults = SavedGachaResults
                 }
             };
@@ -46,7 +45,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             return new ShopBeforehandGachaSaveResponse()
             {
-
+                SelectGachaSnapshot = new BeforehandGachaSnapshotDB()
+                {
+                    ShopUniqueId = 3,
+                    GoodsId = 1,
+                    LastResults = SavedGachaResults
+                }
             };
         }
 
@@ -85,6 +89,53 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             };
         }
 
+        [ProtocolHandler(Protocol.Shop_BuyGacha3)]
+        public ResponsePacket ShopBuyGacha3ResponseHandler(ShopBuyGacha3Request req)
+        {
+            var gachaResults = new List<GachaResult>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                long id = 10000 + new Random().Next(0, 94);
+
+                gachaResults.Add(new(id)
+                {
+                    Character = new() // hardcoded util proper db
+                    {
+                        ServerId = req.AccountId,
+                        UniqueId = 20007,
+                        StarGrade = 3,
+                        Level = 1,
+                        FavorRank = 1,
+                        PublicSkillLevel = 1,
+                        ExSkillLevel = 1,
+                        PassiveSkillLevel = 1,
+                        ExtraPassiveSkillLevel = 1,
+                        LeaderSkillLevel = 1,
+                        IsNew = true,
+                        IsLocked = true
+                    }
+                });
+            }
+
+            return new ShopBuyGacha3Response()
+            {
+                UpdateTime = DateTime.UtcNow,
+                GemBonusRemain = long.MaxValue,
+                ConsumedItems = [],
+                AcquiredItems = [],
+                MissionProgressDBs = [],
+            };
+        }
+
+        [ProtocolHandler(Protocol.Shop_List)]
+        public ResponsePacket ListHandler(ShopListRequest req)
+        {
+            return new ShopListResponse()
+            {
+                ShopInfos = []
+            };
+        }
 
     }
 }

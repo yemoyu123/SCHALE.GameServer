@@ -1,12 +1,18 @@
 using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Parcel;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace SCHALE.Common.Database
 {
+    public class SingleRaidLobbyInfoDB : RaidLobbyInfoDB
+    {
+    
+    }
+
     // Battle? probably need to implement these our selves
     public class BattleSummary
     {
@@ -197,6 +203,12 @@ namespace SCHALE.Common.Database
         [JsonIgnore]
         public virtual ICollection<EchelonDB> Echelons { get; }
 
+        [JsonIgnore]
+        public virtual ICollection<EquipmentDB> Equipment { get; }
+
+        [JsonIgnore]
+        public virtual ICollection<WeaponDB> Weapons { get; }
+
         public AccountDB() { }
 
         public AccountDB(long publisherAccountId)
@@ -358,7 +370,7 @@ namespace SCHALE.Common.Database
         Cheat = 4
     }
 
-    public class AssistCharacterDB
+    public class AssistCharacterDB : CharacterDB
     {
         public EchelonType EchelonType { get; set; }
         public int SlotNumber { get; set; }
@@ -1108,8 +1120,10 @@ namespace SCHALE.Common.Database
 
     public class EquipmentDB : ConsumableItemBaseDB
     {
+        [NotMapped]
         public override ParcelType Type { get => ParcelType.Equipment;  }
 
+        [NotMapped]
         [JsonIgnore]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
 
@@ -1738,6 +1752,16 @@ namespace SCHALE.Common.Database
         public long PurchaseOrderId { get; set; }
     }
 
+    public class RaidMemberCollection : KeyedCollection<long, RaidMemberDescription>
+    {
+        public long TotalDamage { get; set; }
+
+        protected override long GetKeyForItem(RaidMemberDescription item)
+        {
+            return -1;
+        }
+        //public IEnumerable<RaidDamage> RaidDamages { get; set; }
+    }
 
     public class RaidBattleDB
     {
@@ -1749,7 +1773,7 @@ namespace SCHALE.Common.Database
         public long CurrentBossAIPhase { get; set; }
         public string BIEchelon { get; set; }
         public bool IsClear { get; set; }
-        //public RaidMemberCollection RaidMembers { get; set; }
+        public RaidMemberCollection RaidMembers { get; set; }
         public List<long> SubPartsHPs { get; set; }
     }
 
@@ -1777,10 +1801,23 @@ namespace SCHALE.Common.Database
         public long CostumeId { get; set; }
     }
 
-
-    public class RaidDB
+    public class RaidMemberDescription : IEquatable<RaidMemberDescription>
     {
-        //public RaidMemberDescription Owner { get; set; }
+        public long AccountId { get; set; }
+
+        public string AccountName { get; set; }
+
+        public long CharacterId { get; set; }
+
+        public bool Equals(RaidMemberDescription? other)
+        {
+            return this.AccountId == other.AccountId;
+        }
+    }
+
+        public class RaidDB
+    {
+        public RaidMemberDescription Owner { get; set; }
         public ContentType ContentType { get; set; }
         public long ServerId { get; set; }
         public long UniqueId { get; set; }
@@ -1832,7 +1869,7 @@ namespace SCHALE.Common.Database
     }
 
 
-    public class RaidLobbyInfoDB
+    public abstract class RaidLobbyInfoDB
     {
         public long SeasonId { get; set; }
         public int Tier { get; set; }
@@ -2113,10 +2150,123 @@ namespace SCHALE.Common.Database
         public RaidTeamSettingDB RaidTeamSettingDB { get; set; }
     }
 
+    public enum SkillSlot
+    {
+        None,
+        NormalAttack01,
+        NormalAttack02,
+        NormalAttack03,
+        NormalAttack04,
+        NormalAttack05,
+        NormalAttack06,
+        NormalAttack07,
+        NormalAttack08,
+        NormalAttack09,
+        NormalAttack10,
+        ExSkill01,
+        ExSkill02,
+        ExSkill03,
+        ExSkill04,
+        ExSkill05,
+        ExSkill06,
+        ExSkill07,
+        ExSkill08,
+        ExSkill09,
+        ExSkill10,
+        Passive01,
+        Passive02,
+        Passive03,
+        Passive04,
+        Passive05,
+        Passive06,
+        Passive07,
+        Passive08,
+        Passive09,
+        Passive10,
+        ExtraPassive01,
+        ExtraPassive02,
+        ExtraPassive03,
+        ExtraPassive04,
+        ExtraPassive05,
+        ExtraPassive06,
+        ExtraPassive07,
+        ExtraPassive08,
+        ExtraPassive09,
+        ExtraPassive10,
+        Support01,
+        Support02,
+        Support03,
+        Support04,
+        Support05,
+        Support06,
+        Support07,
+        Support08,
+        Support09,
+        Support10,
+        EnterBattleGround,
+        LeaderSkill01,
+        LeaderSkill02,
+        LeaderSkill03,
+        LeaderSkill04,
+        LeaderSkill05,
+        LeaderSkill06,
+        LeaderSkill07,
+        LeaderSkill08,
+        LeaderSkill09,
+        LeaderSkill10,
+        Equipment01,
+        Equipment02,
+        Equipment03,
+        Equipment04,
+        Equipment05,
+        Equipment06,
+        Equipment07,
+        Equipment08,
+        Equipment09,
+        Equipment10,
+        PublicSkill01,
+        PublicSkill02,
+        PublicSkill03,
+        PublicSkill04,
+        PublicSkill05,
+        PublicSkill06,
+        PublicSkill07,
+        PublicSkill08,
+        PublicSkill09,
+        PublicSkill10,
+        GroupBuff01,
+        HexaBuff01,
+        EventBuff01,
+        EventBuff02,
+        EventBuff03,
+        MoveAttack01,
+        MetamorphNormalAttack,
+        GroundPassive01,
+        GroundPassive02,
+        GroundPassive03,
+        GroundPassive04,
+        GroundPassive05,
+        GroundPassive06,
+        GroundPassive07,
+        GroundPassive08,
+        GroundPassive09,
+        GroundPassive10,
+        HiddenPassive01,
+        HiddenPassive02,
+        HiddenPassive03,
+        HiddenPassive04,
+        HiddenPassive05,
+        HiddenPassive06,
+        HiddenPassive07,
+        HiddenPassive08,
+        HiddenPassive09,
+        HiddenPassive10,
+        Count
+    }
 
     public class SkillLevelBatchGrowthRequestDB
     {
-        //public SkillSlot SkillSlot { get; set; }
+        public SkillSlot SkillSlot { get; set; }
         public int Level { get; set; }
         public List<SelectTicketReplaceInfo> ReplaceInfos { get; set; }
     }
@@ -2241,10 +2391,21 @@ namespace SCHALE.Common.Database
 
     public class WeaponDB : ParcelBase
     {
+        [NotMapped]
         public override ParcelType Type { get => ParcelType.CharacterWeapon; }
 
+        [NotMapped]
         [JsonIgnore]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
+
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
+        public long AccountServerId { get; set; }
+
+        [Key]
+        public long ServerId { get; set; }
 
         public long UniqueId { get; set; }
         public int Level { get; set; }

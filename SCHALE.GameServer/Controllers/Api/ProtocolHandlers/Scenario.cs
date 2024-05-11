@@ -10,10 +10,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Scenario_Skip)]
         public ResponsePacket SkipHandler(ScenarioSkipRequest req)
         {
-            Log.Debug($"ScenarioSkipRequest ScriptGroupId:" + req.ScriptGroupId);
-            Log.Debug($"ScenarioSkipRequest SkipPointScriptCount: " + req.SkipPointScriptCount);
-
-            // skip story doesn't work yet, probably need to implement missiondb 
             return new ScenarioSkipResponse();
         }
 
@@ -21,6 +17,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket SelectHandler(ScenarioSelectRequest req)
         {
             return new ScenarioSelectResponse();
+        }
+
+        [ProtocolHandler(Protocol.Scenario_GroupHistoryUpdate)]
+        public ResponsePacket GroupHistoryUpdateHandler(ScenarioGroupHistoryUpdateRequest req)
+        {
+            return new ScenarioGroupHistoryUpdateResponse();
         }
     }
 }

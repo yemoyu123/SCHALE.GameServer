@@ -2693,7 +2693,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.Character_SetFavorites;
             }
         }
         public List<CharacterDB> CharacterDBs { get; set; }
@@ -2819,7 +2819,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.Character_BatchSkillLevelUpdate;
             }
         }
         public CharacterDB CharacterDB { get; set; }
@@ -2870,7 +2870,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.Clan_Search;
             }
         }
         public List<ClanDB> ClanDBs { get; set; }
@@ -3487,7 +3487,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.Clan_SetAssist;
             }
         }
         public EchelonType EchelonType { get; set; }
@@ -5460,8 +5460,8 @@ namespace SCHALE.Common.NetworkProtocol
                 return NetworkProtocol.Protocol.Equipment_Equip;
             }
         }
-        public CharacterDB CharacterDB;
-        public List<EquipmentDB> EquipmentDBs;
+        public CharacterDB CharacterDB { get; set; }
+        public List<EquipmentDB> EquipmentDBs { get; set; }
     }
 
 
@@ -8477,7 +8477,7 @@ namespace SCHALE.Common.NetworkProtocol
         public bool IsPractice { get; set; }
         [JsonIgnore]
         public int LastBossIndex { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         //public IEnumerable<RaidDamage> RaidBossDamages { get; set; }
         //[JsonIgnore]
         //public RaidBossResultCollection RaidBossResults { get; set; }
@@ -8712,7 +8712,7 @@ namespace SCHALE.Common.NetworkProtocol
         }
         public RaidSeasonType SeasonType { get; set; }
         public RaidGiveUpDB RaidGiveUpDB { get; set; }
-        //public SingleRaidLobbyInfoDB RaidLobbyInfoDB { get; set; }
+        public SingleRaidLobbyInfoDB RaidLobbyInfoDB { get; set; }
         public AccountCurrencyDB AccountCurrencyDB { get; set; }
     }
 
