@@ -1,10 +1,73 @@
-﻿using SCHALE.Common.NetworkProtocol;
+﻿using SCHALE.Common.Database;
+using SCHALE.Common.NetworkProtocol;
+using SCHALE.GameServer.Services;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
     public class Clan : ProtocolHandlerBase
     {
-        public Clan(IProtocolHandlerFactory protocolHandlerFactory) : base(protocolHandlerFactory) { }
+        private readonly ISessionKeyService sessionKeyService;
+        private readonly SCHALEContext context;
+        private readonly ExcelTableService excelTableService;
+
+        public Clan(IProtocolHandlerFactory protocolHandlerFactory, ISessionKeyService _sessionKeyService, SCHALEContext _context, ExcelTableService _excelTableService) : base(protocolHandlerFactory)
+        {
+            sessionKeyService = _sessionKeyService;
+            context = _context;
+            excelTableService = _excelTableService;
+        }
+
+        [ProtocolHandler(Protocol.Clan_Lobby)]
+        public ResponsePacket CheckHandler(ClanLobbyRequest req)
+        {
+            var account = sessionKeyService.GetAccount(req.SessionKey);
+
+            return new ClanLobbyResponse()
+            {
+                IrcConfig = new()
+                {
+                    //HostAddress = "10.0.0.149",
+                    HostAddress = "192.168.86.35",
+                    Port = 6667,
+                    Password = ""
+                },
+                AccountClanDB = new()
+                {
+                    ClanDBId = 777,
+                    ClanName = "Nexon",
+                    ClanChannelName = "channel_1",
+                    ClanPresidentNickName = "Arona",
+                    ClanPresidentRepresentCharacterUniqueId = 10000,
+                    ClanNotice = "",
+                    ClanMemberCount = 1,
+                },
+                AccountClanMemberDB = new()
+                {
+                    AccountId = account.ServerId,
+                    AccountLevel = account.Level,
+                    ClanDBId = 777,
+                    RepresentCharacterUniqueId = 10000,
+                    ClanSocialGrade = Common.FlatData.ClanSocialGrade.Member,
+                    AccountNickName = account.Nickname
+                },
+                ClanMemberDBs = [
+                    new() {
+                        AccountId = account.ServerId,
+                        AccountLevel = account.Level,
+                        ClanDBId = 777,
+                        RepresentCharacterUniqueId = 10000,
+                        AttendanceCount = 33,
+                        ClanSocialGrade = Common.FlatData.ClanSocialGrade.Member,
+                        AccountNickName = account.Nickname,
+                        AttachmentDB = new() {
+                            AccountId = account.ServerId,
+                            EmblemUniqueId = 123123
+                        }
+                    }
+                ],
+                
+            };
+        }
 
         [ProtocolHandler(Protocol.Clan_Check)]
         public ResponsePacket CheckHandler(ClanCheckRequest req)

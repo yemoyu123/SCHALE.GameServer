@@ -1,5 +1,6 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.NetworkProtocol;
+using SCHALE.GameServer.Services;
 using Serilog;
 using System.Reflection;
 

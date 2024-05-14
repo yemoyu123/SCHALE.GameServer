@@ -8795,7 +8795,7 @@ namespace SCHALE.Common.NetworkProtocol
         {
             get
             {
-                return NetworkProtocol.Protocol.None;
+                return NetworkProtocol.Protocol.MultiFloorRaid_Sync;
             }
         }
         public List<MultiFloorRaidDB> MultiFloorRaidDBs { get; set; }

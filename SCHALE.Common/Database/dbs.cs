@@ -209,6 +209,9 @@ namespace SCHALE.Common.Database
         [JsonIgnore]
         public virtual ICollection<WeaponDB> Weapons { get; }
 
+        [JsonIgnore]
+        public long RaidSeasonId { get; set; } // idk where to store this
+
         public AccountDB() { }
 
         public AccountDB(long publisherAccountId)

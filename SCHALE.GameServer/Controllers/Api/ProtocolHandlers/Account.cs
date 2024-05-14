@@ -224,6 +224,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             //AddAllEquipment(account);
             //AddAllItems(account);
             //AddAllWeapons(account);
+            SetRaidSeason(account, 63);
 
             return new AccountLoginSyncResponse()
             {
@@ -325,6 +326,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 EquipmentItemListResponse = new EquipmentItemListResponse()
                 {
                     EquipmentDBs = [.. account.Equipment]
+                },
+
+                ClanLoginResponse = new ClanLoginResponse()
+                {
+                    AccountClanMemberDB = new()
+                    {
+                        AccountId = account.ServerId
+                    }
                 },
 
                 FriendCode = "SCHALE",
@@ -444,36 +453,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             return new MiniGameMissionListResponse();
         }
-
+        
         // these will probably be commands
-        private void AddAllCharacters(AccountDB account)
-        {
-            var characterExcel = excelTableService.GetTable<CharacterExcelTable>().UnPack().DataList;
-            var allCharacters = characterExcel.Where(x => x.IsPlayable && x.IsPlayableCharacter && x.CollectionVisible && !account.Characters.Any(c => c.UniqueId == x.Id)).Select(x =>
-            {
-                return new CharacterDB()
-                {
-                    UniqueId = x.Id,
-                    StarGrade = x.MaxStarGrade,
-                    Level = 90,
-                    Exp = 0,
-                    PublicSkillLevel = 10,
-                    ExSkillLevel = 5,
-                    PassiveSkillLevel = 10,
-                    ExtraPassiveSkillLevel = 10,
-                    LeaderSkillLevel = 1,
-                    FavorRank = 500,
-                    IsNew = true,
-                    IsLocked = true,
-                    PotentialStats = { { 1, 0 }, { 2, 0 }, { 3, 0 } },
-                    EquipmentServerIds = [0, 0, 0]
-                };
-            }).ToList();
-
-            account.AddCharacters(context, [.. allCharacters]);
-            context.SaveChanges();
-        }
-
         private void AddAllEquipment(AccountDB account)
         {
             var equipmentExcel = excelTableService.GetTable<EquipmentExcelTable>().UnPack().DataList;
@@ -519,7 +500,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     BoundCharacterServerId = x.ServerId,
                     IsLocked = false,
                     StarGrade = 5,
-                    Level = 70
+                    Level = 200
                 };
             });
 
@@ -527,6 +508,11 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             context.SaveChanges();
         }
 
+        private void SetRaidSeason(AccountDB account, long seasonId)
+        {
+            account.RaidSeasonId = seasonId;
+            context.SaveChanges();
+        }
     }
 
 }

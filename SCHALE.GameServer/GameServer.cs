@@ -6,6 +6,7 @@ using SCHALE.Common.Database;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
 using SCHALE.GameServer.Services;
 using Microsoft.EntityFrameworkCore;
+using SCHALE.GameServer.Services.Irc;
 
 namespace SCHALE.GameServer
 {
@@ -53,6 +54,7 @@ namespace SCHALE.GameServer
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
                 builder.Services.AddExcelTableService();
+                builder.Services.AddIrcService();
 
                 // Add all Handler Groups
                 var handlerGroups = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(ProtocolHandlerBase)));

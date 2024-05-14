@@ -103,7 +103,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     Character = new() // hardcoded util proper db
                     {
                         ServerId = req.AccountId,
-                        UniqueId = 20007,
+                        UniqueId = id,
                         StarGrade = 3,
                         Level = 1,
                         FavorRank = 1,
@@ -120,6 +120,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
             return new ShopBuyGacha3Response()
             {
+                GachaResults = gachaResults,
                 UpdateTime = DateTime.UtcNow,
                 GemBonusRemain = long.MaxValue,
                 ConsumedItems = [],
