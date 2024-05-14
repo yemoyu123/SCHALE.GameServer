@@ -6,52 +6,25 @@ using System.Text;
 
 namespace SCHALE.GameServer.Commands
 {
-    [CommandHandler("help", "Print out all commands with their description and example", "help")]
-    public class HelpCommand : Command
+
+    [CommandHandler("help", "Show this help.", "/help")]
+    internal class HelpCommand : Command
     {
-        static readonly Dictionary<Type, CommandHandler?> commandAttributes = new Dictionary<Type, CommandHandler?>();
+        public HelpCommand(IrcConnection connection, string[] args, bool validate = true) : base(connection, args, validate) { }
 
-        // doesnt support console yet
-        public override void Execute(Dictionary<string, string> args)
-        {
-            base.Execute(args);
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("Available Commands: ");
-            foreach (var command in CommandHandlerFactory.Commands.Where(x => x.Usage.HasFlag(CommandUsage.Console)))
+        public override void Execute()
+        {   // can't use newline, not gonna print args help for now
+            foreach (var command in CommandFactory.commands.Keys)
             {
-                if (!commandAttributes.TryGetValue(command.GetType(), out var attr))
+                var cmdAtr = (CommandHandlerAttribute?)Attribute.GetCustomAttribute(CommandFactory.commands[command], typeof(CommandHandlerAttribute));
+
+                Command? cmd = CommandFactory.CreateCommand(command, connection, args, false);
+
+                if (cmd is not null)
                 {
-                    attr = command.GetType().GetCustomAttribute(typeof(CommandHandler)) as CommandHandler;
-                    commandAttributes[command.GetType()] = attr;
+                    connection.SendChatMessage($"{command} - {cmdAtr.Hint} (Usage: {cmdAtr.Usage})");
                 }
-
-                if (attr != null)
-                    sb.AppendLine($"{attr.Name} - {attr.Description} (Example: {attr.Example})");
             }
-
-            Console.Write(sb.ToString());
-        }
-
-        public override void Execute(Dictionary<string, string> args, IrcConnection connection)
-        {
-            base.Execute(args);
-
-            connection.SendChatMessage("Available Commands: ");
-            foreach (var command in CommandHandlerFactory.Commands.Where(x => x.Usage.HasFlag(CommandUsage.User)))
-            {
-                if (!commandAttributes.TryGetValue(command.GetType(), out var attr))
-                {
-                    attr = command.GetType().GetCustomAttribute(typeof(CommandHandler)) as CommandHandler;
-                    commandAttributes[command.GetType()] = attr;
-                }
-
-                if (attr != null)
-                    connection.SendChatMessage($"{attr.Name} - {attr.Description} (Example: {attr.Example})");
-            }
-
-            base.NotifySuccess(connection);
         }
     }
 

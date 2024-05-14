@@ -19,7 +19,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             excelTableService = _excelTableService;
         }
 
-        // most handlers empty
         [ProtocolHandler(Protocol.Account_CheckYostar)]
         public ResponsePacket CheckYostarHandler(AccountCheckYostarRequest req)
         {

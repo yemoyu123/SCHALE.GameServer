@@ -1,177 +1,134 @@
 ﻿using SCHALE.GameServer.Services.Irc;
+using Serilog;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace SCHALE.GameServer.Commands
 {
-
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class CommandHandler : Attribute
+    public abstract class Command
     {
-        public string Name { get; }
-        public string Description { get; }
-        public string Example { get; }
+        protected IrcConnection connection;
+        protected string[] args;
 
-        public CommandHandler(string commandName, string description, string example)
+        /// <summary>
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="args"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public Command(IrcConnection connection, string[] args, bool validate = true)
         {
-            Name = commandName;
-            Description = description;
-            Example = example;
+            this.connection = connection;
+            this.args = args;
         }
 
+        public string? Validate()
+        {
+            List<PropertyInfo> argsProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.GetCustomAttribute(typeof(ArgumentAttribute)) is not null).ToList();
+            if (argsProperties.Where(x => (((ArgumentAttribute)x.GetCustomAttribute(typeof(ArgumentAttribute))!).Flags & ArgumentFlags.Optional) != ArgumentFlags.Optional).Count() > args.Length)
+                return "Invalid args length!";
+
+            foreach (var argProp in argsProperties)
+            {
+                ArgumentAttribute attr = (ArgumentAttribute)argProp.GetCustomAttribute(typeof(ArgumentAttribute))!;
+                if (attr.Position + 1 > args.Length && (attr.Flags & ArgumentFlags.Optional) != ArgumentFlags.Optional)
+                    return $"Argument {argProp.Name} is required!";
+                else if (attr.Position + 1 > args.Length)
+                    return null;
+
+                if (!attr.Pattern.IsMatch(args[attr.Position]))
+                    return $"Argument {argProp.Name} is invalid!";
+
+                argProp.SetValue(this, args[attr.Position]);
+            }
+            return null;
+        }
+
+        public abstract void Execute();
     }
 
     [AttributeUsage(AttributeTargets.Property)]
     public class ArgumentAttribute : Attribute
     {
-        public string Key { get; }
+        public int Position { get; }
+        public Regex Pattern { get; set; }
+        public string? Description { get; }
+        public ArgumentFlags Flags { get; }
 
-        public ArgumentAttribute(string key)
+        public ArgumentAttribute(int position, string pattern, string? description = null, ArgumentFlags flags = ArgumentFlags.None)
         {
-            Key = key;
+            Position = position;
+
+            if ((flags & ArgumentFlags.IgnoreCase) != ArgumentFlags.IgnoreCase)
+                Pattern = new(pattern);
+            else
+                Pattern = new(pattern, RegexOptions.IgnoreCase);
+
+            Description = description;
+            Flags = flags;
         }
     }
 
-    [Flags]
-    public enum CommandUsage
+    public enum ArgumentFlags
     {
         None = 0,
-        Console = 1,
-        User = 2
+        Optional = 1,
+        IgnoreCase = 2
     }
 
-    public abstract class Command
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class CommandHandlerAttribute : Attribute
     {
-        public virtual CommandUsage Usage
+        public string Name { get; }
+        
+        public string Hint { get; }
+
+        public string Usage { get; }
+
+        public CommandHandlerAttribute(string name, string hint, string usage)
         {
-            get
-            {
-                var usage = CommandUsage.None;
-                if (GetType().GetMethod(nameof(Execute), [typeof(Dictionary<string, string>), typeof(IrcConnection)])?.DeclaringType == GetType())
-                    usage |= CommandUsage.User;
-                if (GetType().GetMethod(nameof(Execute), [typeof(Dictionary<string, string>)])?.DeclaringType == GetType())
-                    usage |= CommandUsage.Console;
-
-                return usage;
-            }
-        }
-
-        readonly Dictionary<string, PropertyInfo> argsProperties;
-
-        public Command()
-        {
-            argsProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(x => Attribute.IsDefined(x, typeof(ArgumentAttribute)))
-                .ToDictionary(x => ((ArgumentAttribute)Attribute.GetCustomAttribute(x, typeof(ArgumentAttribute))!).Key, StringComparer.OrdinalIgnoreCase);
-        }
-
-        public virtual void Execute(Dictionary<string, string> args)
-        {
-            foreach (var arg in args)
-            {
-                if (argsProperties.TryGetValue(arg.Key, out var prop))
-                    prop.SetValue(this, arg.Value);
-            }
-        }
-
-        public virtual void Execute(Dictionary<string, string> args, IrcConnection connection)
-        {
-            Execute(args);
-        }
-
-        public virtual void NotifySuccess(IrcConnection connection)
-        {
-            connection.SendChatMessage($"{GetType().Name} success! Please relog for it to take effect.");
-        }
-
-        protected T Parse<T>(string? value, T fallback = default!)
-        {
-            var tryParseMethod = typeof(T).GetMethod("TryParse", [typeof(string), typeof(T).MakeByRefType()]);
-
-            if (tryParseMethod != null)
-            {
-                var parameters = new object[] { value!, null! };
-                bool success = (bool)tryParseMethod.Invoke(null, parameters)!;
-
-                if (success)
-                    return (T)parameters[1];
-            }
-
-            return fallback;
+            Name = name;
+            Hint = hint;
+            Usage = usage;
         }
     }
 
-    public static class CommandHandlerFactory
+    public static class CommandFactory
     {
-        public static readonly List<Command> Commands = new List<Command>();
+        public static readonly Dictionary<string, Type> commands = new();
 
-        static readonly Dictionary<string, Action<Dictionary<string, string>>> commandFunctions;
-        static readonly Dictionary<string, Action<Dictionary<string, string>, IrcConnection>> commandFunctionsConn;
-        private static readonly char[] separator = new[] { ' ' };
-
-        static CommandHandlerFactory()
+        public static void LoadCommands()
         {
-            commandFunctions = new Dictionary<string, Action<Dictionary<string, string>>>(StringComparer.OrdinalIgnoreCase);
-            commandFunctionsConn = new Dictionary<string, Action<Dictionary<string, string>, IrcConnection>>(StringComparer.OrdinalIgnoreCase);
+            Log.Information("Loading commands...");
 
-            RegisterCommands(Assembly.GetExecutingAssembly());
+            IEnumerable<Type> classes = from t in Assembly.GetExecutingAssembly().GetTypes()
+                                        where t.IsClass && t.GetCustomAttribute<CommandHandlerAttribute>() is not null
+                                        select t;
+
+            foreach (var command in classes)
+            {
+                CommandHandlerAttribute nameAttr = command.GetCustomAttribute<CommandHandlerAttribute>()!;
+                commands.Add(nameAttr.Name, command);
+#if DEBUG
+                Log.Information($"Loaded {nameAttr.Name} command");
+#endif
+            }
+
+            Log.Information("Finished loading commands");
         }
 
-        public static void RegisterCommands(Assembly assembly)
+        public static Command? CreateCommand(string name, IrcConnection connection, string[] args, bool validate = true)
         {
-            var commandTypes = assembly.GetTypes()
-                .Where(t => Attribute.IsDefined(t, typeof(CommandHandler)) && typeof(Command).IsAssignableFrom(t));
+            Type? command = commands.GetValueOrDefault(name);
+            if (command is null)
+                return null;
 
-            foreach (var commandType in commandTypes)
-            {
-                var commandAttribute = (CommandHandler?)Attribute.GetCustomAttribute(commandType, typeof(CommandHandler));
-                if (commandAttribute != null)
-                {
-                    var commandInstance = (Command)Activator.CreateInstance(commandType)!;
+            var cmd = (Command)Activator.CreateInstance(command, new object[] { connection, args, validate })!;
 
-                    if (commandInstance.Usage.HasFlag(CommandUsage.Console))
-                        commandFunctions[commandAttribute.Name] = commandInstance.Execute;
-                    if (commandInstance.Usage.HasFlag(CommandUsage.User))
-                        commandFunctionsConn[commandAttribute.Name] = commandInstance.Execute;
+            string? ret = cmd.Validate();
+            if (ret is not null && validate)
+                throw new ArgumentException(ret);
 
-                    Commands.Add(commandInstance);
-                }
-            }
-        }
-
-        public static void HandleCommand(string commandLine, IrcConnection? connection = null)
-        {
-            var parts = commandLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length == 0)
-                return;
-
-            var arguments = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            for (var i = 1; i < parts.Length; i++)
-            {
-                var argParts = parts[i].Split('=', 2);
-                if (argParts.Length == 2)
-                    arguments[argParts[0]] = argParts[1];
-            }
-
-            if (connection is not null)
-            {
-                if (!(commandFunctionsConn).TryGetValue(parts[0], out var command))
-                {
-                    connection.SendChatMessage($"Unknown command: {parts[0]}");
-                    return;
-                }
-
-                command(arguments, connection);
-            } else
-            {
-                if (!(commandFunctions).TryGetValue(parts[0], out var command))
-                {
-                    connection.SendChatMessage($"Unknown command: {parts[0]}");
-                    return;
-                }
-
-                command(arguments);
-            }
+            return cmd;
         }
     }
-
 }

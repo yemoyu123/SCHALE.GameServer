@@ -7,6 +7,7 @@ using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
 using SCHALE.GameServer.Services;
 using Microsoft.EntityFrameworkCore;
 using SCHALE.GameServer.Services.Irc;
+using SCHALE.GameServer.Commands;
 
 namespace SCHALE.GameServer
 {
@@ -43,6 +44,9 @@ namespace SCHALE.GameServer
             Log.Information("Starting...");
             try
             {
+                // Load Commands
+                CommandFactory.LoadCommands();
+
                 var builder = WebApplication.CreateBuilder(args);
 
                 builder.Services.Configure<KestrelServerOptions>(op => op.AllowSynchronousIO = true);

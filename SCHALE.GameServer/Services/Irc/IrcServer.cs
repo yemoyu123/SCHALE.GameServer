@@ -147,10 +147,31 @@ namespace SCHALE.GameServer.Services.Irc
             //logger.LogDebug("payload: " + payloadStr);
 
             var payload = JsonSerializer.Deserialize(payloadStr, typeof(IrcMessage)) as IrcMessage;
-
+            
             if (payload.Text.StartsWith('/'))
             {
-                CommandHandlerFactory.HandleCommand(payload.Text.Substring(1), clients[client]);
+                var cmdStrings = payload.Text.Split(" ");
+                var connection = clients[client];
+
+                var cmdStr = cmdStrings.First().Split('/').Last();
+
+                try
+                {
+                    Command? cmd = CommandFactory.CreateCommand(cmdStr, connection, cmdStrings[1..]);
+
+                    if (cmd is null)
+                    {
+                        connection.SendChatMessage($"Invalid command {cmdStr}, try /help");
+                        return;
+                    }
+
+                    cmd?.Execute();
+                    connection.SendChatMessage($"Command {cmdStr} executed sucessfully! Please relog for it to take effect.");
+                }
+                catch (Exception ex)
+                {
+                    connection.SendChatMessage($"Command {cmdStr} failed to execute!, " + ex.Message);
+                }
             }
         }
 

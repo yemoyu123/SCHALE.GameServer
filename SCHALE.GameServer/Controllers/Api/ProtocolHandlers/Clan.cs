@@ -26,8 +26,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             {
                 IrcConfig = new()
                 {
-                    //HostAddress = "10.0.0.149",
-                    HostAddress = "192.168.86.35",
+                    HostAddress = REPLACE WITH YOUR IP,
                     Port = 6667,
                     Password = ""
                 },
