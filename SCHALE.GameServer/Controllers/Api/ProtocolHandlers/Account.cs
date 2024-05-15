@@ -218,13 +218,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             var account = sessionKeyService.GetAccount(req.SessionKey);
 
-            // add everything manually
-            //AddAllCharacters(account);
-            //AddAllEquipment(account);
-            //AddAllItems(account);
-            //AddAllWeapons(account);
-            SetRaidSeason(account, 63);
-
             return new AccountLoginSyncResponse()
             {
                 AccountCurrencySyncResponse = new AccountCurrencySyncResponse()
@@ -454,59 +447,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         }
         
         // these will probably be commands
-        private void AddAllEquipment(AccountDB account)
-        {
-            var equipmentExcel = excelTableService.GetTable<EquipmentExcelTable>().UnPack().DataList;
-            var allEquipment = equipmentExcel.Select(x =>
-            {
-                return new EquipmentDB()
-                {
-                    UniqueId = x.Id,
-                    Level = 1,
-                    StackCount = 100, // ~ 90,000 cap, auto converted if over
-                };
-            }).ToList();
-
-            account.AddEquipment(context, [.. allEquipment]);
-            context.SaveChanges();
-        }
-
-        private void AddAllItems(AccountDB account)
-        {
-            var itemExcel = excelTableService.GetTable<ItemExcelTable>().UnPack().DataList;
-            var allItems = itemExcel.Select(x =>
-            {
-                return new ItemDB()
-                {
-                    IsNew = true,
-                    UniqueId = x.Id,
-                    StackCount = 5555,
-                };
-            }).ToList();
-
-            account.AddItems(context, [.. allItems]);
-            context.SaveChanges();
-        }
-
-        private void AddAllWeapons(AccountDB account)
-        {
-            // only for current characters
-            var allWeapons = account.Characters.Select(x =>
-            {
-                return new WeaponDB()
-                {
-                    UniqueId = x.UniqueId,
-                    BoundCharacterServerId = x.ServerId,
-                    IsLocked = false,
-                    StarGrade = 5,
-                    Level = 200
-                };
-            });
-
-            account.AddWeapons(context, [.. allWeapons]);
-            context.SaveChanges();
-        }
-
         private void SetRaidSeason(AccountDB account, long seasonId)
         {
             account.RaidSeasonId = seasonId;

@@ -22,10 +22,15 @@ namespace SCHALE.GameServer.Services.Irc
 
         public void SendChatMessage(string text)
         {
-            SendChatMessage(text, "Shiroko", 10010, IrcMessageType.Chat);
+            SendChatMessage(text, "Shiroko", 10010, 0, IrcMessageType.Chat);
         }
 
-        public void SendChatMessage(string text, string nickname, long pfpCharacterId, IrcMessageType messageType)
+        public void SendEmote(long stickerId)
+        {
+            SendChatMessage("", "Shiroko", 10010, stickerId, IrcMessageType.Sticker);
+        }
+
+        public void SendChatMessage(string text, string nickname, long pfpCharacterId, long stickerId, IrcMessageType messageType)
         {
             var reply = new Reply()
             {
@@ -38,11 +43,11 @@ namespace SCHALE.GameServer.Services.Irc
                     AccountNickname = nickname,
                     Text = text,
                     SendTicks = DateTimeOffset.Now.Ticks,
+                    StickerId = stickerId,
                 }, typeof(IrcMessage)),
             }.ToString();
 
             StreamWriter.WriteLine(reply);
-            StreamWriter.Flush();
         }
     }
 }

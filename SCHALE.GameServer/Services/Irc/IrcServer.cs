@@ -129,12 +129,16 @@ namespace SCHALE.GameServer.Services.Irc
                 channels[channel] = new List<long>();
             }
 
-            var userClient = clients[client];
+            var connection = clients[client];
 
-            channels[channel].Add(userClient.AccountServerId);
-            userClient.CurrentChannel = channel;
+            channels[channel].Add(connection.AccountServerId);
+            connection.CurrentChannel = channel;
 
-            logger.LogDebug($"User {userClient.AccountServerId} joined {channel}");
+            logger.LogDebug($"User {connection.AccountServerId} joined {channel}");
+
+            // custom welcome
+            connection.SendChatMessage("Welcome to SCHALE!");
+            connection.SendEmote(2);
         }
 
         private async Task HandlePrivMsg(string parameters, TcpClient client) // player sends msg
@@ -215,7 +219,7 @@ namespace SCHALE.GameServer.Services.Irc
         public string AccountNickname { get; set; }
 
         [JsonPropertyName("StickerId")]
-        public long StickerId { get; }
+        public long StickerId { get; set; }
 
         [JsonPropertyName("Text")]
         public string Text { get; set; }

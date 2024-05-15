@@ -1,19 +1,55 @@
-﻿using SCHALE.Common.Database;
+﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using SCHALE.Common.Database;
 using SCHALE.GameServer.Services.Irc;
 using Serilog;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SCHALE.GameServer.Commands
 {
 
-    [CommandHandler("help", "Show this help.", "/help")]
+    [CommandHandler("help", "Show this help.", "/help [command]")]
     internal class HelpCommand : Command
     {
+        [Argument(0, @"^[a-zA-Z]+$", "The command to display the help message", ArgumentFlags.IgnoreCase | ArgumentFlags.Optional)]
+        public string Command { get; set; } = string.Empty;
+
         public HelpCommand(IrcConnection connection, string[] args, bool validate = true) : base(connection, args, validate) { }
 
         public override void Execute()
-        {   // can't use newline, not gonna print args help for now
+        {   
+            if (Command != string.Empty)
+            {
+                if (CommandFactory.commands.ContainsKey(Command))
+                {
+                    var cmdAtr = (CommandHandlerAttribute?)Attribute.GetCustomAttribute(CommandFactory.commands[Command], typeof(CommandHandlerAttribute));
+                    Command? cmd = CommandFactory.CreateCommand(Command, connection, args, false);
+
+                    if (cmd is not null)
+                    {
+                        connection.SendChatMessage($"{Command} - {cmdAtr.Hint} (Usage: {cmdAtr.Usage})");
+
+                        List<PropertyInfo> argsProperties = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.GetCustomAttribute(typeof(ArgumentAttribute)) is not null).ToList();
+                        
+                        foreach (var argProp in argsProperties)
+                        {
+                            ArgumentAttribute attr = (ArgumentAttribute)argProp.GetCustomAttribute(typeof(ArgumentAttribute))!;
+                            var arg = Regex.Replace(attr.Pattern.ToString(), @"[\^\$\+]", "");
+
+                            connection.SendChatMessage($"<{arg}> - {attr.Description}");
+                        }
+                    }
+                } else
+                {
+                    throw new ArgumentException("Invalid Argument.");
+                }
+
+                return;
+            }
+
             foreach (var command in CommandFactory.commands.Keys)
             {
                 var cmdAtr = (CommandHandlerAttribute?)Attribute.GetCustomAttribute(CommandFactory.commands[command], typeof(CommandHandlerAttribute));
