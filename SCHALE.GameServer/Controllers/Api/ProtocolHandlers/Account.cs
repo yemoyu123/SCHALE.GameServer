@@ -320,11 +320,26 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     EquipmentDBs = [.. account.Equipment]
                 },
 
+                CharacterGearListResponse = new CharacterGearListResponse()
+                {
+                    GearDBs = [.. account.Gears]
+                },
+
                 ClanLoginResponse = new ClanLoginResponse()
                 {
                     AccountClanMemberDB = new()
                     {
                         AccountId = account.ServerId
+                    }
+                },
+
+                EliminateRaidLoginResponse = new EliminateRaidLoginResponse()
+                {
+                    SeasonType = RaidSeasonType.Open,
+                    SweepPointByRaidUniqueId = new()
+                    {
+                        { 2041104, int.MaxValue },
+                        { 2041204, int.MaxValue }
                     }
                 },
 
@@ -444,13 +459,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket MiniGame_MissionListHandler(MiniGameMissionListRequest req)
         {
             return new MiniGameMissionListResponse();
-        }
-        
-        // these will probably be commands
-        private void SetRaidSeason(AccountDB account, long seasonId)
-        {
-            account.RaidSeasonId = seasonId;
-            context.SaveChanges();
         }
     }
 

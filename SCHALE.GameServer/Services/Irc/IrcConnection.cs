@@ -22,12 +22,12 @@ namespace SCHALE.GameServer.Services.Irc
 
         public void SendChatMessage(string text)
         {
-            SendChatMessage(text, "Shiroko", 10010, 0, IrcMessageType.Chat);
+            SendChatMessage(text, "Arona", 19009113, 0, IrcMessageType.Chat);
         }
 
         public void SendEmote(long stickerId)
         {
-            SendChatMessage("", "Shiroko", 10010, stickerId, IrcMessageType.Sticker);
+            SendChatMessage("", "Arona", 19009113, stickerId, IrcMessageType.Sticker);
         }
 
         public void SendChatMessage(string text, string nickname, long pfpCharacterId, long stickerId, IrcMessageType messageType)

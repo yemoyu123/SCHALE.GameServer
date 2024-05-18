@@ -1,6 +1,7 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.Database.ModelExtensions;
 using SCHALE.Common.FlatData;
+using SCHALE.Common.Migrations;
 using SCHALE.GameServer.Services;
 using SCHALE.GameServer.Services.Irc;
 using System;
@@ -23,6 +24,8 @@ namespace SCHALE.Common.Utils
 
             account.AddCharacters(context, [.. allCharacters]);
             context.SaveChanges();
+
+            connection.SendChatMessage("Added all characters!");
         }
 
         public static void AddAllEquipment(IrcConnection connection)
@@ -40,6 +43,8 @@ namespace SCHALE.Common.Utils
 
             connection.Account.AddEquipment(connection.Context, [.. allEquipment]);
             connection.Context.SaveChanges();
+
+            connection.SendChatMessage("Added all equipment!");
         }
 
         public static void AddAllItems(IrcConnection connection)
@@ -57,6 +62,8 @@ namespace SCHALE.Common.Utils
 
             connection.Account.AddItems(connection.Context, [.. allItems]);
             connection.Context.SaveChanges();
+
+            connection.SendChatMessage("Added all items!");
         }
 
         public static void AddAllWeapons(IrcConnection connection)
@@ -79,7 +86,33 @@ namespace SCHALE.Common.Utils
 
             account.AddWeapons(context, [.. allWeapons]);
             context.SaveChanges();
+
+            connection.SendChatMessage("Added all weapons!");
         }
+
+        public static void AddAllGears(IrcConnection connection)
+        {
+            var account = connection.Account;
+            var context = connection.Context;
+
+            var gearExcel = connection.ExcelTableService.GetTable<CharacterGearExcelTable>().UnPack().DataList;
+
+            var allGears = gearExcel.Where(x => x.Tier == 2 && context.Characters.Any(y => y.UniqueId == x.CharacterId)).Select(x => new GearDB()
+            {
+                UniqueId = x.Id,
+                Level = 1,
+                SlotIndex = 4,
+                BoundCharacterServerId = context.Characters.FirstOrDefault(z => z.UniqueId == x.CharacterId).ServerId,
+                Tier = 2,
+                Exp = 0,
+            });
+
+            account.AddGears(context, [.. allGears]);
+            context.SaveChanges();
+
+            connection.SendChatMessage("Added all gears!");
+        }
+
 
         public static void RemoveAllCharacters(IrcConnection connection) // removing default characters breaks game
         {
@@ -89,6 +122,8 @@ namespace SCHALE.Common.Utils
             var removed = characterDB.Where(x => x.AccountServerId == connection.AccountServerId && !defaultCharacters.Contains(x.UniqueId));
 
             characterDB.RemoveRange(removed);
+
+            connection.SendChatMessage("Removed all characters!");
         }
 
         public static CharacterDB CreateMaxCharacterFromId(long characterId)

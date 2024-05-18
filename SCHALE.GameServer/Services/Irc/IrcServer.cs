@@ -163,6 +163,7 @@ namespace SCHALE.GameServer.Services.Irc
                 {
                     Command? cmd = CommandFactory.CreateCommand(cmdStr, connection, cmdStrings[1..]);
 
+
                     if (cmd is null)
                     {
                         connection.SendChatMessage($"Invalid command {cmdStr}, try /help");
@@ -174,7 +175,10 @@ namespace SCHALE.GameServer.Services.Irc
                 }
                 catch (Exception ex)
                 {
+                    var cmdAtr = (CommandHandlerAttribute?)Attribute.GetCustomAttribute(CommandFactory.commands[cmdStr], typeof(CommandHandlerAttribute));
+
                     connection.SendChatMessage($"Command {cmdStr} failed to execute!, " + ex.Message);
+                    connection.SendChatMessage($"Usage: {cmdAtr.Usage}");
                 }
             }
         }

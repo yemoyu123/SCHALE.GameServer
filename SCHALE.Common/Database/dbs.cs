@@ -210,6 +210,10 @@ namespace SCHALE.Common.Database
         public virtual ICollection<WeaponDB> Weapons { get; }
 
         [JsonIgnore]
+        public virtual ICollection<GearDB> Gears { get; }
+
+
+        [JsonIgnore]
         public long RaidSeasonId { get; set; } // idk where to store this
 
         public AccountDB() { }
@@ -1094,7 +1098,7 @@ namespace SCHALE.Common.Database
     }
 
 
-    public class EliminateRaidLobbyInfoDB
+    public class EliminateRaidLobbyInfoDB : RaidLobbyInfoDB
     {
         public List<string> OpenedBossGroups { get; set; }
         public Dictionary<string, long> BestRankingPointPerBossGroup { get; set; }
@@ -1456,19 +1460,44 @@ namespace SCHALE.Common.Database
 
     public class GearDB : ParcelBase
     {
+        [NotMapped]
         public override ParcelType Type { get => ParcelType.CharacterGear; }
 
+        [NotMapped]
         [JsonIgnore]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
 
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
+        public long AccountServerId { get; set; }
+
+        [Key]
         public long ServerId { get; set; }
+
+
         public long UniqueId { get; set; }
         public int Level { get; set; }
         public long Exp { get; set; }
         public int Tier { get; set; }
         public long SlotIndex { get; set; }
         public long BoundCharacterServerId { get; set; }
-        public EquipmentDB ToEquipmentDB { get; set; }
+
+        [NotMapped]
+        public EquipmentDB ToEquipmentDB { get {
+                return new()
+                {
+                    IsNew = true,
+                    ServerId = ServerId,
+                    BoundCharacterServerId = BoundCharacterServerId,
+                    Tier = Tier,
+                    Level = Level,
+                    StackCount = 1,
+                    Exp = Exp
+                };
+            } 
+        }
     }
 
 
@@ -1895,6 +1924,7 @@ namespace SCHALE.Common.Database
         public DateTime NextSeasonEndDate { get; set; }
         public DateTime NextSettlementEndDate { get; set; }
         public ClanAssistUseInfo ClanAssistUseInfo { get; set; }
+        public Dictionary<int, bool> RemainFailCompensation { get; set; }
     }
 
 

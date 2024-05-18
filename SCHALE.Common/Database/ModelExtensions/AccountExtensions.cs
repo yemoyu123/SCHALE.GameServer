@@ -51,5 +51,19 @@
 
             return [.. items];
         }
+
+        public static List<GearDB> AddGears(this AccountDB account, SCHALEContext context, params GearDB[] gears)
+        {
+            foreach (var gear in gears)
+            {
+                gear.AccountServerId = account.ServerId;
+                context.Gears.Add(gear);
+
+                var targetCharacter = account.Characters.FirstOrDefault(x => x.ServerId == gear.BoundCharacterServerId);
+                targetCharacter.EquipmentServerIds.Add(gear.ServerId);
+            }
+
+            return [.. gears];
+        }
     }
 }

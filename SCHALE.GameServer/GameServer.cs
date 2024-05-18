@@ -8,6 +8,8 @@ using SCHALE.GameServer.Services;
 using Microsoft.EntityFrameworkCore;
 using SCHALE.GameServer.Services.Irc;
 using SCHALE.GameServer.Commands;
+using SCHALE.GameServer.Utils;
+using System.Net.NetworkInformation;
 
 namespace SCHALE.GameServer
 {
@@ -46,6 +48,15 @@ namespace SCHALE.GameServer
             {
                 // Load Commands
                 CommandFactory.LoadCommands();
+
+                // Load Config
+                Config.Load();
+
+                if (Config.Instance.Address == "127.0.0.1")
+                {
+                    Config.Instance.Address = NetworkInterface.GetAllNetworkInterfaces().Where(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback && i.OperationalStatus == OperationalStatus.Up).First().GetIPProperties().UnicastAddresses.Where(a => a.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).First().Address.ToString();
+                    Config.Save();
+                }
 
                 var builder = WebApplication.CreateBuilder(args);
 

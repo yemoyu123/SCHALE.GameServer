@@ -16,6 +16,7 @@ namespace SCHALE.Common.Database
         public DbSet<CharacterDB> Characters { get; set; }
         public DbSet<EquipmentDB> Equipment { get; set; }
         public DbSet<WeaponDB> Weapons { get; set; }
+        public DbSet<GearDB> Gears { get; set; }
 
         public DbSet<EchelonDB> Echelons { get; set; }
         public DbSet<AccountTutorial> AccountTutorials { get; set; }
@@ -62,10 +63,16 @@ namespace SCHALE.Common.Database
                 .WithOne(x => x.Account)
                 .HasForeignKey(x => x.AccountServerId)
                 .IsRequired();
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.Gears)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
 
             modelBuilder.Entity<ItemDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<EquipmentDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<WeaponDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
+            modelBuilder.Entity<GearDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<EchelonDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
 

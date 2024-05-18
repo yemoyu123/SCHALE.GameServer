@@ -1,6 +1,7 @@
 ﻿using SCHALE.Common.Database;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.GameServer.Services;
+using SCHALE.GameServer.Utils;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
@@ -26,8 +27,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             {
                 IrcConfig = new()
                 {
-                    HostAddress = REPLACE WITH YOUR IP,
-                    Port = 6667,
+                    HostAddress = Config.Instance.Address,
+                    Port = Config.Instance.Port,
                     Password = ""
                 },
                 AccountClanDB = new()

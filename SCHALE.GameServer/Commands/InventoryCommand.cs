@@ -6,12 +6,12 @@ using SCHALE.GameServer.Services.Irc;
 
 namespace SCHALE.GameServer.Commands
 {
-    [CommandHandler("inventory", "Command to manage inventory (chars, weapons, equipment, items)", "/inventory <addall|clearall>")]
+    [CommandHandler("inventory", "Command to manage inventory (chars, weapons, equipment, items)", "/inventory <addall|removeall>")]
     internal class InventoryCommand : Command
     {
         public InventoryCommand(IrcConnection connection, string[] args, bool validate = true) : base(connection, args, validate) { }
 
-        [Argument(0, @"^addall$|^clearall$", "The operation selected (addall, clearall)", ArgumentFlags.IgnoreCase)]
+        [Argument(0, @"^addall$|^removeall$", "The operation selected (addall, removeall)", ArgumentFlags.IgnoreCase)]
         public string Op { get; set; } = string.Empty;
 
         public override void Execute()
@@ -25,13 +25,19 @@ namespace SCHALE.GameServer.Commands
                     InventoryUtils.AddAllWeapons(connection);
                     InventoryUtils.AddAllEquipment(connection);
                     InventoryUtils.AddAllItems(connection);
+                    InventoryUtils.AddAllGears(connection);
+
+                    connection.SendChatMessage("Added Everything!");
                     break;
 
-                case "clearall":
+                case "removeall":
                     InventoryUtils.RemoveAllCharacters(connection);
                     context.Weapons.RemoveRange(context.Weapons.Where(x => x.AccountServerId == connection.AccountServerId));
                     context.Equipment.RemoveRange(context.Equipment.Where(x => x.AccountServerId == connection.AccountServerId));
                     context.Items.RemoveRange(context.Items.Where(x => x.AccountServerId == connection.AccountServerId));
+                    context.Gears.RemoveRange(context.Gears.Where(x => x.AccountServerId == connection.AccountServerId));
+
+                    connection.SendChatMessage("Removed Everything!");
                     break;
             }
 
