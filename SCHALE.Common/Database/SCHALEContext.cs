@@ -68,7 +68,8 @@ namespace SCHALE.Common.Database
                 .WithOne(x => x.Account)
                 .HasForeignKey(x => x.AccountServerId)
                 .IsRequired();
-
+            
+            modelBuilder.Entity<AccountDB>(x => x.Property(b => b.RaidInfo).HasJsonConversion());
             modelBuilder.Entity<ItemDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<EquipmentDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<WeaponDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();

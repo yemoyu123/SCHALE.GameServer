@@ -20,7 +20,7 @@ namespace SCHALE.GameServer.Commands
         public override void Execute()
         {
             PropertyInfo? targetProperty = typeof(AccountDB).GetProperty(Property) ?? typeof(AccountDB).GetProperty(Property.Capitalize());
-            
+
             if (targetProperty != null)
             {
                 TypeConverter converter = TypeDescriptor.GetConverter(targetProperty.PropertyType);
@@ -39,9 +39,30 @@ namespace SCHALE.GameServer.Commands
                     {
                         throw new ArgumentException("Invalid Value");
                     }
-                } 
+                }
             } 
             
+            else if (Property.Equals("raidseasonid", StringComparison.CurrentCultureIgnoreCase)) // temp raid stuff
+            {
+                if (long.TryParse(Value, out long seasonId))
+                {
+                    connection.Account.RaidInfo = new RaidInfo()
+                    {
+                        SeasonId = seasonId,
+                        BestRankingPoint = 0,
+                        TotalRankingPoint = 0,
+                    };
+
+                    connection.SendChatMessage($"Set Raid SeasonId to: {seasonId}");
+                    connection.Context.SaveChanges();
+                }
+
+                else
+                {
+                    throw new ArgumentException("Invalid Value");
+                }
+            }
+
             else
             {
                 throw new ArgumentException("Invalid Player Property!");

@@ -13,13 +13,130 @@ namespace SCHALE.Common.Database
     
     }
 
-    // Battle? probably need to implement these our selves
-    public class BattleSummary
+    public struct RaidBossResult : IEquatable<RaidBossResult>
     {
+        [JsonIgnore]
+        public int Index { get; set; }
 
+        [JsonIgnore]
+        public long GivenDamage { get; set; }
+
+        [JsonIgnore]
+        public long GivenGroggyPoint { get; set; }
+
+        //public RaidDamage RaidDamage { get; set; }
+
+        public long EndHpRateRawValue { readonly get; set; }
+
+        public long GroggyRateRawValue { readonly get; set; }
+
+        public int GroggyCount { readonly get; set; }
+
+        public List<long> SubPartsHPs { readonly get; set; }
+
+        public long AIPhase { readonly get; set; }
+
+        public bool Equals(RaidBossResult other)
+        {
+            return this.Index == other.Index;
+        }
     }
 
-    // probably just a simple json wrapper
+    public class RaidBossResultCollection : KeyedCollection<int, RaidBossResult>
+    {
+		[JsonIgnore]
+        public int LastIndex { get; set; }
+
+        [JsonIgnore]
+        public long TotalDamage { get; set; }
+        
+        [JsonIgnore]
+        public long CurrentDamage { get; set; }
+
+        [JsonIgnore]
+        public long TotalGroggyPoint { get; set; }
+
+        [JsonIgnore]
+        public long CurrentGroggyPoint { get; set; }
+
+        [JsonIgnore]
+        public int TotalGroggyCount { get; set; }
+
+        protected override int GetKeyForItem(RaidBossResult item)
+        {
+            return item.Index;
+        }
+    }
+
+    public class RaidSummary
+    {
+        public long RaidSeasonId { get; set; }
+
+        public long GivenDamage { get; set; }
+        
+        public int TotalGroggyCount { get; set; }
+
+        public int RaidBossIndex { get; set; }
+
+        public RaidBossResultCollection RaidBossResults { get; set; }
+    }
+
+    // Battle? probably need to implement these our selves
+    public class BattleSummary : IEquatable<BattleSummary>
+    {
+        public long HashKey { get; set; }
+
+        public bool IsBossBattle { get; set; }
+
+        //public BattleTypes BattleType { get; set; }
+
+        public long StageId { get; set; }
+
+        public long GroundId { get; set; }
+
+        //public GroupTag Winner { get; set; }
+
+        [JsonIgnore]
+        public bool IsPlayerWin {  get; set; }  
+
+        //public BattleEndType EndType { get; set; }
+
+        public int EndFrame { get; set; }
+
+        //public GroupSummary Group01Summary { get; set; }
+
+        //public GroupSummary Group02Summary { get; set; }
+
+        //public WeekDungeonSummary WeekDungeonSummary { get; set; }
+
+        public RaidSummary RaidSummary { get; set; }
+
+        //public ArenaSummary ArenaSummary { get; set; }
+
+        [JsonIgnore]
+        public TimeSpan EndTime { get; set; }
+
+        public int ContinueCount { get; set; }
+
+        public float ElapsedRealtime { get; set; }
+
+        [JsonIgnore]
+        public string FindGiftClearText { get; set; }
+
+        [JsonIgnore]
+        public long EventContentId { get; set; }
+
+        [JsonIgnore]
+        public long FixedEchelonId { get; set; }
+
+        public bool IsAbort { get; set; }
+
+        public bool Equals(BattleSummary? other)
+        {
+            return this.HashKey == other.HashKey;
+        }
+    }
+
     public class TypedJsonWrapper
     {
 
@@ -189,6 +306,19 @@ namespace SCHALE.Common.Database
         public Dictionary<CurrencyTypes, DateTime> UpdateTimeDict { get; set; }
     }
 
+    public class RaidInfo // custom class for all raid stuff needed
+    {
+        public long SeasonId { get; set; }
+
+        public long CurrentRaidUniqueId { get; set; }
+
+        public Difficulty CurrentDifficulty { get; set; }
+
+        public long BestRankingPoint { get; set; }
+
+        public long TotalRankingPoint { get; set; }
+    }
+
     public class AccountDB
     {
         [JsonIgnore]
@@ -212,9 +342,8 @@ namespace SCHALE.Common.Database
         [JsonIgnore]
         public virtual ICollection<GearDB> Gears { get; }
 
-
         [JsonIgnore]
-        public long RaidSeasonId { get; set; } // idk where to store this
+        public virtual RaidInfo RaidInfo { get; set; }
 
         public AccountDB() { }
 
@@ -225,6 +354,12 @@ namespace SCHALE.Common.Database
             Level = 1;
             LastConnectTime = DateTime.Now;
             CreateDate = DateTime.Now;
+            RaidInfo = new()
+            {
+                SeasonId = 1, // default
+                BestRankingPoint = 0,
+                TotalRankingPoint = 0,
+            };
         }
 
         [Key]
