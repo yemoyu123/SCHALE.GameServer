@@ -2,11 +2,32 @@ using SCHALE.Common.Database;
 using System.Text.Json.Serialization;
 using SCHALE.Common.Parcel;
 using SCHALE.Common.FlatData;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace SCHALE.Common.NetworkProtocol
 {
+
+    public class MissionSyncRequest : RequestPacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Mission_Sync;
+            }
+        }
+    }
+
+    public class MissionSyncResponse : ResponsePacket
+    {
+        public override Protocol Protocol
+        {
+            get
+            {
+                return NetworkProtocol.Protocol.Mission_Sync;
+            }
+        }
+    }
+
 
     public class AccountAuthResponse : ResponsePacket
     {

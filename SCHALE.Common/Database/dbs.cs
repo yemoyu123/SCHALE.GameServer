@@ -1204,6 +1204,7 @@ namespace SCHALE.Common.Database
         public long TSSInteractionServerId { get; set; }
         public EchelonStatusFlag UsingFlag { get; set; }
         public List<long> SkillCardMulliganCharacterIds { get; set; } = [];
+        public int[] CombatStyleIndex { get; set; } = [];
     }
 
 

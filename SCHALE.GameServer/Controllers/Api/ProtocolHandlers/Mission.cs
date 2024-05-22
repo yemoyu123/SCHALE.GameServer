@@ -16,6 +16,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             context = _context;
         }
 
+        [ProtocolHandler(Protocol.Mission_Sync)]
+        public ResponsePacket SyncHandler(MissionSyncRequest req)
+        {
+            return new MissionSyncResponse();
+        }
+
         [ProtocolHandler(Protocol.Mission_List)]
         public ResponsePacket ListHandler(MissionListRequest req)
         {

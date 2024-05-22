@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCHALE.Common.Database;
 
@@ -11,9 +12,11 @@ using SCHALE.Common.Database;
 namespace SCHALE.Common.Migrations
 {
     [DbContext(typeof(SCHALEContext))]
-    partial class SCHALEContextModelSnapshot : ModelSnapshot
+    [Migration("20240522122813_EchelonDB_CombatStyleIndex")]
+    partial class EchelonDB_CombatStyleIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
