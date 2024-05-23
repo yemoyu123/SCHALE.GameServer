@@ -6,7 +6,6 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Serilog;
 using System.Text.Json.Serialization;
 
 namespace SCHALE.GameServer.Controllers.Api
@@ -14,13 +13,13 @@ namespace SCHALE.GameServer.Controllers.Api
     [Route("/api/[controller]")]
     public class GatewayController : ControllerBase
     {
-        static JsonSerializerOptions jsonOptions = new() // ignore null or fields not set, if this breaks anything, remove it, idk if it does but it makes the pcap logs look more readable
+        private readonly static JsonSerializerOptions jsonOptions = new() // ignore null or fields not set, if this breaks anything, remove it, idk if it does but it makes the pcap logs look more readable
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
         };
 
-        IProtocolHandlerFactory protocolHandlerFactory;
-        ILogger<GatewayController> logger;
+        private readonly IProtocolHandlerFactory protocolHandlerFactory;
+        private readonly ILogger<GatewayController> logger;
 
         public GatewayController(IProtocolHandlerFactory _protocolHandlerFactory, ILogger<GatewayController> _logger)
         {
@@ -96,7 +95,7 @@ namespace SCHALE.GameServer.Controllers.Api
             protocolErrorRet:
                 return Results.Json(new
                 {
-                    packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = "Protocol not implemented (Server Error)", ErrorCode = WebAPIErrorCode.InternalServerError }, jsonOptions),
+                    packet = JsonSerializer.Serialize(new ErrorPacket() { Reason = "Protocol not implemented (Server Error)", ErrorCode = WebAPIErrorCode.ServerFailedToHandleRequest }, jsonOptions),
                     protocol = Protocol.Error.ToString()
                 });
             }

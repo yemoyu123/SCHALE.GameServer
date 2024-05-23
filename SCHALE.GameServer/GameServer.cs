@@ -20,8 +20,8 @@ namespace SCHALE.GameServer
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.Local.json", true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+                .AddJsonFile("appsettings.Local.json", true)
                 .Build();
 
             {
