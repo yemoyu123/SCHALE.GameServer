@@ -18,6 +18,7 @@ services:
       target: final
     ports:
       - 80:80
+      - 6667:6667
 
   db:
     image: mcr.microsoft.com/mssql/server

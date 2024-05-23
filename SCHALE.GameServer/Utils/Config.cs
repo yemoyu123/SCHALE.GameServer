@@ -15,16 +15,19 @@ namespace SCHALE.GameServer.Utils
             if (!File.Exists(ConfigPath))
                 Save();
 
+#if !DOCKER_BUILD
             string json = File.ReadAllText(ConfigPath);
-
             Instance = JsonSerializer.Deserialize<Config>(json);
+#endif
 
             Log.Debug($"Config loaded");
         }
 
         public static void Save()
         {
+#if !DOCKER_BUILD
             File.WriteAllText(ConfigPath, JsonSerializer.Serialize(Instance));
+#endif
 
             Log.Debug($"Config saved");
         }
