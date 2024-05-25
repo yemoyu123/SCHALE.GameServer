@@ -25,16 +25,16 @@ Alternatively this software can run in docker too (`docker compose up --build`).
 5. Download `Excel.zip` and unzip and add the excels to the following path: `SCHALE.GameServer\bin\Debug\net8.0\Resources\excel` the password is `/wy5f3hIGGXLOIUDS9DZ`
 6. modify Address in `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\Config.json`
 7. Open `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\SCHALE.GameServer.exe`
-8. Download python and install it
+8. Download python and install it<br>
 <https://www.python.org/>
 9. Use pip install frida
 ```
 pip install frida-tools
 pip install frida
 ```
-10. Download frida-server and uncompress it(emulator download x86)
+10. Download frida-server and uncompress it(emulator download x86)<br>
 <https://github.com/frida/frida/releases>
-11. Download adb
+11. Download adb<br>
 <https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn#downloads>
 12. Use adb connect emulator and start frida-server(enable root first)
 ```
@@ -53,17 +53,17 @@ adb shell "/data/local/tmp/frida-server &"
 ## Troubleshooting
 
 ##### YostarRequestFail:INIT_FAILED(Initialization failed)
-change `SERVER_ADDRESS` in `ba.js` to your IPV4 and not `0.0.0.0`
+- change `SERVER_ADDRESS` in `ba.js` to your IPV4 and not `0.0.0.0`
 
 ##### アカウント情報の連携中にエラーガ発生乚ま乚た
-restart server or without `Resources\excel`
+- restart server or without `Resources\excel`
 
 ##### can enter game but black screen
-close server and delete database, then open server.<br>
+- close server and delete database, then open server.<br>
 if it isn't work, you may need to pass the official tutorial first.  
 
 ##### failed to load club
-change `Address` in `config.json` to your IPV4
+- change `Address` in `config.json` to your IPV4
 
 ##### command not work
-the excel you are using may have problem, change your excel.
+- the excel you are using may have problem, change your excel.
