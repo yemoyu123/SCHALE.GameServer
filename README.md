@@ -53,7 +53,7 @@ adb shell "/data/local/tmp/frida-server &"
 ## Troubleshooting
 
 ##### YostarRequestFail:INIT_FAILED(Initialization failed)
-modify `SERVER_ADDRESS` in `ba.js` and ensure it is your IPV4 and not `0.0.0.0`
+change `SERVER_ADDRESS` in `ba.js` to your IPV4 and not `0.0.0.0`
 
 ##### アカウント情報の連携中にエラーガ発生乚ま乚た
 restart server or without `Resources\excel`
@@ -63,7 +63,7 @@ close server and delete database, then open server.<br>
 if it isn't work, you may need to pass the official tutorial first.  
 
 ##### failed to load club
-modify `Address` in `config.json` is your IPV4
+change `Address` in `config.json` to your IPV4
 
 ##### command not work
 the excel you are using may have problem, change your excel.
