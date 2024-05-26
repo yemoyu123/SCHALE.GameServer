@@ -12,32 +12,33 @@ Alternatively this software can run in docker too (`docker compose up --build`).
 [Discord Server](https://discord.gg/fbsRYc7bBA)
 
 ## How to use (E.g Windows and LDPlayer 9)
-1. Download this repo<br>
-`git clone https://github.com/rafi1212122/SCHALE.GameServer.git`
-2. Download .NET SDK, SQL Server Express, and install them<br>
+1. Download this repo.
+```sh
+git clone https://github.com/rafi1212122/SCHALE.GameServer.git
+```
+2. Download .NET SDK, SQL Server Express, and install them.
 - .NET SDK<br>
-<https://dotnet.microsoft.com/zh-cn/download/dotnet?cid=getdotnetcorecli><br>
+<https://dotnet.microsoft.com/zh-cn/download/dotnet?cid=getdotnetcorecli>
 - SQL Server Express<br>
 <https://go.microsoft.com/fwlink/p/?linkid=2216019&clcid=0x804&culture=zh-cn&country=cn>
-3. Download Visual Studio and Install C# and Database Extensions<br>
-<https://visualstudio.microsoft.com/zh-hans/vs/>
+3. Download Visual Studio and Install C# and Database Extensions.<br>
+[https://visualstudio.microsoft.com/zh-hans/vs/](https://visualstudio.microsoft.com/vs/)
 4. Use Visual Studio to open `SCHALE.GameServer\SCHALE.GameServer.sln` and make it.
-5. Download `Excel.zip` and unzip and add the excels to the following path: `SCHALE.GameServer\bin\Debug\net8.0\Resources\excel` the password is `/wy5f3hIGGXLOIUDS9DZ`
-6. modify Address in `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\Config.json`
-7. Open `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\SCHALE.GameServer.exe`
-8. Download python and install frida<br>You may need to add python site packages to PATH if "frida" command is missing<br>
+5. Download `Excel.zip` and unzip and add the excels to the following path: `SCHALE.GameServer\bin\Debug\net8.0\Resources\excel`.
+6. Modify the IP address in `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\Config.json`.
+7. Open `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\SCHALE.GameServer.exe`.
+8. Download python and install frida<br>You may need to add python site packages to PATH if "frida" command is missing.<br>
 <https://www.python.org/>
-```
+```sh
 pip install frida-tools
 pip install frida
 ```
-9. Download frida-server(if you use emulator, download x86)<br>
-Find "frida-server-[Latest Version]-android-x86_64.xz" and download & unzip it, before push you may rename the bin file to "frida-server"<br>
+9. Download frida-server(if you use emulator, download x86), find "frida-server-[Latest Version]-android-x86_64.xz" and download & unzip it, before push you may rename the bin file to "frida-server".<br>
 <https://github.com/frida/frida/releases>
-10. Download adb<br>
+10. Download adb.<br>
 <https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn#downloads>
 11. Use adb connect emulator and start frida-server(enable root first)
-```
+```sh
 adb root
 adb push frida-server /data/local/tmp/
 adb shell "chmod 755 /data/local/tmp/frida-server"
