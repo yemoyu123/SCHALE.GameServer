@@ -28,7 +28,17 @@ namespace SCHALE.GameServer.Services
             if (caches.TryGetValue(type, out var cache))
                 return (T)cache;
 
-            var bytesFilePath = Path.Join(Path.GetDirectoryName(AppContext.BaseDirectory), "Resources/excel/", $"{type.Name.ToLower()}.bytes");
+            var folder = Path.GetDirectoryName(AppContext.BaseDirectory);
+            string excelFolder;
+            while (true){
+                excelFolder = Path.Join(folder, "Resources/excel");
+                if (Directory.Exists(excelFolder)) break;
+                folder = Path.GetDirectoryName(folder);
+                if (folder == null)
+                    throw new FileNotFoundException($"Excel folder is not found.");
+            }
+
+            var bytesFilePath = Path.Join(excelFolder, $"{type.Name.ToLower()}.bytes");
             if (!File.Exists(bytesFilePath))
             {
                 throw new FileNotFoundException($"bytes files for {type.Name} not found");
