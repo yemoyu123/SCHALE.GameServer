@@ -224,7 +224,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     AccountCurrencyDB = new AccountCurrencyDB
                     {
-                        AccountLevel = 1,
+                        AccountLevel = 90,
                         AcademyLocationRankSum = 1,
                         CurrencyDict = new Dictionary<CurrencyTypes, long>
                         {
@@ -354,7 +354,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
             return new AccountGetTutorialResponse()
             {
-                TutorialIds = tutorialIds ?? []
+                TutorialIds = tutorialIds ?? [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
             };
         }
 
