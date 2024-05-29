@@ -26,7 +26,7 @@
 
 ### SQL server
 
-Use SSMS to connect with default settings.
+Use SSMS to connect with default settings except that you have to check "Trust server certificate".
 
 ### Game server
 
@@ -67,4 +67,3 @@ chmod 755 frida-server
 # in this repo
 frida -U "ブルアカ" -l ba.js --realm=emulated
 ```
-
