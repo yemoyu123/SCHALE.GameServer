@@ -16,7 +16,7 @@ namespace SCHALE.GameServer
 {
     public class GameServer
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!)
@@ -61,6 +61,9 @@ namespace SCHALE.GameServer
             Log.Information("Starting...");
             try
             {
+                Log.Information("Downloading Excels...");
+                await ExcelTableService.Init();
+
                 // Load Commands
                 CommandFactory.LoadCommands();
 
