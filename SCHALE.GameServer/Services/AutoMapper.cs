@@ -7,7 +7,7 @@ namespace SCHALE.GameServer.Services
     {
         public MappingProfile()
         {
-            CreateMap<EchelonDB, EchelonDB>();
+            CreateMap<EchelonDB, EchelonDB>().ForMember(x => x.ServerId, opt => opt.Ignore());
         }
     }
 }
