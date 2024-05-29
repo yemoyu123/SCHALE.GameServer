@@ -14,29 +14,22 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         private readonly ISessionKeyService sessionKeyService = _sessionKeyService;
         private readonly SCHALEContext context = _context;
 
-        private EquipmentDB GetEquipmentDB(long accountServerId, long equipmentServerId)
+        private EquipmentDB? GetEquipmentDB(long accountServerId, long equipmentServerId)
         {
             if (equipmentServerId == 0)
-                return new EquipmentDB();
-            var equipmentDB = context
-                .Equipment.OrderBy(row => row.ServerId)
-                .LastOrDefault(c =>
-                    c.AccountServerId == accountServerId && c.ServerId == equipmentServerId
-                );
-            ArgumentNullException.ThrowIfNull(equipmentDB);
-            return equipmentDB;
+                return null;
+            return context.Equipment.First(c =>
+                c.AccountServerId == accountServerId && c.ServerId == equipmentServerId
+            );
         }
 
-        private ArenaCharacterDB Convert(long accountServerId, long characterServerId)
+        private ArenaCharacterDB? Convert(long accountServerId, long characterServerId)
         {
             if (characterServerId == 0)
-                return new ArenaCharacterDB();
-            var characterDB = context
-                .Characters.OrderBy(row => row.ServerId)
-                .LastOrDefault(c =>
-                    c.AccountServerId == accountServerId && c.ServerId == characterServerId
-                );
-            ArgumentNullException.ThrowIfNull(characterDB);
+                return null;
+            var characterDB = context.Characters.First(c =>
+                c.AccountServerId == accountServerId && c.ServerId == characterServerId
+            );
             return Convert(characterDB);
         }
 
@@ -54,7 +47,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 LeaderSkillLevel = db.LeaderSkillLevel,
                 EquipmentDBs = db
                     .EquipmentServerIds.Select(i => GetEquipmentDB(db.AccountServerId, i))
-                    .ToList()[..3],
+                    .Where(i => i != null)
+                    .ToList()!,
                 FavorRankInfo = new Dictionary<long, long>
                 {
                     // TODO: add all
@@ -62,18 +56,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 },
                 PotentialStats = db.PotentialStats
             };
-            var weaponDB = context
-                .Weapons.OrderBy(row => row.ServerId)
-                .LastOrDefault(w =>
-                    w.AccountServerId == db.ServerId && w.BoundCharacterServerId == db.ServerId
-                );
+            var weaponDB = context.Weapons.FirstOrDefault(w =>
+                w.AccountServerId == db.AccountServerId && w.BoundCharacterServerId == db.ServerId
+            );
             if (weaponDB != null)
                 res.WeaponDB = weaponDB;
-            var gearDB = context
-                .Gears.OrderBy(row => row.ServerId)
-                .LastOrDefault(w =>
-                    w.AccountServerId == db.ServerId && w.BoundCharacterServerId == db.ServerId
-                );
+            var gearDB = context.Gears.FirstOrDefault(w =>
+                w.AccountServerId == db.AccountServerId && w.BoundCharacterServerId == db.ServerId
+            );
             if (gearDB != null)
                 res.GearDB = gearDB;
             return res;
@@ -82,23 +72,23 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         private ArenaTeamSettingDB Convert(EchelonDB db)
         {
             var LeaderCharacterId = context
-                .Characters.OrderBy(row => row.ServerId)
-                .LastOrDefault(c =>
+                .Characters.First(c =>
                     c.AccountServerId == db.AccountServerId && c.ServerId == db.LeaderServerId
                 )
-                ?.UniqueId;
-            ArgumentNullException.ThrowIfNull(LeaderCharacterId);
+                .UniqueId;
 
             return new ArenaTeamSettingDB()
             {
                 EchelonType = db.EchelonType,
-                LeaderCharacterId = LeaderCharacterId.Value,
+                LeaderCharacterId = LeaderCharacterId,
                 MainCharacters = db
                     .MainSlotServerIds.Select(i => Convert(db.AccountServerId, i))
-                    .ToList(),
+                    .Where(i => i != null)
+                    .ToList()!,
                 SupportCharacters = db
                     .SupportSlotServerIds.Select(i => Convert(db.AccountServerId, i))
-                    .ToList(),
+                    .Where(i => i != null)
+                    .ToList()!,
                 MapId = 1001,
             };
         }
@@ -110,7 +100,6 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 LeaderCharacterId = 10065,
                 MainCharacters =
                 [
-                    new ArenaCharacterDB(),
                     new ArenaCharacterDB()
                     {
                         UniqueId = 10065,
@@ -128,14 +117,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
         private ArenaTeamSettingDB? GetDefense(long accountId)
         {
-            var defense = context
-                .Echelons.OrderBy(row => row.ServerId)
-                .LastOrDefault(e =>
-                    e.AccountServerId == accountId
-                    && e.EchelonType == EchelonType.ArenaDefence
-                    && e.EchelonNumber == 1
-                    && e.ExtensionType == EchelonExtensionType.Base
-                );
+            var defense = context.Echelons.FirstOrDefault(e =>
+                e.AccountServerId == accountId
+                && e.EchelonType == EchelonType.ArenaDefence
+                && e.EchelonNumber == 1
+                && e.ExtensionType == EchelonExtensionType.Base
+            );
             if (defense == null)
                 return null;
             return Convert(defense);
@@ -186,8 +173,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     AllTimeRecord = 1
                 },
                 OpponentUserDBs = DummyOpponent(GetDefense(req.AccountId)),
-                MapId = 1001,
-                AutoRefreshTime = DateTime.Parse("2099-01-01T00:00:00")
+                MapId = 1001
             };
         }
 
@@ -210,15 +196,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Arena_EnterBattlePart1)]
         public ResponsePacket EnterBattlePart1Handler(ArenaEnterBattlePart1Request req)
         {
-            var attack = context
-                .Echelons.OrderBy(row => row.ServerId)
-                .LastOrDefault(e =>
-                    e.AccountServerId == req.AccountId
-                    && e.EchelonType == EchelonType.ArenaAttack
-                    && e.EchelonNumber == 1
-                    && e.ExtensionType == EchelonExtensionType.Base
-                );
-            ArgumentNullException.ThrowIfNull(attack);
+            var attack = context.Echelons.First(e =>
+                e.AccountServerId == req.AccountId
+                && e.EchelonType == EchelonType.ArenaAttack
+                && e.EchelonNumber == 1
+                && e.ExtensionType == EchelonExtensionType.Base
+            );
 
             ArenaUserDB arenaUserDB =
                 new()
