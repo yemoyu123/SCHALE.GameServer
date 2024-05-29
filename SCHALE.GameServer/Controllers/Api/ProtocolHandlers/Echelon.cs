@@ -31,9 +31,19 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Echelon_Save)]
         public ResponsePacket SaveHandler(EchelonSaveRequest req)
         {
-            var db = req.EchelonDB;
-            
-            context.Echelons.Add(db);
+            var account = sessionKeyService.GetAccount(req.SessionKey);
+
+            var newEchelon = req.EchelonDB;
+            var existingEchelon = context.Echelons.FirstOrDefault(e => e.AccountServerId == newEchelon.AccountServerId && e.EchelonType == newEchelon.EchelonType &&
+                                                                    e.EchelonNumber == newEchelon.EchelonNumber && e.ExtensionType == newEchelon.ExtensionType);
+
+            if (existingEchelon != null)
+            {
+                context.Echelons.Remove(existingEchelon);
+                context.SaveChanges();
+            }
+
+            account.AddEchelons(context, [newEchelon]);
             context.SaveChanges();
             
             return new EchelonSaveResponse() { EchelonDB = req.EchelonDB, };

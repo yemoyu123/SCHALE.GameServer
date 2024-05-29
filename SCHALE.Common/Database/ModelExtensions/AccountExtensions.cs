@@ -65,5 +65,16 @@
 
             return [.. gears];
         }
+
+        public static List<EchelonDB> AddEchelons(this AccountDB account, SCHALEContext context, params EchelonDB[] echelons)
+        {
+            foreach (var echelon in echelons)
+            {
+                echelon.AccountServerId = account.ServerId;
+                context.Echelons.Add(echelon);
+            }
+
+            return [.. echelons];
+        }
     }
 }
