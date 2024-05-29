@@ -79,8 +79,8 @@ namespace SCHALE.Common.Utils
                     UniqueId = x.UniqueId,
                     BoundCharacterServerId = x.ServerId,
                     IsLocked = false,
-                    StarGrade = 5,
-                    Level = 200
+                    StarGrade = 3,
+                    Level = 50
                 };
             });
 
@@ -132,17 +132,17 @@ namespace SCHALE.Common.Utils
             {
                 UniqueId = characterId,
                 StarGrade = 5,
-                Level = 200,
+                Level = 90,
                 Exp = 0,
                 PublicSkillLevel = 10,
                 ExSkillLevel = 5,
                 PassiveSkillLevel = 10,
                 ExtraPassiveSkillLevel = 10,
                 LeaderSkillLevel = 1,
-                FavorRank = 500,
+                FavorRank = 20,
                 IsNew = true,
                 IsLocked = true,
-                PotentialStats = { { 1, 25 }, { 2, 25 }, { 3, 25 } },
+                PotentialStats = { { 1, 0 }, { 2, 0 }, { 3, 0 } },
                 EquipmentServerIds = [0, 0, 0]
             };
         }

@@ -1,76 +1,69 @@
 # SCHALE.GameServer
 
-## Running
-By default the server is configured to run with SQL Server Express in `appsettings.json`. If you wanna use other edition of SQL Server Express change the `ConnectionStrings` in there.
+> [!TIP]
+> For original README please refer to <https://github.com/rafi1212122/SCHALE.GameServer>
 
-Alternatively this software can run in docker too (`docker compose up --build`).
+## Prerequisites
 
-## Connecting
-- Run the game with this [frida script](https://gist.githubusercontent.com/raphaeIl/c4ca030411186c9417da22d8d7864c4d/raw/00b69c5bacdf79c24972411bd80d785eed3841ce/ba.js)
+- Some computer knowledge
+- [.NET SDK 8.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0)
+- [SQL Express](https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads)
+- [SQL Server Management Studio (SSMS)](https://learn.microsoft.com/zh-tw/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+- [LD Player 9](https://www.ldplayer.tw/)
+- [Python](https://www.python.org/)
+- [Frida](https://frida.re/)
+- [frida-server-16.2.5-android-x86_64](https://github.com/frida/frida/releases)
 
-## Discuss
-[Discord Server](https://discord.gg/fbsRYc7bBA)
+## Steps
 
-## How to use (E.g Windows and LDPlayer 9)
-1. Download this repo.
-```sh
-git clone https://github.com/rafi1212122/SCHALE.GameServer.git
+1. Start SQL server
+2. Start private game server
+3. Start LD Player
+4. Start Frida server
+5. Start ブルアカ
+6. Inject Frida script
+7. Enjoy :smile:
+
+### SQL server
+
+Use SSMS to connect with default settings except that you have to check "Trust server certificate".
+
+### Game server
+
+```bash
+# in this repo
+cd SCHALE.GameServer
+dotnet run
 ```
-2. Download .NET SDK, SQL Server Express, and install them.
-- .NET SDK<br>
-<https://dotnet.microsoft.com/zh-cn/download/dotnet?cid=getdotnetcorecli>
-- SQL Server Express<br>
-<https://go.microsoft.com/fwlink/p/?linkid=2216019&clcid=0x804&culture=zh-cn&country=cn>
-3. Download Visual Studio and Install C# and Database Extensions.<br>
-[https://visualstudio.microsoft.com/zh-hans/vs/](https://visualstudio.microsoft.com/vs/)
-4. Use Visual Studio to open `SCHALE.GameServer\SCHALE.GameServer.sln` and make it.
-5. Download `Excel.zip` and unzip and add the excels to the following path: `SCHALE.GameServer\bin\Debug\net8.0\Resources\excel`.
-6. Modify the IP address in `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\Config.json`.
-7. Open `SCHALE.GameServer-master\SCHALE.GameServer\bin\Debug\net8.0\SCHALE.GameServer.exe`.
-8. Download python and install frida<br>You may need to add python site packages to PATH if "frida" command is missing.<br>
-<https://www.python.org/>
-```sh
-pip install frida-tools
-pip install frida
+
+### Frida server
+
+1. Extract `frida-server-16.2.5-android-x86_64.xz`
+to `LDPlayer/frida-server-16.2.5-android-x86_64`.
+2. Turn on LD Player
+3. Turn on root and adb in the settings of LD Player.
+4.
+
+```bash
+# in LDPlayer
+cd LDPlayer9
+./adb.exe push ../frida-server-16.2.5-android-x86_64 /data/local/tmp/frida-server
+./adb.exe shell
+su
+cd /data/local/tmp
+chmod 755 frida-server
+./frida-server
 ```
-9. Download frida-server(if you use emulator, download x86), find "frida-server-[Latest Version]-android-x86_64.xz" and download & unzip it, before push you may rename the bin file to "frida-server".<br>
-<https://github.com/frida/frida/releases>
-10. Download adb.<br>
-<https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn#downloads>
-11. Use adb connect emulator and start frida-server(enable root first)
-```sh
-adb root
-adb push frida-server /data/local/tmp/
-adb shell "chmod 755 /data/local/tmp/frida-server"
-adb shell "/data/local/tmp/frida-server &"
+
+### Inject Frida script
+
+> [!NOTE]  
+> Edit line 5 of [ba.js](./ba.js) to your own server IP.
+
+> [!WARNING]  
+> Do this fast when you open ブルアカ and see the Yostar logo.
+
+```bash
+# in this repo
+frida -U "ブルアカ" -l ba.js --realm=emulated
 ```
-12. Start BluearchiveJP and use frida script
-    1. download this [frida script](https://gist.githubusercontent.com/raphaeIl/c4ca030411186c9417da22d8d7864c4d/raw/00b69c5bacdf79c24972411bd80d785eed3841ce/ba.js) and modify `SERVER_ADDRESS`
-    2. Start BluearchiveJP first and then start frida
-    3. `frida -U "ブルアカ" -l ba.js --realm=emulated`
-13. Skip Tutorial<br>
-If you have never finished any tutorials try this<br>
-`INSERT INTO [dbo].[AccountTutorials] ([AccountServerId], [TutorialIds]) VALUES (1, N'[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]');`<br>
-or you have finished the front part of the tutorial use this<br>
-`UPDATE [dbo].[AccountTutorials] SET [TutorialIds] = N'[1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]' WHERE [AccountServerId] = [Your Server ID];`
-
-## Command
-Go to club and input `/help` to view command usage
-
-## Troubleshooting
-
-##### YostarRequestFail:INIT_FAILED(Initialization failed)
-- change `SERVER_ADDRESS` in `ba.js` to your IPV4 and not `0.0.0.0`
-
-##### アカウント情報の連携中にエラーガ発生乚ま乚た
-- restart server or without `Resources\excel`
-
-##### can enter game but black screen
-- close server and delete database, then open server.<br>
-if it isn't work, you may need to pass the official tutorial first.  
-
-##### failed to load club
-- change `Address` in `config.json` to your IPV4
-
-##### command not work
-- the excel you are using may have problem, change your excel.

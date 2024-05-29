@@ -1,8 +1,8 @@
 ﻿using SCHALE.Common.Database;
+using SCHALE.Common.Database.ModelExtensions;
+using SCHALE.Common.FlatData;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.GameServer.Services;
-using SCHALE.Common.FlatData;
-using SCHALE.Common.Database.ModelExtensions;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
@@ -12,7 +12,13 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         private readonly SCHALEContext context;
         private readonly ExcelTableService excelTableService;
 
-        public Account(IProtocolHandlerFactory protocolHandlerFactory, ISessionKeyService _sessionKeyService, SCHALEContext _context, ExcelTableService _excelTableService) : base(protocolHandlerFactory)
+        public Account(
+            IProtocolHandlerFactory protocolHandlerFactory,
+            ISessionKeyService _sessionKeyService,
+            SCHALEContext _context,
+            ExcelTableService _excelTableService
+        )
+            : base(protocolHandlerFactory)
         {
             sessionKeyService = _sessionKeyService;
             context = _context;
@@ -24,7 +30,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             string[] uidToken = req.EnterTicket.Split(':');
 
-            var account = context.GuestAccounts.SingleOrDefault(x => x.Uid == long.Parse(uidToken[0]) && x.Token == uidToken[1]);
+            var account = context.GuestAccounts.SingleOrDefault(x =>
+                x.Uid == long.Parse(uidToken[0]) && x.Token == uidToken[1]
+            );
 
             if (account is null)
             {
@@ -38,7 +46,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             return new AccountCheckYostarResponse()
             {
                 ResultState = 1,
-                SessionKey = sessionKeyService.Create(account.Uid) ?? new SessionKey() { MxToken = req.EnterTicket }
+                SessionKey =
+                    sessionKeyService.Create(account.Uid)
+                    ?? new SessionKey() { MxToken = req.EnterTicket }
             };
         }
 
@@ -47,10 +57,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             if (req.SessionKey is null || req.SessionKey.AccountServerId == 0)
             {
-                return new ErrorPacket()
-                {
-                    ErrorCode = WebAPIErrorCode.AccountAuthNotCreated
-                };
+                return new ErrorPacket() { ErrorCode = WebAPIErrorCode.AccountAuthNotCreated };
             }
             else
             {
@@ -69,16 +76,28 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                         { OpenConditionContent.Cafe, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Unit_Growth_Skill, OpenConditionLockReason.None },
                         { OpenConditionContent.Unit_Growth_LevelUp, OpenConditionLockReason.None },
-                        { OpenConditionContent.Unit_Growth_Transcendence, OpenConditionLockReason.None },
+                        {
+                            OpenConditionContent.Unit_Growth_Transcendence,
+                            OpenConditionLockReason.None
+                        },
                         { OpenConditionContent.WeekDungeon, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Arena, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Academy, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Equip, OpenConditionLockReason.None },
                         { OpenConditionContent.Item, OpenConditionLockReason.None },
                         { OpenConditionContent.Mission, OpenConditionLockReason.None },
-                        { OpenConditionContent.WeekDungeon_Chase, OpenConditionLockReason.StageClear },
-                        { OpenConditionContent.__Deprecated_WeekDungeon_FindGift, OpenConditionLockReason.None },
-                        { OpenConditionContent.__Deprecated_WeekDungeon_Blood, OpenConditionLockReason.None },
+                        {
+                            OpenConditionContent.WeekDungeon_Chase,
+                            OpenConditionLockReason.StageClear
+                        },
+                        {
+                            OpenConditionContent.__Deprecated_WeekDungeon_FindGift,
+                            OpenConditionLockReason.None
+                        },
+                        {
+                            OpenConditionContent.__Deprecated_WeekDungeon_Blood,
+                            OpenConditionLockReason.None
+                        },
                         { OpenConditionContent.Story_Sub, OpenConditionLockReason.None },
                         { OpenConditionContent.Story_Replay, OpenConditionLockReason.None },
                         { OpenConditionContent.None, OpenConditionLockReason.None },
@@ -98,24 +117,46 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                         { OpenConditionContent.Story, OpenConditionLockReason.None },
                         { OpenConditionContent.Tactic_Speed, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Cafe_Invite, OpenConditionLockReason.StageClear },
-                        { OpenConditionContent.Cafe_Invite_2, OpenConditionLockReason.CafeRank | OpenConditionLockReason.StageClear },
-                        { OpenConditionContent.EventMiniGame_1, OpenConditionLockReason.StageClear },
+                        {
+                            OpenConditionContent.Cafe_Invite_2,
+                            OpenConditionLockReason.CafeRank | OpenConditionLockReason.StageClear
+                        },
+                        {
+                            OpenConditionContent.EventMiniGame_1,
+                            OpenConditionLockReason.StageClear
+                        },
                         { OpenConditionContent.SchoolDungeon, OpenConditionLockReason.StageClear },
-                        { OpenConditionContent.TimeAttackDungeon, OpenConditionLockReason.StageClear },
+                        {
+                            OpenConditionContent.TimeAttackDungeon,
+                            OpenConditionLockReason.StageClear
+                        },
                         { OpenConditionContent.ShiftingCraft, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Tactic_Skip, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Mulligan, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.EventPermanent, OpenConditionLockReason.StageClear },
-                        { OpenConditionContent.Main_L_1_2, OpenConditionLockReason.ScenarioModeClear },
-                        { OpenConditionContent.Main_L_1_3, OpenConditionLockReason.ScenarioModeClear },
-                        { OpenConditionContent.Main_L_1_4, OpenConditionLockReason.ScenarioModeClear },
+                        {
+                            OpenConditionContent.Main_L_1_2,
+                            OpenConditionLockReason.ScenarioModeClear
+                        },
+                        {
+                            OpenConditionContent.Main_L_1_3,
+                            OpenConditionLockReason.ScenarioModeClear
+                        },
+                        {
+                            OpenConditionContent.Main_L_1_4,
+                            OpenConditionLockReason.ScenarioModeClear
+                        },
                         { OpenConditionContent.EliminateRaid, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.Cafe_2, OpenConditionLockReason.StageClear },
                         { OpenConditionContent.MultiFloorRaid, OpenConditionLockReason.StageClear }
                     },
-                    MissionProgressDBs = [.. context.MissionProgresses.Where(x => x.AccountServerId == account.ServerId)]
+                    MissionProgressDBs =
+                    [
+                        .. context.MissionProgresses.Where(x =>
+                            x.AccountServerId == account.ServerId
+                        )
+                    ]
                 };
-
             }
         }
 
@@ -124,10 +165,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             if (req.SessionKey is null)
             {
-                return new ErrorPacket()
-                {
-                    ErrorCode = WebAPIErrorCode.InvalidSession
-                };
+                return new ErrorPacket() { ErrorCode = WebAPIErrorCode.InvalidSession };
             }
 
             string[] uidToken = req.SessionKey.MxToken.Split(':');
@@ -137,38 +175,55 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             context.SaveChanges();
 
             // Default items
-            context.Items.Add(new()
-            {
-                AccountServerId = account.ServerId,
-                UniqueId = 2,
-                StackCount = 5
-            });
+            context.Items.Add(
+                new()
+                {
+                    AccountServerId = account.ServerId,
+                    UniqueId = 2,
+                    StackCount = 5
+                }
+            );
 
             // Default chars
-            var defaultCharacters = excelTableService.GetTable<DefaultCharacterExcelTable>().UnPack().DataList;
-            var newCharacters = defaultCharacters.Select(x =>
-            {
-                var characterExcel = excelTableService.GetTable<CharacterExcelTable>().UnPack().DataList.Find(y => y.Id == x.CharacterId);
-
-                return new CharacterDB()
+            var defaultCharacters = excelTableService
+                .GetTable<DefaultCharacterExcelTable>()
+                .UnPack()
+                .DataList;
+            var newCharacters = defaultCharacters
+                .Select(x =>
                 {
-                    UniqueId = x.CharacterId,
-                    StarGrade = x.StarGrade,
-                    Level = x.Level,
-                    Exp = x.Exp,
-                    FavorRank = x.FavorRank,
-                    FavorExp = x.FavorExp,
-                    PublicSkillLevel = 1,
-                    ExSkillLevel = x.ExSkillLevel,
-                    PassiveSkillLevel = x.PassiveSkillLevel,
-                    ExtraPassiveSkillLevel = x.ExtraPassiveSkillLevel,
-                    LeaderSkillLevel = x.LeaderSkillLevel,
-                    IsNew = true,
-                    IsLocked = true,
-                    EquipmentServerIds = characterExcel is not null ? characterExcel.EquipmentSlot.Select(x => (long)0).ToList() : [0, 0, 0],
-                    PotentialStats = { { 1, 0 }, { 2, 0 }, { 3, 0 } }
-                };
-            }).ToList();
+                    var characterExcel = excelTableService
+                        .GetTable<CharacterExcelTable>()
+                        .UnPack()
+                        .DataList.Find(y => y.Id == x.CharacterId);
+
+                    return new CharacterDB()
+                    {
+                        UniqueId = x.CharacterId,
+                        StarGrade = x.StarGrade,
+                        Level = x.Level,
+                        Exp = x.Exp,
+                        FavorRank = x.FavorRank,
+                        FavorExp = x.FavorExp,
+                        PublicSkillLevel = 1,
+                        ExSkillLevel = x.ExSkillLevel,
+                        PassiveSkillLevel = x.PassiveSkillLevel,
+                        ExtraPassiveSkillLevel = x.ExtraPassiveSkillLevel,
+                        LeaderSkillLevel = x.LeaderSkillLevel,
+                        IsNew = true,
+                        IsLocked = true,
+                        EquipmentServerIds = characterExcel is not null
+                            ? characterExcel.EquipmentSlot.Select(x => (long)0).ToList()
+                            : [0, 0, 0],
+                        PotentialStats =
+                        {
+                            { 1, 0 },
+                            { 2, 0 },
+                            { 3, 0 }
+                        }
+                    };
+                })
+                .ToList();
 
             account.AddCharacters(context, [.. newCharacters]);
             context.SaveChanges();
@@ -176,19 +231,26 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             var favCharacter = defaultCharacters.Find(x => x.FavoriteCharacter);
             if (favCharacter is not null)
             {
-                account.RepresentCharacterServerId = (int)newCharacters.First(x => x.UniqueId == favCharacter.CharacterId).ServerId;
+                account.RepresentCharacterServerId = (int)
+                    newCharacters.First(x => x.UniqueId == favCharacter.CharacterId).ServerId;
             }
             if (newCharacters.Count > 0)
             {
-                context.Echelons.Add(new()
-                {
-                    AccountServerId = account.ServerId,
-                    EchelonNumber = 1,
-                    EchelonType = EchelonType.Adventure,
-                    LeaderServerId = newCharacters[0].ServerId,
-                    MainSlotServerIds = newCharacters.Take(3).Select(x => x.ServerId).Append(0).ToList(),
-                    SupportSlotServerIds = [0, 0]
-                });
+                context.Echelons.Add(
+                    new()
+                    {
+                        AccountServerId = account.ServerId,
+                        EchelonNumber = 1,
+                        EchelonType = EchelonType.Adventure,
+                        LeaderServerId = newCharacters[0].ServerId,
+                        MainSlotServerIds = newCharacters
+                            .Take(3)
+                            .Select(x => x.ServerId)
+                            .Append(0)
+                            .ToList(),
+                        SupportSlotServerIds = [0, 0]
+                    }
+                );
             }
             context.SaveChanges();
 
@@ -206,17 +268,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             account.Nickname = req.Nickname;
             context.SaveChanges();
 
-            return new AccountNicknameResponse()
-            {
-                AccountDB = account
-            };
-
+            return new AccountNicknameResponse() { AccountDB = account };
         }
 
         [ProtocolHandler(Protocol.Account_LoginSync)]
         public ResponsePacket LoginSyncHandler(AccountLoginSyncRequest req)
         {
             var account = sessionKeyService.GetAccount(req.SessionKey);
+            ArgumentNullException.ThrowIfNull(account);
 
             return new AccountLoginSyncResponse()
             {
@@ -224,7 +283,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     AccountCurrencyDB = new AccountCurrencyDB
                     {
-                        AccountLevel = 1,
+                        AccountLevel = 90,
                         AcademyLocationRankSum = 1,
                         CurrencyDict = new Dictionary<CurrencyTypes, long>
                         {
@@ -260,23 +319,71 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                             { CurrencyTypes.AcademyTicket, DateTime.Parse("2024-04-26T19:29:12") },
                             { CurrencyTypes.ArenaTicket, DateTime.Parse("2024-04-26T19:29:12") },
                             { CurrencyTypes.RaidTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WeekDungeonChaserATicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WeekDungeonChaserBTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WeekDungeonChaserCTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.SchoolDungeonATicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.SchoolDungeonBTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.SchoolDungeonCTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.TimeAttackDungeonTicket, DateTime.Parse("2024-04-26T19:29:12") },
+                            {
+                                CurrencyTypes.WeekDungeonChaserATicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.WeekDungeonChaserBTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.WeekDungeonChaserCTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.SchoolDungeonATicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.SchoolDungeonBTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.SchoolDungeonCTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.TimeAttackDungeonTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
                             { CurrencyTypes.MasterCoin, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WorldRaidTicketA, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WorldRaidTicketB, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.WorldRaidTicketC, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.ChaserTotalTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.SchoolDungeonTotalTicket, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.EliminateTicketA, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.EliminateTicketB, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.EliminateTicketC, DateTime.Parse("2024-04-26T19:29:12") },
-                            { CurrencyTypes.EliminateTicketD, DateTime.Parse("2024-04-26T19:29:12") }
+                            {
+                                CurrencyTypes.WorldRaidTicketA,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.WorldRaidTicketB,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.WorldRaidTicketC,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.ChaserTotalTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.SchoolDungeonTotalTicket,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.EliminateTicketA,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.EliminateTicketB,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.EliminateTicketC,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            },
+                            {
+                                CurrencyTypes.EliminateTicketD,
+                                DateTime.Parse("2024-04-26T19:29:12")
+                            }
                         }
                     }
                 },
@@ -287,10 +394,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     WeaponDBs = [.. account.Weapons],
                     CostumeDBs = [],
                 },
-                ItemListResponse = new ItemListResponse()
-                {
-                    ItemDBs = [.. account.Items],
-                },
+                ItemListResponse = new ItemListResponse() { ItemDBs = [.. account.Items], },
 
                 EchelonListResponse = new EchelonListResponse()
                 {
@@ -298,7 +402,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 },
                 EventContentPermanentListResponse = new EventContentPermanentListResponse()
                 {
-                    PermanentDBs = [
+                    PermanentDBs =
+                    [
                         new() { EventContentId = 900801 },
                         new() { EventContentId = 900802 },
                         new() { EventContentId = 900803 },
@@ -327,10 +432,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 
                 ClanLoginResponse = new ClanLoginResponse()
                 {
-                    AccountClanMemberDB = new()
-                    {
-                        AccountId = account.ServerId
-                    }
+                    AccountClanMemberDB = new() { AccountId = account.ServerId }
                 },
 
                 EliminateRaidLoginResponse = new EliminateRaidLoginResponse()
@@ -350,11 +452,15 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Account_GetTutorial)]
         public ResponsePacket GetTutorialHandler(AccountGetTutorialRequest req)
         {
-            var tutorialIds = context.AccountTutorials.SingleOrDefault(x => x.AccountServerId == sessionKeyService.GetAccount(req.SessionKey).ServerId)?.TutorialIds;
+            var tutorialIds = context
+                .AccountTutorials.SingleOrDefault(x =>
+                    x.AccountServerId == sessionKeyService.GetAccount(req.SessionKey).ServerId
+                )
+                ?.TutorialIds;
 
             return new AccountGetTutorialResponse()
             {
-                TutorialIds = tutorialIds ?? []
+                TutorialIds = tutorialIds ?? Enumerable.Range(1, 27).Select(i => (long)i).ToList()
             };
         }
 
@@ -362,7 +468,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket SetTutorialHandler(AccountSetTutorialRequest req)
         {
             var account = sessionKeyService.GetAccount(req.SessionKey);
-            var tutorial = context.AccountTutorials.SingleOrDefault(x => x.AccountServerId == account.ServerId);
+            var tutorial = context.AccountTutorials.SingleOrDefault(x =>
+                x.AccountServerId == account.ServerId
+            );
             if (tutorial == null)
             {
                 tutorial = new()
@@ -401,45 +509,48 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Toast_List)]
         public ResponsePacket ToastListHandler(ToastListRequest req)
         {
-
             return new ToastListResponse();
         }
 
         [ProtocolHandler(Protocol.ContentLog_UIOpenStatistics)]
-        public ResponsePacket ContentLog_UIOpenStatisticsHandler(ContentLogUIOpenStatisticsRequest req)
+        public ResponsePacket ContentLog_UIOpenStatisticsHandler(
+            ContentLogUIOpenStatisticsRequest req
+        )
         {
-
             return new ContentLogUIOpenStatisticsResponse();
         }
 
         [ProtocolHandler(Protocol.Event_RewardIncrease)]
         public ResponsePacket Event_RewardIncreaseHandler(EventRewardIncreaseRequest req)
         {
-
             return new EventRewardIncreaseResponse();
         }
 
         [ProtocolHandler(Protocol.OpenCondition_EventList)]
         public ResponsePacket OpenCondition_EventListHandler(OpenConditionEventListRequest req)
         {
-
             return new OpenConditionEventListResponse()
             {
                 // all open for now ig
-                StaticOpenConditions = Enum.GetValues(typeof(OpenConditionContent)).Cast<OpenConditionContent>().ToDictionary(key => key, key => OpenConditionLockReason.None)
+                StaticOpenConditions = Enum.GetValues(typeof(OpenConditionContent))
+                    .Cast<OpenConditionContent>()
+                    .ToDictionary(key => key, key => OpenConditionLockReason.None)
             };
         }
 
         [ProtocolHandler(Protocol.Notification_EventContentReddotCheck)]
-        public ResponsePacket Notification_EventContentReddotCheckHandler(NotificationEventContentReddotRequest req)
+        public ResponsePacket Notification_EventContentReddotCheckHandler(
+            NotificationEventContentReddotRequest req
+        )
         {
             return new NotificationEventContentReddotResponse();
         }
 
         [ProtocolHandler(Protocol.Billing_PurchaseListByYostar)]
-        public ResponsePacket Billing_PurchaseListByYostarHandler(BillingPurchaseListByYostarRequest req)
+        public ResponsePacket Billing_PurchaseListByYostarHandler(
+            BillingPurchaseListByYostarRequest req
+        )
         {
-
             return new BillingPurchaseListByYostarResponse();
         }
 
@@ -461,5 +572,4 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             return new MiniGameMissionListResponse();
         }
     }
-
 }

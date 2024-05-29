@@ -1,35 +1,48 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Serilog.Events;
-using Serilog;
+using System.Collections;
+using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
+using SCHALE.Common.Crypto;
 using SCHALE.Common.Database;
+using SCHALE.GameServer.Commands;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
 using SCHALE.GameServer.Services;
-using Microsoft.EntityFrameworkCore;
 using SCHALE.GameServer.Services.Irc;
-using SCHALE.GameServer.Commands;
 using SCHALE.GameServer.Utils;
-using System.Net.NetworkInformation;
+using Serilog;
+using Serilog.Events;
 
 namespace SCHALE.GameServer
 {
     public class GameServer
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+                .AddJsonFile(
+                    $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
+                    true
+                )
                 .AddJsonFile("appsettings.Local.json", true)
                 .Build();
 
             {
-                var logFilePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory)!, "logs", "log.txt");
+                var logFilePath = Path.Combine(
+                    Path.GetDirectoryName(AppContext.BaseDirectory)!,
+                    "logs",
+                    "log.txt"
+                );
 
                 if (File.Exists(logFilePath))
                 {
-                    var prevLogFilePath = Path.Combine(Path.GetDirectoryName(logFilePath)!, "log-prev.txt");
+                    var prevLogFilePath = Path.Combine(
+                        Path.GetDirectoryName(logFilePath)!,
+                        "log-prev.txt"
+                    );
                     if (File.Exists(prevLogFilePath))
                         File.Delete(prevLogFilePath);
 
@@ -37,15 +50,22 @@ namespace SCHALE.GameServer
                 }
 
                 Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File(logFilePath, restrictedToMinimumLevel: LogEventLevel.Verbose, shared: true)
-                .ReadFrom.Configuration(config)
-                .CreateBootstrapLogger();
+                    .WriteTo.Console()
+                    .WriteTo.File(
+                        logFilePath,
+                        restrictedToMinimumLevel: LogEventLevel.Verbose,
+                        shared: true
+                    )
+                    .ReadFrom.Configuration(config)
+                    .CreateBootstrapLogger();
             }
 
             Log.Information("Starting...");
             try
             {
+                Log.Information("Downloading Excels...");
+                await ExcelTableService.Init();
+
                 // Load Commands
                 CommandFactory.LoadCommands();
 
@@ -54,17 +74,36 @@ namespace SCHALE.GameServer
 
                 if (Config.Instance.Address == "127.0.0.1")
                 {
-                    Config.Instance.Address = NetworkInterface.GetAllNetworkInterfaces().Where(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback && i.OperationalStatus == OperationalStatus.Up).First().GetIPProperties().UnicastAddresses.Where(a => a.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).First().Address.ToString();
+                    Config.Instance.Address = NetworkInterface
+                        .GetAllNetworkInterfaces()
+                        .Where(i =>
+                            i.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                            && i.OperationalStatus == OperationalStatus.Up
+                        )
+                        .First()
+                        .GetIPProperties()
+                        .UnicastAddresses.Where(a =>
+                            a.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
+                        )
+                        .First()
+                        .Address.ToString();
                     Config.Save();
                 }
 
                 var builder = WebApplication.CreateBuilder(args);
 
-                builder.Services.Configure<KestrelServerOptions>(op => op.AllowSynchronousIO = true);
+                builder.Services.Configure<KestrelServerOptions>(op =>
+                    op.AllowSynchronousIO = true
+                );
                 builder.Host.UseSerilog();
 
                 // Add services to the container.
-                builder.Services.AddSQLServerProvider(config.GetConnectionString("SQLServer") ?? throw new ArgumentNullException("ConnectionStrings/SQLServer in appsettings is missing"));
+                builder.Services.AddSQLServerProvider(
+                    config.GetConnectionString("SQLServer")
+                        ?? throw new ArgumentNullException(
+                            "ConnectionStrings/SQLServer in appsettings is missing"
+                        )
+                );
                 builder.Services.AddControllers();
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
@@ -72,8 +111,11 @@ namespace SCHALE.GameServer
                 builder.Services.AddIrcService();
 
                 // Add all Handler Groups
-                var handlerGroups = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(ProtocolHandlerBase)));
-                
+                var handlerGroups = Assembly
+                    .GetExecutingAssembly()
+                    .GetTypes()
+                    .Where(t => t.IsSubclassOf(typeof(ProtocolHandlerBase)));
+
                 foreach (var handlerGroup in handlerGroups)
                     builder.Services.AddProtocolHandlerGroupByType(handlerGroup);
 
