@@ -1,10 +1,12 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Google.FlatBuffers;
 using Ionic.Zip;
 using SCHALE.Common.Crypto;
+using Serilog;
 
 namespace SCHALE.GameServer.Services
 {
@@ -44,9 +46,11 @@ namespace SCHALE.GameServer.Services
 
         private static async Task GetZip()
         {
+
             string url = GetUrl();
             string filePath = "TableBundles/Excel.zip";
             string zipPath = Path.Combine(ResourcesFolder!, "download", filePath);
+
             ExcelFolder = zipPath[..^4];
             if (File.Exists(zipPath))
                 return;
@@ -58,7 +62,9 @@ namespace SCHALE.GameServer.Services
             byte[] content = await response.Content.ReadAsByteArrayAsync();
             File.WriteAllBytes(zipPath, content);
             using ZipFile zip = ZipFile.Read(zipPath);
-            zip.Password = "/wy5f3hIGGXLOIUDS9DZ";
+            //zip.Password = "/wy5f3hIGGXLOIUDS9DZ";
+            zip.Password = Convert.ToBase64String(TableService.CreatePassword(Path.GetFileName(filePath)));
+
             foreach (ZipEntry e in zip)
             {
                 e.Extract(ExcelFolder, ExtractExistingFileAction.OverwriteSilently);

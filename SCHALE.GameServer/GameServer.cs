@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Net.NetworkInformation;
 using System.Reflection;
-using AutoMapper;
+using System.Text;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
+using SCHALE.Common.Crypto;
 using SCHALE.Common.Database;
 using SCHALE.GameServer.Commands;
 using SCHALE.GameServer.Controllers.Api.ProtocolHandlers;
@@ -103,7 +105,6 @@ namespace SCHALE.GameServer
                         )
                 );
                 builder.Services.AddControllers();
-                builder.Services.AddAutoMapper(typeof(GameServer));
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
                 builder.Services.AddExcelTableService();
