@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Google.FlatBuffers;
 using Ionic.Zip;
 using SCHALE.Common.Crypto;
-using Serilog;
 
 namespace SCHALE.GameServer.Services
 {
@@ -62,7 +61,6 @@ namespace SCHALE.GameServer.Services
             byte[] content = await response.Content.ReadAsByteArrayAsync();
             File.WriteAllBytes(zipPath, content);
             using ZipFile zip = ZipFile.Read(zipPath);
-            //zip.Password = "/wy5f3hIGGXLOIUDS9DZ";
             zip.Password = Convert.ToBase64String(TableService.CreatePassword(Path.GetFileName(filePath)));
 
             foreach (ZipEntry e in zip)
