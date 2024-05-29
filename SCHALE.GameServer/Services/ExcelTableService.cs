@@ -47,10 +47,10 @@ namespace SCHALE.GameServer.Services
             string url = GetUrl();
             string filePath = "TableBundles/Excel.zip";
             string zipPath = Path.Combine(ResourcesFolder!, "download", filePath);
+            ExcelFolder = zipPath[..^4];
             if (File.Exists(zipPath))
                 return;
             Directory.CreateDirectory(Path.GetDirectoryName(zipPath)!);
-            ExcelFolder = zipPath[..^4];
 
             using HttpClient client = new();
             HttpResponseMessage response = await client.GetAsync(url + filePath);
