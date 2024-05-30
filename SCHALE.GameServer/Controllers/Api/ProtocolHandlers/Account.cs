@@ -400,6 +400,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     EchelonDBs = [.. account.Echelons]
                 },
+
+                MemoryLobbyListResponse = new MemoryLobbyListResponse()
+                {
+                    MemoryLobbyDBs = [.. account.MemoryLobbies]
+                },
+
                 EventContentPermanentListResponse = new EventContentPermanentListResponse()
                 {
                     PermanentDBs =
@@ -433,6 +439,11 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 ClanLoginResponse = new ClanLoginResponse()
                 {
                     AccountClanMemberDB = new() { AccountId = account.ServerId }
+                },
+
+                ScenarioListResponse = new ScenarioListResponse()
+                {
+                    ScenarioHistoryDBs = [.. account.Scenarios]
                 },
 
                 EliminateRaidLoginResponse = new EliminateRaidLoginResponse()
@@ -487,6 +498,24 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             context.SaveChanges();
 
             return new AccountSetTutorialResponse();
+        }
+
+
+        [ProtocolHandler(Protocol.Account_SetRepresentCharacterAndComment)]
+        public ResponsePacket SetRepresentCharacterAndCommentHandler(AccountSetRepresentCharacterAndCommentRequest req)
+        {
+            var account = sessionKeyService.GetAccount(req.SessionKey);
+
+            account.RepresentCharacterServerId = req.RepresentCharacterServerId;
+            account.Comment = req.Comment;
+
+            context.SaveChanges();
+
+            return new AccountSetRepresentCharacterAndCommentResponse()
+            {
+                AccountDB = account,
+                RepresentCharacterDB = account.Characters.FirstOrDefault(x => x.ServerId == req.RepresentCharacterServerId)
+            };
         }
 
         // TODO: others handlers, move to different handler group later
@@ -571,5 +600,25 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         {
             return new MiniGameMissionListResponse();
         }
+
+        [ProtocolHandler(Protocol.Attachment_EmblemAcquire)]
+        public ResponsePacket Attachment_EmblemAcquireHandler(AttachmentEmblemAcquireRequest req)
+        {
+            return new AttachmentEmblemAcquireResponse();
+        }
+
+        [ProtocolHandler(Protocol.Friend_List)]
+        public ResponsePacket Attachment_EmblemAcquireHandler(FriendListRequest req)
+        {
+            return new FriendListResponse();
+        }
+
+        [ProtocolHandler(Protocol.Friend_GetIdCard)]
+        public ResponsePacket Friend_GetIdCardHandler(FriendGetIdCardRequest req)
+        {
+            return new FriendGetIdCardResponse();
+        }
+
+        
     }
 }

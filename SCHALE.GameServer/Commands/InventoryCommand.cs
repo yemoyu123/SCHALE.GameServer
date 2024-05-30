@@ -26,6 +26,8 @@ namespace SCHALE.GameServer.Commands
                     InventoryUtils.AddAllEquipment(connection);
                     InventoryUtils.AddAllItems(connection);
                     InventoryUtils.AddAllGears(connection);
+                    InventoryUtils.AddAllMemoryLobbies(connection);
+                    InventoryUtils.AddAllScenarios(connection);
 
                     connection.SendChatMessage("Added Everything!");
                     break;
@@ -36,6 +38,8 @@ namespace SCHALE.GameServer.Commands
                     context.Equipment.RemoveRange(context.Equipment.Where(x => x.AccountServerId == connection.AccountServerId));
                     context.Items.RemoveRange(context.Items.Where(x => x.AccountServerId == connection.AccountServerId));
                     context.Gears.RemoveRange(context.Gears.Where(x => x.AccountServerId == connection.AccountServerId));
+                    context.MemoryLobbies.RemoveRange(context.MemoryLobbies.Where(x => x.AccountServerId == connection.AccountServerId));
+                    context.Scenarios.RemoveRange(context.Scenarios.Where(x => x.AccountServerId == connection.AccountServerId));
 
                     connection.SendChatMessage("Removed Everything!");
                     break;

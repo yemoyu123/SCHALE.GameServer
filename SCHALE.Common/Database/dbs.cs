@@ -343,6 +343,12 @@ namespace SCHALE.Common.Database
         public virtual ICollection<GearDB> Gears { get; }
 
         [JsonIgnore]
+        public virtual ICollection<MemoryLobbyDB> MemoryLobbies { get; }
+
+        [JsonIgnore]
+        public virtual ICollection<ScenarioHistoryDB> Scenarios { get; }
+
+        [JsonIgnore]
         public virtual RaidInfo RaidInfo { get; set; }
 
         public AccountDB() { }
@@ -1733,10 +1739,19 @@ namespace SCHALE.Common.Database
     {
         public override ParcelType Type { get => ParcelType.MemoryLobby; }
 
+        [NotMapped]
         [JsonIgnore]
         public override IEnumerable<ParcelInfo> ParcelInfos { get; }
 
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
         public long AccountServerId { get; set; }
+
+        [Key]
+        public long ServerId { get; set; }
+
         public long MemoryLobbyUniqueId { get; set; }
     }
 
@@ -2197,7 +2212,15 @@ namespace SCHALE.Common.Database
 
     public class ScenarioHistoryDB
     {
+        [JsonIgnore]
+        public virtual AccountDB Account { get; set; }
+
+        [JsonIgnore]
         public long AccountServerId { get; set; }
+
+        [Key]
+        public long ServerId { get; set; }
+
         public long ScenarioUniqueId { get; set; }
         public DateTime ClearDateTime { get; set; }
     }

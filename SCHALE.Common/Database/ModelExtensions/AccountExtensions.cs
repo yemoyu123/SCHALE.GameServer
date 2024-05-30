@@ -76,5 +76,27 @@
 
             return [.. echelons];
         }
+
+        public static List<MemoryLobbyDB> AddMemoryLobbies(this AccountDB account, SCHALEContext context, params MemoryLobbyDB[] memoryLobbies)
+        {
+            foreach (var lobby in memoryLobbies)
+            {
+                lobby.AccountServerId = account.ServerId;
+                context.MemoryLobbies.Add(lobby);
+            }
+
+            return [.. memoryLobbies];
+        }
+
+        public static List<ScenarioHistoryDB> AddScenarios(this AccountDB account, SCHALEContext context, params ScenarioHistoryDB[] scenarios)
+        {
+            foreach (var scenario in scenarios)
+            {
+                scenario.AccountServerId = account.ServerId;
+                context.Scenarios.Add(scenario);
+            }
+
+            return [.. scenarios];
+        }
     }
 }

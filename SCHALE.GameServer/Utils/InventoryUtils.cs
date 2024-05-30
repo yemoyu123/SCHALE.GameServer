@@ -56,7 +56,7 @@ namespace SCHALE.Common.Utils
                 {
                     IsNew = true,
                     UniqueId = x.Id,
-                    StackCount = 5555,
+                    StackCount = 1000,
                 };
             }).ToList();
 
@@ -113,6 +113,45 @@ namespace SCHALE.Common.Utils
             connection.SendChatMessage("Added all gears!");
         }
 
+        public static void AddAllMemoryLobbies(IrcConnection connection)
+        {
+            var account = connection.Account;
+            var context = connection.Context;
+
+            var memoryLobbyExcel = connection.ExcelTableService.GetTable<MemoryLobbyExcelTable>().UnPack().DataList;
+            var allMemoryLobbies = memoryLobbyExcel.Select(x =>
+            {
+                return new MemoryLobbyDB()
+                {
+                    MemoryLobbyUniqueId = x.Id,
+                };
+            }).ToList();
+
+            account.AddMemoryLobbies(context, [.. allMemoryLobbies]);
+            context.SaveChanges();
+
+            connection.SendChatMessage("Added all Memory Lobbies!");
+        }
+
+        public static void AddAllScenarios(IrcConnection connection)
+        {
+            var account = connection.Account;
+            var context = connection.Context;
+
+            var scenarioModeExcel = connection.ExcelTableService.GetTable<ScenarioModeExcelTable>().UnPack().DataList;
+            var allScenarios = scenarioModeExcel.Select(x =>
+            {
+                return new ScenarioHistoryDB()
+                {
+                    ScenarioUniqueId = x.ModeId,
+                };
+            }).ToList();
+
+            account.AddScenarios(context, [.. allScenarios]);
+            context.SaveChanges();
+
+            connection.SendChatMessage("Added all Scenarios!");
+        }
 
         public static void RemoveAllCharacters(IrcConnection connection) // removing default characters breaks game
         {

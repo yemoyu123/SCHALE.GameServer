@@ -17,11 +17,13 @@ namespace SCHALE.Common.Database
         public DbSet<EquipmentDB> Equipment { get; set; }
         public DbSet<WeaponDB> Weapons { get; set; }
         public DbSet<GearDB> Gears { get; set; }
+        
+        public DbSet<MemoryLobbyDB> MemoryLobbies { get; set; }
+        public DbSet<ScenarioHistoryDB> Scenarios { get; set; }
 
         public DbSet<EchelonDB> Echelons { get; set; }
         public DbSet<AccountTutorial> AccountTutorials { get; set; }
         
-
         public static SCHALEContext Create(string connectionString) =>
             new(new DbContextOptionsBuilder<SCHALEContext>()
                 .UseSqlServer(connectionString)
@@ -68,7 +70,17 @@ namespace SCHALE.Common.Database
                 .WithOne(x => x.Account)
                 .HasForeignKey(x => x.AccountServerId)
                 .IsRequired();
-            
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.MemoryLobbies)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
+            modelBuilder.Entity<AccountDB>()
+                .HasMany(x => x.Scenarios)
+                .WithOne(x => x.Account)
+                .HasForeignKey(x => x.AccountServerId)
+                .IsRequired();
+
             modelBuilder.Entity<AccountDB>(x => x.Property(b => b.RaidInfo).HasJsonConversion());
             modelBuilder.Entity<ItemDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<EquipmentDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
