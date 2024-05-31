@@ -63,32 +63,15 @@ namespace SCHALE.GameServer
             Log.Information("Starting...");
             try
             {
-                Log.Information("Downloading Excels...");
-                await ExcelTableService.Init();
+                // Load Config
+                Config.Load();
+
+                // Load Excels
+                await ExcelTableService.LoadExcels();
 
                 // Load Commands
                 CommandFactory.LoadCommands();
 
-                // Load Config
-                Config.Load();
-
-                if (Config.Instance.Address == "127.0.0.1")
-                {
-                    Config.Instance.Address = NetworkInterface
-                        .GetAllNetworkInterfaces()
-                        .Where(i =>
-                            i.NetworkInterfaceType != NetworkInterfaceType.Loopback
-                            && i.OperationalStatus == OperationalStatus.Up
-                        )
-                        .First()
-                        .GetIPProperties()
-                        .UnicastAddresses.Where(a =>
-                            a.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
-                        )
-                        .First()
-                        .Address.ToString();
-                    Config.Save();
-                }
 
                 var builder = WebApplication.CreateBuilder(args);
 

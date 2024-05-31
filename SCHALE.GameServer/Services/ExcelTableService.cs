@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Google.FlatBuffers;
 using Ionic.Zip;
 using SCHALE.Common.Crypto;
+using SCHALE.GameServer.Utils;
+using Serilog;
 
 namespace SCHALE.GameServer.Services
 {
@@ -15,63 +17,34 @@ namespace SCHALE.GameServer.Services
         private readonly ILogger<ExcelTableService> logger = _logger;
         private readonly Dictionary<Type, object> caches = [];
 
-        private static string? ResourcesFolder;
-        private static string? ExcelFolder;
-
-        private static string GetUrl()
+        public static async Task LoadExcels()
         {
-            string urlPath;
-            if (ResourcesFolder == null)
+            var excelZipUrl = $"https://prod-clientpatch.bluearchiveyostar.com/{Config.Instance.VersionId}/TableBundles/Excel.zip";
+            
+            var excelDir = $"{Path.GetDirectoryName(AppContext.BaseDirectory)}/Resources/excel/";
+            var excelZipPath = Path.Combine(excelDir, "Excel.zip");
+
+            if (Directory.Exists(excelDir))
             {
-                var folder = Path.GetDirectoryName(AppContext.BaseDirectory);
-                while (true)
-                {
-                    urlPath = Path.Join(folder, "Resources/url.txt");
-                    if (File.Exists(urlPath))
-                        break;
-                    folder = Path.GetDirectoryName(folder);
-                    if (folder == null)
-                        throw new FileNotFoundException($"Resources folder is not found.");
-                }
-                ResourcesFolder = Path.GetDirectoryName(urlPath);
-            }
-            else
-            {
-                urlPath = Path.Join(ResourcesFolder, "url.txt");
-            }
-            string url = File.ReadAllText(urlPath);
-            return url + "/";
-        }
-
-        private static async Task GetZip()
-        {
-
-            string url = GetUrl();
-            string filePath = "TableBundles/Excel.zip";
-            string zipPath = Path.Combine(ResourcesFolder!, "download", filePath);
-
-            ExcelFolder = zipPath[..^4];
-            if (File.Exists(zipPath))
+                Log.Information("Excels already downloaded, skipping...");
                 return;
-            Directory.CreateDirectory(Path.GetDirectoryName(zipPath)!);
-
-            using HttpClient client = new();
-            HttpResponseMessage response = await client.GetAsync(url + filePath);
-            response.EnsureSuccessStatusCode();
-            byte[] content = await response.Content.ReadAsByteArrayAsync();
-            File.WriteAllBytes(zipPath, content);
-            using ZipFile zip = ZipFile.Read(zipPath);
-            zip.Password = Convert.ToBase64String(TableService.CreatePassword(Path.GetFileName(filePath)));
-
-            foreach (ZipEntry e in zip)
-            {
-                e.Extract(ExcelFolder, ExtractExistingFileAction.OverwriteSilently);
             }
-        }
+            
+            Log.Information("Downloading Excels...");
+            Directory.CreateDirectory(excelDir);
 
-        public static async Task Init()
-        {
-            await GetZip();
+            using var client = new HttpClient();
+            var zipBytes = await client.GetByteArrayAsync(excelZipUrl);
+
+            File.WriteAllBytes(excelZipPath, zipBytes);
+
+            using (var zip = ZipFile.Read(excelZipPath)) {
+                zip.Password = Convert.ToBase64String(TableService.CreatePassword(Path.GetFileName(excelZipPath)));
+                zip.ExtractAll(excelDir, ExtractExistingFileAction.OverwriteSilently);
+            }
+
+            File.Delete(excelZipPath);
+            Log.Information($"Excel Version {Config.Instance.VersionId} downloaded! Notice that versions higher than r67 currently does not work");
         }
 
         /// <summary>
@@ -80,16 +53,14 @@ namespace SCHALE.GameServer.Services
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="FileNotFoundException"></exception>
-        public T GetTable<T>()
-            where T : IFlatbufferObject
+        public T GetTable<T>() where T : IFlatbufferObject
         {
             var type = typeof(T);
 
             if (caches.TryGetValue(type, out var cache))
                 return (T)cache;
 
-            ArgumentNullException.ThrowIfNull(ExcelFolder);
-            var bytesFilePath = Path.Join(ExcelFolder, $"{type.Name.ToLower()}.bytes");
+            var bytesFilePath = Path.Join(Path.GetDirectoryName(AppContext.BaseDirectory), "Resources/excel/", $"{type.Name.ToLower()}.bytes");
             if (!File.Exists(bytesFilePath))
             {
                 throw new FileNotFoundException($"bytes files for {type.Name} not found");
@@ -97,12 +68,7 @@ namespace SCHALE.GameServer.Services
 
             var bytes = File.ReadAllBytes(bytesFilePath);
             TableEncryptionService.XOR(type.Name, bytes);
-            var inst = type.GetMethod(
-                        $"GetRootAs{type.Name}",
-                        BindingFlags.Static | BindingFlags.Public,
-                        [typeof(ByteBuffer)]
-                    )!
-                .Invoke(null, [new ByteBuffer(bytes)]);
+            var inst = type.GetMethod($"GetRootAs{type.Name}", BindingFlags.Static | BindingFlags.Public, [typeof(ByteBuffer)])!.Invoke(null, [new ByteBuffer(bytes)]);
 
             caches.Add(type, inst!);
             logger.LogDebug("{Excel} loaded and cached", type.Name);

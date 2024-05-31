@@ -27,8 +27,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             {
                 IrcConfig = new()
                 {
-                    HostAddress = Config.Instance.Address,
-                    Port = Config.Instance.Port,
+                    HostAddress = Config.Instance.IRCAddress,
+                    Port = Config.Instance.IRCPort,
                     Password = ""
                 },
                 AccountClanDB = new()

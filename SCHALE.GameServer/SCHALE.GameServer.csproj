@@ -20,8 +20,4 @@
     <ProjectReference Include="..\SCHALE.Common\SCHALE.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Data\" />
-  </ItemGroup>
-
 </Project>
