@@ -29,9 +29,6 @@ while (true) {
                 Conn.method("set_ApiUrl").invoke(Il2Cpp.String.from(`http://${SERVER_ADDRESS}/api/`));
                 Conn.method("set_ProhibitedWordBlackListUri").invoke(Il2Cpp.String.from(""));
                 Conn.method("set_ProhibitedWordBlackListUri").invoke(Il2Cpp.String.from(""));
-                const acur =  Conn.method("get_AddressablesCatalogUrlRoot").invoke();
-                console.log("AddressablesCatalogUrlRoot: " + acur);
-                Conn.method("set_AddressablesCatalogUrlRoot").invoke(Il2Cpp.String.from(`http://${SERVER_ADDRESS}/data`));
         
                 return Conn;
             }
