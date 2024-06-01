@@ -1,7 +1,6 @@
 # SCHALE.GameServer
 
-> [!TIP]
-> For original README please refer to <https://github.com/rafi1212122/SCHALE.GameServer>
+### [中文教程](README_zh.md) (by shunner114514)
 
 ## Prerequisites
 
