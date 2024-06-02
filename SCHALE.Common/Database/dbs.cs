@@ -323,7 +323,7 @@ namespace SCHALE.Common.Database
     {
         [JsonIgnore]
         public virtual ICollection<ItemDB> Items { get; }
-        
+
         [JsonIgnore]
         public virtual ICollection<CharacterDB> Characters { get; }
         
@@ -351,9 +351,19 @@ namespace SCHALE.Common.Database
         [JsonIgnore]
         public virtual RaidInfo RaidInfo { get; set; }
 
-        public AccountDB() { }
+        public AccountDB() { 
+            Items = new List<ItemDB>();
+            Characters = new List<CharacterDB>();
+            MissionProgresses = new List<MissionProgressDB>();
+            Echelons = new List<EchelonDB>();
+            Equipment = new List<EquipmentDB>();
+            Weapons = new List<WeaponDB>();
+            Gears = new List<GearDB>();
+            MemoryLobbies = new List<MemoryLobbyDB>();
+            Scenarios = new List<ScenarioHistoryDB>();
+        }
 
-        public AccountDB(long publisherAccountId)
+        public AccountDB(long publisherAccountId) : this()
         {
             PublisherAccountId = publisherAccountId;
             State = AccountState.Normal;

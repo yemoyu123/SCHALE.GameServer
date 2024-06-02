@@ -2,28 +2,28 @@
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     /// <inheritdoc />
-    public partial class EchelonDB_CombatStyleIndex : Migration
+    public partial class Account_RaidSeasonId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "CombatStyleIndex",
-                table: "Echelons",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<long>(
+                name: "RaidSeasonId",
+                table: "Accounts",
+                type: "bigint",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: 0L);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "CombatStyleIndex",
-                table: "Echelons");
+                name: "RaidSeasonId",
+                table: "Accounts");
         }
     }
 }

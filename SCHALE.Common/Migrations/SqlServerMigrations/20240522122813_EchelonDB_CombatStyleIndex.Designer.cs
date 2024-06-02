@@ -9,11 +9,11 @@ using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(SCHALEContext))]
-    [Migration("20240530042248_MemoryLobby_and_Scenario")]
-    partial class MemoryLobby_and_Scenario
+    [Migration("20240522122813_EchelonDB_CombatStyleIndex")]
+    partial class EchelonDB_CombatStyleIndex
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -325,27 +325,6 @@ namespace SCHALE.Common.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MemoryLobbyUniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("MemoryLobbies");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
                 {
                     b.Property<long>("ServerId")
@@ -410,30 +389,6 @@ namespace SCHALE.Common.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("GuestAccounts");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ClearDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ScenarioUniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("Scenarios");
                 });
 
             modelBuilder.Entity("SCHALE.Common.Database.WeaponDB", b =>
@@ -527,32 +482,10 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("MemoryLobbies")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
                         .WithMany("MissionProgresses")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Scenarios")
                         .HasForeignKey("AccountServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -583,11 +516,7 @@ namespace SCHALE.Common.Migrations
 
                     b.Navigation("Items");
 
-                    b.Navigation("MemoryLobbies");
-
                     b.Navigation("MissionProgresses");
-
-                    b.Navigation("Scenarios");
 
                     b.Navigation("Weapons");
                 });

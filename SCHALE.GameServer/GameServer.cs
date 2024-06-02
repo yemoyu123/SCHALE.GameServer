@@ -80,13 +80,19 @@ namespace SCHALE.GameServer
                 );
                 builder.Host.UseSerilog();
 
-                // Add services to the container.
-                builder.Services.AddSQLServerProvider(
-                    config.GetConnectionString("SQLServer")
-                        ?? throw new ArgumentNullException(
-                            "ConnectionStrings/SQLServer in appsettings is missing"
-                        )
-                );
+                // Add services to the container.              
+                builder.Services.AddSingleton<SCHALEContext>(s =>
+                {
+                    var sqlProvider = config.GetValue<string>("SQL Provider");
+                    var noConnectionStringException = new ArgumentNullException($"ConnectionString for {sqlProvider} in appsettings is missing");
+                    return sqlProvider switch
+                    {
+                        "SQLite3" => SCHALESqliteContext.Create(config.GetConnectionString("SQLite3") ?? throw noConnectionStringException),
+                        "SQLServer" => SCHALEContext.Create(config.GetConnectionString("SQLServer") ?? throw noConnectionStringException),
+                        _ => throw new ArgumentException($"SQL Provider '{sqlProvider}' is not valid"),
+                    };
+                });
+
                 builder.Services.AddControllers();
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();
