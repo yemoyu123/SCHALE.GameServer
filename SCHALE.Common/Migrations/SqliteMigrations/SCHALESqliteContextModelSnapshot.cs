@@ -2,96 +2,87 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqliteMigrations
 {
-    [DbContext(typeof(SCHALEContext))]
-    [Migration("20240510093842_Weapons")]
-    partial class Weapons
+    [DbContext(typeof(SCHALESqliteContext))]
+    partial class SCHALESqliteContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
             modelBuilder.Entity("SCHALE.Common.Database.AccountDB", b =>
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("BirthDay")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CallName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CallNameUpdateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DevId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("Exp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastConnectTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("LinkRewardDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("LobbyMode")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("MemoryLobbyUniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nickname")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("PublisherAccountId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RaidInfo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("RepresentCharacterServerId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("RetentionDays")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("State")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("UnReadMailCount")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("VIPLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -102,63 +93,61 @@ namespace SCHALE.Common.Migrations
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("EquipmentServerIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("EquipmentSlotAndDBIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ExSkillLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("Exp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ExtraPassiveSkillLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("FavorExp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("FavorRank")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsFavorite")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("LeaderSkillLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PassiveSkillLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("PotentialStats")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PublicSkillLevel")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("StarGrade")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -171,42 +160,44 @@ namespace SCHALE.Common.Migrations
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CombatStyleIndex")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("EchelonNumber")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("EchelonType")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ExtensionType")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("LeaderServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("MainSlotServerIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SkillCardMulliganCharacterIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SupportSlotServerIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("TSSInteractionServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("UsingFlag")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -219,33 +210,31 @@ namespace SCHALE.Common.Migrations
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BoundCharacterServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("Exp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("StackCount")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Tier")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -254,25 +243,57 @@ namespace SCHALE.Common.Migrations
                     b.ToTable("Equipment");
                 });
 
+            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
+                {
+                    b.Property<long>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("AccountServerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BoundCharacterServerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Exp")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SlotIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Tier")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UniqueId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ServerId");
+
+                    b.HasIndex("AccountServerId");
+
+                    b.ToTable("Gears");
+                });
+
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("StackCount")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -281,29 +302,46 @@ namespace SCHALE.Common.Migrations
                     b.ToTable("Items");
                 });
 
+            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
+                {
+                    b.Property<long>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("AccountServerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("MemoryLobbyUniqueId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ServerId");
+
+                    b.HasIndex("AccountServerId");
+
+                    b.ToTable("MemoryLobbies");
+                });
+
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Complete")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("MissionUniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ProgressParameters")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ServerId");
 
@@ -315,11 +353,11 @@ namespace SCHALE.Common.Migrations
             modelBuilder.Entity("SCHALE.Common.Database.Models.AccountTutorial", b =>
                 {
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("TutorialIds")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AccountServerId");
 
@@ -330,51 +368,69 @@ namespace SCHALE.Common.Migrations
                 {
                     b.Property<long>("Uid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Uid"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("DeviceId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Uid");
 
                     b.ToTable("GuestAccounts");
                 });
 
+            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
+                {
+                    b.Property<long>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("AccountServerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ClearDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("ScenarioUniqueId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ServerId");
+
+                    b.HasIndex("AccountServerId");
+
+                    b.ToTable("Scenarios");
+                });
+
             modelBuilder.Entity("SCHALE.Common.Database.WeaponDB", b =>
                 {
                     b.Property<long>("ServerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BoundCharacterServerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("Exp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("StarGrade")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ServerId");
 
@@ -416,6 +472,17 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
+                {
+                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
+                        .WithMany("Gears")
+                        .HasForeignKey("AccountServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
@@ -427,10 +494,32 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
+                {
+                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
+                        .WithMany("MemoryLobbies")
+                        .HasForeignKey("AccountServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
                         .WithMany("MissionProgresses")
+                        .HasForeignKey("AccountServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
+                {
+                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
+                        .WithMany("Scenarios")
                         .HasForeignKey("AccountServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -457,9 +546,15 @@ namespace SCHALE.Common.Migrations
 
                     b.Navigation("Equipment");
 
+                    b.Navigation("Gears");
+
                     b.Navigation("Items");
 
+                    b.Navigation("MemoryLobbies");
+
                     b.Navigation("MissionProgresses");
+
+                    b.Navigation("Scenarios");
 
                     b.Navigation("Weapons");
                 });

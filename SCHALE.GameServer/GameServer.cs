@@ -81,12 +81,7 @@ namespace SCHALE.GameServer
                 builder.Host.UseSerilog();
 
                 // Add services to the container.
-                builder.Services.AddSQLServerProvider(
-                    config.GetConnectionString("SQLServer")
-                        ?? throw new ArgumentNullException(
-                            "ConnectionStrings/SQLServer in appsettings is missing"
-                        )
-                );
+                builder.Services.AddDbProvider(config);
                 builder.Services.AddControllers();
                 builder.Services.AddProtocolHandlerFactory();
                 builder.Services.AddMemorySessionKeyService();

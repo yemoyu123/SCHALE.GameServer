@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(SCHALEContext))]
-    partial class SCHALEContextModelSnapshot : ModelSnapshot
+    [Migration("20240511074956_Account_RaidSeasonId")]
+    partial class Account_RaidSeasonId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +78,8 @@ namespace SCHALE.Common.Migrations
                     b.Property<long>("PublisherAccountId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("RaidInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("RaidSeasonId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RepresentCharacterServerId")
                         .HasColumnType("int");
@@ -179,10 +181,6 @@ namespace SCHALE.Common.Migrations
                     b.Property<long>("AccountServerId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CombatStyleIndex")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("EchelonNumber")
                         .HasColumnType("bigint");
 
@@ -259,42 +257,6 @@ namespace SCHALE.Common.Migrations
                     b.ToTable("Equipment");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("BoundCharacterServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Exp")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SlotIndex")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Tier")
-                        .HasColumnType("int");
-
-                    b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("Gears");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.Property<long>("ServerId")
@@ -320,27 +282,6 @@ namespace SCHALE.Common.Migrations
                     b.HasIndex("AccountServerId");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MemoryLobbyUniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("MemoryLobbies");
                 });
 
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
@@ -407,30 +348,6 @@ namespace SCHALE.Common.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("GuestAccounts");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ClearDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ScenarioUniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("Scenarios");
                 });
 
             modelBuilder.Entity("SCHALE.Common.Database.WeaponDB", b =>
@@ -502,17 +419,6 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Gears")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
@@ -524,32 +430,10 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.MemoryLobbyDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("MemoryLobbies")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
                         .WithMany("MissionProgresses")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.ScenarioHistoryDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Scenarios")
                         .HasForeignKey("AccountServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -576,15 +460,9 @@ namespace SCHALE.Common.Migrations
 
                     b.Navigation("Equipment");
 
-                    b.Navigation("Gears");
-
                     b.Navigation("Items");
 
-                    b.Navigation("MemoryLobbies");
-
                     b.Navigation("MissionProgresses");
-
-                    b.Navigation("Scenarios");
 
                     b.Navigation("Weapons");
                 });

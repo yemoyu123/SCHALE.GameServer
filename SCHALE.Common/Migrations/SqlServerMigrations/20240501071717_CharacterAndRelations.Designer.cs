@@ -9,11 +9,11 @@ using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(SCHALEContext))]
-    [Migration("20240501081158_UnMapIsNew")]
-    partial class UnMapIsNew
+    [Migration("20240501071717_CharacterAndRelations")]
+    partial class CharacterAndRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,6 @@ namespace SCHALE.Common.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.2")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -136,6 +133,9 @@ namespace SCHALE.Common.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNew")
                         .HasColumnType("bit");
 
                     b.Property<int>("LeaderSkillLevel")

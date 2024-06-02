@@ -9,11 +9,11 @@ using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(SCHALEContext))]
-    [Migration("20240522122813_EchelonDB_CombatStyleIndex")]
-    partial class EchelonDB_CombatStyleIndex
+    [Migration("20240510093842_Weapons")]
+    partial class Weapons
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,10 +77,6 @@ namespace SCHALE.Common.Migrations
 
                     b.Property<long>("PublisherAccountId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("RaidInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RepresentCharacterServerId")
                         .HasColumnType("int");
@@ -182,10 +178,6 @@ namespace SCHALE.Common.Migrations
                     b.Property<long>("AccountServerId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CombatStyleIndex")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("EchelonNumber")
                         .HasColumnType("bigint");
 
@@ -260,42 +252,6 @@ namespace SCHALE.Common.Migrations
                     b.HasIndex("AccountServerId");
 
                     b.ToTable("Equipment");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("BoundCharacterServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Exp")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SlotIndex")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Tier")
-                        .HasColumnType("int");
-
-                    b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("Gears");
                 });
 
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
@@ -460,17 +416,6 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.GearDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Gears")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
@@ -511,8 +456,6 @@ namespace SCHALE.Common.Migrations
                     b.Navigation("Echelons");
 
                     b.Navigation("Equipment");
-
-                    b.Navigation("Gears");
 
                     b.Navigation("Items");
 

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     /// <inheritdoc />
     public partial class Echelons : Migration

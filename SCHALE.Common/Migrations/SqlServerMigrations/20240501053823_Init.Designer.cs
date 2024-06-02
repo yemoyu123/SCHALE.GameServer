@@ -9,11 +9,11 @@ using SCHALE.Common.Database;
 
 #nullable disable
 
-namespace SCHALE.Common.Migrations
+namespace SCHALE.Common.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(SCHALEContext))]
-    [Migration("20240501071717_CharacterAndRelations")]
-    partial class CharacterAndRelations
+    [Migration("20240501053823_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,78 +95,6 @@ namespace SCHALE.Common.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("SCHALE.Common.Database.CharacterDB", b =>
-                {
-                    b.Property<long>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ServerId"));
-
-                    b.Property<long>("AccountServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("EquipmentServerIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EquipmentSlotAndDBIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ExSkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Exp")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ExtraPassiveSkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<long>("FavorExp")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("FavorRank")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNew")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LeaderSkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PassiveSkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PotentialStats")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PublicSkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StarGrade")
-                        .HasColumnType("int");
-
-                    b.Property<long>("UniqueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
-
-                    b.ToTable("Characters");
-                });
-
             modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
                 {
                     b.Property<long>("ServerId")
@@ -188,8 +116,6 @@ namespace SCHALE.Common.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
 
                     b.ToTable("Items");
                 });
@@ -219,8 +145,6 @@ namespace SCHALE.Common.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ServerId");
-
-                    b.HasIndex("AccountServerId");
 
                     b.ToTable("MissionProgresses");
                 });
@@ -258,48 +182,6 @@ namespace SCHALE.Common.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("GuestAccounts");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.CharacterDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Characters")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.ItemDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("Items")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.MissionProgressDB", b =>
-                {
-                    b.HasOne("SCHALE.Common.Database.AccountDB", "Account")
-                        .WithMany("MissionProgresses")
-                        .HasForeignKey("AccountServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("SCHALE.Common.Database.AccountDB", b =>
-                {
-                    b.Navigation("Characters");
-
-                    b.Navigation("Items");
-
-                    b.Navigation("MissionProgresses");
                 });
 #pragma warning restore 612, 618
         }

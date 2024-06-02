@@ -11,25 +11,29 @@ namespace SCHALE.Common.Database
         public DbSet<GuestAccount> GuestAccounts { get; set; }
         public DbSet<AccountDB> Accounts { get; set; }
         public DbSet<MissionProgressDB> MissionProgresses { get; set; }
-        
+
         public DbSet<ItemDB> Items { get; set; }
         public DbSet<CharacterDB> Characters { get; set; }
         public DbSet<EquipmentDB> Equipment { get; set; }
         public DbSet<WeaponDB> Weapons { get; set; }
         public DbSet<GearDB> Gears { get; set; }
-        
+
         public DbSet<MemoryLobbyDB> MemoryLobbies { get; set; }
         public DbSet<ScenarioHistoryDB> Scenarios { get; set; }
 
         public DbSet<EchelonDB> Echelons { get; set; }
         public DbSet<AccountTutorial> AccountTutorials { get; set; }
-        
+
         public static SCHALEContext Create(string connectionString) =>
             new(new DbContextOptionsBuilder<SCHALEContext>()
                 .UseSqlServer(connectionString)
                 .Options);
 
-        public SCHALEContext(DbContextOptions<SCHALEContext> options) : base(options)
+        public SCHALEContext()
+        {
+        }
+
+        public SCHALEContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -97,6 +101,24 @@ namespace SCHALE.Common.Database
 
             modelBuilder.Entity<MissionProgressDB>().Property(x => x.ServerId).ValueGeneratedOnAdd();
             modelBuilder.Entity<MissionProgressDB>().Property(x => x.ProgressParameters).HasJsonConversion();
+        }
+    }
+
+    public class SCHALESqliteContext : SCHALEContext
+    {
+        public SCHALESqliteContext() { }
+
+        public SCHALESqliteContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        public static SCHALESqliteContext Create(string connectionString) =>
+            new(new DbContextOptionsBuilder<SCHALESqliteContext>()
+                .UseSqlite(connectionString).Options);
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=schale.sqlite3");
         }
     }
 
