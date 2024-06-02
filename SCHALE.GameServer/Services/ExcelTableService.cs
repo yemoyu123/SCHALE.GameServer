@@ -17,11 +17,13 @@ namespace SCHALE.GameServer.Services
         private readonly ILogger<ExcelTableService> logger = _logger;
         private readonly Dictionary<Type, object> caches = [];
 
-        public static async Task LoadExcels()
+        public static async Task LoadExcels(string excelDirectory = "")
         {
             var excelZipUrl = $"https://prod-clientpatch.bluearchiveyostar.com/{Config.Instance.VersionId}/TableBundles/Excel.zip";
             
-            var excelDir = $"{Path.GetDirectoryName(AppContext.BaseDirectory)}/Resources/excel/";
+            var excelDir = string.IsNullOrWhiteSpace(excelDirectory) 
+                ? Path.Join(Path.GetDirectoryName(AppContext.BaseDirectory), "Resources/excel")
+                : excelDirectory;
             var excelZipPath = Path.Combine(excelDir, "Excel.zip");
 
             if (Directory.Exists(excelDir))
@@ -53,14 +55,17 @@ namespace SCHALE.GameServer.Services
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="FileNotFoundException"></exception>
-        public T GetTable<T>() where T : IFlatbufferObject
+        public T GetTable<T>(bool bypassCache = false, string excelDirectory = "") where T : IFlatbufferObject
         {
             var type = typeof(T);
 
-            if (caches.TryGetValue(type, out var cache))
+            if (!bypassCache && caches.TryGetValue(type, out var cache))
                 return (T)cache;
 
-            var bytesFilePath = Path.Join(Path.GetDirectoryName(AppContext.BaseDirectory), "Resources/excel/", $"{type.Name.ToLower()}.bytes");
+            var excelDir = string.IsNullOrWhiteSpace(excelDirectory)
+                ? Path.Join(Path.GetDirectoryName(AppContext.BaseDirectory), "Resources/excel")
+                : excelDirectory;
+            var bytesFilePath = Path.Join(excelDir, $"{type.Name.ToLower()}.bytes");
             if (!File.Exists(bytesFilePath))
             {
                 throw new FileNotFoundException($"bytes files for {type.Name} not found");

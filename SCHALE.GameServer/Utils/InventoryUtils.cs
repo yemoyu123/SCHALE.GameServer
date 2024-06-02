@@ -17,10 +17,15 @@ namespace SCHALE.Common.Utils
             var context = connection.Context;
 
             var characterExcel = connection.ExcelTableService.GetTable<CharacterExcelTable>().UnPack().DataList;
-            var allCharacters = characterExcel.Where(x => x.IsPlayable && x.IsPlayableCharacter && x.CollectionVisible && !account.Characters.Any(c => c.UniqueId == x.Id)).Select(x =>
-            {
-                return CreateMaxCharacterFromId(x.Id);
-            }).ToList();
+            var allCharacters = characterExcel.Where(x =>
+                x is
+                {
+                    IsPlayable: true,
+                    IsPlayableCharacter: true,
+                    IsNPC: false,
+                    ProductionStep: ProductionStep.Release,
+                }
+            ).Select(x => CreateMaxCharacterFromId(x.Id)).ToList();
 
             account.AddCharacters(context, [.. allCharacters]);
             context.SaveChanges();
