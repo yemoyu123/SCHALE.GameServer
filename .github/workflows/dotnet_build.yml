@@ -1,0 +1,63 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build_linux:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.204
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish -c Release -p:PublishProfile=./SCHALE.GameServer/Properties/PublishProfiles/linux_x64.pubxml
+    - name: rm files
+      run: |
+        rm -rf ./SCHALE.GameServer/bin/Release/net8.0/linux-x64/publish/SCHALE.GameServer.pdb
+        rm -rf ./SCHALE.GameServer/bin/Release/net8.0/linux-x64/publish/SCHALE.Common.pdb
+        rm -rf ./SCHALE.GameServer/bin/Release/net8.0/linux-x64/publish/appsettings.Docker.json
+        rm -rf ./SCHALE.GameServer/bin/Release/net8.0/linux-x64/publish/appsettings.Development.json
+    - name: Upload output
+      uses: actions/upload-artifact@v2
+      with:
+        name: "Build_Linux"
+        path: ./SCHALE.GameServer/bin/Release/net8.0/linux-x64/publish
+
+  build_win:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.204
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish -c Release -p:PublishProfile=./SCHALE.GameServer/Properties/PublishProfiles/win_x64.pubxml
+    - name: rm files
+      run: |
+        del ./SCHALE.GameServer/bin/Release/net8.0/win-x64/publish/SCHALE.GameServer.pdb
+        del ./SCHALE.GameServer/bin/Release/net8.0/win-x64/publish/SCHALE.Common.pdb
+        del ./SCHALE.GameServer/bin/Release/net8.0/win-x64/publish/appsettings.Docker.json
+        del ./SCHALE.GameServer/bin/Release/net8.0/win-x64/publish/appsettings.Development.json
+    - name: Upload output
+      uses: actions/upload-artifact@v2
+      with:
+        name: "Build_Windows"
+        path: ./SCHALE.GameServer/bin/Release/net8.0/win-x64/publish
