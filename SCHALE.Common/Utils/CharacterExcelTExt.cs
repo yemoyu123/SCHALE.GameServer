@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SCHALE.Common.FlatData;
 
-namespace SCHALE.Common.Extensions
+namespace SCHALE.Common.Utils
 {
     public enum StudentType
     {
@@ -21,7 +21,8 @@ namespace SCHALE.Common.Extensions
             if (!ch.CollectionVisibleEndDate.StartsWith("2099"))
             {
                 return StudentType.Unique;
-            } else if (ch.CombineRecipeId == 0)
+            }
+            else if (ch.CombineRecipeId == 0)
             {
                 return StudentType.Event;
             }
