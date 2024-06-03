@@ -4,6 +4,7 @@ using SCHALE.Common.Database.ModelExtensions;
 using SCHALE.Common.NetworkProtocol;
 using SCHALE.Common.Utils;
 using SCHALE.GameServer.Services;
+using SCHALE.GameServer.Utils;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
 {
@@ -280,6 +281,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 _context.SaveChanges();
 
                 transaction.Commit();
+
+                _context.Entry(account).Collection(x => x.Items).Reload();
             }
             catch (Exception ex)
             {

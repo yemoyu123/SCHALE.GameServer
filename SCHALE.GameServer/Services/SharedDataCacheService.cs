@@ -1,5 +1,5 @@
-﻿using SCHALE.Common.Extensions;
-using SCHALE.Common.FlatData;
+﻿using SCHALE.Common.FlatData;
+using SCHALE.Common.Utils;
 
 namespace SCHALE.GameServer.Services
 {
