@@ -94,6 +94,7 @@
             // exportButton
             // 
             exportButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            exportButton.Enabled = false;
             exportButton.Location = new Point(289, 3);
             exportButton.Name = "exportButton";
             exportButton.Size = new Size(280, 59);

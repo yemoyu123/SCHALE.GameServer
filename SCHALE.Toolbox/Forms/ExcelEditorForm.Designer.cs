@@ -30,14 +30,14 @@
         {
             downloadButton = new Button();
             reloadButton = new Button();
-            propertyGrid1 = new PropertyGrid();
+            propGrid = new PropertyGrid();
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
             tableListView = new ListView();
             columnHeader1 = new ColumnHeader();
             itemListView = new ListView();
-            button1 = new Button();
             columnHeader2 = new ColumnHeader();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -68,13 +68,13 @@
             reloadButton.UseVisualStyleBackColor = true;
             reloadButton.Click += reloadButton_Click;
             // 
-            // propertyGrid1
+            // propGrid
             // 
-            propertyGrid1.Dock = DockStyle.Fill;
-            propertyGrid1.Location = new Point(0, 0);
-            propertyGrid1.Name = "propertyGrid1";
-            propertyGrid1.Size = new Size(695, 831);
-            propertyGrid1.TabIndex = 4;
+            propGrid.Dock = DockStyle.Fill;
+            propGrid.Location = new Point(0, 0);
+            propGrid.Name = "propGrid";
+            propGrid.Size = new Size(695, 831);
+            propGrid.TabIndex = 4;
             // 
             // splitContainer1
             // 
@@ -88,7 +88,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(propertyGrid1);
+            splitContainer1.Panel2.Controls.Add(propGrid);
             splitContainer1.Size = new Size(1048, 831);
             splitContainer1.SplitterDistance = 349;
             splitContainer1.TabIndex = 5;
@@ -142,9 +142,12 @@
             itemListView.TabIndex = 0;
             itemListView.UseCompatibleStateImageBehavior = false;
             itemListView.View = View.Details;
+            itemListView.SelectedIndexChanged += itemListView_SelectedIndexChanged;
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button1.Enabled = false;
             button1.Location = new Point(872, 12);
             button1.Name = "button1";
             button1.Size = new Size(188, 44);
@@ -179,7 +182,7 @@
 
         private Button downloadButton;
         private Button reloadButton;
-        private PropertyGrid propertyGrid1;
+        private PropertyGrid propGrid;
         private SplitContainer splitContainer1;
         private SplitContainer splitContainer2;
         private ListView tableListView;

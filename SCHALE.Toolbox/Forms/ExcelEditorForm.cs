@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,6 +28,7 @@ namespace SCHALE.Toolbox.Forms
         private readonly ExcelTableService _tableService;
         private readonly ILogger<ExcelEditorForm> _logger;
         private string _excelDirectory;
+        private IList? _currentExcelTable = null;
 
         public ExcelEditorForm()
         {
@@ -60,7 +62,63 @@ namespace SCHALE.Toolbox.Forms
 
         private void tableListView_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var selectedItems = tableListView.SelectedItems;
+            if (selectedItems.Count < 1) return;
 
+            var type = selectedItems[0].Tag as Type;
+            if (type == null) return;
+
+            var fbPath = Path.Join(_excelDirectory, $"{type.Name.ToLower()}.fb");
+            if (!File.Exists(fbPath))
+            {
+                _logger.LogError("Decrypted flatbuffer for {Type} not found", type);
+                return;
+            }
+
+            var bytes = File.ReadAllBytes(fbPath);
+            var inst = type.GetMethod($"GetRootAs{type.Name}", BindingFlags.Static | BindingFlags.Public,
+                [typeof(ByteBuffer)])!.Invoke(null, [new ByteBuffer(bytes)]);
+            var obj = type.GetMethod("UnPack", BindingFlags.Instance | BindingFlags.Public)!.Invoke(inst, null);
+            var dataList =
+                obj!.GetType().GetProperty("DataList", BindingFlags.Instance | BindingFlags.Public)!.GetMethod!.Invoke(obj, null)!;
+            Type? itemType = null;
+            foreach (var iType in dataList!.GetType().GetInterfaces())
+            {
+                if (iType.IsGenericType && iType.GetGenericTypeDefinition() == typeof(IList<>))
+                {
+                    itemType = iType.GetGenericArguments()[0];
+                    break;
+                }
+            }
+            if (itemType == null)
+            {
+                _logger.LogError("Unknown type error");
+                return;
+            }
+
+            _currentExcelTable = dataList as IList;
+            _logger.LogInformation("{Count} {TypeName} found", _currentExcelTable!.Count, itemType.Name);
+
+            itemListView.Items.Clear();
+            for (var i = 0; i < _currentExcelTable!.Count; i++)
+            {
+                var listItem = new ListViewItem($"{i}");
+                listItem.Tag = _currentExcelTable[i];
+                itemListView.Items.Add(listItem);
+            }
+
+            itemListView.Columns[0].Width = -1;
+        }
+
+        private void itemListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedItems = itemListView.SelectedItems;
+            if (selectedItems.Count < 1) return;
+
+            var obj = selectedItems[0].Tag;
+            if (obj == null) return;
+
+            propGrid.SelectedObject = obj;
         }
 
         private void ReloadExcels()
