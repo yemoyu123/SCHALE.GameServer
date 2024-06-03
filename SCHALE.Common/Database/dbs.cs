@@ -771,8 +771,8 @@ namespace SCHALE.Common.Database
         public int LeaderSkillLevel { get; set; } = 1;
 
         [NotMapped]
-        public bool IsNew { get; set; }
-        public bool IsLocked { get; set; }
+        public bool IsNew { get; set; } = true;
+        public bool IsLocked { get; set; } = true;
         public bool IsFavorite { get; set; }
         public List<long> EquipmentServerIds { get; set; } = [];
         public Dictionary<int, int> PotentialStats { get; set; } = [];

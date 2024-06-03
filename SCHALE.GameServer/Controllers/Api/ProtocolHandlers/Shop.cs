@@ -1,6 +1,8 @@
-﻿using SCHALE.Common.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using SCHALE.Common.Database;
 using SCHALE.Common.Database.ModelExtensions;
 using SCHALE.Common.NetworkProtocol;
+using SCHALE.Common.Utils;
 using SCHALE.GameServer.Services;
 
 namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
@@ -10,15 +12,17 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         private readonly ISessionKeyService _sessionKeyService;
         private readonly SCHALEContext _context;
         private readonly SharedDataCacheService _sharedData;
+        private readonly ILogger<Shop> _logger;
 
         // TODO: temp storage until gacha management
         public List<long> SavedGachaResults { get; set; } = [];
 
-        public Shop(IProtocolHandlerFactory protocolHandlerFactory, ISessionKeyService sessionKeyService, SCHALEContext context, SharedDataCacheService sharedData) : base(protocolHandlerFactory)
+        public Shop(IProtocolHandlerFactory protocolHandlerFactory, ISessionKeyService sessionKeyService, SCHALEContext context, SharedDataCacheService sharedData, ILogger<Shop> logger) : base(protocolHandlerFactory)
         {
             _sessionKeyService = sessionKeyService;
             _context = context;
             _sharedData = sharedData;
+            _logger = logger;
         }
 
         [ProtocolHandler(Protocol.Shop_BeforehandGachaGet)]
@@ -96,10 +100,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         public ResponsePacket ShopBuyGacha3ResponseHandler(ShopBuyGacha3Request req)
         {
             var account = _sessionKeyService.GetAccount(req.SessionKey);
-            var accountCharacters = account.Characters.Select(x => x.UniqueId).ToHashSet();
+            var accountChSet = account.Characters.Select(x => x.UniqueId).ToHashSet();
 
             // TODO: Implement FES Gacha
             // TODO: Check Gacha currency
+            // TODO: SR pickup
+            // TODO: pickup stone count
             // TODO: even more...
             // Type          Rate  Acc.R
             // -------------------------
@@ -108,10 +114,14 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             // SR           18.5%  21.5%
             // R            78.5%  100.%
 
+            const int gpStoneID = 90070086;
+            const int chUniStoneID = 23;
+
             var rateUpChId = 10094; // 10094, 10095
             var rateUpIsNormalStudent = false;
             var gachaList = new List<GachaResult>(10);
-            var newChList = new List<CharacterDB>();
+            var itemDict = new AccDict<int>();
+            itemDict[gpStoneID] = 10;
 
             for (int i = 0; i < 10; ++i)
             {
@@ -119,19 +129,26 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 if (randomNumber < 7)
                 {
                     // always 3 star
-                    var isNew = accountCharacters.Add(rateUpChId);
+                    var isNew = accountChSet.Add(rateUpChId);
                     gachaList.Add(new(rateUpChId)
                     {
-                        Character = new()
+                        Character = !isNew ? null : new()
                         {
                             AccountServerId = account.ServerId,
                             UniqueId = rateUpChId,
                             StarGrade = 3,
-                            IsNew = isNew,
-                            IsLocked = true,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 50,
                         }
                     });
-                    if (isNew) newChList.Add(gachaList[i].Character);
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 50;
+                        itemDict[rateUpChId] += 100;
+                    }
                 }
                 else if (randomNumber < 30)
                 {
@@ -143,19 +160,26 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     if (normalSSRList[randomPoolIdx].Id == rateUpChId) randomPoolIdx++;
 
                     var chId = normalSSRList[randomPoolIdx].Id;
-                    var isNew = accountCharacters.Add(chId);
+                    var isNew = accountChSet.Add(chId);
                     gachaList.Add(new(chId)
                     {
-                        Character = new()
+                        Character = !isNew ? null : new()
                         {
                             AccountServerId = account.ServerId,
                             UniqueId = chId,
                             StarGrade = 3,
-                            IsNew = isNew,
-                            IsLocked = true,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 50,
                         }
                     });
-                    if (isNew) newChList.Add(gachaList[i].Character);
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 50;
+                        itemDict[rateUpChId] += 30;
+                    }
                 }
                 else if (randomNumber < 215 ||
                     (i == 9 && gachaList.All(x => x.Character.StarGrade == 1)))
@@ -163,49 +187,113 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     var normalSRList = _sharedData.CharaListSRNormal;
                     var randomPoolIdx = (int)Random.Shared.NextInt64(normalSRList.Count);
                     var chId = normalSRList[randomPoolIdx].Id;
-                    var isNew = accountCharacters.Add(chId);
+                    var isNew = accountChSet.Add(chId);
 
                     gachaList.Add(new(chId)
                     {
-                        Character = new()
+                        Character = !isNew ? null : new()
                         {
                             AccountServerId = account.ServerId,
                             UniqueId = chId,
                             StarGrade = 2,
-                            IsNew = isNew,
-                            IsLocked = true,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 10,
                         }
                     });
-                    if (isNew) newChList.Add(gachaList[i].Character);
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 10;
+                        itemDict[rateUpChId] += 5;
+                    }
                 }
                 else
                 {
                     var normalRList = _sharedData.CharaListRNormal;
                     var randomPoolIdx = (int)Random.Shared.NextInt64(normalRList.Count);
                     var chId = normalRList[randomPoolIdx].Id;
-                    var isNew = accountCharacters.Add(chId);
+                    var isNew = accountChSet.Add(chId);
 
                     gachaList.Add(new(chId)
                     {
-                        Character = new()
+                        Character = !isNew ? null : new()
                         {
                             AccountServerId = account.ServerId,
                             UniqueId = chId,
                             StarGrade = 1,
-                            IsNew = isNew,
-                            IsLocked = true,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 1,
                         }
                     });
-                    if (isNew) newChList.Add(gachaList[i].Character);
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 1;
+                        itemDict[rateUpChId] += 1;
+                    }
                 }
             }
 
-            foreach (var ch in newChList)
+            using var transaction = _context.Database.BeginTransaction();
+
+            try
             {
-                ch.AccountServerId = account.ServerId;
+                // add characters
+                _context.Characters.AddRange(
+                    gachaList.Where(x => x.Character != null)
+                            .Select(x => x.Character)!);
+
+                // create if item does not exist
+                foreach (var id in itemDict.Keys)
+                {
+                    var itemExists = _context.Items
+                        .Any(x => x.AccountServerId == account.ServerId && x.UniqueId == id);
+                    if (!itemExists)
+                    {
+                        _context.Items.Add(new ItemDB()
+                        {
+                            IsNew = true,
+                            UniqueId = id,
+                            StackCount = 0,
+                            AccountServerId = account.ServerId,
+                        });
+                    }
+                }
+                _context.SaveChanges();
+
+                // perform item count update
+                foreach (var (id, count) in itemDict)
+                {
+                    _context.Items
+                        .Where(x => x.AccountServerId == account.ServerId && x.UniqueId == id)
+                        .ExecuteUpdate(setters => setters.SetProperty(
+                            item => item.StackCount, item => item.StackCount + count));
+                }
+
+                _context.SaveChanges();
+
+                transaction.Commit();
             }
-            _context.Characters.AddRange(newChList);
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                _logger.LogError("Transaction failed: {Message}", ex.Message);
+                throw;
+            }
+
+            var itemDbList = itemDict.Keys
+                .Select(id => _context.Items.AsNoTracking().First(x => x.AccountServerId == account.ServerId && x.UniqueId == id))
+                .ToList();
+            foreach (var gacha in gachaList)
+            {
+                if (gacha.Stone != null)
+                {
+                    gacha.Stone.ServerId = itemDbList.First(x => x.UniqueId == gacha.Stone.UniqueId).ServerId;
+                }
+            }
 
             return new ShopBuyGacha3Response()
             {
@@ -213,7 +301,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 UpdateTime = DateTime.UtcNow,
                 GemBonusRemain = int.MaxValue,
                 ConsumedItems = [],
-                AcquiredItems = [],
+                AcquiredItems = itemDbList,
                 MissionProgressDBs = [],
             };
         }

@@ -9025,8 +9025,8 @@ namespace SCHALE.Common.NetworkProtocol
     public class GachaResult
     {
         public long CharacterId { get; set; }
-        public CharacterDB Character { get; set; }
-        public ItemDB Stone { get; set; }
+        public CharacterDB? Character { get; set; }
+        public ItemDB? Stone { get; set; }
         public GachaResult(long id)
         {
             this.CharacterId = id;
