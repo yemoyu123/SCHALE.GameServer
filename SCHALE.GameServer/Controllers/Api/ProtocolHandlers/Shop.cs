@@ -120,8 +120,9 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             var rateUpChId = 10094; // 10094, 10095
             var rateUpIsNormalStudent = false;
             var gachaList = new List<GachaResult>(10);
-            var itemDict = new AccDict<int>();
-            itemDict[gpStoneID] = 10;
+            var itemDict = new AccDict<long>();
+            bool shouldDoGuaranteedSR = true;
+            // itemDict[gpStoneID] = 10;
 
             for (int i = 0; i < 10; ++i)
             {
@@ -129,6 +130,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 if (randomNumber < 7)
                 {
                     // always 3 star
+                    shouldDoGuaranteedSR = false;
                     var isNew = accountChSet.Add(rateUpChId);
                     gachaList.Add(new(rateUpChId)
                     {
@@ -152,6 +154,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 }
                 else if (randomNumber < 30)
                 {
+                    shouldDoGuaranteedSR = false;
                     var normalSSRList = _sharedData.CharaListSSRNormal;
                     var poolSize = normalSSRList.Count;
                     if (rateUpIsNormalStudent) poolSize--;
@@ -178,12 +181,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     if (!isNew)
                     {
                         itemDict[chUniStoneID] += 50;
-                        itemDict[rateUpChId] += 30;
+                        itemDict[chId] += 30;
                     }
                 }
-                else if (randomNumber < 215 ||
-                    (i == 9 && gachaList.All(x => x.Character.StarGrade == 1)))
+                else if (randomNumber < 215 || (i == 9 && shouldDoGuaranteedSR))
                 {
+                    shouldDoGuaranteedSR = false;
                     var normalSRList = _sharedData.CharaListSRNormal;
                     var randomPoolIdx = (int)Random.Shared.NextInt64(normalSRList.Count);
                     var chId = normalSRList[randomPoolIdx].Id;
@@ -206,7 +209,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     if (!isNew)
                     {
                         itemDict[chUniStoneID] += 10;
-                        itemDict[rateUpChId] += 5;
+                        itemDict[chId] += 5;
                     }
                 }
                 else
@@ -233,7 +236,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     if (!isNew)
                     {
                         itemDict[chUniStoneID] += 1;
-                        itemDict[rateUpChId] += 1;
+                        itemDict[chId] += 1;
                     }
                 }
             }
