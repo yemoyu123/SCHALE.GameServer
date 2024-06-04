@@ -759,20 +759,20 @@ namespace SCHALE.Common.Database
         [Key]
         public long ServerId { get; set; }
         public long UniqueId { get; set; }
-        public int StarGrade { get; set; }
-        public int Level { get; set; }
-        public long Exp { get; set; }
-        public int FavorRank { get; set; }
-        public long FavorExp { get; set; }
-        public int PublicSkillLevel { get; set; }
-        public int ExSkillLevel { get; set; }
-        public int PassiveSkillLevel { get; set; }
-        public int ExtraPassiveSkillLevel { get; set; }
-        public int LeaderSkillLevel { get; set; }
+        public int StarGrade { get; set; } = 1;
+        public int Level { get; set; } = 1;
+        public long Exp { get; set; } = 0;
+        public int FavorRank { get; set; } = 1;
+        public long FavorExp { get; set; } = 0;
+        public int PublicSkillLevel { get; set; } = 1;
+        public int ExSkillLevel { get; set; } = 1;
+        public int PassiveSkillLevel { get; set; } = 1;
+        public int ExtraPassiveSkillLevel { get; set; } = 1;
+        public int LeaderSkillLevel { get; set; } = 1;
 
         [NotMapped]
-        public bool IsNew { get; set; }
-        public bool IsLocked { get; set; }
+        public bool IsNew { get; set; } = true;
+        public bool IsLocked { get; set; } = true;
         public bool IsFavorite { get; set; }
         public List<long> EquipmentServerIds { get; set; } = [];
         public Dictionary<int, int> PotentialStats { get; set; } = [];

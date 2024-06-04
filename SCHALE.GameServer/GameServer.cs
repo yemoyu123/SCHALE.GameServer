@@ -87,6 +87,7 @@ namespace SCHALE.GameServer
                 builder.Services.AddMemorySessionKeyService();
                 builder.Services.AddExcelTableService();
                 builder.Services.AddIrcService();
+                builder.Services.AddSharedDataCache();
 
                 // Add all Handler Groups
                 var handlerGroups = Assembly
