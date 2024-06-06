@@ -100,7 +100,31 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Shop_BuyGacha3)]
         public ResponsePacket ShopBuyGacha3ResponseHandler(ShopBuyGacha3Request req)
         {
-            var gachaResults = [10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010];
+            var gachaResults = new List<GachaResult>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                long id = 10010;
+
+                gachaResults.Add(new(id)
+                {
+                    Character = new() // hardcoded util proper db
+                    {
+                        ServerId = req.AccountId,
+                        UniqueId = id,
+                        StarGrade = 3,
+                        Level = 1,
+                        FavorRank = 1,
+                        PublicSkillLevel = 1,
+                        ExSkillLevel = 1,
+                        PassiveSkillLevel = 1,
+                        ExtraPassiveSkillLevel = 1,
+                        LeaderSkillLevel = 1,
+                        IsNew = true,
+                        IsLocked = true
+                    }
+                });
+            }
 
             return new ShopBuyGacha3Response()
             {
