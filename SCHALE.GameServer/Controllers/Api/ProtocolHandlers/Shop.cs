@@ -100,7 +100,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Shop_BuyGacha3)]
         public ResponsePacket ShopBuyGacha3ResponseHandler(ShopBuyGacha3Request req)
         {
-            var gachaResults = [10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010]
+            var gachaResults = [10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010, 10010];
 
             return new ShopBuyGacha3Response()
             {
