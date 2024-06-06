@@ -100,39 +100,168 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
         [ProtocolHandler(Protocol.Shop_BuyGacha3)]
         public ResponsePacket ShopBuyGacha3ResponseHandler(ShopBuyGacha3Request req)
         {
-            var gachaResults = new List<GachaResult>();
+            var account = _sessionKeyService.GetAccount(req.SessionKey);
+            var accountChSet = account.Characters.Select(x => x.UniqueId).ToHashSet();
 
-            for (int i = 0; i < 10; i++)
+            // TODO: Implement FES Gacha
+            // TODO: Check Gacha currency
+            // TODO: SR pickup
+            // TODO: pickup stone count
+            // TODO: even more...
+            // Type          Rate  Acc.R
+            // -------------------------
+            // Current SSR   0.7%   0.7% 
+            // Other SSR     2.3%   3.0%ServerId
+            // SR           18.5%  21.5%
+            // R            78.5%  100.%
+
+            const int gpStoneID = 90070086;
+            const int chUniStoneID = 23;
+
+            var rateUpChId = 10010; // 10094, 10095
+            var rateUpIsNormalStudent = false;
+            var gachaList = new List<GachaResult>(10);
+            var itemDict = new AccDict<long>();
+            bool shouldDoGuaranteedSR = true;
+            // itemDict[gpStoneID] = 10;
+
+            for (int i = 0; i < 10; ++i)
             {
-                long id = 10010;
-
-                gachaResults.Add(new(id)
+                var randomNumber = Random.Shared.NextInt64(1000);
+                if (randomNumber < 7)
                 {
-                    Character = new() // hardcoded util proper db
+                    // always 3 star
+                    shouldDoGuaranteedSR = false;
+                    var isNew = accountChSet.Add(rateUpChId);
+                    gachaList.Add(new(rateUpChId)
                     {
-                        ServerId = req.AccountId,
-                        UniqueId = id,
-                        StarGrade = 3,
-                        Level = 1,
-                        FavorRank = 1,
-                        PublicSkillLevel = 1,
-                        ExSkillLevel = 1,
-                        PassiveSkillLevel = 1,
-                        ExtraPassiveSkillLevel = 1,
-                        LeaderSkillLevel = 1,
-                        IsNew = true,
-                        IsLocked = true
+                        Character = !isNew ? null : new()
+                        {
+                            AccountServerId = account.ServerId,
+                            UniqueId = rateUpChId,
+                            StarGrade = 3,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 50,
+                        }
+                    });
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 50;
+                        itemDict[rateUpChId] += 100;
                     }
-                });
+                }
+                else if (randomNumber < 30)
+                {
+                    shouldDoGuaranteedSR = false;
+                    var normalSSRList = _sharedData.CharaListSSRNormal;
+                    var poolSize = normalSSRList.Count;
+                    if (rateUpIsNormalStudent) poolSize--;
+
+                    var randomPoolIdx = (int)Random.Shared.NextInt64(poolSize);
+                    if (normalSSRList[randomPoolIdx].Id == rateUpChId) randomPoolIdx++;
+
+                    var chId = normalSSRList[randomPoolIdx].Id;
+                    var isNew = accountChSet.Add(chId);
+                    gachaList.Add(new(chId)
+                    {
+                        Character = !isNew ? null : new()
+                        {
+                            AccountServerId = account.ServerId,
+                            UniqueId = chId,
+                            StarGrade = 3,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 50,
+                        }
+                    });
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 50;
+                        itemDict[chId] += 30;
+                    }
+                }
+                else if (randomNumber < 215 || (i == 9 && shouldDoGuaranteedSR))
+                {
+                    shouldDoGuaranteedSR = false;
+                    var normalSRList = _sharedData.CharaListSRNormal;
+                    var randomPoolIdx = (int)Random.Shared.NextInt64(normalSRList.Count);
+                    var chId = normalSRList[randomPoolIdx].Id;
+                    var isNew = accountChSet.Add(chId);
+
+                    gachaList.Add(new(chId)
+                    {
+                        Character = !isNew ? null : new()
+                        {
+                            AccountServerId = account.ServerId,
+                            UniqueId = chId,
+                            StarGrade = 2,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 10,
+                        }
+                    });
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 10;
+                        itemDict[chId] += 5;
+                    }
+                }
+                else
+                {
+                    var normalRList = _sharedData.CharaListRNormal;
+                    var randomPoolIdx = (int)Random.Shared.NextInt64(normalRList.Count);
+                    var chId = normalRList[randomPoolIdx].Id;
+                    var isNew = accountChSet.Add(chId);
+
+                    gachaList.Add(new(chId)
+                    {
+                        Character = !isNew ? null : new()
+                        {
+                            AccountServerId = account.ServerId,
+                            UniqueId = chId,
+                            StarGrade = 1,
+                        },
+                        Stone = isNew ? null : new()
+                        {
+                            UniqueId = chUniStoneID,
+                            StackCount = 1,
+                        }
+                    });
+                    if (!isNew)
+                    {
+                        itemDict[chUniStoneID] += 1;
+                        itemDict[chId] += 1;
+                    }
+                }
             }
+
+            account.AddCharacters(_context, [.. gachaList.Where(x => x.Character != null).Select(x => x.Character)]);
+
+            var acquiredItems = new List<ItemDB>();
+
+            acquiredItems = itemDict.Keys.Select(x => new ItemDB()
+            {
+                IsNew = true,
+                UniqueId = x,
+                StackCount = itemDict[x],
+            }).ToList();
+
+            account.AddItems(_context, [.. acquiredItems]);
+            _context.SaveChanges();
 
             return new ShopBuyGacha3Response()
             {
-                GachaResults = gachaResults,
-                UpdateTime = DateTime.UtcNow,
-                GemBonusRemain = long.MaxValue,
+                GachaResults = gachaList,
+                GemBonusRemain = int.MaxValue,
                 ConsumedItems = [],
-                AcquiredItems = [],
+                AcquiredItems = acquiredItems,
                 MissionProgressDBs = [],
             };
         }
