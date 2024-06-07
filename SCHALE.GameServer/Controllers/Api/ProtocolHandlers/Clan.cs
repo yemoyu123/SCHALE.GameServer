@@ -34,7 +34,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 AccountClanDB = new()
                 {
                     ClanDBId = 114514,
-                    ClanName = "夏萝莉privateserver",
+                    ClanName = "夏萝莉 private server",
                     ClanChannelName = "channel_1",
                     ClanPresidentNickName = "Arona",
                     ClanPresidentRepresentCharacterUniqueId = 10000,
