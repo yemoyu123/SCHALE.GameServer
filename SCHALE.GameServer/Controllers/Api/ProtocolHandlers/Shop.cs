@@ -57,7 +57,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     ShopUniqueId = 3,
                     GoodsId = 1,
-                    LastResults = SavedGachaResults
+                    LastResults = SavedGachaResults,
                 }
             };
         }
@@ -263,6 +263,12 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 ConsumedItems = [],
                 AcquiredItems = acquiredItems,
                 MissionProgressDBs = [],
+                FreeRecruitHistoryDB = new()
+                {
+                    UniqueId = 1,
+                    RecruitCount = int.MaxValue,
+                    LastUpdateDate = DateTime.UtcNow,
+                }
             };
         }
 
