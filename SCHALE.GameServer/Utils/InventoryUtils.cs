@@ -42,7 +42,7 @@ namespace SCHALE.Common.Utils
                 {
                     UniqueId = x.Id,
                     Level = 1,
-                    StackCount = 90000, // ~ 90,000 cap, auto converted if over
+                    StackCount = 77777, // ~ 90,000 cap, auto converted if over
                 };
             }).ToList();
 
