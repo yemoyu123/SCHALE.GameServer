@@ -118,7 +118,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
             const int gpStoneID = 90070086;
             const int chUniStoneID = 23;
 
-            var rateUpChId = 20036; // 10094, 10095
+            var rateUpChId = 10067; // 10094, 10095
             var rateUpIsNormalStudent = false;
             var gachaList = new List<GachaResult>(10);
             var itemDict = new AccDict<long>();
