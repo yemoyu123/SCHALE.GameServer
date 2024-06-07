@@ -33,8 +33,8 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 },
                 AccountClanDB = new()
                 {
-                    ClanDBId = 777,
-                    ClanName = "Nexon",
+                    ClanDBId = 114514,
+                    ClanName = "夏萝莉server",
                     ClanChannelName = "channel_1",
                     ClanPresidentNickName = "Arona",
                     ClanPresidentRepresentCharacterUniqueId = 10000,
@@ -45,7 +45,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                 {
                     AccountId = account.ServerId,
                     AccountLevel = account.Level,
-                    ClanDBId = 777,
+                    ClanDBId = 114514,
                     RepresentCharacterUniqueId = 10000,
                     ClanSocialGrade = Common.FlatData.ClanSocialGrade.Member,
                     AccountNickName = account.Nickname
@@ -54,7 +54,7 @@ namespace SCHALE.GameServer.Controllers.Api.ProtocolHandlers
                     new() {
                         AccountId = account.ServerId,
                         AccountLevel = account.Level,
-                        ClanDBId = 777,
+                        ClanDBId = 114514,
                         RepresentCharacterUniqueId = 10000,
                         AttendanceCount = 33,
                         ClanSocialGrade = Common.FlatData.ClanSocialGrade.Member,
